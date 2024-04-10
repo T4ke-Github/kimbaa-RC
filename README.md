@@ -1,5 +1,8 @@
 # KiMBAA
 
+
+![Kimbaa logo](/res/kimbaa_logo.jpg "kimbaa logo")
+
 KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen 
 
 ---
