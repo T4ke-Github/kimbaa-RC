@@ -5,7 +5,6 @@
 
 KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen 
 
----
 
 "kimbaa" soll Studierende beim Antrag ihrer Bachelorarbeit unterstützen, indem sie die Voraussetzungen vorab prüft und wichtige Hilfestellungen und Planungshinweise gibt.
 
@@ -17,21 +16,26 @@ KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen
     - Anlegen
     - Speichern 
     - Aufrufen
+
 - Automatisches Einlesen der Credits des Studierenden
     - Webcrawler
     - PDF parsen 
+
 - Beantworten von Fragen zu spezifischen Modulen wie Praktikum und Projekt
     - Liegt ein Arbeitsvertrag vor?
 - Beantworten von Fragen zur Betreuung der Abschlussarbeit
     - Externer/Interne Betreuung?
     - Liegen ggf. die Qualifikationen der betreuenden Person vor?
+
 - Basierend auf den gesammelten Daten wird ermittelt, ob die Voraussetzungen für den Antrag auf die Bachelorarbeit erfüllt sind
     - Wie viele CPs sind offen?
     - Rating offener Module/Regeln der Studien- und Prüfungsordnung.
+
 - Anzeige von Tipps zur Betreuung der Abschlussarbeit
 - Unterstützung bei der Wahl eines Titels für die Abschlussarbeit
     - Rechtschreib- und Grammatikprüfung
     - Bereitstellung aussagekräftiger Beschreibungen
+
 - Abgabe der gesammelten Informationen
     - Druckfunktion..
     - Online-Einreichung.
@@ -39,9 +43,6 @@ KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen
 ---
 
 ## Techstack
-
-
-
 
 ### Frontend 
 
@@ -83,7 +84,7 @@ Product Owner: Sascha Benjamin
 
 Scrum-Master:  Trung Nguyen Quoc
 
-QA: Martin Ivo Ilschner
+QA: Ivo Ilschner
 
 Frontend: 
 
