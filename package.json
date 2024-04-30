@@ -1,0 +1,18 @@
+{
+  "name": "kimbaa",
+  "version": "1.0.0",
+  "description": "edu web app project",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest --runInBand"
+  },
+  "author": "PiCA BHT",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
