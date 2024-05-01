@@ -7,7 +7,7 @@ import mongoose, { Schema, model, Model } from "mongoose";
 //const mongoose = require('mongoose');
 
 export interface IUser {
-  name: string; // Required, unique
+  name: string; // Required
   password: string; // Required
   admin: boolean; // Optional, default: false
   matrikelnummer: number; // Required, unique
@@ -29,10 +29,21 @@ interface IUserMethods {
 type UserModel = Model<IUser, {}, IUserMethods>;
 //ggf noch Adress verweis hinzufügen
 export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
-  name: { type: String, required: true, unique: true },
+  name: { type: String, required: true, unique: false },
   password: { type: String, required: true },
   admin: { type: Boolean, default: false },
-  matrikelnummer: { type: Number, required: true, unique: true },
+  matrikelnummer: { 
+    type: Number, 
+    required: true, 
+    unique: true, 
+    validate: {
+      //Validator to check if the length of the matrikelnummer is at least 6 by MongoDB
+      validator: function(v: number) {
+        return v.toString().length >= 6; // Matrikelnummer muss mindestens 6 Zeichen lang sein
+      },
+      message: props => `Die Matrikelnummer muss mindestens 6 Zeichen lang sein, aber Sie haben ${props.value}.`
+    }
+  },
   email: { type: String },
   ersteAnmeldung: { type: Date, required: true },
   letzteAnmeldung: { type: Date },
@@ -50,6 +61,20 @@ UserSchema.pre("save", async function () {
     this.password = hashedPassword;
   }
 });
+//Update User only allowed
+UserSchema.pre("findOneAndUpdate", function (next) {
+  const query = this.getQuery();
+  
+  if (!query.matrikelnummer) {
+    const error = new Error("Updates dürfen nur über die Matrikelnummer erfolgen.");
+    return next(error);
+  }
+
+  next(); // Fortfahren, wenn Matrikelnummer vorhanden ist
+});
+
+
+
 
 UserSchema.methods.isCorrectPassword = async function (password: string) {
   try {
