@@ -1,0 +1,20 @@
+
+
+Der Ordner model ist ein Bestandteil des Backend-Systems. 
+Hier werden die Datenstrukturen definiert, die in der Datenbank gespeichert werden. 
+Modelle legen Felder, Beziehungen und Validierungsregeln fest und bieten eine Abstraktionsebene 
+für CRUD-Operationen (Erstellen, Lesen, Aktualisieren, Löschen).
+
+Aufgaben der Modelle
+Definition von Datenstrukturen: 
+Modelle definieren Felder und Datentypen, die in der Datenbank gespeichert werden.
+Interaktion mit der Datenbank: 
+Modelle verwalten die Kommunikation mit der Datenbank und führen CRUD-Operationen aus.
+Middleware und Hooks: 
+Modelle können Middleware-Funktionen enthalten, die vor oder nach bestimmten Operationen ausgeführt werden.
+Integration mit anderen Komponenten
+Services: 
+Modelle arbeiten eng mit den Services zusammen, um die Geschäftslogik von der Datenbankinteraktion zu trennen. 
+Sie stellen eine Abstraktionsebene für die Kommunikation mit der Datenbank bereit.
+
+Stand:01.05.2024 Sascha Athmer

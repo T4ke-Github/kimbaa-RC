@@ -1,0 +1,23 @@
+
+
+Der Ordner services ist Bestandteil des Backend-Systems. 
+Hier wird die Geschäftslogik der Anwendung verwaltet und 
+verschiedene Dienste oder Funktionalitäten werden implementiert. 
+Die Services fungieren als Vermittler zwischen den Datenmodellen, 
+den Controllern oder den externen APIs, und bieten eine Abstraktionsebene, 
+die die Anwendungslogik von der eigentlichen Implementierung trennt.
+
+Aufgaben der Services
+Logik und Datenvalidierung: 
+Die Services können die Geschäftslogik der Anwendung und auch die Validierung und Überprüfung von Daten verantwortlich sein, 
+bevor sie an die Datenbank übergeben oder von dieser abgerufen werden. 
+d. h. sie führen Operationen durch, verarbeiten Daten und wenden logik an.
+Kommunikation mit Datenbanken: 
+Services sind verantwortlich für das Abrufen, Aktualisieren und Speichern 
+von Daten in der Datenbank. Services interagieren mit Modellen ./model. zum speichern der Daten in der Datenbank.
+Zusammenarbeit mit externen APIs: 
+Services können auch Daten von externen Quellen beziehen oder an andere Systeme senden, 
+beispielsweise durch REST- oder GraphQL-Anfragen.
+
+
+Stand:01.05.2024 Sascha Athmer
