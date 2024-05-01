@@ -1,11 +1,10 @@
 import { User, IUser } from "../../../src/backend/model/UserModel";
 import { logger } from "../../../src/backend/backlogger";
+import mongoose from "mongoose";
 import { HydratedDocument } from "mongoose";
 import { Types } from "mongoose";
+import { MongoMemoryServer } from "mongodb-memory-server";
 
-
-
-logger.info("UserModel.test wird gestartet");
 
 beforeEach(async () => {
     await User.deleteMany({});

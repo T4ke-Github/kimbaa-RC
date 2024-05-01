@@ -3,6 +3,9 @@ import { logger } from "../backlogger";
 import mongoose, { Schema, model, Model } from "mongoose";
 
 
+//TODO: remove or letit
+//const mongoose = require('mongoose');
+
 export interface IUser {
   name: string; // Required, unique
   password: string; // Required

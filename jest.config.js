@@ -7,10 +7,10 @@ module.exports = {
     "default",
     ["jest-junit", { suiteNameTemplate: "{filename}" }],
   ],
-  testMatch: ["**/(*.)+(test).?(m)[jt]s?(x)"],
-  collectCoverageFrom: ['<rootDir>/src/**/*.{ts,js,mjs,tsx,jsx,mts}'],
-  testPathIgnorePatterns: ["<rootDir>/dist/", "<rootDir>/node_modules/"],
-  coveragePathIgnorePatterns: ["<rootDir>/dist/", "<rootDir>/node_modules/", "<rootDir>/tests/"],
+  //testMatch: ["**/(*.)+(test).?(m)[jt]s?(x)"],
+  //collectCoverageFrom: ['<rootDir>/src/**/*.{ts,js,mjs,tsx,jsx,mts}'],
+  //testPathIgnorePatterns: ["<rootDir>/dist/", "<rootDir>/node_modules/"],
+  //coveragePathIgnorePatterns: ["<rootDir>/dist/", "<rootDir>/node_modules/", "<rootDir>/tests/"], 
   // start mongo memory server
   globalSetup: "<rootDir>/testConfig/globalSetup.ts",
   // stop mongo memory server
