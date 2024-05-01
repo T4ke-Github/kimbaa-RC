@@ -1,9 +1,6 @@
 import { User, IUser } from "../../../src/backend/model/UserModel";
 import { logger } from "../../../src/backend/backlogger";
-import mongoose from "mongoose";
-import { HydratedDocument } from "mongoose";
-import { Types } from "mongoose";
-import { MongoMemoryServer } from "mongodb-memory-server";
+
 
 
 beforeEach(async () => {
@@ -26,5 +23,19 @@ test("createUser", async () => {
         CreditPoints: 0,
         telefon: 123
     });
-    await User.save();
-})
+    await user.save();
+    expect(user.id).toBeDefined();
+    expect(user.name).toBe("test");
+    expect(user.admin).toBe(false);
+    expect(user.matrikelnummer).toBe(123);
+    expect(user.email).toBe("test");
+    expect(user.ersteAnmeldung).toBeDefined();
+    expect(user.letzteAnmeldung).toBeDefined();
+    expect(user.pwAnderungDatum).toBeDefined();
+    expect(user.fehlerhafteAnmeldeversuche).toBe(0);
+    expect(user.fachbereich).toBe("test");
+    expect(user.immatrikuliertSeit).toBeDefined();
+    expect(user.CreditPoints).toBe(0);
+    expect(user.telefon).toBe(123);
+
+}); 

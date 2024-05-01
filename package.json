@@ -10,9 +10,6 @@
   "scripts": {
     "test": "jest --runInBand"
   },
-  "jest": {
-    "testEnvironment": "node"
-  },
   "author": "PiCA BHT",
   "license": "MIT",
   "devDependencies": {
