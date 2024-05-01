@@ -5,5 +5,5 @@
   },
           // Nur für VSCode relevant, ermögliche so Zugriff auf 
           // die eigentichen Quelldaten (für Content Assist wie Quick Fixes)
-  "include": ["src/**/*"]
+  //"include": ["src/**/*"]
 }

@@ -1,7 +1,7 @@
 import { UserResource } from "../Resources"; // This should be your resource interface for User
 import { User } from "../model/UserModel";
 import { AntragZulassung } from "../model/AntragZulassungModel";
-import { logger } from "../logger";
+import { logger } from "../backlogger";
 import * as bcrypt from 'bcryptjs';
 import { Types } from "mongoose";
 
