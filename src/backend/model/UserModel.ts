@@ -2,29 +2,16 @@ import * as bcrypt from 'bcryptjs';
 //import { logger } from "../../src/logger";
 import mongoose, { Schema, model, Model } from "mongoose";
 
-export interface IAdress {
-  street: string;
-  city: string;
-  postalCode: string;
-  country: string;
-}
-
-export interface IAntragZulassung {
-  date: Date;
-  approved: boolean;
-}
 
 export interface IUser {
   name: string; // Required, unique
   password: string; // Required
   admin: boolean; // Optional, default: false
   matrikelnummer: number; // Required, unique
-  antrag: IAntragZulassung; // Required
-  adress: IAdress; // Required
   email: string; // Optional
   ersteAnmeldung: Date; // Required
   letzteAnmeldung: Date; // Optional
-  pw_änderungDatum: Date; // Required
+  pwAnderungDatum: Date; // Required
   fehlerhafteAnmeldeversuche: number; // Required, default: 0
   fachbereich: string; // Optional
   immatrikuliertSeit: Date; // Optional
@@ -37,26 +24,16 @@ interface IUserMethods {
 }
 
 type UserModel = Model<IUser, {}, IUserMethods>;
-
+//ggf noch Adress verweis hinzufügen
 export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   name: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   admin: { type: Boolean, default: false },
   matrikelnummer: { type: Number, required: true, unique: true },
-  antrag: {
-    date: { type: Date, required: true },
-    approved: { type: Boolean, required: true },
-  },
-  adress: {
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    postalCode: { type: String, required: true },
-    country: { type: String, required: true },
-  },
   email: { type: String },
   ersteAnmeldung: { type: Date, required: true },
   letzteAnmeldung: { type: Date },
-  pw_änderungDatum: { type: Date, required: true },
+  pwAnderungDatum: { type: Date, required: true },
   fehlerhafteAnmeldeversuche: { type: Number, default: 0 },
   fachbereich: { type: String },
   immatrikuliertSeit: { type: Date },

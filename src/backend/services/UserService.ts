@@ -1,6 +1,6 @@
-import { USERResource } from "../Resources"; // This should be your resource interface for User
+import { UserResource } from "../Resources"; // This should be your resource interface for User
 import { User } from "../model/UserModel";
-//import { AntragZulassung } from "../model/AntragZulassungModel";
+import { AntragZulassung } from "../model/AntragZulassungModel";
 import { logger } from "../logger";
 import * as bcrypt from 'bcryptjs';
 import { Types } from "mongoose";
@@ -8,15 +8,24 @@ import { Types } from "mongoose";
 /**
  * Holt alle Benutzer, ohne Passwörter zurückzugeben.
  */
-export async function getAlleUser(): Promise<USERResource[]> {
+export async function getAlleUser(): Promise<UserResource[]> {
     logger.info("UserService.getAlleUser wird gestartet");
     const users = await User.find({}).exec();
-    const userResources = users.map(user => ({
+    const userResources: UserResource[] = users.map(user => ({
         id: user.id,
         name: user.name,
-        email: user.email,
+        password: user.password,
+        admin: user.admin,
         matrikelnummer: user.matrikelnummer,
-        admin: user.admin
+        email: user.email,
+        ersteAnmeldung: user.ersteAnmeldung,
+        letzteAnmeldung: user.letzteAnmeldung,
+        pwAnderungDatum: user.pwAnderungDatum,
+        fehlerhafteAnmeldeversuche: user.fehlerhafteAnmeldeversuche,
+        fachbereich: user.fachbereich,
+        immatrikuliertSeit: user.immatrikuliertSeit,
+        CreditPoints: user.CreditPoints,
+        telefon: user.telefon
     }));
     return userResources; 
 }
@@ -24,7 +33,7 @@ export async function getAlleUser(): Promise<USERResource[]> {
 /**
  * Erstellt einen neuen Benutzer, überprüft erforderliche Felder.
  */
-export async function createUser(userResource: USERResource): Promise<USERResource> {
+export async function createUser(userResource: UserResource): Promise<UserResource> {
     logger.info("UserService.createUser wird gestartet");
 
     if(!userResource.name || !userResource.password) {
@@ -44,7 +53,7 @@ export async function createUser(userResource: USERResource): Promise<USERResour
 /**
  * Aktualisiert einen Benutzer, einschließlich Passwortänderungen.
  */
-export async function updateUser(userResource: USERResource): Promise<USERResource> {
+export async function updateUser(userResource: UserResource): Promise<UserResource> {
     logger.info("UserService.updateUser wird gestartet");
 
     if (!userResource.id) {
