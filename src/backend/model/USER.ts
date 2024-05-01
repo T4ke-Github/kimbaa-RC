@@ -74,20 +74,20 @@ UserSchema.pre("save", async function () {
 UserSchema.methods.isCorrectPassword = async function (password: string) {
   try {
     if (password === this.password) {
-      logger.info("Fehler das Passwort ist der gespeicherte Hash.");
+      //logger.info("Fehler das Passwort ist der gespeicherte Hash.");
       return false;
     }
 
     const isMatch = await bcrypt.compare(password, this.password);
     if (isMatch) {
-      logger.info("Passwort ist korrekt.");
+      //logger.info("Passwort ist korrekt.");
       return true; 
     } else {
-      logger.info("Passwort ist falsch.");
+      //logger.info("Passwort ist falsch.");
       return false; 
     }
   } catch (error) {
-    logger.error("Fehler beim Vergleichen des Passworts: " + error);
+    //logger.error("Fehler beim Vergleichen des Passworts: " + error);
     throw error;
   }
 };
