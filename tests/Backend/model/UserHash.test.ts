@@ -48,7 +48,6 @@ test("UserHash.test.js isCorrectPassword wirft Fehler bei nicht gehashtem Passwo
     const user = new User({ name: "User1", password: "12345", admin: false });
     user.isCorrectPassword("12345")
       .then(() => {
-        logger.error("isCorrectPassword sollte einen Fehler auslösen bei nicht gehashtem Passwort hat es aber nicht");
         done.fail(new Error("Ein ungehashtes Passwort sollte einen Fehler auslösen."));
       })
       .catch((err) => {
@@ -61,32 +60,40 @@ test("UserHash.test.js isCorrectPassword wirft Fehler bei nicht gehashtem Passwo
   });
 
   test("UserHash.test.js Passwort Änderung", async () => {
-    logger.info("Passwort Änderung wird gestartet");
-    
-    try {
-        const foundUser = await User.findOne({ matrikelnummer: 666456 });
-        
-        if (foundUser) {
-            foundUser.password = "newpassword";
-          const isMatch = await bcrypt.compare("newpassword", foundUser.password);
-          if (!isMatch) {
-            logger.error("Passwort wurde geändert: Das gehashte Passwort stimmt nicht mit dem erwarteten Wert überein.");
-            throw new Error("Das neue gehashte Passwort ist nicht korrekt.");
-          }
-          logger.info("Passwort wurde geändert: Das gehashte Passwort stimmt mit dem erwarteten Wert überein.");
-          expect(isMatch).toBe(true);
-          expect(foundUser.password).not.toBe("newpassword");
-        }
-    }catch (error) {
-        logger.error("Passwort Änderung: User wurde nicht gefunden Passwort änderung");
-      
+    logger.info("UserHash.test.js  Passwort Änderung wird gestartet");
+    const user = await User.create({ 
+        name: "User1", 
+        password: "unchangedpassword",
+        admin: false,
+        matrikelnummer: 133799,
+        email: "test",
+        ersteAnmeldung: new Date(),
+        letzteAnmeldung: new Date(),
+        pwAnderungDatum: new Date(),
+        fehlerhafteAnmeldeversuche: 0,
+        fachbereich: "6",
+        immatrikuliertSeit: new Date(),
+        CreditPoints: 0,
+        telefon: 123
+    });
+    await user.save();
+ 
+    user.password = "newpassword";
+    await user.save(); 
+    const isMatch = await bcrypt.compare("newpassword", user.password);
+    if (!isMatch) {
+    logger.error("UserHash.test.js Passwort wurde geändert: Das gehashte Passwort stimmt nicht mit dem erwarteten Wert überein.");
     }
+    logger.info("UserHash.test.js Passwort wurde geändert: Das gehashte Passwort stimmt mit dem erwarteten Wert überein.");
+    expect(isMatch).toBe(true);
+    expect(user.password).not.toBe("newpassword");
+   
   
-    logger.info("Passwort Änderung wird beendet");
+    logger.info("UserHash.test.js Passwort Änderung wird beendet");
 })
   
   test("UserHash.test.js Passwort bleibt unverändert, wenn nicht geändert", async () => {
-    logger.info("Passwort bleibt unverändert, wenn nicht geändert wird gestartet");
+    logger.info("UserHash.test.js Passwort bleibt unverändert, wenn nicht geändert wird gestartet");
     const user = await User.create({ 
         name: "User1", 
         password: "unchangedpassword",
@@ -112,27 +119,27 @@ test("UserHash.test.js isCorrectPassword wirft Fehler bei nicht gehashtem Passwo
     const foundUser = await User.findOne({ name: "User1" });
     if (foundUser) {
       if (foundUser.password !== originalHash) {
-        logger.error("Passwort wurde geändert, obwohl es nicht sollte");
-        throw new Error("Passwort wurde unerwartet geändert");
+        logger.error("UserHash.test.js Passwort wurde geändert, obwohl es nicht sollte");
+        throw new Error("UserHash.test.js Passwort wurde unerwartet geändert");
       }
-      logger.info("Passwort bleibt unverändert: Passwort bleibt unverändert");
+      logger.info("UserHash.test.js Passwort bleibt unverändert: Passwort bleibt unverändert");
       expect(foundUser.password).toBe(originalHash);
     } else {
-      logger.error("Passwort bleibt unverändert: User wurde nicht gefunden passwort bleibt unverändert wenn nicht geändert");
-      throw new Error("User wurde nicht gefunden");
+      logger.error("UserHash.test.js Passwort bleibt unverändert: User wurde nicht gefunden passwort bleibt unverändert wenn nicht geändert");
+      throw new Error("UserHash.test.js User wurde nicht gefunden");
     }
   
-    logger.info("Passwort bleibt unverändert, wenn nicht geändert wird beendet");
+    logger.info("UserHash.test.js Passwort bleibt unverändert, wenn nicht geändert wird beendet");
 });
   
   test("UserHash.test.js isCorrectPassword gibt true für korrektes Passwort", async () => {
-    logger.info("isCorrectPassword gibt true für korrektes Passwort wird gestartet");
+    logger.info("UserHash.test.js isCorrectPassword gibt true für korrektes Passwort wird gestartet");
   /*   const user = new User({ name: "User1", password: "password", admin: false });
     await user.save(); */
     let user1 = await User.findOne({ matrikelnummer: 666456 });
     const isCorrect = await user1!.isCorrectPassword("test");
     expect(isCorrect).toBe(true);
-    logger.info("isCorrectPassword gibt true für korrektes Passwort wird beendet");
+    logger.info("UserHash.test.js isCorrectPassword gibt true für korrektes Passwort wird beendet");
   });
   
   test("UserHash.test.js isCorrectPassword gibt false für ungültiges Passwort", async () => {
@@ -141,27 +148,26 @@ test("UserHash.test.js isCorrectPassword wirft Fehler bei nicht gehashtem Passwo
     
     const isCorrect = await user!.isCorrectPassword("wrongpassword");
     if (isCorrect) {
-      logger.error("is Correct Password: Ein ungültiges Passwort hat korrekt einen fehler ausgelösst.");
-      throw new Error("Ein ungültiges Passwort hat korrekt einen fehler ausgelösst.");
+      logger.error("UserHash.test.js is Correct Password: Ein ungültiges Passwort hat korrekt einen fehler ausgelösst.");
+      throw new Error("UserHash.test.js Ein ungültiges Passwort hat korrekt einen fehler ausgelösst.");
     } else {
-      logger.info("is Correct Password: Ein ungültiges Passwort hat nicht korrekt einen fehler ausgelösst.");
+      logger.info("UserHash.test.js is Correct Password: Ein ungültiges Passwort hat nicht korrekt einen fehler ausgelösst.");
   
     }
     expect(isCorrect).toBe(false);
     logger.info("isCorrectPassword gibt false für ungültiges Passwort wird beendet");
   })
   test("UserHash.test.js User kann nicht mit leerem Passwort erstellt werden", async () => {
-    logger.info("User kann nicht mit leerem Passwort erstellt werden wird gestartet");
+    logger.info("UserHash.test.js User kann nicht mit leerem Passwort erstellt werden wird gestartet");
     try {
       await User.create({ name: "invalidUser", password: "", admin: false });
-      logger.error("Pleger kann nicht mit leerem Passwort erstellt werden: User wurd fehlerhaft erstellt");
-      throw new Error("Der User sollte nicht erstellt werden können");
+      throw new Error("UserHash.test.js Der User sollte nicht erstellt werden können"+ logger.error("UserHash.test.js Pleger kann nicht mit leerem Passwort erstellt werden: User wurd fehlerhaft erstellt"));
     } catch (err) {
-      logger.info("Pleger kann nicht mit leerem Passwort erstellt werden: User wurde korrekt nicht erstellt");
+      logger.info("UserHash.test.js Pleger kann nicht mit leerem Passwort erstellt werden: User wurde korrekt nicht erstellt");
       expect(err).toBeInstanceOf(Error);
     }
   
-    logger.info("User kann nicht mit leerem Passwort erstellt werden wird beendet");
+    logger.info("UserHash.test.js User kann nicht mit leerem Passwort erstellt werden wird beendet");
   });
   
   test("UserHash.test.js isCorrectPassword gibt false wenn falsches Passwort bei gespeichertem User eingegeben wird", async () => {
