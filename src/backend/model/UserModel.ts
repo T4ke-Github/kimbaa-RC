@@ -61,8 +61,18 @@ UserSchema.pre("save", async function () {
     this.password = hashedPassword;
   }
 });
-//Update User only allowed
+//Update User only allowed with Matrikelnummer
 UserSchema.pre("findOneAndUpdate", function (next) {
+  const query = this.getQuery();
+  
+  if (!query.matrikelnummer) {
+    const error = new Error("Updates dürfen nur über die Matrikelnummer erfolgen.");
+    return next(error);
+  }
+
+  next(); // Fortfahren, wenn Matrikelnummer vorhanden ist
+});
+UserSchema.pre("updateOne", function (next) {
   const query = this.getQuery();
   
   if (!query.matrikelnummer) {

@@ -191,7 +191,32 @@ test("UserModel.test matrikelnummer must min 6 chars", async () => {
     }   
     logger.info("UserModel.test matrikelnummer must min 6 chars wurde beendet");
 })
-
+test("UserModel.test change name without matrikelnummer must fail", async () => {
+    logger.info("UserModel.test change name without matrikelnummer must fail wird gestartet");
+    const user = new User({
+        name: "irgendeinOtto",
+        password: "test",
+        admin: false,
+        matrikelnummer: 123456,
+        email: "test",
+        ersteAnmeldung: new Date(),
+        letzteAnmeldung: new Date(),
+        pwAnderungDatum: new Date(),
+        fehlerhafteAnmeldeversuche: 0,
+        fachbereich: "test",
+        immatrikuliertSeit: new Date(),
+        CreditPoints: 0,
+        telefon: 123
+    });
+    await user.save();
+    try {
+        let updateUser = await User.findOneAndUpdate({ name: "irgendeinOtto" }, { name: "newname" }, { new: true });
+    } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+    }   
+    logger.info("UserModel.test change name without matrikelnummer must fail wurde beendet");
+    
+})
 test("UserModel.test change name with findOneandUpdate", async () => {
     logger.info("UserModel.test change name with findOneandUpdate wird gestartet");
     let user = new User({
