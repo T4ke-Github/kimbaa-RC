@@ -15,10 +15,10 @@ javascript:
     MONGOMS_VERSION: "7.0.3"
   script:
     # ci is like install, but faster (and we need a synchronized package-lock.json)
-    - npm ci
+    - npm backend/ci
     # - npm run build # we use ts-jest, no need for compilation
-    - npm test
+    - npm backend/test
   artifacts:
     reports:
       junit:
-        - junit.xml
+        - backend/junit.xml
