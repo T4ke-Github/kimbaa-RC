@@ -1,6 +1,6 @@
-import { User, IUser } from "../../../../backend/model/UserModel";
-import { logger } from "../../../../backend/backlogger";
-import * as UserService from "../../../../backend/services/UserService";
+import { User, IUser } from "../model/UserModel";
+import { logger } from "../backlogger";
+import * as UserService from "../services/UserService";
 import { HydratedDocument } from "mongoose";
 
 
