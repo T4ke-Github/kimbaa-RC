@@ -8,7 +8,7 @@ module.exports = {
     "default",
     ["jest-junit", { suiteNameTemplate: "{filename}" }],
   ],
-  testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],//["**/(*.)+(test).?(m)[jt]s?(x)"],
+  testMatch: ['**/tests/**/?(*.)+(spec|test).[tj]s?(x)'],//["**/(*.)+(test).?(m)[jt]s?(x)"],
   collectCoverageFrom: ['<rootDir>/src/**/*.{ts,js,mjs,tsx,jsx,mts}'],
   testPathIgnorePatterns: ["<rootDir>/dist/", "<rootDir>/node_modules/"],
   coveragePathIgnorePatterns: ["<rootDir>/dist/", "<rootDir>/node_modules/", "<rootDir>/tests/"],
