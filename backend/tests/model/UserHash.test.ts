@@ -1,6 +1,6 @@
-import { User, IUser } from "../../../../backend/model/UserModel";
+import { User, IUser } from "../../src/model/UserModel";
 import * as bcrypt from "bcryptjs";
-import { logger } from "../../../../backend/backlogger";
+import { logger } from "../../src/backlogger";
 
 beforeEach(async () => {
     await User.deleteMany({});

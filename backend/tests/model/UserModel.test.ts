@@ -1,5 +1,5 @@
-import { User, IUser } from "../../../../backend/model/UserModel";
-import { logger } from "../../../../backend/backlogger";
+import { User, IUser } from "../../src/model/UserModel";
+import { logger } from "../../src/logger";
 
 
 

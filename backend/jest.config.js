@@ -2,12 +2,13 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
+  roots: ['<rootDir>/tests'],
   collectCoverage: true,
   reporters: [
     "default",
     ["jest-junit", { suiteNameTemplate: "{filename}" }],
   ],
-  testMatch: ["**/(*.)+(test).?(m)[jt]s?(x)"],
+  testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],//["**/(*.)+(test).?(m)[jt]s?(x)"],
   collectCoverageFrom: ['<rootDir>/src/**/*.{ts,js,mjs,tsx,jsx,mts}'],
   testPathIgnorePatterns: ["<rootDir>/dist/", "<rootDir>/node_modules/"],
   coveragePathIgnorePatterns: ["<rootDir>/dist/", "<rootDir>/node_modules/", "<rootDir>/tests/"],
