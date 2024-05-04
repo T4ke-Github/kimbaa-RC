@@ -6,6 +6,44 @@ version: '3.1'
 
 services:
 
+  frontend:
+    build:
+      context: frontend
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: #TODO target path
+          ignore: 
+            - ./frontend/package.json
+        - action: rebuild
+          path: ./backend/package.json
+
+ 
+
+
+
+
+  backend:
+    build:
+      contex: backend
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: #TODO target path
+          ignore: 
+            - ./backend/package.json
+            - ./backend/tests
+            - ./backend/testConfig
+        - action: rebuild
+          path: ./backend/package.json
+
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo
+
   mongo:
     container_name: mongo-db
     image: mongo
@@ -13,7 +51,7 @@ services:
     ports: 
       - '27017:27017'
     env_file:
-      - mongo-dev.env
+      - mongodb/mongo-dev.env
 
 #  mongo-express:
 #    image: mongo-express
