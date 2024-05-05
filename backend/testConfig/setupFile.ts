@@ -28,15 +28,8 @@ beforeAll(async () => {
  * Drops the database and disconnects from the MongoDB instance.
  */
 afterAll(async() => {
-    try {
         await mongoose.connection.dropDatabase();
         await mongoose.disconnect();
-
-    } catch (error) {
-        console.log(error);
-
-    }
-    
 });
 
 /**
