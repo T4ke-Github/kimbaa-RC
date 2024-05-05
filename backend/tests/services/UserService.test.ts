@@ -1,7 +1,6 @@
-import { User, IUser } from "../../src/model/UserModel";
 import { logger } from "../../src/backlogger";
+import { User } from "../../src/model/UserModel";
 import * as UserService from "../../src/services/UserService";
-import { HydratedDocument } from "mongoose";
 
 
 
@@ -10,32 +9,32 @@ beforeEach(async () => {
         name: "DerOtto",
         password: "test",
         admin: false,
-        matrikelnummer: 666456,
+        studentId: 666456,
         email: "test@bht-berlin.de",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "6",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "6",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     });
     await user1.save();
     const user2 = new User({
         name: "RealOtto",
         password: "test",
         admin: false,
-        matrikelnummer: 666999,
+        studentId: 666999,
         email: "test2@bht-berlin.de",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "6",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "6",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     });
     await user2.save();
 
@@ -55,18 +54,18 @@ test("UserService.test createUser ", async () => {
         name: "Neuer Benutzer",
         password: "test",
         admin: false,
-        matrikelnummer: 666222,
+        studentId: 666222,
         email: "cuel@bht-berlin.de", 
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "6",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "6",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     })
-    const neuErstellterUser = await User.findOne({ matrikelnummer: 666222 });
+    const neuErstellterUser = await User.findOne({ studentId: 666222 });
 
     expect(neuErstellterUser!.name).toBe("Neuer Benutzer"); // Überprüfen Sie, ob der Benutzer korrekt erstellt wurde
     logger.info("UserService.test createUser wurde beendet");
@@ -79,9 +78,9 @@ test("UserService.test deleteUser", async () => {
 test("UserService.test create user without password", async () => {
     logger.info ("UserService.test updateUser not implemented yet");
 });
-//User mit gleicher matrikelnummer
-test("UserService.test createUser with same matrikelnummer", async () => {
-    logger.info ("UserService.test createUser with same matrikelnummer not implemented yet");
+//User mit gleicher studentId
+test("UserService.test createUser with same studentId", async () => {
+    logger.info ("UserService.test createUser with same studentId not implemented yet");
 });
 //User mit gleicher email
 test("UserService.test createUser with same email", async () => {

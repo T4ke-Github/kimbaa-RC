@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs';
+import { Model, Schema, model } from "mongoose";
 import { logger } from "../backlogger";
-import mongoose, { Schema, model, Model } from "mongoose";
 
 
 
@@ -9,16 +9,18 @@ export interface IUser {
   name: string; // Required
   password: string; // Required
   admin: boolean; // Optional, default: false
-  matrikelnummer: number; // Required, unique
+  studentId: number; // Required, unique
+  application: string;
+  address: string;
   email: string; // Optional
-  ersteAnmeldung: Date; // Required
-  letzteAnmeldung: Date; // Optional
-  pwAnderungDatum: Date; // Required
-  fehlerhafteAnmeldeversuche: number; // Required, default: 0
-  fachbereich: string; // Optional
-  immatrikuliertSeit: Date; // Optional
+  firstLogin: Date; // Required
+  lastLogin: Date; // Optional
+  pwChangeDate: Date; // Required
+  failedLoginCount: number; // Required, default: 0
+  department: string; // Optional
+  enrolledSince: Date; // Optional
   CreditPoints: number; // Optional
-  telefon: number; // Optional
+  phone: number; // Optional
 }
 
 interface IUserMethods {
@@ -31,18 +33,20 @@ export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   name: { type: String, required: true, unique: false },
   password: { type: String, required: true },
   admin: { type: Boolean, default: false },
-  matrikelnummer: {
+  studentId: {
     type: Number,
     required: true,
     unique: true,
     validate: {
-      //Validator to check if the length of the matrikelnummer is at least 6 by MongoDB
+      //Validator to check if the length of the studentId is at least 6 by MongoDB
       validator: function (v: number) {
-        return v.toString().length >= 6; // Matrikelnummer muss mindestens 6 Zeichen lang sein
+        return v.toString().length >= 6; // studentId muss mindestens 6 Zeichen lang sein
       },
-      message: props => `Die Matrikelnummer muss mindestens 6 Zeichen lang sein, aber Sie haben ${props.value}.`
+      message: props => `Die studentId muss mindestens 6 Zeichen lang sein, aber Sie haben ${props.value}.`
     }
   },
+  application : { type: String },
+  address: { type: String },
   email: {
     type: String,
     required: true,
@@ -57,14 +61,14 @@ export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
       message: (props) => `Die E-Mail-Adresse muss mit '@bht-berlin.de' enden, aber Sie haben '${props.value}'.`,
     },
   },
-  ersteAnmeldung: { type: Date, required: false },
-  letzteAnmeldung: { type: Date },
-  pwAnderungDatum: { type: Date, required: true },
-  fehlerhafteAnmeldeversuche: { type: Number, default: 0 },
-  fachbereich: { type: String },
-  immatrikuliertSeit: { type: Date },
+  firstLogin: { type: Date, required: false, timestamps: true },
+  lastLogin: { type: Date, required: false, timestamps: true },
+  pwChangeDate: { type: Date, required: false, timestamps: true },
+  failedLoginCount: { type: Number, default: 0 },
+  department: { type: String },
+  enrolledSince: { type: Date },
   CreditPoints: { type: Number },
-  telefon: { type: Number },
+  phone: { type: Number },
 });
 
 UserSchema.pre("save", async function () {
@@ -73,26 +77,25 @@ UserSchema.pre("save", async function () {
     this.password = hashedPassword;
   }
 });
-//Update User only allowed with Matrikelnummer
+//Update User only allowed with studentId
 UserSchema.pre("findOneAndUpdate", function (next) {
   const query = this.getQuery();
 
-  if (!query.matrikelnummer) {
-    const error = new Error("Updates dürfen nur über die Matrikelnummer erfolgen.");
+  if (!query.studentId) {
+    const error = new Error("Updates dürfen nur über die studentId erfolgen.");
     return next(error);
   }
 
-  next(); // Fortfahren, wenn Matrikelnummer vorhanden ist
+  next(); // Fortfahren, wenn studentId vorhanden ist
 });
 UserSchema.pre("updateOne", function (next) {
   const query = this.getQuery();
 
-  if (!query.matrikelnummer) {
-    const error = new Error("Updates dürfen nur über die Matrikelnummer erfolgen.");
+  if (!query.studentId) {
+    const error = new Error("Updates dürfen nur über die studentId erfolgen.");
     return next(error);
   }
-
-  next(); // Fortfahren, wenn Matrikelnummer vorhanden ist
+  next(); // Fortfahren, wenn studentId vorhanden ist
 });
 
 

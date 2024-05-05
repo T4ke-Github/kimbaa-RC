@@ -9,31 +9,31 @@ test("UserModel.test createUser", async () => {
         name: "test",
         password: "test",
         admin: false,
-        matrikelnummer: 123456,
+        studentId: 123456,
         email: "test@bht-berlin.de",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "test",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     });
     await user.save();
     expect(user.id).toBeDefined();
     expect(user.name).toBe("test");
     expect(user.admin).toBe(false);
-    expect(user.matrikelnummer).toBe(123456);
+    expect(user.studentId).toBe(123456);
     expect(user.email).toBe("test@bht-berlin.de");
-    expect(user.ersteAnmeldung).toBeDefined();
-    expect(user.letzteAnmeldung).toBeDefined();
-    expect(user.pwAnderungDatum).toBeDefined();
-    expect(user.fehlerhafteAnmeldeversuche).toBe(0);
-    expect(user.fachbereich).toBe("test");
-    expect(user.immatrikuliertSeit).toBeDefined();
+    expect(user.firstLogin).toBeDefined();
+    expect(user.lastLogin).toBeDefined();
+    expect(user.pwChangeDate).toBeDefined();
+    expect(user.failedLoginCount).toBe(0);
+    expect(user.department).toBe("test");
+    expect(user.enrolledSince).toBeDefined();
     expect(user.CreditPoints).toBe(0);
-    expect(user.telefon).toBe(123);
+    expect(user.phone).toBe(123);
     logger.info("UserModel.test createUser wurde beendet");
 }); 
 
@@ -44,31 +44,31 @@ test("UserModel.test createUser twice same name", async () => {
         name: "DerOtto",
         password: "test",
         admin: false,
-        matrikelnummer: 666456,
+        studentId: 666456,
         email: "test@bht-berlin.de",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "test",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     });
     const user2 = new User({
         name: "DerOtto",
         password: "test",
         admin: false,
-        matrikelnummer: 123456,
+        studentId: 123456,
         email: "test2@bht-berlin.de",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "test",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     });
     await user1.save();
     await user2.save();
@@ -78,37 +78,37 @@ test("UserModel.test createUser twice same name", async () => {
     logger.info("UserModel.test createUser twice wurde beendet");
 });
 
-test("UserModel.test createUser twice same matrikelnummer must fail", async () => {
-    logger.info("UserModel.test createUser twice same matrikelnummer wird gestartet");
+test("UserModel.test createUser twice same studentId must fail", async () => {
+    logger.info("UserModel.test createUser twice same studentId wird gestartet");
     const user1 = new User({
         name: "test",
         password: "test",
         admin: false,
-        matrikelnummer: 123456,
+        studentId: 123456,
         email: "test@bht-berlin.de",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "test",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     });
     const user2 = new User({
         name: "test2",
         password: "test",
         admin: false,
-        matrikelnummer: 123456,
+        studentId: 123456,
         email: "test",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "test",
-        immatrikuliertSeit: new Date(), 
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(), 
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     });
     await user1.save();
     try {
@@ -116,7 +116,7 @@ test("UserModel.test createUser twice same matrikelnummer must fail", async () =
     } catch (error) {
         expect(error).toBeDefined();
     }
-    logger.info("UserModel.test createUser twice same matrikelnummer wurde beendet");
+    logger.info("UserModel.test createUser twice same studentId wurde beendet");
 })
 
 test("UserModel.test createUser without password must fail", async () => {
@@ -124,16 +124,16 @@ test("UserModel.test createUser without password must fail", async () => {
     const user = new User({
         name: "test",
         admin: false,
-        matrikelnummer: 123456,
+        studentId: 123456,
         email: "test",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "test",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     });
     try {
         await user.save();
@@ -148,61 +148,61 @@ test("UserModel.test find user by name", async () => {
         name: "test",
         password: "test",
         admin: false,
-        matrikelnummer: 123456,
+        studentId: 123456,
         email: "test@bht-berlin.de",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "test",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     })
     const user = await User.findOne({ name: "test" });
     expect(user?.name).toBe("test");
     logger.info("UserModel.test find user wurde beendet");
 })
-test("UserModel.test matrikelnummer must min 6 chars", async () => {
-    logger.info("UserModel.test matrikelnummer must min 6 chars wird gestartet");
+test("UserModel.test studentId must min 6 chars", async () => {
+    logger.info("UserModel.test studentId must min 6 chars wird gestartet");
     const user = new User({
         name: "test",
         password: "test",
         admin: false,
-        matrikelnummer: 12345,
+        studentId: 12345,
         email: "test",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "test",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     });
     try {
         await user.save();
     } catch (error) {
         expect(error).toBeInstanceOf(Error);
     }   
-    logger.info("UserModel.test matrikelnummer must min 6 chars wurde beendet");
+    logger.info("UserModel.test studentId must min 6 chars wurde beendet");
 })
-test("UserModel.test change name without matrikelnummer must fail", async () => {
-    logger.info("UserModel.test change name without matrikelnummer must fail wird gestartet");
+test("UserModel.test change name without studentId must fail", async () => {
+    logger.info("UserModel.test change name without studentId must fail wird gestartet");
     const user = new User({
         name: "irgendeinOtto",
         password: "test",
         admin: false,
-        matrikelnummer: 123456,
+        studentId: 123456,
         email: "test@bht-berlin.de",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "test",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     });
     await user.save();
     try {
@@ -210,31 +210,31 @@ test("UserModel.test change name without matrikelnummer must fail", async () => 
     } catch (error) {
         expect(error).toBeInstanceOf(Error);
     }   
-    logger.info("UserModel.test change name without matrikelnummer must fail wurde beendet");
+    logger.info("UserModel.test change name without studentId must fail wurde beendet");
     
 })
 test("UserModel.test change name with findOneandUpdate", async () => {
     logger.info("UserModel.test change name with findOneandUpdate wird gestartet");
-    let user = new User({
+    const user = new User({
         name: "oldname",
         password: "test",
         admin: false,
-        matrikelnummer: 123456,
+        studentId: 123456,
         email: "test@bht-berlin.de",
-        ersteAnmeldung: new Date(),
-        letzteAnmeldung: new Date(),
-        pwAnderungDatum: new Date(),
-        fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "test",
-        immatrikuliertSeit: new Date(),
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(),
         CreditPoints: 0,
-        telefon: 123
+        phone: 123
     })
     await user.save();
     expect(user?.name).toBe("oldname");
     
    
-    let updateUser = await User.findOneAndUpdate({ matrikelnummer: "123456" }, { name: "newname" }, { new: true });
+    let updateUser = await User.findOneAndUpdate({ studentId: "123456" }, { name: "newname" }, { new: true });
     
     if(updateUser) {
         expect(updateUser?.name).toBe("newname");
@@ -243,4 +243,56 @@ test("UserModel.test change name with findOneandUpdate", async () => {
     }
     logger.info("UserModel.test change name with findOneandUpdate wurde beendet");
 })
-
+//UpdateOne
+test("UserModel.test change name with updateOne", async () => {
+    logger.info("UserModel.test change name with updateOne wird gestartet");
+    const user = new User({
+        name: "oldname",
+        password: "test",
+        admin: false,
+        studentId: 123456,
+        email: "test@bht-berlin.de",
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(),
+        CreditPoints: 0,
+        phone: 123
+    })
+    await user.save();
+    expect(user?.name).toBe("oldname");
+    await User.updateOne({ studentId: "123456" }, { name: "newname" });
+    let updateUser = await User.findOne({ studentId: "123456" });
+    
+    expect(updateUser!.name).toBe("newname");
+    
+    logger.info("UserModel.test change name with updateOne wurde beendet");
+})
+//update one without studentId
+test("UserModel.test change name without studentId with updateOne must fail", async () => {
+    logger.info("UserModel.test change name without studentId with updateOne wird gestartet");
+    let user = new User({
+        name: "oldname",
+        password: "test",
+        admin: false,
+        studentId: 123456,
+        email: "test@bht-berlin.de",
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        pwChangeDate: new Date(),
+        failedLoginCount: 0,
+        department: "test",
+        enrolledSince: new Date(),
+        CreditPoints: 0,
+        phone: 123
+    })
+    await user.save();
+    try {
+        await User.updateOne({ name: "oldname" }, { name: "newname" });
+    } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+    }
+    logger.info("UserModel.test change name without studentId with updateOne wurde beendet");
+})

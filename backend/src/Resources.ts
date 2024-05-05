@@ -3,29 +3,29 @@ export type UserResource = {
     name: string;
     password?: string;
     admin: boolean;
-    matrikelnummer: number;
+    studentId: number;
     email: string;
-    ersteAnmeldung: Date;
-    letzteAnmeldung: Date;
-    pwAnderungDatum: Date;
-    fehlerhafteAnmeldeversuche: number;
-    fachbereich: string;
-    immatrikuliertSeit: Date;
+    firstLogin: Date;
+    lastLogin: Date;
+    pwChangeDate: Date;
+    failedLoginCount: number;
+    department: string;
+    enrolledSince: Date;
     CreditPoints: number;
-    telefon: number;
+    phone: number;
 }
 
-export type AntragZulassungResource = {
-    ersteller: string;
-    anlage_1_id: string;
-    anlage_2_id: string;
-    zielsemester: string;
+export type applicationZulassungResource = {
+    creator: string;
+    attach1id: string;
+    attach2id: string;
+    finalSemester: string;
     name: string;
-    studiengang: string;
-    fachbereich: string;
+    degreeProgram: string;
+    department: string;
     email: string;
     adresse: AdressResource;
-    fragen: AntragZulassungKontrollfragenResource[];
+    fragen: applicationZulassungKontrollfragenResource[];
     datum: Date;
 }
 
@@ -36,7 +36,7 @@ export type AdressResource = {
     country: string;
 }
 
-export type AntragZulassungKontrollfragenResource = {
+export type applicationZulassungKontrollfragenResource = {
     dummy_frage: string;
     dummy_antwort: string;
 }
