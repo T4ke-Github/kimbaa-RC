@@ -75,8 +75,8 @@ test("UserHash.test.js Passwort Änderung", async () => {
     expect(isMatch).toBe(true);
     expect(foundUser.password).not.toBe("newpassword");
   } else {
-    logger.error("isCorrectPasswort Änderung: Pfleger wurde nicht gefunden Passwort änderung");
-    throw new Error("isCorrectPasswort Änderung: Pfleger wurde nicht gefunden");
+    logger.error("isCorrectPasswort Änderung: User wurde nicht gefunden Passwort änderung");
+    throw new Error("isCorrectPasswort Änderung: User wurde nicht gefunden");
   }
   logger.info("UserHash.test.js Passwort Änderung wird beendet");
 })
