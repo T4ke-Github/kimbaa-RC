@@ -3,8 +3,7 @@ import { logger } from "../backlogger";
 import mongoose, { Schema, model, Model } from "mongoose";
 
 
-//TODO: remove or letit
-//const mongoose = require('mongoose');
+
 
 export interface IUser {
   name: string; // Required
@@ -32,20 +31,33 @@ export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   name: { type: String, required: true, unique: false },
   password: { type: String, required: true },
   admin: { type: Boolean, default: false },
-  matrikelnummer: { 
-    type: Number, 
-    required: true, 
-    unique: true, 
+  matrikelnummer: {
+    type: Number,
+    required: true,
+    unique: true,
     validate: {
       //Validator to check if the length of the matrikelnummer is at least 6 by MongoDB
-      validator: function(v: number) {
+      validator: function (v: number) {
         return v.toString().length >= 6; // Matrikelnummer muss mindestens 6 Zeichen lang sein
       },
       message: props => `Die Matrikelnummer muss mindestens 6 Zeichen lang sein, aber Sie haben ${props.value}.`
     }
   },
-  email: { type: String },
-  ersteAnmeldung: { type: Date, required: true },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: function (v: string) {
+        const regex = /@bht-berlin.de$/;
+        logger.info(regex.test(v));
+        logger.info(v);
+        return regex.test(v);
+      },
+      message: (props) => `Die E-Mail-Adresse muss mit '@bht-berlin.de' enden, aber Sie haben '${props.value}'.`,
+    },
+  },
+  ersteAnmeldung: { type: Date, required: false },
   letzteAnmeldung: { type: Date },
   pwAnderungDatum: { type: Date, required: true },
   fehlerhafteAnmeldeversuche: { type: Number, default: 0 },
@@ -64,7 +76,7 @@ UserSchema.pre("save", async function () {
 //Update User only allowed with Matrikelnummer
 UserSchema.pre("findOneAndUpdate", function (next) {
   const query = this.getQuery();
-  
+
   if (!query.matrikelnummer) {
     const error = new Error("Updates dürfen nur über die Matrikelnummer erfolgen.");
     return next(error);
@@ -74,7 +86,7 @@ UserSchema.pre("findOneAndUpdate", function (next) {
 });
 UserSchema.pre("updateOne", function (next) {
   const query = this.getQuery();
-  
+
   if (!query.matrikelnummer) {
     const error = new Error("Updates dürfen nur über die Matrikelnummer erfolgen.");
     return next(error);
@@ -96,10 +108,10 @@ UserSchema.methods.isCorrectPassword = async function (password: string) {
     const isMatch = await bcrypt.compare(password, this.password);
     if (isMatch) {
       logger.info("Passwort ist korrekt.");
-      return true; 
+      return true;
     } else {
       logger.info("Passwort ist falsch.");
-      return false; 
+      return false;
     }
   } catch (error) {
     logger.error("Fehler beim Vergleichen des Passworts: " + error);

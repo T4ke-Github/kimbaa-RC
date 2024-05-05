@@ -27,9 +27,16 @@ beforeAll(async () => {
 /**
  * Drops the database and disconnects from the MongoDB instance.
  */
-afterAll(async () => {
-    await mongoose.connection.dropDatabase();
-    await mongoose.disconnect();
+afterAll(async() => {
+    try {
+        await mongoose.connection.dropDatabase();
+        await mongoose.disconnect();
+
+    } catch (error) {
+        console.log(error);
+
+    }
+    
 });
 
 /**
@@ -42,3 +49,4 @@ afterEach(async () => {
         await collection.deleteMany({});
     }
 })
+

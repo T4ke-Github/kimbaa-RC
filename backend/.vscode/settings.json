@@ -2,8 +2,6 @@
     "typescript.preferences.importModuleSpecifier": "relative",
     "jest.runMode": {
       "type": "on-demand",
-      "testFileOnly": true,
-      "deferred": true
     },
     "jest.outputConfig": {
       "revealOn": "demand",

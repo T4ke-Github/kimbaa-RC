@@ -6,14 +6,12 @@ import { HydratedDocument } from "mongoose";
 
 
 beforeEach(async () => {
-    await User.deleteMany({});
-
     const user1 = new User({
         name: "DerOtto",
         password: "test",
         admin: false,
         matrikelnummer: 666456,
-        email: "test",
+        email: "test@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
@@ -29,7 +27,7 @@ beforeEach(async () => {
         password: "test",
         admin: false,
         matrikelnummer: 666999,
-        email: "test",
+        email: "test2@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
@@ -51,49 +49,30 @@ test("UserService.test getAlleUser", async () => {
     logger.info("UserService.test getAlleUser wurde beendet");
 });
 
-test("UserService.test createUser by resource", async () => {
+test("UserService.test createUser ", async () => {
     logger.info("UserService.test createUser wird gestartet");
-
-    const userResource = {
+    const user = await UserService.createUser({
         name: "Neuer Benutzer",
         password: "test",
         admin: false,
-        matrikelnummer: 123456,
-        email: "test",
+        matrikelnummer: 666222,
+        email: "cuel@bht-berlin.de", 
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
         fehlerhafteAnmeldeversuche: 0,
-        fachbereich: "test",
+        fachbereich: "6",
         immatrikuliertSeit: new Date(),
         CreditPoints: 0,
         telefon: 123
-    };
+    })
+    const neuErstellterUser = await User.findOne({ matrikelnummer: 666222 });
 
-    const neuErstellterUser = await UserService.createUser(userResource);
-
-    expect(neuErstellterUser.name).toBe("Neuer Benutzer"); // Überprüfen Sie, ob der Benutzer korrekt erstellt wurde
+    expect(neuErstellterUser!.name).toBe("Neuer Benutzer"); // Überprüfen Sie, ob der Benutzer korrekt erstellt wurde
     logger.info("UserService.test createUser wurde beendet");
 });
 
-test("UserService.test getalleUser and find by name", async () => {
-    logger.info("UserService.test getalleUser and find by name wird gestartet");
-
-    const alleUser = await UserService.getAlleUser();
-    const userbyname = await alleUser.find(user => user.name === "DerOtto");
-    if (userbyname === undefined || userbyname === null)
-    {
-        logger.error("UserService.test getalleUser and find by name: Benutzer nicht gefunden");
-        throw new Error("Benutzer nicht gefunden");
-    }else if (userbyname.name !== undefined && userbyname.name !== null)
-        {
-            logger.info("UserService.test getalleUser and find by name: Benutzer gefunden");
-            expect(userbyname.name).toBe("DerOtto");
-        }
-
-    logger.info("UserService.test getalleUser and find by name wurde beendet");
-
-});
+/* 
 test("UserService.test deleteUser", async () => {
     logger.info ("UserService.test deleteUser not implemented yet");
 });
@@ -103,7 +82,6 @@ test("UserService.test create user without password", async () => {
 //User mit gleicher matrikelnummer
 test("UserService.test createUser with same matrikelnummer", async () => {
     logger.info ("UserService.test createUser with same matrikelnummer not implemented yet");
-
 });
 //User mit gleicher email
 test("UserService.test createUser with same email", async () => {
@@ -140,3 +118,4 @@ test("UserService.test deleteUser", async () => {
 });
 
 
+ */

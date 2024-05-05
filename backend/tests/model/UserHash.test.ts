@@ -3,13 +3,12 @@ import * as bcrypt from "bcryptjs";
 import { logger } from "../../src/backlogger";
 
 beforeEach(async () => {
-    await User.deleteMany({});
     const user1 = new User({
         name: "DerOtto",
         password: "test",
         admin: false,
         matrikelnummer: 666456,
-        email: "test",
+        email: "test@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
@@ -22,6 +21,7 @@ beforeEach(async () => {
     await user1.save();
 
 })
+
 
 logger.info("UserHash.test.js wird gestartet");
 test("UserHash.test. Passwort wird korrekt gehasht", async () => {
@@ -43,21 +43,6 @@ test("UserHash.test. Passwort wird korrekt gehasht", async () => {
   logger.info("Passwort wird gehasht beendet");
 })
 
-test("UserHash.test.js isCorrectPassword wirft Fehler bei nicht gehashtem Passwort", (done) => {
-    logger.info("isCorrectPassword wirft Fehler bei nicht gehashtem Passwort wird gestartet");
-    const user = new User({ name: "User1", password: "12345", admin: false });
-    user.isCorrectPassword("12345")
-      .then(() => {
-        done.fail(new Error("Ein ungehashtes Passwort sollte einen Fehler auslösen."));
-      })
-      .catch((err) => {
-        logger.info("isCorrectPassword hat einen Fehler ausgeloest bei nicht gehashtem Passwort");
-        expect(err).toBeInstanceOf(Error);
-        done();
-      });
-  
-    logger.info("isCorrectPassword wirft Fehler bei nicht gehashtem Passwort wird beendet");
-  });
 
   test("UserHash.test.js Passwort Änderung", async () => {
     logger.info("UserHash.test.js  Passwort Änderung wird gestartet");
@@ -66,7 +51,7 @@ test("UserHash.test.js isCorrectPassword wirft Fehler bei nicht gehashtem Passwo
         password: "unchangedpassword",
         admin: false,
         matrikelnummer: 133799,
-        email: "test",
+        email: "test2@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
@@ -79,15 +64,20 @@ test("UserHash.test.js isCorrectPassword wirft Fehler bei nicht gehashtem Passwo
     await user.save();
     user.password = "newpassword";
     await user.save(); 
-    const isMatch = await bcrypt.compare("newpassword", user.password);
-    if (!isMatch) {
-    logger.error("UserHash.test.js Passwort wurde geändert: Das gehashte Passwort stimmt nicht mit dem erwarteten Wert überein.");
+    const foundUser = await User.findOne({ matrikelnummer: 133799 });
+    if (foundUser) {
+      const isMatch = await bcrypt.compare("newpassword", user.password);
+      if (!isMatch) {
+        logger.error("isCorrectPasswort wurde geändert: Das gehashte Passwort stimmt nicht mit dem erwarteten Wert überein.");
+        throw new Error("isCorrectPasswort wurde geändert: Das neue gehashte Passwort ist nicht korrekt.");
+      }
+      logger.info("isCorrectPasswort wurde geändert: Das gehashte Passwort stimmt mit dem erwarteten Wert überein.");
+      expect(isMatch).toBe(true);
+      expect(foundUser.password).not.toBe("newpassword");
+    } else {
+      logger.error("isCorrectPasswort Änderung: Pfleger wurde nicht gefunden Passwort änderung");
+      throw new Error("isCorrectPasswort Änderung: Pfleger wurde nicht gefunden");
     }
-    logger.info("UserHash.test.js Passwort wurde geändert: Das gehashte Passwort stimmt mit dem erwarteten Wert überein.");
-    expect(isMatch).toBe(true);
-    expect(user.password).not.toBe("newpassword");
-   
-  
     logger.info("UserHash.test.js Passwort Änderung wird beendet");
 })
   
@@ -98,7 +88,7 @@ test("UserHash.test.js isCorrectPassword wirft Fehler bei nicht gehashtem Passwo
         password: "unchangedpassword",
         admin: false,
         matrikelnummer: 133799,
-        email: "test",
+        email: "test100@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),

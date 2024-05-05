@@ -1,13 +1,7 @@
-import { User, IUser } from "../../src/model/UserModel";
 import { logger } from "../../src/logger";
+import { User } from "../../src/model/UserModel";
 
 
-
-
-
-beforeEach(async () => {
-    await User.deleteMany({});
-});
 
 test("UserModel.test createUser", async () => {
     logger.info("UserModel.test createUser wird gestartet");
@@ -16,7 +10,7 @@ test("UserModel.test createUser", async () => {
         password: "test",
         admin: false,
         matrikelnummer: 123456,
-        email: "test",
+        email: "test@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
@@ -31,7 +25,7 @@ test("UserModel.test createUser", async () => {
     expect(user.name).toBe("test");
     expect(user.admin).toBe(false);
     expect(user.matrikelnummer).toBe(123456);
-    expect(user.email).toBe("test");
+    expect(user.email).toBe("test@bht-berlin.de");
     expect(user.ersteAnmeldung).toBeDefined();
     expect(user.letzteAnmeldung).toBeDefined();
     expect(user.pwAnderungDatum).toBeDefined();
@@ -51,7 +45,7 @@ test("UserModel.test createUser twice same name", async () => {
         password: "test",
         admin: false,
         matrikelnummer: 666456,
-        email: "test",
+        email: "test@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
@@ -66,7 +60,7 @@ test("UserModel.test createUser twice same name", async () => {
         password: "test",
         admin: false,
         matrikelnummer: 123456,
-        email: "test",
+        email: "test2@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
@@ -91,7 +85,7 @@ test("UserModel.test createUser twice same matrikelnummer must fail", async () =
         password: "test",
         admin: false,
         matrikelnummer: 123456,
-        email: "test",
+        email: "test@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
@@ -155,7 +149,7 @@ test("UserModel.test find user by name", async () => {
         password: "test",
         admin: false,
         matrikelnummer: 123456,
-        email: "test",
+        email: "test@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
@@ -200,7 +194,7 @@ test("UserModel.test change name without matrikelnummer must fail", async () => 
         password: "test",
         admin: false,
         matrikelnummer: 123456,
-        email: "test",
+        email: "test@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
@@ -226,7 +220,7 @@ test("UserModel.test change name with findOneandUpdate", async () => {
         password: "test",
         admin: false,
         matrikelnummer: 123456,
-        email: "test",
+        email: "test@bht-berlin.de",
         ersteAnmeldung: new Date(),
         letzteAnmeldung: new Date(),
         pwAnderungDatum: new Date(),
