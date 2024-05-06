@@ -14,6 +14,7 @@ javascript:
     # BHT's Gitlab CI only supports MongoDB up to 7.0.3
     MONGOMS_VERSION: "7.0.3"
   script:
+    - cd backend
     # ci is like install, but faster (and we need a synchronized package-lock.json)
     - npm ci
     # - npm run build # we use ts-jest, no need for compilation
@@ -21,4 +22,4 @@ javascript:
   artifacts:
     reports:
       junit:
-        - junit.xml
+        - backend/junit.xml
