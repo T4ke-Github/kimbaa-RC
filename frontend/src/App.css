@@ -1,6 +1,6 @@
 @font-face {
   font-family: "BHTFont";
-  src: url('../../../assets/BHTFont/BHT\ CaseText-Regular.otf');
+  src: url('./_resources/BHTFont/BHT\ CaseText-Regular.otf');
 }
 
 :root{
