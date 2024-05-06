@@ -1,5 +1,19 @@
+@font-face {
+  font-family: "BHTFont";
+  src: url('../../../assets/BHTFont/BHT\ CaseText-Regular.otf');
+}
+
+:root{
+  --anthrazite: #555555;
+  --yellow: #ffc900;
+  --red: #ea3b07;
+  --petrol: #00a0aa;
+  --blue: #004282;
+}
+
 .App {
   text-align: center;
+  font-family: BHTFont;
 }
 
 .App-logo {

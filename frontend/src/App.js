@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import { connect } from 'react-redux';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import TopMenu from './components/TopMenu';
+import LoggedDemo from './components/LoggedDemo'
+import LandingDemo from './components/LandingDemo';
+
+const mapStateToProps = state => {
+  return state;
 }
 
-export default App;
+class App extends Component{
+  render(){
+    const loggedIn = this.props.loggedIn;
+    let workspace;
+    if(loggedIn){
+      workspace = <LoggedDemo />
+    }else{
+      workspace = <LandingDemo />
+    }
+
+    return (
+      <div className='App'>
+        <TopMenu />
+        { workspace }
+      </div>
+    )
+  }
+}
+
+export default connect(mapStateToProps)(App);
