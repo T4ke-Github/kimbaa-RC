@@ -6,20 +6,57 @@
 image: node:20
 
 stages:
+  - build
   - test
 
-javascript:
+build_backend:
+  stage: build
+  script:
+    - cd backend
+    # ci is like install, but faster (and we need a synchronized package-lock.json)
+    - npm ci
+    # - npm run build # we use ts-jest, no need for compilation
+  artifacts:
+    reports:
+      junit:
+        - backend/junit.xml
+
+build_frontend:
+  stage: build
+  script:
+    - cd frontend
+    - npm ci
+  artifacts:
+    reports:
+      junit:
+        - frontend/junit.xml
+
+test_backend:
   stage: test
   variables:
     # BHT's Gitlab CI only supports MongoDB up to 7.0.3
     MONGOMS_VERSION: "7.0.3"
   script:
     - cd backend
-    # ci is like install, but faster (and we need a synchronized package-lock.json)
     - npm ci
-    # - npm run build # we use ts-jest, no need for compilation
     - npm test
   artifacts:
     reports:
       junit:
         - backend/junit.xml
+
+test_frontend:
+  stage: test
+  variables:
+    # BHT's Gitlab CI only supports MongoDB up to 7.0.3
+    MONGOMS_VERSION: "7.0.3"
+  script:
+    - cd frontend
+    - npm ci
+    - npm test
+  artifacts:
+    reports:
+      junit:
+        - frontend/junit.xml
+
+
