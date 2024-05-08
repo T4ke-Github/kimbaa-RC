@@ -25,14 +25,24 @@ class TopMenu extends Component{
 
     render(){
         return(
-            <Navbar>
+            <>
+            <style>
+                {`
+                    .kimbaa {
+                        background-color: #00a0aa;
+                        color: #ffc900;
+                    }
+                `}
+            </style>
+            <Navbar className="kimbaa">
                 <Container>
                 <Navbar.Brand onClick={this.handleLogout}>
-                    <img alt="" src="kimbaa_logo_clean.png" width="30" height="30" className="d-inline-block align-top look"/>
+                    <img alt="" src="kimbaa_logo_clean.png" width="50" height="50" className="d-inline-block align-top look"/>
                     {' '} kimbaa
                 </Navbar.Brand>
                 </Container>
             </Navbar>
+            </>
         )
     }
 }
