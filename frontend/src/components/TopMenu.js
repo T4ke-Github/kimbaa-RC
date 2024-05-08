@@ -29,7 +29,7 @@ class TopMenu extends Component{
             <style>
                 {`
                     .kimbaa {
-                        background-color: #00a0aa;
+                        background-color: #555555;
                         color: #ffc900;
                     }
                 `}
