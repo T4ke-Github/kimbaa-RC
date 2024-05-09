@@ -1,19 +1,50 @@
-# Use root/example as user/password credentials
-# From:
-# https://hub.docker.com/_/mongo/
-
 version: '3.1'
 
 services:
+
+  frontend:
+    build:
+      context: frontend
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /frontend #TODO target path
+          ignore:
+            - ./frontend/package.json
+        - action: rebuild
+          path: ./backend/package.json
+    ports:
+      - 8080:3000
+
+
+  backend:
+    build:
+      context: backend
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: /backend #TODO target path
+          ignore:
+            - ./backend/package.json
+            - ./backend/tests
+            - ./backend/testConfig
+        - action: rebuild
+          path: ./backend/package.json
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
 
   mongo:
     container_name: mongo-db
     image: mongo
     restart: always
-    ports: 
+    ports:
       - '27017:27017'
     env_file:
-      - mongo-dev.env
+      - mongodb/mongo-dev.env
 
 #  mongo-express:
 #    image: mongo-express
