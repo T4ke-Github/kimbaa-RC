@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:22-alpine
 
 RUN mkdir -p /frontend && chown -R node:node /frontend
 
@@ -12,6 +12,6 @@ RUN npm install
 
 COPY --chown=node:node . .
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD [ "npm", "start" ]

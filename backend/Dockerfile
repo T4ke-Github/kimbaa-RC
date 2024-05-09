@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:22-alpine
 
 RUN mkdir -p /backend && chown -R node:node /backend
 
@@ -14,4 +14,4 @@ COPY --chown=node:node . .
 
 EXPOSE 8081
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "run" ]
