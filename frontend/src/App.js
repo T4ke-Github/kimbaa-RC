@@ -12,12 +12,16 @@ const mapStateToProps = state => {
 
 class App extends Component{
   render(){
-    const loggedIn = this.props.page;
+    const page = this.props.page;
     let workspace;
-    if(loggedIn){
-      workspace = <LoggedDemo />
-    }else{
-      workspace = <LoginPage />
+
+    switch (page){
+      case "land":
+        workspace = <LoggedDemo />
+      case "logged":
+        workspace = <LoginPage />
+      default:
+        workspace = <LoggedDemo />
     }
 
     return (
