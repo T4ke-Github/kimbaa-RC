@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
-import { getLoginAction } from "../actions/DemoActions";
+import { getNavLoginAction } from "../actions/NavActions";
 
 class LandingDemo extends Component{
     constructor(props){
@@ -10,7 +10,7 @@ class LandingDemo extends Component{
 
     getLoginAction(){
         const dispatch = this.props.dispatch;
-        dispatch(getLoginAction());
+        dispatch(getNavLoginAction());
     }
 
     render(){
@@ -18,7 +18,7 @@ class LandingDemo extends Component{
             <div>
                 <h1>Willkommen bei kimbaa!</h1>
                 <p>Login:</p>
-                <input type="text" id="input1" name="input1" placeholder="Studenten-ID" />
+                <input type="text" id="input1" name="input1" placeholder="Matrikelnr." />
                 <input type="password" id="input2" name="input2" placeholder="Passwort" />
                 <button onClick={this.getLoginAction}>Anmelden</button>
             </div>

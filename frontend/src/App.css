@@ -3,6 +3,11 @@
   src: url('./_resources/BHTFont/BHT\ CaseText-Regular.otf');
 }
 
+@font-face {
+  font-family: "BHTTitle";
+  src: url('./_resources/BHTFont/BHT\ CaseText-Bold.otf');
+}
+
 :root{
   --anthrazite: #555555;
   --yellow: #ffc900;
@@ -40,6 +45,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+h1, h2, h3 {
+  font-family: BHTTitle;
 }
 
 @keyframes App-logo-spin {
