@@ -1,10 +1,8 @@
 # KiMBAA
 
-
-![Kimbaa logo](/res/kimbaa_logo.jpg "kimbaa logo")
-
-<img src="/res/kimbaa_logo.jpg" alt="kimbaa_logo" width="400">
-
+<div style="text-align: center">
+    <img src="/res/kimbaa_logo.jpg" alt="kimbaa_logo" width="400">
+</div>
 KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen
 
 
