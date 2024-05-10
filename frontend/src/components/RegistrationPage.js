@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Button from "react-bootstrap/Button";
 
 import * as navActions from '../actions/NavActions'
 
@@ -14,17 +15,25 @@ class RegistrationPage extends Component{
         super(props);
     }
 
+    handleCancel(e){
+        const { cancel } = this.props;
+        cancel();
+    }
+
     render(){
         return(
             <div>
-                <h1>Hello!</h1>
+                <h1>Registriere dich als neuen Nutzer: </h1>
+                <Button onClick={this.handleCancel} >Abbrechen</Button>
             </div>
         )
     }
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    cancel: navActions
-})
+    cancel: navActions.getNavLandingAction,
+}, dispatch);
 
-export default connect()(RegistrationPage)
+const RegistrationPage = connect(mapStateToProps, mapDispatchToProps)(RegistrationPage)
+
+export default RegistrationPage;

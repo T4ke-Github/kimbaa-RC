@@ -15,13 +15,23 @@ class LandingDemo extends Component{
 
     render(){
         return(
-            <div>
-                <h1>Willkommen bei kimbaa!</h1>
-                <p>Login:</p>
-                <input type="text" id="input1" name="input1" placeholder="Matrikelnr." />
-                <input type="password" id="input2" name="input2" placeholder="Passwort" />
-                <button onClick={this.getLoginAction}>Anmelden</button>
-            </div>
+            <>
+                <style>
+                    {`
+                        .landing{
+                            padding-left: 2%;
+                            padding-top: 2%
+                        }
+                    `}
+                </style>
+                <div className="landing">
+                    <h1>Willkommen bei kimbaa!</h1>
+                    <p>Login:</p>
+                    <input type="text" id="input1" name="input1" placeholder="Matrikelnr." />
+                    <input type="password" id="input2" name="input2" placeholder="Passwort" />
+                    <button onClick={this.getLoginAction}>Anmelden</button>
+                </div>
+            </>
         )
     }
 }
