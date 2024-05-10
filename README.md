@@ -3,7 +3,9 @@
 
 ![Kimbaa logo](/res/kimbaa_logo.jpg "kimbaa logo")
 
-KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen 
+<img src="/res/kimbaa_logo.jpg" alt="kimbaa_logo" width="400">
+
+KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen
 
 
 "kimbaa" soll Studierende beim application ihrer Bachelorarbeit unterstützen, indem sie die Voraussetzungen vorab prüft und wichtige Hilfestellungen und Planungshinweise gibt.
@@ -14,12 +16,12 @@ KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen
 
 - User-Account
     - Anlegen
-    - Speichern 
+    - Speichern
     - Aufrufen
 
 - Automatisches Einlesen der Credits des Studierenden
     - Webcrawler
-    - PDF parsen 
+    - PDF parsen
 
 - Beantworten von Fragen zu spezifischen Modulen wie Praktikum und Projekt
     - Liegt ein Arbeitsvertrag vor?
@@ -44,7 +46,7 @@ KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen
 
 ## Techstack
 
-### Frontend 
+### Frontend
 
 - Express.js für die REST-API
 - HTML5, CSS3 und JavaScript für die Gestaltung der Benutzeroberfläche
@@ -54,14 +56,14 @@ KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen
 - Jest, Mocha oder andere Testframeworks für die Erstellung von Unit- und Integrationstests
 - ESLint oder Prettier für die Codequalitätssicherung und das Einhalten von Code-Standards
 
-### Backend 
+### Backend
 
 - JavaScript/Python für die Backend-Entwicklung
 - Redux oder Zustandshooks für die Verwaltung des globalen Zustands der Anwendung
 - Nutzung von Frameworks für Webcrawler und PDF-Parsing
 - Axios oder Fetch API für die Kommunikation mit der REST-API
 
-### Datenbank 
+### Datenbank
 
 - MongoDB
 
@@ -86,7 +88,7 @@ Scrum-Master:  Trung Nguyen Quoc
 
 QA: Ivo Ilschner
 
-Frontend: 
+Frontend:
 
 Backend: Sascha Benjamin
 
