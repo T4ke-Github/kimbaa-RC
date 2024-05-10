@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
-import { getLoginAction } from "../actions/DemoActions";
+import { getNavLoginAction } from "../actions/NavActions";
 
 class LandingDemo extends Component{
     constructor(props){
@@ -10,7 +10,7 @@ class LandingDemo extends Component{
 
     getLoginAction(){
         const dispatch = this.props.dispatch;
-        dispatch(getLoginAction());
+        dispatch(getNavLoginAction());
     }
 
     render(){

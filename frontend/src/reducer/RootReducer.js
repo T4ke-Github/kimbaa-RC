@@ -1,7 +1,7 @@
-import * as demoActions from "../actions/DemoActions";
+import * as demoActions from "../actions/NavActions";
 
 const initialState = {
-    loggedIn: false
+    page: "login"
 }
 
 function rootReducer(state = initialState, action) {
@@ -9,12 +9,12 @@ function rootReducer(state = initialState, action) {
         case demoActions.LOGIN:
             return{
                 ...state,
-                loggedIn: true
+                page: "land"
             }
         case demoActions.LOGOUT:
             return{
                 ...state,
-                loggedIn: false
+                loggedIn: "land"
             }
         default:
             return{

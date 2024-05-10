@@ -10,7 +10,7 @@ class RegistrationPage extends Component{
     render(){
         return(
             <div>
-                <p>Placeholder</p>
+                <h1>Hello!</h1>
             </div>
         )
     }

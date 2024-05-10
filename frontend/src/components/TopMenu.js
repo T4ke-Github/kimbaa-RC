@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import * as demoActions from '../actions/DemoActions';
+import * as navActions from '../actions/NavActions';
 
 const mapStateToProps = state => {
     return state;
@@ -48,7 +48,7 @@ class TopMenu extends Component{
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    logout: demoActions.getLogoutAction,
+    logout: navActions.getNavLogoutAction,
 }, dispatch);
 
 const ConnectedTopMenu = connect(mapStateToProps, mapDispatchToProps)(TopMenu);

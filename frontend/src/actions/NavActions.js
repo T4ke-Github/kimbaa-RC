@@ -1,12 +1,12 @@
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 
-export function getLoginAction(){
+export function getNavLoginAction(){
     return {
         type: LOGIN
     }
 }
-export function getLogoutAction(){
+export function getNavLogoutAction(){
     return {
         type: LOGOUT
     }
