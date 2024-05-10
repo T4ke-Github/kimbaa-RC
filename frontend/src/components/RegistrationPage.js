@@ -13,6 +13,7 @@ class RegistrationPage extends Component{
 
     constructor(props){
         super(props);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     handleCancel(e){
@@ -34,6 +35,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     cancel: navActions.getNavLandingAction,
 }, dispatch);
 
-const RegistrationPage = connect(mapStateToProps, mapDispatchToProps)(RegistrationPage)
-
-export default RegistrationPage;
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationPage);

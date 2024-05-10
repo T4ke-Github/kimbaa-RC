@@ -16,6 +16,11 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 page: "login"
             }
+        case navActions.REGISTRATION:
+            return{
+                ...state,
+                page: "registration"
+            }
         default:
             return{
                 ...state

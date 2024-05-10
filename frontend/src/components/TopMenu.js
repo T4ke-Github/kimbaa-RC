@@ -32,13 +32,20 @@ class TopMenu extends Component{
                         background-color: #555555;
                         color: #ffc900;
                     }
+                    .logo {
+                        display: flex;
+                        align: center;
+                    }
+                    .logo img{
+                        margin-right: 10px;
+                    }
                 `}
             </style>
             <Navbar className="topMenu">
                 <Container>
-                <Navbar.Brand onClick={this.handleLogout}>
+                <Navbar.Brand onClick={this.handleLogout} className="logo">
                     <img alt="" src="kimbaa_logo_clean.png" width="50" height="50" className="d-inline-block align-top look"/>
-                    {' '} kimbaa
+                    {' '}kimbaa
                 </Navbar.Brand>
                 </Container>
             </Navbar>
