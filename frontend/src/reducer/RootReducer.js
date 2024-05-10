@@ -1,4 +1,4 @@
-import * as demoActions from "../actions/NavActions";
+import * as navActions from "../actions/NavActions";
 
 const initialState = {
     page: "login"
@@ -6,15 +6,15 @@ const initialState = {
 
 function rootReducer(state = initialState, action) {
     switch(action.type){
-        case demoActions.LOGIN:
+        case navActions.LOGIN:
             return{
                 ...state,
                 page: "land"
             }
-        case demoActions.LOGOUT:
+        case navActions.LOGOUT:
             return{
                 ...state,
-                loggedIn: "land"
+                page: "login"
             }
         default:
             return{

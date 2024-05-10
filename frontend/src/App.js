@@ -3,7 +3,7 @@ import './App.css';
 import { connect } from 'react-redux';
 
 import TopMenu from './components/TopMenu';
-import LoggedDemo from './components/LoggedDemo'
+import LandingPage from './components/LandingPage'
 import LoginPage from './components/LoginPage';
 
 const mapStateToProps = state => {
@@ -17,11 +17,13 @@ class App extends Component{
 
     switch (page){
       case "land":
-        workspace = <LoggedDemo />
-      case "logged":
+        workspace = <LandingPage />
+        break;
+      case "login":
         workspace = <LoginPage />
+        break;
       default:
-        workspace = <LoggedDemo />
+        workspace = <LoginPage />
     }
 
     return (

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-class LoggedDemo extends Component{
+class LandingPage extends Component{
     render(){
         return (
             <div>
@@ -11,4 +11,4 @@ class LoggedDemo extends Component{
     }
 }
 
-export default LoggedDemo;
+export default LandingPage;
