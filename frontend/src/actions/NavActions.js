@@ -1,13 +1,13 @@
 export const LOGIN = "LOGIN";
-export const LOGOUT = "LOGOUT";
+export const LANDING = "LANDING";
 
 export function getNavLoginAction(){
     return {
         type: LOGIN
     }
 }
-export function getNavLogoutAction(){
+export function getNavLandingAction(){
     return {
-        type: LOGOUT
+        type: LANDING
     }
 }

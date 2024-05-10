@@ -11,7 +11,7 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 page: "land"
             }
-        case navActions.LOGOUT:
+        case navActions.LANDING:
             return{
                 ...state,
                 page: "login"

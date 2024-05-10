@@ -48,7 +48,7 @@ class TopMenu extends Component{
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    logout: navActions.getNavLogoutAction,
+    logout: navActions.getNavLandingAction,
 }, dispatch);
 
 const ConnectedTopMenu = connect(mapStateToProps, mapDispatchToProps)(TopMenu);
