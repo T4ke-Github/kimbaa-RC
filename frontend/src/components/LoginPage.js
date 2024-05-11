@@ -33,12 +33,31 @@ class LandingDemo extends Component{
                 <style>
                     {`
                         .login{
-                            padding-left: 4%;
+                            display: flex;
+                            flex-direction: row;
+                            align-items: flex-start;
+                            height: 100vh;
+                            padding-left: 100px;
                             padding-top: 2%
                         }
+                        .login img {
+                            width: auto;
+                            max-height: 80%;
+                            max-width: 50%;
+                        }
+                        .loginAlignmentHelp{
+                            display: flex;
+                            flex-direction: column;
+                            flex: 1;
+                        }
                         .lBody{
-                            margin-top: 4%;
-                            padding-left: 2%;
+                            margin-top: 2%;
+                            padding-left: 50px;
+                            padding-top: 10px;
+                            padding-bottom: 40px;
+                            width: 400px;
+                            background-color: #ffc900;
+                            border-radius: 30px;
                         }
                         .lForm{
                             display: flex;
@@ -46,10 +65,14 @@ class LandingDemo extends Component{
                         }
                         input{
                             width: 340px;
+                            height: 26px;
+                            border-radius: 10px;
+                            border: 0;
                             margin-top: 10px;
                         }
                         .loginButton{
                             width: 340px;
+                            height: 40px;
                             background-color: #004282;
                             color: #ffffff;
                             border-radius: 20px;
@@ -63,7 +86,7 @@ class LandingDemo extends Component{
                             border: none;
                             background: none;
                             margin-bottom: 10px;
-                            margin-top: 5px;
+                            margin-top: 10px;
                         }
                         .registrationButton:hover{
                             color: #fa4b17;
@@ -71,19 +94,22 @@ class LandingDemo extends Component{
                     `}
                 </style>
                 <div className="login">
-                    <h1>Willkommen bei kimbaa!</h1>
-                    <p>Melde dich an, um deine Sitzung fortzusetzen.</p>
-                    <div className="lBody">
-                        <h2>Login:</h2>
-                        <div className="lForm">
-                            <input type="text" id="input1" name="input1" placeholder="Matrikelnr." />
-                            <input type="password" id="input2" name="input2" placeholder="Passwort" />
-                            <div>
-                                <button onClick={this.getRegistrationForm} className="registrationButton"><u>Registrieren</u></button>
+                    <div className="loginAlignmentHelp">
+                        <h1>Willkommen bei kimbaa!</h1>
+                        <p>Melde dich an, um deine Sitzung fortzusetzen.</p>
+                        <div className="lBody">
+                            <h2>Login:</h2>
+                            <div className="lForm">
+                                <input type="text" id="input1" name="input1" placeholder="Matrikelnr." />
+                                <input type="password" id="input2" name="input2" placeholder="Passwort" />
+                                <div>
+                                    <button onClick={this.getRegistrationForm} className="registrationButton"><u>Registrieren</u></button>
+                                </div>
+                                <Button onClick={this.doLogin} className="loginButton">Anmelden</Button>
                             </div>
-                            <Button onClick={this.doLogin} className="loginButton">Anmelden</Button>
                         </div>
                     </div>
+                    <img alt="kimbaa_login_logo" src="kimbaa_high_login.png"/>
                 </div>
             </>
         )

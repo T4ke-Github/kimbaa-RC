@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -31,23 +31,22 @@ class TopMenu extends Component{
                     .topMenu {
                         background-color: #555555;
                         color: #ffc900;
-                    }
-                    .logo {
                         display: flex;
-                        align: center;
+                        align-items: center;
                     }
                     .logo img{
                         margin-right: 10px;
+                        margin-left: 15px;
                     }
                 `}
             </style>
             <Navbar className="topMenu">
-                <Container>
                 <Navbar.Brand onClick={this.handleLogout} className="logo">
-                    <img alt="" src="kimbaa_logo_clean.png" width="50" height="50" className="d-inline-block align-top look"/>
-                    {' '}kimbaa
+                    <img alt="" src="kimbaa_logo_256.png" width="52" height="52" className="d-inline-block align-top"/>
                 </Navbar.Brand>
-                </Container>
+                <Nav>
+                    <h2 onClick={this.handleLogout}>kimbaa</h2>
+                </Nav>
             </Navbar>
             </>
         )
@@ -55,7 +54,7 @@ class TopMenu extends Component{
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    logout: navActions.getNavLandingAction,
+    logout: navActions.getNavLoginAction,
 }, dispatch);
 
 const ConnectedTopMenu = connect(mapStateToProps, mapDispatchToProps)(TopMenu);

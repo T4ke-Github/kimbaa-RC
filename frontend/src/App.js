@@ -17,7 +17,7 @@ class App extends Component{
     let workspace;
 
     switch (page){
-      case "land":
+      case "landing":
         workspace = <LandingPage />
         break;
       case "login":

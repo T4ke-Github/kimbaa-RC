@@ -32,7 +32,7 @@ class RegistrationPage extends Component{
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    cancel: navActions.getNavLandingAction,
+    cancel: navActions.getNavLoginAction,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationPage);
