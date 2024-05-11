@@ -30,83 +30,18 @@ class LandingDemo extends Component{
     render(){
         return(
             <>
-                <style>
-                    {`
-                        .login{
-                            display: flex;
-                            flex-direction: row;
-                            align-items: flex-start;
-                            height: 100vh;
-                            padding-left: 100px;
-                            padding-top: 2%
-                        }
-                        .login img {
-                            width: auto;
-                            max-height: 80%;
-                            max-width: 50%;
-                        }
-                        .loginAlignmentHelp{
-                            display: flex;
-                            flex-direction: column;
-                            flex: 1;
-                        }
-                        .lBody{
-                            margin-top: 2%;
-                            padding-left: 50px;
-                            padding-top: 10px;
-                            padding-bottom: 40px;
-                            width: 400px;
-                            background-color: #ffc900;
-                            border-radius: 30px;
-                        }
-                        .lForm{
-                            display: flex;
-                            flex-direction: column; 
-                        }
-                        input{
-                            width: 340px;
-                            height: 26px;
-                            border-radius: 10px;
-                            border: 0;
-                            margin-top: 10px;
-                        }
-                        .loginButton{
-                            width: 340px;
-                            height: 40px;
-                            background-color: #004282;
-                            color: #ffffff;
-                            border-radius: 20px;
-                            border: none;
-                        }
-                        .loginButton:hover{
-                            background-color: #00a0aa;
-                        }
-                        .registrationButton{
-                            color: #ea3b07;
-                            border: none;
-                            background: none;
-                            margin-bottom: 10px;
-                            margin-top: 10px;
-                        }
-                        .registrationButton:hover{
-                            color: #fa4b17;
-                        }
-                    `}
-                </style>
-                <div className="login">
-                    <div className="loginAlignmentHelp">
+                <div className="formPage">
+                    <div className="fAlignmentHelp">
                         <h1>Willkommen bei kimbaa!</h1>
                         <p>Melde dich an, um deine Sitzung fortzusetzen.</p>
-                        <div className="lBody">
+                        <div className="fBody">
                             <h2>Login:</h2>
-                            <div className="lForm">
                                 <input type="text" id="input1" name="input1" placeholder="Matrikelnr." />
                                 <input type="password" id="input2" name="input2" placeholder="Passwort" />
                                 <div>
-                                    <button onClick={this.getRegistrationForm} className="registrationButton"><u>Registrieren</u></button>
+                                    <button onClick={this.getRegistrationForm} className="linkStyleButton"><u>Registrieren</u></button>
                                 </div>
-                                <Button onClick={this.doLogin} className="loginButton">Anmelden</Button>
-                            </div>
+                                <Button onClick={this.doLogin} className="standardButton">Anmelden</Button>
                         </div>
                     </div>
                     <img alt="kimbaa_login_logo" src="kimbaa_high_login.png"/>

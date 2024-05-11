@@ -28,3 +28,71 @@ h1, h2, h3 {
   padding: 5px;
   font-family: BHTTitle;
 }
+
+.formPage{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  height: 100vh;
+  padding-left: 100px;
+  padding-top: 2%;
+}
+.formPage img {
+  width: auto;
+  max-height: 80%;
+  max-width: 50%;
+}
+
+.fAlignmentHelp{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.fBody{
+  margin-top: 2%;
+  padding-left: 50px;
+  padding-top: 10px;
+  padding-bottom: 40px;
+  width: 400px;
+  background-color: #ffc900;
+  border-radius: 30px;
+}
+
+input{
+  width: 340px;
+  height: 26px;
+  border-radius: 10px;
+  border: 0;
+  margin-top: 10px;
+}
+
+.standardButton{
+  width: 340px;
+  height: 40px;
+  background-color: #004282;
+  color: #ffffff;
+  border-radius: 20px;
+  border: none;
+}
+.standardButton:hover{
+  background-color: #00a0aa;
+}
+
+.linkStyleButton{
+  color: #ea3b07;
+  border: none;
+  background: none;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.linkStyleButton:hover{
+  color: #fa4b17;
+}
+
+.spaceTop{
+  margin-top: 20px;
+}
+.spaceBottom{
+  margin-bottom: 20px;
+}
