@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.8'
 
 services:
 
@@ -34,6 +34,9 @@ services:
           path: ./backend/package.json
     ports:
       - 8081:8081
+    environment:
+      - DB_CONNECTION_STRING=mongodb://root:example@mongo:27017/
+      - HTTP_PORT=8080
     depends_on:
       - mongo
 
