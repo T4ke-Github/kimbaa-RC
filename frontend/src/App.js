@@ -3,8 +3,9 @@ import './App.css';
 import { connect } from 'react-redux';
 
 import TopMenu from './components/TopMenu';
-import LoggedDemo from './components/LoggedDemo'
-import LandingDemo from './components/LandingDemo';
+import LandingPage from './components/LandingPage';
+import LoginPage from './components/LoginPage';
+import RegistrationPage from './components/RegistrationPage';
 
 const mapStateToProps = state => {
   return state;
@@ -12,12 +13,21 @@ const mapStateToProps = state => {
 
 class App extends Component{
   render(){
-    const loggedIn = this.props.loggedIn;
+    const page = this.props.page;
     let workspace;
-    if(loggedIn){
-      workspace = <LoggedDemo />
-    }else{
-      workspace = <LandingDemo />
+
+    switch (page){
+      case "landing":
+        workspace = <LandingPage />
+        break;
+      case "login":
+        workspace = <LoginPage />
+        break;
+      case "registration":
+        workspace = <RegistrationPage />
+        break;
+      default:
+        workspace = <LoginPage />
     }
 
     return (

@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import * as demoActions from '../actions/DemoActions';
+import * as navActions from '../actions/NavActions';
 
 const mapStateToProps = state => {
     return state;
@@ -25,20 +25,36 @@ class TopMenu extends Component{
 
     render(){
         return(
-            <Navbar>
-                <Container>
-                <Navbar.Brand onClick={this.handleLogout}>
-                    <img alt="" src="kimbaa_logo_clean.png" width="30" height="30" className="d-inline-block align-top look"/>
-                    {' '} kimbaa
+            <>
+            <style>
+                {`
+                    .topMenu {
+                        background-color: #555555;
+                        color: #ffc900;
+                        display: flex;
+                        align-items: center;
+                    }
+                    .logo img{
+                        margin-right: 10px;
+                        margin-left: 15px;
+                    }
+                `}
+            </style>
+            <Navbar className="topMenu">
+                <Navbar.Brand onClick={this.handleLogout} className="logo">
+                    <img alt="" src="kimbaa_logo_256.png" width="52" height="52" className="d-inline-block align-top"/>
                 </Navbar.Brand>
-                </Container>
+                <Nav>
+                    <h2 onClick={this.handleLogout}>kimbaa</h2>
+                </Nav>
             </Navbar>
+            </>
         )
     }
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    logout: demoActions.getLogoutAction,
+    logout: navActions.getNavLoginAction,
 }, dispatch);
 
 const ConnectedTopMenu = connect(mapStateToProps, mapDispatchToProps)(TopMenu);
