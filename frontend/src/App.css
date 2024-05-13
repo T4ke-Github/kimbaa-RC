@@ -67,6 +67,39 @@ input{
   margin-top: 10px;
 }
 
+.fGrid{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-flow: space-evenly;
+  align-content: center;
+  gap: 10px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  border-radius: 30px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 30px;
+  max-width: 50%;
+}
+
+.card{
+  flex-direction: column;
+  background-color: #555555;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.cardButton{
+  width: 250px;
+  height: 40px;
+  background-color: #004282;
+  color: #ffffff;
+  border-radius: 20px;
+  border: none;
+}
+
 .standardButton{
   width: 340px;
   height: 40px;
@@ -95,4 +128,14 @@ input{
 }
 .spaceBottom{
   margin-bottom: 20px;
+}
+
+.cardImg {
+  width: 80%;
+  height: 10vh;
+  object-fit: cover;
+}
+
+.fLanding{
+  margin-left: 80px;
 }
