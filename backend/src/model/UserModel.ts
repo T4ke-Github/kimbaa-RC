@@ -8,19 +8,17 @@ import { logger } from "../backlogger";
 export interface IUser {
   name: string; // Required
   password: string; // Required
-  admin: boolean; // Optional, default: false
+  admin?: boolean; // Optional, default: false
   studentId: number; // Required, unique
-  application: string;
-  address: string;
-  email: string; // Optional
-  firstLogin: Date; // Required
-  lastLogin: Date; // Optional
-  pwChangeDate: Date; // Required
-  failedLoginCount: number; // Required, default: 0
-  department: string; // Optional
-  enrolledSince: Date; // Optional
-  CreditPoints: number; // Optional
-  phone: number; // Optional
+  application?: string;
+  address?: string;
+  email?: string; // Optional
+  createdAt?: Date; // Required
+  updatedAt?: Date; // Optional
+  department?: string; // Optional
+  enrolledSince?: Date; // Optional
+  CreditPoints?: number; // Optional
+  phone?: number; // Optional
 }
 
 interface IUserMethods {
@@ -30,7 +28,7 @@ interface IUserMethods {
 type UserModel = Model<IUser, {}, IUserMethods>;
 //ggf noch Adress verweis hinzufügen
 export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
-  name: { type: String, required: true, unique: false },
+  name: { type: String, required: true },
   password: { type: String, required: true },
   admin: { type: Boolean, default: false },
   studentId: {
@@ -61,14 +59,14 @@ export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
       message: (props) => `Die E-Mail-Adresse muss mit '@bht-berlin.de' enden, aber Sie haben '${props.value}'.`,
     },
   },
-  firstLogin: { type: Date, required: false},
-  lastLogin: { type: Date, required: false},
-  pwChangeDate: { type: Date, required: false},
-  failedLoginCount: { type: Number, default: 0 },
+  createdAt: { type: Date},
+  updatedAt: { type: Date},
   department: { type: String },
-  enrolledSince: { type: Date },
+  enrolledSince: { type: String },
   CreditPoints: { type: Number },
   phone: { type: Number },
+},{
+  timestamps: true,
 });
 
 UserSchema.pre("save", async function () {
