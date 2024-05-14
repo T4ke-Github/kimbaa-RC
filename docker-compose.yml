@@ -33,10 +33,10 @@ services:
         - action: rebuild
           path: ./backend/package.json
     ports:
-      - 8081:8081
+      - 8081:3000
     environment:
       - DB_CONNECTION_STRING=mongodb://root:example@mongo:27017/
-      - HTTP_PORT=8080
+      - HTTP_PORT=3000
     depends_on:
       - mongo
 
