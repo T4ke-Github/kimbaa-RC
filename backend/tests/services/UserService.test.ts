@@ -59,6 +59,20 @@ test("UserService.test createUser ", async () => {
     logger.info("UserService.test createUser wurde beendet");
 });
 
+//getOne
+test("UserService.test getOneUser by studentId(number)", async () => {
+    logger.info("UserService.test getOneUser wird gestartet");
+    const user = await UserService.getOneUser({studentId: 666456});
+    expect(user.name).toBe("DerOtto");
+    logger.info("UserService.test getOneUser wurde beendet");
+}); 
+test("UserService.test getOneUser by email", async () => {
+    logger.info("UserService.test getOneUser wird gestartet");
+    const user = await UserService.getOneUser({email: "test@bht-berlin.de"});
+    expect(user.name).toBe("DerOtto");
+    logger.info("UserService.test getOneUser wurde beendet");
+});
+
 test("UserService.test Create User with minimal data", async () => {
     logger.info("UserService.test Create User with minimal data wird gestartet");
     const user = await UserService.createUser({
@@ -67,7 +81,10 @@ test("UserService.test Create User with minimal data", async () => {
         studentId: 666222,
         email: "cuel@bht-berlin.de"
     })
-    
+    const neuErstellterUser = await User.findOne({ studentId: 666222 });
+
+    expect(neuErstellterUser!.name).toBe("Neuer Benutzer"); //prüfen Sie, ob der Benutzer korrekt erstellt wurde
+    logger.info("UserService.test Create User with minimal data wurde beendet");
 })
 
 /* 

@@ -26,7 +26,39 @@ export async function getAlleUser(): Promise<UserResource[]> {
     }));
     return userResources; 
 }
+//getOne by studentid or email
+export async function getOneUser(identifier: { studentId?: number; email?: string }): Promise<UserResource> {
+    logger.info("UserService.getOneUser wird gestartet");
 
+    try {
+        let user = null;
+
+        if (identifier.studentId) {
+            user = await User.findOne({ studentId: identifier.studentId }).exec();
+        } else if (identifier.email) {
+            user = await User.findOne({ email: identifier.email }).exec();
+        } else {
+            throw new Error("Either studentId or email must be provided");
+        }
+
+        if (user === null) {
+            throw new Error("User not found");
+        }
+
+        return {
+            id: user.id,
+            name: user.name,
+            admin: user.admin || false,
+            studentId: user.studentId,
+            email: user.email,
+            department: user.department || undefined,
+            CreditPoints: user.CreditPoints || undefined,
+            phone: user.phone || undefined
+        };
+    } catch (error) {
+        throw new Error("Fehler beim Abrufen des Benutzers: " + error);
+    }
+}
 /**
  * Erstellt einen neuen Benutzer, dont give back the password.
  */

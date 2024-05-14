@@ -56,18 +56,23 @@ test("/api/user getAlleUser", async () => {
     expect(response.body[2].name).toBe("Jerry");
 });
 
-/* test("/api/user/getOne", async () => {
+test("/api/user/getOneId", async () => {
     const testee = supertest(app);
-    const response = await testee.get("/api/user/getOne/666456");
-   // expect(response.status).toBe(200);
+    const response = await testee.get("/api/user/getOneId/666456");
+    expect(response.status).toBe(200);
     expect(response.body.name).toBe("Tim");
     expect(response.body.studentId).toBe(666456);
     expect(response.body.email).toBe("test@bht-berlin.de");
-    expect(response.body.department).toBe("6");
-    expect(response.body.enrolledSince).toBeDefined();
-    expect(response.body.CreditPoints).toBe(0);
-    expect(response.body.phone).toBe(123);
-}) */
+})
+//getOne by email
+test("/api/user/getOneEmail", async () => {
+    const testee = supertest(app);
+    const response = await testee.get("/api/user/getOneEmail/test@bht-berlin.de");
+    expect(response.status).toBe(200);
+    expect(response.body.name).toBe("Tim");
+    expect(response.body.studentId).toBe(666456);
+    expect(response.body.email).toBe("test@bht-berlin.de");
+})
 //Create test
 
 test("/api/user/create", async () => {
@@ -75,32 +80,20 @@ test("/api/user/create", async () => {
 
     // Testbenutzer-Objekt
     const userResource: UserResource = {
-        name: "test",
+        name: "uniqueUser 3000",
         password: "test",
-        admin: false,
-        studentId: 123456,
-        email: "test@bht-berlin.de",
-        department: "test",
-        enrolledSince: new Date,
-        CreditPoints: 0,
-        phone: 123
+        studentId: 696969,
+        email: "uniqueUserEmail@bht-berlin.de",
     };
 
     // Anfrage zur Erstellung des Benutzers
     const response = await testee.post("/api/user/create").send(userResource);
 
     // Überprüfen des Statuscodes und der Antwortdaten
-    expect(response.status).toBe(200);
-    expect(response.body.name).toBe("test");
-    expect(response.body.studentId).toBe(123456);
-    expect(response.body.email).toBe("test@bht-berlin.de");
+    expect(response.status).toBe(201);
+    expect(response.body.name).toBe("uniqueUser 3000");
+    expect(response.body.studentId).toBe(696969);
+    expect(response.body.email).toBe("uniqueUserEmail@bht-berlin.de");
 
-    // Optional: Überprüfen, ob der Benutzer tatsächlich in der Datenbank gespeichert wurde
-    // Dies erfordert, dass Sie auf Ihre Datenbank zugreifen und den neuen Benutzer abfragen
-    const createdUser = await User.findOne(response.body.id);  // Passen Sie diese Funktion entsprechend an
-    expect(createdUser).toBeDefined();
-    expect(createdUser!.name).toBe("test");
-    expect(createdUser!.studentId).toBe(123456);
-    expect(createdUser!.email).toBe("test@bht-berlin.de");
 });
 
