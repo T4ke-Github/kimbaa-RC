@@ -15,6 +15,7 @@ loginRouter.post("/login", async (req, res, next) => {
         if (loginResult) {
             // Erfolgreicher Login
             res.status(200).json(loginResult); // Gib Benutzer-ID und Rolle zurück
+            
         } else {
             // Fehlgeschlagener Login
             res.status(401).send("Unauthorized"); // Oder eine angemessene Fehlermeldung
