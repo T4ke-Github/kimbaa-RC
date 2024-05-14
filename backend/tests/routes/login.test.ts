@@ -22,6 +22,7 @@ beforeEach(async () => {
 
 test("/api/login login with correct credentials", async () => {
     const testee = supertest(app);
+    const testee23 = supertest(app);
     const response = await testee.get("/api/user/alle");
     expect(response.status).toBe(200);
     expect(response.body.length).toBe(1);

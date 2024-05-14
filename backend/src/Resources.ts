@@ -2,17 +2,15 @@ export type UserResource = {
     id?: string;
     name: string;
     password?: string;
-    admin: boolean;
+    admin?: boolean;
     studentId: number;
-    email: string;
-    firstLogin: Date;
-    lastLogin: Date;
-    pwChangeDate: Date;
-    failedLoginCount: number;
-    department: string;
-    enrolledSince: Date;
-    CreditPoints: number;
-    phone: number;
+    email?: string;
+    createdAt?: string;
+    updatedAt?: string;
+    department?: string;
+    enrolledSince?: string;
+    CreditPoints?: number;
+    phone?: number;
 }
 
 export type applicationZulassungResource = {
@@ -41,3 +39,9 @@ export type applicationZulassungKontrollfragenResource = {
     dummy_antwort: string;
 }
 
+export type LoginResource = {
+    id: string
+    role: "a"|"u"
+    /** Expiration time in seconds since 1.1.1970 */
+    exp: number
+}
