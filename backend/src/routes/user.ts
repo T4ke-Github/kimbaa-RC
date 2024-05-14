@@ -17,7 +17,7 @@ userRouter.get("/alle", async (req, res, next) => {
     }
 });
 //getOne by studentId
-userRouter.get("/getOnestudentId/:studentId", async (req: Request, res: Response, next: NextFunction) => {
+userRouter.get("/getOneId/:studentId", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const studentId = req.params.studentId;
         const user = await userService.getOneUser({ studentId: Number(studentId) });
