@@ -45,7 +45,7 @@ class RegistrationPage extends Component{
     handleRegistration(e){
         e.preventDefault();
         const { regMatrikel, regName, regEmail, regPassword, regPasswordRe } = this.state;
-        const { register } = this.props;
+        const { register, close } = this.props;
         if(regPassword != regPasswordRe){
             this.setState({noMatch: true});
             this.setState({regPassword: ""});
@@ -89,15 +89,18 @@ class RegistrationPage extends Component{
                             background-color: #60a2d2;
                             color: #004282;
                         }
+                        .warn{
+                            color: #ea3b07;
+                        }
                     `}
                 </style>
                 <div className="formPage">
                     <div className="fAlignmentHelp">
                         <h1>Registriere dich hier als neuen Nutzer: </h1>
                         <form className="fBody">
-                            <input type="text" id="matrikel" name="regMatrikel" placeholder="Matrikelnr." className="spaceTop"/>
+                            <input type="number" id="matrikel" name="regMatrikel" placeholder="Matrikelnr." className="spaceTop"/>
                             <input type="text" id="name" name="regName" placeholder="Name" />
-                            <input type="text" id="email" name="regEmail" placeholder="Email" />
+                            <input type="email" id="email" name="regEmail" placeholder="Email" />
                             { warning }
                             <input type="password" id="password" name="regPassword" placeholder="Passwort" className="spaceTop"/>
                             <input type="passwordRe" id="passwordRe" name="regPasswordRe" placeholder="Passwort widerholen" className="spaceBottom"/>
