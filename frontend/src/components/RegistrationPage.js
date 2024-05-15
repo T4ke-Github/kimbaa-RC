@@ -37,9 +37,13 @@ class RegistrationPage extends Component{
     handleInputChange(e){
         const { name, value } = e.target;
         if(name === "regPassword" || name === "regPasswordRe"){
-            this.setState({noMatch: false});
+            this.setState(prevState => ({
+                [name]: value,
+                noMatch: false
+            }));
+        }else{
+            this.setState({[name]: value});
         }
-        this.setState({[name]: value});
     }
 
     handleRegistration(e){
@@ -47,11 +51,13 @@ class RegistrationPage extends Component{
         const { regMatrikel, regName, regEmail, regPassword, regPasswordRe } = this.state;
         const { register, close } = this.props;
         if(regPassword !== regPasswordRe){
+            console.log("HERE")
             this.setState({noMatch: true});
             this.setState({regPassword: ""});
             this.setState({regPasswordRe: ""});
             return;
         }
+        console.log(regPassword+", "+regPasswordRe);
         register(regMatrikel, regName, regEmail, regPassword);
         setTimeout(() => {}, 1000);
         close();
@@ -90,7 +96,7 @@ class RegistrationPage extends Component{
                             color: #004282;
                         }
                         .warn{
-                            color: #ea3b07;
+                            color: #ffffff;
                         }
                     `}
                 </style>
@@ -98,15 +104,15 @@ class RegistrationPage extends Component{
                     <div className="fAlignmentHelp">
                         <h1>Registriere dich hier als neuen Nutzer: </h1>
                         <form className="fBody">
-                            <input type="number" id="matrikel" name="regMatrikel" placeholder="Matrikelnr." className="spaceTop"/>
-                            <input type="text" id="name" name="regName" placeholder="Name" />
-                            <input type="email" id="email" name="regEmail" placeholder="Email" />
+                            <input type="number" id="matrikel" name="regMatrikel" value={this.state.regMatrikel} placeholder="Matrikelnr." className="spaceTop" onChange={this.handleInputChange}/>
+                            <input type="text" id="name" name="regName" value={this.state.regName} placeholder="Name" onChange={this.handleInputChange}/>
+                            <input type="email" id="email" name="regEmail" value={this.state.regEmail}placeholder="Email" onChange={this.handleInputChange}/>
+                            <input type="password" id="password" name="regPassword" value={this.state.regPassword} placeholder="Passwort" className="spaceTop" onChange={this.handleInputChange}/>
+                            <input type="password" id="passwordRe" name="regPasswordRe" value={this.state.regPasswordRe} placeholder="Passwort widerholen" className="spaceBottom" onChange={this.handleInputChange}/>
                             { warning }
-                            <input type="password" id="password" name="regPassword" placeholder="Passwort" className="spaceTop"/>
-                            <input type="passwordRe" id="passwordRe" name="regPasswordRe" placeholder="Passwort widerholen" className="spaceBottom"/>
                             <div className="regButtonAlign">
                                 <Button onClick={this.handleCancel} className="standardButton rCancel ">Abbrechen</Button>
-                                <Button onClick={this.handleRegistration} className="standardButton submit" type="submit" >Registrieren</Button>
+                                <Button onClick={this.handleRegistration} className="standardButton submit">Registrieren</Button>
                             </div>
                         </form>
                     </div>

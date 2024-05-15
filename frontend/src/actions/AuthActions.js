@@ -10,7 +10,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
 function getRegistrationPending(){ return { type: REGISTRATION_PENDING } }
 function getRegistrationFail(err){ return { type: REGISTRATION_FAILURE, err: err } }
-function getRegistrationSuccess(){ return { type: REGISTRATION_FINISHED } }
+function getRegistrationSuccess(){ return { type: REGISTRATION_SUCCESS } }
 
 function getLoginPending(){ return { type: LOGIN_PENDING } }
 function getLoginFail(err){ return { type: LOGIN_FAILURE, err: err } }

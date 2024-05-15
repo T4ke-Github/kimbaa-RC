@@ -50,8 +50,8 @@ class LandingDemo extends Component{
                         <p>Melde dich an, um deine Sitzung fortzusetzen.</p>
                         <div className="fBody">
                             <h2>Login:</h2>
-                                <input type="number" id="input1" name="matrikel" placeholder="Matrikelnr." />
-                                <input type="password" id="input2" name="password" placeholder="Passwort" />
+                                <input type="number" name="matrikel" value={this.state.matrikel} placeholder="Matrikelnr." onChange={this.handleInputChange}/>
+                                <input type="password" name="password"value={this.state.password} placeholder="Passwort" onChange={this.handleInputChange}/>
                                 <div>
                                     <button onClick={this.getRegistrationForm} className="linkStyleButton"><u>Registrieren</u></button>
                                 </div>
