@@ -53,10 +53,10 @@ function registerUser(matrikel, name, email, password){
         })
 }
 
-export function loginAction(matrikel, password){
+export function loginAction(loginId, password){
     return dispatch => {
         dispatch(getLoginPending());
-        login(matrikel, password)
+        login(loginId, password)
             .then(mat => {
                 dispatch(getLoginSuccess(mat))
             })
@@ -65,14 +65,18 @@ export function loginAction(matrikel, password){
             })
     }
 }
-function login(matrikel, password){
-    const registrationForm = {
-        studentId: matrikel,
+function login(loginId, password){
+    const loginData = {
+        studentId: loginId,
         password: password
     }
     
     const requestOptions = {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginData)
     }
 
     return fetch('http://localhost:8081/api/login/login', requestOptions)
@@ -80,6 +84,13 @@ function login(matrikel, password){
             if(!response.ok){
                 throw new Error('Error logging in');
             }
-            return matrikel;
+            return loginId;
         })
 }
+
+/*
+if login ok: 
+    status code 200
+    body: userResource
+    loginResult
+*/
