@@ -1,6 +1,7 @@
 import express from 'express';
 import "express-async-errors"; // needs to be imported before routers and other stuff!
 
+import cors from 'cors';
 import { userRouter } from '../src/routes/user';
 import { loginRouter } from '../src/routes/login';
 import bodyParser from 'body-parser';
@@ -9,6 +10,9 @@ import bodyParser from 'body-parser';
 const app = express();
 
 // Middleware:
+app.use(cors({
+    origin: 'http://localhost:8081'
+}));
 app.use('*', express.json()) //
 app.use(bodyParser.json())
 
