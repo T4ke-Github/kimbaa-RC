@@ -36,7 +36,7 @@ class RegistrationPage extends Component{
 
     handleInputChange(e){
         const { name, value } = e.target;
-        if(name == "regPassword" || name == "regPasswordRe"){
+        if(name === "regPassword" || name === "regPasswordRe"){
             this.setState({noMatch: false});
         }
         this.setState({[name]: value});
@@ -46,7 +46,7 @@ class RegistrationPage extends Component{
         e.preventDefault();
         const { regMatrikel, regName, regEmail, regPassword, regPasswordRe } = this.state;
         const { register, close } = this.props;
-        if(regPassword != regPasswordRe){
+        if(regPassword !== regPasswordRe){
             this.setState({noMatch: true});
             this.setState({regPassword: ""});
             this.setState({regPasswordRe: ""});

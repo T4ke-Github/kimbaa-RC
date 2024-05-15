@@ -22,7 +22,7 @@ class LandingDemo extends Component{
 
         this.doLogin = this.doLogin.bind(this);
         this.getRegistrationForm = this.getRegistrationForm.bind(this);
-        this.handleInputChange == this.handleInputChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     doLogin(){
