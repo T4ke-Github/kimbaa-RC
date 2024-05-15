@@ -37,23 +37,18 @@ const AntragZulassungSchema = new Schema<IAntragZulassung>({
   creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
   attach1id: { type: Schema.Types.ObjectId, ref: "Anlage", required: false },
   attach2id: { type: Schema.Types.ObjectId, ref: "Anlage", required: false },
-  finalSemester: { type: String, required: true },
-  name: { type: String, required: true },
-  degreeProgram: { type: String, required: true },
+  finalSemester: { type: String, required: false },
+  name: { type: String, required: false },
+  degreeProgram: { type: String, required: false },
   department: { type: String },
-  email: { type: String, required: true },
-  adress: {
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    postalCode: { type: String, required: true },
-    country: { type: String, required: true },
-  },
+  email: { type: String, required: false },
+  adress: { type: String, required: false },
   extension: 
     {
-      frage: { type: String, required: true },
+      frage: { type: String, required: false },
       antwort: { type: String, required: false },
     },
-  datum: { type: Date, required: true },
+  datum: { type: Date, required: false },
 });
 
 // Modell für den application auf Zulassung
