@@ -1,3 +1,5 @@
+import * as authActions from '../actions/NavActions';
+
 const initialState = {
     admin: false,
     matrikel: "",
