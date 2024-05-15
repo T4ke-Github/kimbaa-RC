@@ -41,7 +41,7 @@ function registerUser(matrikel, name, email, password){
         body: JSON.stringify(registrationForm)
     }
 
-    return fetch('https://localhost/api/user/create', requestOptions)
+    return fetch('http://localhost:8081/api/user/create', requestOptions)
         .then(response => {
             if(!response.ok){
                 throw new Error('Error while registrating');
@@ -72,7 +72,7 @@ function login(matrikel, password){
         method: 'POST'
     }
 
-    return fetch('https://localhost/api/login/login', requestOptions)
+    return fetch('http://localhost:8081/api/login/login', requestOptions)
         .then(response => {
             if(!response.ok){
                 throw new Error('Error logging in');
