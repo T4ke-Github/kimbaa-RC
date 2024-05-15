@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { connect } from "react-redux";
 
 import * as navActions from '../actions/NavActions';
-import * as authActions from '../actions/AuthActionsActions';
+import * as authActions from '../actions/AuthActions';
 import { bindActionCreators } from "redux";
 
 import Button from "react-bootstrap/Button";
