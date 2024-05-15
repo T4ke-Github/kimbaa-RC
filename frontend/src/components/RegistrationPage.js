@@ -52,7 +52,7 @@ class RegistrationPage extends Component{
                 <div className="formPage">
                     <div className="fAlignmentHelp">
                         <h1>Registriere dich hier als neuen Nutzer: </h1>
-                        <div className="fBody">
+                        <form className="fBody">
                             <input type="text" id="matrikel" name="matrikel" placeholder="Matrikelnr." className="spaceTop"/>
                             <input type="text" id="name" name="name" placeholder="Name" />
                             <input type="text" id="surname" name="surname" placeholder="Vorname" />
@@ -62,7 +62,7 @@ class RegistrationPage extends Component{
                                 <Button onClick={this.handleCancel} className="standardButton rCancel ">Abbrechen</Button>
                                 <Button onClick={this.handleCancel} className="standardButton submit">Registrieren</Button>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <img alt="kimbaa_login_logo" src="kimbaa_high_login.png"/>
                 </div>

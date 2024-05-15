@@ -8,7 +8,9 @@ import LoginPage from './components/LoginPage';
 import RegistrationPage from './components/RegistrationPage';
 
 const mapStateToProps = state => {
-  return state;
+  return {
+    page: state.root.page
+  };
 }
 
 class App extends Component{
