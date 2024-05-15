@@ -20,7 +20,7 @@ loginRouter.post("/login", async (req, res, next) => {
             res.status(200).json({user,loginResult}); // Gib Benutzer-ID und Rolle zurück
         } else {
             // Fehlgeschlagener Login
-            res.status(401).json({ success: false, message: "Invalid credentials" });
+            res.status(401).json(false);
         }
     } catch (error) {
         res.status(500).send("Internal Server Error");

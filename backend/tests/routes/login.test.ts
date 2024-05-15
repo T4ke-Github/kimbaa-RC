@@ -52,9 +52,7 @@ test("/api/login login with correct credentials", async () => {
 test("/api/login login with wrong credentials", async () => {
     const testee = supertest(app);
     const response = await testee.post("/api/login/login").send({ studentId: 666456, password: "test2" });
-    
-    expect(response.body.success).toBe(false);
-    expect(response.body.message).toBe("Invalid credentials");
+    expect(response.body).toBe(false);
     expect(response.status).toBe(401);
 });
 
