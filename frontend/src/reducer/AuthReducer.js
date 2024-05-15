@@ -1,7 +1,8 @@
 import * as authActions from '../actions/AuthActions';
 
 const initialState = {
-    matrikel: ""
+    matrikel: "",
+    err: null
 }
 
 function authReducer(state = initialState, action){
