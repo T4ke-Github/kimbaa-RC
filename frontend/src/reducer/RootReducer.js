@@ -21,6 +21,11 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 page: "registration"
             }
+        case navActions.ANTRAG:
+            return{
+                ...state,
+                page: "antrag"
+            }
         default:
             return{
                 ...state
