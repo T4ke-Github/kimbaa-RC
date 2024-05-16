@@ -5,7 +5,7 @@ import "express-async-errors"; // needs to be imported before routers and other 
 import cors from 'cors';
 import { userRouter } from '../src/routes/user';
 import { loginRouter } from '../src/routes/login';
-import bodyParser from 'body-parser';
+
 
 
 
@@ -20,7 +20,7 @@ app.use(cors({
 
 }));
 app.use('*', express.json()) //
-app.use(bodyParser.json())
+
 
 // Routes
 app.use("/api/login", loginRouter)   

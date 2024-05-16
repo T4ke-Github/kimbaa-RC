@@ -7,7 +7,7 @@ import { logger } from '../backlogger';
 
 export const userRouter = express.Router();
 
-userRouter.get("/alle", async (req, res, next) => {
+userRouter.get("/alle", async (req: Request, res: Response, next ) => {
     try {
         const users = await userService.getAlleUser();
         res.send(users);
@@ -24,6 +24,7 @@ userRouter.get("/getOneId/:studentId", async (req: Request, res: Response, next:
         res.status(200).send(user);
     } catch (error) {
         res.status(500).send("userRouter.Fehler beim Abrufen des Benutzers: " + error);
+    
     }
 })
 userRouter.get("/getOneEmail/:email", async (req: Request, res: Response, next: NextFunction) => {
@@ -33,6 +34,7 @@ userRouter.get("/getOneEmail/:email", async (req: Request, res: Response, next: 
         res.status(200).send(user);
     } catch (error) {
         res.status(500).send("userRouter.Fehler beim Abrufen des Benutzers: " + error);
+        //Next nicht nötig da send ende der pipeline macht
     }
 })
 //CREate
