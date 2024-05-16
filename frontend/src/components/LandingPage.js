@@ -1,9 +1,25 @@
 import React, {Component} from "react";
 import { Button, Card} from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
+import { connect } from "react-redux";
 
+import * as navActions from '../actions/NavActions';
+import { bindActionCreators } from "redux";
+
+const mapStateToProps = state => {
+    return state;
+}
 
 class LandingPage extends Component{
+    constructor(props){
+        super(props);
+        this.getAntrag = this.getAntrag.bind(this);
+    }
+
+    getAntrag(){
+        const { antrag } = this.props;
+        antrag();
+    }
     render(){
         return (
             <>
@@ -15,7 +31,7 @@ class LandingPage extends Component{
                     <Card style={{ width: '18rem' }} className="card">
                         <Card.Img variant="top" src="kimbaa_logo_clean.png" class="cardImg" />
                         <Card.Body>
-                            <Card.Title><Button className="cardButton"> Neuen Antrag Anlegen</Button> </Card.Title>
+                            <Card.Title><Button className="cardButton" onClick={this.getAntrag}> Neuen Antrag Anlegen</Button> </Card.Title>
                                 <Card.Text >
                                     hier kannst du einen neuen bachelorantrag erstellen
                                 </Card.Text>
@@ -54,4 +70,8 @@ class LandingPage extends Component{
     }   
 }
 
-export default LandingPage;
+const mapDispatchToProps = dispatch => bindActionCreators({
+    antrag: navActions.getAntragPageAction,
+}, dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
