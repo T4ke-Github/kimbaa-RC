@@ -12,7 +12,14 @@ const app = express();
 
 // Middleware:
 app.use(cors({
+<<<<<<< HEAD
     origin: 'http://localhost:8080' // Replace with your frontend URL
+=======
+    origin: 'http://localhost:3000'
+>>>>>>> merge_test_02
+=======
+
+>>>>>>> merge_test_02
 }));
 app.use('*', express.json()) //
 app.use(bodyParser.json())

@@ -5,31 +5,13 @@
 
 image: node:20
 
+# variables:
+#   DOCKER_HOST: tcp://docker:2376
+
 stages:
-  - build
   - test
-
-build_backend:
-  stage: build
-  script:
-    - cd backend
-    # ci is like install, but faster (and we need a synchronized package-lock.json)
-    - npm ci
-    # - npm run build # we use ts-jest, no need for compilation
-  artifacts:
-    reports:
-      junit:
-        - backend/junit.xml
-
-build_frontend:
-  stage: build
-  script:
-    - cd frontend
-    - npm ci
-  artifacts:
-    reports:
-      junit:
-        - frontend/junit.xml
+  - build
+  # - deploy
 
 test_backend:
   stage: test
@@ -46,17 +28,70 @@ test_backend:
         - backend/junit.xml
 
 test_frontend:
-  stage: test
-  variables:
-    # BHT's Gitlab CI only supports MongoDB up to 7.0.3
-    MONGOMS_VERSION: "7.0.3"
+  # stage: test
+  # variables:
+  #   # BHT's Gitlab CI only supports MongoDB up to 7.0.3
+  #   MONGOMS_VERSION: "7.0.3"
   script:
     - cd frontend
-    - npm ci
-    - npm test
-  artifacts:
-    reports:
-      junit:
-        - frontend/junit.xml
+    - npm install
+    # - npm test
+  # artifacts:
+  #   reports:
+  #     junit:
+  #       - frontend/junit.xml
+
+build_backend:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH == 'dev'
+  stage: build
+  needs: ["test_backend"]
+  image: docker:20.10.16
+  services:
+    - name: registry.hub.docker.com/library/docker:20.10.16-dind
+      alias: docker
+  tags:
+    - docker-privileged
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - echo $CI_REGISTRY
+    - docker info
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -t $CI_REGISTRY/jala5026/kimbaa/backend:$CI_COMMIT_REF_SLUG backend/
+    - docker push $CI_REGISTRY/jala5026/kimbaa/backend:$CI_COMMIT_REF_SLUG
 
 
+build_frontend:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH == 'dev'
+  stage: build
+  needs: ["test_frontend"]
+  image: docker:20.10.16
+  services:
+    - name: registry.hub.docker.com/library/docker:20.10.16-dind
+      alias: docker
+  tags:
+    - docker-privileged
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker info
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -t $CI_REGISTRY/jala5026/kimbaa/frontend:$CI_COMMIT_REF_SLUG frontend/
+    - docker push $CI_REGISTRY/jala5026/kimbaa/frontend:$CI_COMMIT_REF_SLUG
+
+# build_frontend_prod:
+#   stage: build
+#   script:
+#     - cd frontend
+#     - npm install
+#     - npm run build

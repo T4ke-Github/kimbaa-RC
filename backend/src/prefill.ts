@@ -24,9 +24,7 @@ export async function prefillDB(): Promise<{ heinz: UserResource}> {
         password: "123_abc_ABC",
         admin: true,
         email: "",
- 
         department: "",
-
         CreditPoints: 0,
         phone: 0
     }
