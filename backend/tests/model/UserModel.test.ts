@@ -11,10 +11,6 @@ test("UserModel.test createUser", async () => {
         admin: false,
         studentId: 123456,
         email: "test@bht-berlin.de",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
-        failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(),
         CreditPoints: 0,
@@ -26,10 +22,6 @@ test("UserModel.test createUser", async () => {
     expect(user.admin).toBe(false);
     expect(user.studentId).toBe(123456);
     expect(user.email).toBe("test@bht-berlin.de");
-    expect(user.firstLogin).toBeDefined();
-    expect(user.lastLogin).toBeDefined();
-    expect(user.pwChangeDate).toBeDefined();
-    expect(user.failedLoginCount).toBe(0);
     expect(user.department).toBe("test");
     expect(user.enrolledSince).toBeDefined();
     expect(user.CreditPoints).toBe(0);
@@ -46,10 +38,6 @@ test("UserModel.test createUser twice same name", async () => {
         admin: false,
         studentId: 666456,
         email: "test@bht-berlin.de",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
-        failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(),
         CreditPoints: 0,
@@ -61,10 +49,6 @@ test("UserModel.test createUser twice same name", async () => {
         admin: false,
         studentId: 123456,
         email: "test2@bht-berlin.de",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
-        failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(),
         CreditPoints: 0,
@@ -86,10 +70,6 @@ test("UserModel.test createUser twice same studentId must fail", async () => {
         admin: false,
         studentId: 123456,
         email: "test@bht-berlin.de",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
-        failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(),
         CreditPoints: 0,
@@ -101,10 +81,6 @@ test("UserModel.test createUser twice same studentId must fail", async () => {
         admin: false,
         studentId: 123456,
         email: "test",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
-        failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(), 
         CreditPoints: 0,
@@ -126,10 +102,6 @@ test("UserModel.test createUser without password must fail", async () => {
         admin: false,
         studentId: 123456,
         email: "test",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
-        failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(),
         CreditPoints: 0,
@@ -150,9 +122,6 @@ test("UserModel.test find user by name", async () => {
         admin: false,
         studentId: 123456,
         email: "test@bht-berlin.de",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
         failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(),
@@ -171,9 +140,6 @@ test("UserModel.test studentId must min 6 chars", async () => {
         admin: false,
         studentId: 12345,
         email: "test",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
         failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(),
@@ -195,10 +161,6 @@ test("UserModel.test change name without studentId must fail", async () => {
         admin: false,
         studentId: 123456,
         email: "test@bht-berlin.de",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
-        failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(),
         CreditPoints: 0,
@@ -221,10 +183,6 @@ test("UserModel.test change name with findOneandUpdate", async () => {
         admin: false,
         studentId: 123456,
         email: "test@bht-berlin.de",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
-        failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(),
         CreditPoints: 0,
@@ -252,9 +210,6 @@ test("UserModel.test change name with updateOne", async () => {
         admin: false,
         studentId: 123456,
         email: "test@bht-berlin.de",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
         failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(),
@@ -279,9 +234,6 @@ test("UserModel.test change name without studentId with updateOne must fail", as
         admin: false,
         studentId: 123456,
         email: "test@bht-berlin.de",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
         failedLoginCount: 0,
         department: "test",
         enrolledSince: new Date(),
@@ -295,4 +247,18 @@ test("UserModel.test change name without studentId with updateOne must fail", as
         expect(error).toBeInstanceOf(Error);
     }
     logger.info("UserModel.test change name without studentId with updateOne wurde beendet");
+})
+
+test("UserModel.test Create User with minimal data", async () => {
+    logger.info("UserModel.test Create User with minimal data wird gestartet");
+    const user = new User({
+        name: "test",
+        password: "test",
+        studentId: 123456,
+        email: "test@bht-berlin.de",
+    });
+    await user.save();
+    expect(user?.name).toBe("test");
+    expect(user?.studentId).toBe(123456);
+    logger.info("UserModel.test Create User with minimal data wurde beendet");
 })

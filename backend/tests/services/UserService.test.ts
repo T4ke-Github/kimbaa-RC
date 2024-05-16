@@ -11,10 +11,6 @@ beforeEach(async () => {
         admin: false,
         studentId: 666456,
         email: "test@bht-berlin.de",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
-        failedLoginCount: 0,
         department: "6",
         enrolledSince: new Date(),
         CreditPoints: 0,
@@ -27,10 +23,6 @@ beforeEach(async () => {
         admin: false,
         studentId: 666999,
         email: "test2@bht-berlin.de",
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
-        failedLoginCount: 0,
         department: "6",
         enrolledSince: new Date(),
         CreditPoints: 0,
@@ -56,12 +48,8 @@ test("UserService.test createUser ", async () => {
         admin: false,
         studentId: 666222,
         email: "cuel@bht-berlin.de", 
-        firstLogin: new Date(),
-        lastLogin: new Date(),
-        pwChangeDate: new Date(),
-        failedLoginCount: 0,
         department: "6",
-        enrolledSince: new Date(),
+
         CreditPoints: 0,
         phone: 123
     })
@@ -70,6 +58,34 @@ test("UserService.test createUser ", async () => {
     expect(neuErstellterUser!.name).toBe("Neuer Benutzer"); // Überprüfen Sie, ob der Benutzer korrekt erstellt wurde
     logger.info("UserService.test createUser wurde beendet");
 });
+
+//getOne
+test("UserService.test getOneUser by studentId(number)", async () => {
+    logger.info("UserService.test getOneUser wird gestartet");
+    const user = await UserService.getOneUser({studentId: 666456});
+    expect(user.name).toBe("DerOtto");
+    logger.info("UserService.test getOneUser wurde beendet");
+}); 
+test("UserService.test getOneUser by email", async () => {
+    logger.info("UserService.test getOneUser wird gestartet");
+    const user = await UserService.getOneUser({email: "test@bht-berlin.de"});
+    expect(user.name).toBe("DerOtto");
+    logger.info("UserService.test getOneUser wurde beendet");
+});
+
+test("UserService.test Create User with minimal data", async () => {
+    logger.info("UserService.test Create User with minimal data wird gestartet");
+    const user = await UserService.createUser({
+        name: "Neuer Benutzer",
+        password: "test",
+        studentId: 666222,
+        email: "cuel@bht-berlin.de"
+    })
+    const neuErstellterUser = await User.findOne({ studentId: 666222 });
+
+    expect(neuErstellterUser!.name).toBe("Neuer Benutzer"); //prüfen Sie, ob der Benutzer korrekt erstellt wurde
+    logger.info("UserService.test Create User with minimal data wurde beendet");
+})
 
 /* 
 test("UserService.test deleteUser", async () => {
