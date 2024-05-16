@@ -6,7 +6,7 @@
 KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen 
 
 
-"kimbaa" soll Studierende beim Antrag ihrer Bachelorarbeit unterstützen, indem sie die Voraussetzungen vorab prüft und wichtige Hilfestellungen und Planungshinweise gibt.
+"kimbaa" soll Studierende beim application ihrer Bachelorarbeit unterstützen, indem sie die Voraussetzungen vorab prüft und wichtige Hilfestellungen und Planungshinweise gibt.
 
 ---
 
@@ -27,7 +27,7 @@ KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen
     - Externer/Interne Betreuung?
     - Liegen ggf. die Qualifikationen der betreuenden Person vor?
 
-- Basierend auf den gesammelten Daten wird ermittelt, ob die Voraussetzungen für den Antrag auf die Bachelorarbeit erfüllt sind
+- Basierend auf den gesammelten Daten wird ermittelt, ob die Voraussetzungen für den application auf die Bachelorarbeit erfüllt sind
     - Wie viele CPs sind offen?
     - Rating offener Module/Regeln der Studien- und Prüfungsordnung.
 

@@ -1,0 +1,14 @@
+{
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "jest.runMode": {
+      "type": "on-demand",
+    },
+    "jest.outputConfig": {
+      "revealOn": "demand",
+      "revealWithFocus": "none",
+      "clearOnRun": "none"
+    },
+    // this requires the following setting as well:
+    "testing.openTesting": "neverOpen",
+    
+  }
