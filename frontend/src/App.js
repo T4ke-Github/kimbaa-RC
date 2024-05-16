@@ -9,7 +9,9 @@ import RegistrationPage from './components/RegistrationPage';
 import HauptAntragPage from './components/HauptAntragPage';
 
 const mapStateToProps = state => {
-  return state;
+  return {
+    page: state.root.page
+  };
 }
 
 class App extends Component{
