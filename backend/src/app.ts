@@ -1,9 +1,7 @@
 import express from 'express';
 import "express-async-errors"; // needs to be imported before routers and other stuff!
-<<<<<<< HEAD
-=======
 
->>>>>>> merge_test_02
+
 import cors from 'cors';
 import { userRouter } from '../src/routes/user';
 import { loginRouter } from '../src/routes/login';
@@ -16,14 +14,10 @@ const app = express();
 
 // Middleware:
 app.use(cors({
-<<<<<<< HEAD
-    origin: 'http://localhost:8080' // Replace with your frontend URL
-=======
-    origin: 'http://localhost:3000'
->>>>>>> merge_test_02
-=======
+    origin: 'http://localhost:8080', // Replace with your frontend URL
 
->>>>>>> merge_test_02
+    origin: 'http://localhost:3000',
+
 }));
 app.use('*', express.json()) //
 app.use(bodyParser.json())
