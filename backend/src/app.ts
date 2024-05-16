@@ -14,9 +14,9 @@ const app = express();
 
 // Middleware:
 app.use(cors({
-    origin: 'http://localhost:8080', // Replace with your frontend URL
+    //origin: 'http://localhost:8080', // Replace with your frontend URL
 
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3000'
 
 }));
 app.use('*', express.json()) //
