@@ -4,6 +4,7 @@ import { UserResource } from "../Resources"; // This should be your resource int
 import { logger } from "../backlogger";
 import { User } from "../model/UserModel";
 import { AntragZulassung } from "../model/AntragZulassungModel";
+import { dateToString } from './ServiceHelper';
 
 /**
  * Holt alle Benutzer, ohne Passwörter zurückzugeben.
@@ -14,42 +15,78 @@ export async function getAlleUser(): Promise<UserResource[]> {
     const userResources: UserResource[] = users.map(user => ({
         id: user.id,
         name: user.name,
-        password: user.password,
-        admin: user.admin,
+        admin: user.admin || false,
         studentId: user.studentId,
-        application: user.application,
-        address: user.address,
+        application: user.application || undefined,
+        address: user.address || undefined,
         email: user.email,
-        firstLogin: user.firstLogin,
-        lastLogin: user.lastLogin,
-        pwChangeDate: user.pwChangeDate,
-        failedLoginCount: user.failedLoginCount,
-        department: user.department,
-        enrolledSince: user.enrolledSince,
-        CreditPoints: user.CreditPoints,
-        phone: user.phone
+        department: user.department || undefined,
+        CreditPoints: user.CreditPoints || undefined,
+        phone: user.phone || undefined
     }));
     return userResources; 
 }
+//getOne by studentid or email
+export async function getOneUser(identifier: { studentId?: number; email?: string }): Promise<UserResource> {
+    logger.info("UserService.getOneUser wird gestartet");
 
+    try {
+        let user = null;
+
+        if (identifier.studentId) {
+            user = await User.findOne({ studentId: identifier.studentId }).exec();
+        } else if (identifier.email) {
+            user = await User.findOne({ email: identifier.email }).exec();
+        } else {
+            throw new Error("Either studentId or email must be provided");
+        }
+
+        if (user === null) {
+            throw new Error("User not found");
+        }
+
+        return {
+            id: user.id,
+            name: user.name,
+            admin: user.admin || false,
+            studentId: user.studentId,
+            email: user.email,
+            department: user.department || undefined,
+            CreditPoints: user.CreditPoints || undefined,
+            phone: user.phone || undefined
+        };
+    } catch (error) {
+        throw new Error("Fehler beim Abrufen des Benutzers: " + error);
+    }
+}
 /**
  * Erstellt einen neuen Benutzer, dont give back the password.
  */
 export async function createUser(userResource: UserResource): Promise<UserResource> {
     logger.info("UserService.createUser wird gestartet");
 
-    const user = await User.create(userResource);
+    
+    const user = new User({
+        name: userResource.name,
+        email: userResource.email,
+        studentId: userResource.studentId,
+        password: userResource.password,
+    })
+
+    await user.save();
+    const datum = new Date(); 
+    const updatedAt = userResource.updatedAt ? new Date(userResource.updatedAt) : datum;
+
+
     return { id: user.id,
         name: user.name,
-        admin: user.admin,
+        admin: user.admin || false,
         studentId: user.studentId,
         email: user.email,
-        firstLogin: user.firstLogin,
-        lastLogin: user.lastLogin,
-        pwChangeDate: user.pwChangeDate,
-        failedLoginCount: user.failedLoginCount,
+        createdAt: userResource.createdAt,
+        updatedAt: dateToString(updatedAt),
         department: user.department,
-        enrolledSince: user.enrolledSince,
+        enrolledSince: user.enrolledSince ? dateToString(user.enrolledSince) : undefined,
         CreditPoints: user.CreditPoints,
         phone: user.phone
     };
@@ -80,7 +117,7 @@ export async function updateUser(userResource: UserResource): Promise<UserResour
 
         await user.save();
         logger.info("UserService.updateUser: Benutzer aktualisiert mit ID: " + user.id);
-        return user;
+        return { id: user.id, name: user.name, admin: user.admin, studentId: user.studentId, email: user.email };
     } else {
         throw new Error("Benutzer nicht gefunden.");
     }
