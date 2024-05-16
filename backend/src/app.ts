@@ -1,5 +1,9 @@
 import express from 'express';
 import "express-async-errors"; // needs to be imported before routers and other stuff!
+<<<<<<< HEAD
+=======
+
+>>>>>>> merge_test_02
 import cors from 'cors';
 import { userRouter } from '../src/routes/user';
 import { loginRouter } from '../src/routes/login';
