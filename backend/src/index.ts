@@ -6,18 +6,15 @@ dotenv.config() // read ".env"
 import http from "http";
 import mongoose from 'mongoose';
 import app from "./app";
+import sdk from "./instrumentation"
 import { logger } from "./logger"
 import { prefillDB } from "./prefill";
 //import { prefillDB } from "./prefill";
 
 async function setup() {
 
-    let mongodURI = process.env.DB_CONNECTION_STRING;
-    if (!mongodURI) {
-        logger.error(`Cannot start, no database configured. Set environment variable DB_CONNECTION_STRING. Use "memory" for MongoMemoryServer`);
-        process.exit(1);
-    }
-    if (mongodURI === "memory") {
+    let mongodURI = (process.env.DB_CONNECTION_STRING || "memory");
+    if (mongodURI = "memory"){
         logger.info("Start MongoMemoryServer")
         const MMS = await import('mongodb-memory-server')
         const mongo = await MMS.MongoMemoryServer.create();
@@ -37,6 +34,7 @@ async function setup() {
         logger.info(`Listening for HTTP at http://localhost:${port}`);
     });
 
+    sdk.start();
 };
 
 setup();

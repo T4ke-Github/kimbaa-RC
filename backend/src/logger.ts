@@ -2,8 +2,13 @@
 //write logger.info or logger.error("BLAGH") for logging messages
 import winston from "winston";
 
+let log_level = process.env.LOG_LEVEL;
+    if (!log_level) {
+        log_level = 'info'
+    }
+
 export const logger = winston.createLogger({
-    level: 'debug',
+    level: log_level,
     transports: [
         new winston.transports.Console({
             format: winston.format.combine(
