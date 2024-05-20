@@ -16,7 +16,7 @@ class LandingDemo extends Component{
         super(props);
 
         this.state = {
-            matrikel: null,
+            matrikel: "",
             password: ""
         }
 
