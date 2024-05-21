@@ -3,8 +3,8 @@ import "express-async-errors"; // needs to be imported before routers and other 
 
 
 import cors from 'cors';
-import { userRouter } from '../src/routes/user';
-import { loginRouter } from '../src/routes/login';
+import { userRouter } from './routes/userRout';
+import { loginRouter } from './routes/loginRoute';
 
 
 

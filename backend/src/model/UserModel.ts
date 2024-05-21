@@ -98,7 +98,7 @@ UserSchema.pre("updateOne", function (next) {
 
 
 UserSchema.methods.isCorrectPassword = async function (password: string) {
-  try {
+
     if (password === this.password) {
       logger.info("Fehler das Passwort ist der gespeicherte Hash.");
       return false;
@@ -112,10 +112,7 @@ UserSchema.methods.isCorrectPassword = async function (password: string) {
       logger.info("Passwort ist falsch.");
       return false;
     }
-  } catch (error) {
-    logger.error("Fehler beim Vergleichen des Passworts: " + error);
-    throw error;
-  }
+
 };
 
 export const User = model<IUser, UserModel>("User", UserSchema);

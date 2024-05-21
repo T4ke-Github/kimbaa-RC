@@ -17,7 +17,7 @@ userRouter.get("/alle", async (req: Request, res: Response, next ) => {
     }
 });
 //getOne by studentId
-userRouter.get("/getOneId/:studentId", async (req: Request, res: Response, next: NextFunction) => {
+userRouter.get("/:studentId", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const studentId = req.params.studentId;
         const user = await userService.getOneUser({ studentId: Number(studentId) });
@@ -27,7 +27,7 @@ userRouter.get("/getOneId/:studentId", async (req: Request, res: Response, next:
     
     }
 })
-userRouter.get("/getOneEmail/:email", async (req: Request, res: Response, next: NextFunction) => {
+userRouter.get("/:email", async (req: Request, res: Response, next: NextFunction) => {
     try {
         const email = req.params.email;
         const user = await userService.getOneUser({ email: String(email) });

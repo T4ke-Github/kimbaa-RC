@@ -8,7 +8,7 @@ export const loginRouter = express.Router();
 
 // Route für den Login
 loginRouter.post("/login", async (req, res, next) => {
-    try {
+
         const { studentId, password } = req.body; // Annahme: Student-ID und Passwort werden im Anfragekörper übergeben
 
         // Überprüfe die Anmeldeinformationen
@@ -22,8 +22,5 @@ loginRouter.post("/login", async (req, res, next) => {
             // Fehlgeschlagener Login
             res.status(401).json(false);
         }
-    } catch (error) {
-        res.status(500).send("Internal Server Error");
-        next(error);
-    }
+
 });
