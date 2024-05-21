@@ -124,16 +124,17 @@ export async function updateUser(userResource: UserResource): Promise<UserResour
  */
 export async function deleteUser(id: string): Promise<void> {
     logger.info("UserService.deleteUser wird gestartet");
-    try {
+
         const user = await User.findById(id).exec();
-        if (user) {
+
+        if (user === null || user.name === null) {
+            throw new Error("Benutzer nicht gefunden.");
+        }
+        if (user !== null) {
             logger.info("UserService.deleteUser: Benutzer gefunden und bereit zu löschen: " + user.name);
             await AntragZulassung.deleteMany({ creator: user._id }); // Löscht verbundene Daten
             await user.deleteOne({ _id: new Types.ObjectId(id) });
             logger.info("UserService.deleteUser: Benutzer gelöscht: " + user.name);
         }
-    } catch (error) {
-        logger.error("Fehler beim Löschen des Benutzers: " + error);
-        throw new Error("Fehler beim Löschen des Benutzers.");
-    }
+
 }

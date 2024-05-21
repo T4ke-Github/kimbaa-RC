@@ -8,13 +8,8 @@ import { logger } from '../backlogger';
 export const userRouter = express.Router();
 
 userRouter.get("/alle", async (req: Request, res: Response, next ) => {
-    try {
         const users = await userService.getAlleUser();
         res.send(users);
-    } catch (error) {
-        res.status(500);
-        next(error);
-    }
 });
 //getOne by studentId
 userRouter.get("/:identifier", async (req: Request, res: Response, next: NextFunction) => {
@@ -25,44 +20,57 @@ userRouter.get("/:identifier", async (req: Request, res: Response, next: NextFun
         if (!isNaN(Number(identifier))) {
             // Wenn identifier eine Nummer ist, dann ist es eine studentId
             user = await userService.getOneUser({ studentId: Number(identifier) });
+            
         } else if (serviceHelper.isEmail(identifier)) {
             // Wenn identifier das Format einer E-Mail hat, dann ist es eine email
-            user = await getOneUser({ email: String(identifier) });
-        } else {
-            throw new Error("Invalid identifier format");
+            user = await userService.getOneUser({ email: String(identifier) });
+            
+        }else {
+            // Wenn weder eine Studenten-ID noch eine E-Mail-Adresse erkannt wird, lösen wir einen Fehler aus
+            throw new Error("Invalid identifier");
         }
-
         res.status(200).send(user);
     } catch (error) {
-        res.status(500).send("userRouter.Fehler beim Abrufen des Benutzers: " + error.message);
+        res.status(400).send(error);
+        next(error);
     }
 });
 //CREate
 
-userRouter.post("/create", async (req: Request, res: Response, next: NextFunction) => {
-    try {
+userRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
+
         const userResource: UserResource = req.body;
-        logger.info("UserResource: " + userResource);
-        logger.info("User name: " + userResource.name);
-        logger.info("User password: " + userResource.password);
-        logger.info("User studentId: " + userResource.studentId);
-        logger.info("User email: " + userResource.email);
         // Validierung der Anfragedaten
-        if (!userResource.name || !userResource.password || !userResource.studentId || !userResource.email) {
-            res.status(400).send({ error: "Missing required fields" });
-            return;
-        }
         try {
             const user = await userService.createUser(userResource);
             res.status(201).send(user);
         } catch (error) {
             logger.error("UserRouter.create: Fehler beim Erstellen des Users: " + error);
+            res.status(400).send(error);
+            next(error);
         }
-        
+});
 
-        
+userRouter.put("/:identifier", async (req: Request, res: Response, next: NextFunction) => {
+    const userResource: UserResource = req.body;
+    try {
+        const user = await userService.updateUser(userResource);
+        logger.info("UserService.updateUser: User aktualisiert ");
+        res.status(200).send(user);
     } catch (error) {
-        res.status(500);
+        logger.error("UserService.updateUser: Fehler beim Aktualisieren des Users: " + error);
+        res.status(400).send(error);
         next(error);
     }
-});
+})
+userRouter.delete("/:identifier", async (req: Request, res: Response, next: NextFunction) => {
+    const identifier = req.params.identifier;
+    try {
+        const user = await userService.deleteUser(identifier);
+        res.status(200).send(user);
+    } catch (error) {
+        logger.error("UserService.deleteUser: Fehler beim Loeschen des Users: " + error);
+        res.status(400).send(error);
+        next(error);
+    }
+})
