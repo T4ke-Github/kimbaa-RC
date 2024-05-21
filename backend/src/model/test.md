@@ -30,6 +30,7 @@ const UserSchema = new Schema({
     validate: {
       validator: (v) => v.toString().length >= 6,
       message: "Student ID must be at least 6 characters long.",
+
     },
   },
  });
