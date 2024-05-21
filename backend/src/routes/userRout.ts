@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 
 import * as userService from "../services/UserService";
-import { User } from "../model/UserModel";
+import * as serviceHelper from "../services/ServiceHelper";
 import { UserResource } from "../Resources";
 import { logger } from '../backlogger';
 
@@ -17,26 +17,26 @@ userRouter.get("/alle", async (req: Request, res: Response, next ) => {
     }
 });
 //getOne by studentId
-userRouter.get("/:studentId", async (req: Request, res: Response, next: NextFunction) => {
+userRouter.get("/:identifier", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const studentId = req.params.studentId;
-        const user = await userService.getOneUser({ studentId: Number(studentId) });
+        const identifier = req.params.identifier;
+
+        let user;
+        if (!isNaN(Number(identifier))) {
+            // Wenn identifier eine Nummer ist, dann ist es eine studentId
+            user = await userService.getOneUser({ studentId: Number(identifier) });
+        } else if (serviceHelper.isEmail(identifier)) {
+            // Wenn identifier das Format einer E-Mail hat, dann ist es eine email
+            user = await getOneUser({ email: String(identifier) });
+        } else {
+            throw new Error("Invalid identifier format");
+        }
+
         res.status(200).send(user);
     } catch (error) {
-        res.status(500).send("userRouter.Fehler beim Abrufen des Benutzers: " + error);
-    
+        res.status(500).send("userRouter.Fehler beim Abrufen des Benutzers: " + error.message);
     }
-})
-userRouter.get("/:email", async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const email = req.params.email;
-        const user = await userService.getOneUser({ email: String(email) });
-        res.status(200).send(user);
-    } catch (error) {
-        res.status(500).send("userRouter.Fehler beim Abrufen des Benutzers: " + error);
-        //Next nicht nötig da send ende der pipeline macht
-    }
-})
+});
 //CREate
 
 userRouter.post("/create", async (req: Request, res: Response, next: NextFunction) => {

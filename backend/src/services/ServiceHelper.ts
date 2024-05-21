@@ -6,3 +6,8 @@ export function stringToDate(dateString: string) {
     const parts = dateString.split('.');
     return new Date(`${parts[2]}-${parts[1]}-${parts[0]}Z`);
 }
+
+export function isEmail(str: string): boolean {
+    const emailRegex = /^[^\s@]+@bht-berlin\.de$/;
+    return emailRegex.test(str);
+}
