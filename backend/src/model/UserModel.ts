@@ -62,9 +62,7 @@ export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   createdAt: { type: Date},
   updatedAt: { type: Date},
   department: { type: String },
-  enrolledSince: { type: String },
   CreditPoints: { type: Number },
-  phone: { type: Number },
 },{
   timestamps: true,
 });

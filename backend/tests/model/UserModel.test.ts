@@ -23,9 +23,7 @@ test("UserModel.test createUser", async () => {
     expect(user.studentId).toBe(123456);
     expect(user.email).toBe("test@bht-berlin.de");
     expect(user.department).toBe("test");
-    expect(user.enrolledSince).toBeDefined();
     expect(user.CreditPoints).toBe(0);
-    expect(user.phone).toBe(123);
     logger.info("UserModel.test createUser wurde beendet");
 }); 
 
@@ -184,9 +182,7 @@ test("UserModel.test change name with findOneandUpdate", async () => {
         studentId: 123456,
         email: "test@bht-berlin.de",
         department: "test",
-        enrolledSince: new Date(),
         CreditPoints: 0,
-        phone: 123
     })
     await user.save();
     expect(user?.name).toBe("oldname");
@@ -212,9 +208,7 @@ test("UserModel.test change name with updateOne", async () => {
         email: "test@bht-berlin.de",
         failedLoginCount: 0,
         department: "test",
-        enrolledSince: new Date(),
         CreditPoints: 0,
-        phone: 123
     })
     await user.save();
     expect(user?.name).toBe("oldname");
@@ -236,9 +230,7 @@ test("UserModel.test change name without studentId with updateOne must fail", as
         email: "test@bht-berlin.de",
         failedLoginCount: 0,
         department: "test",
-        enrolledSince: new Date(),
         CreditPoints: 0,
-        phone: 123
     })
     await user.save();
     try {
@@ -262,3 +254,4 @@ test("UserModel.test Create User with minimal data", async () => {
     expect(user?.studentId).toBe(123456);
     logger.info("UserModel.test Create User with minimal data wurde beendet");
 })
+

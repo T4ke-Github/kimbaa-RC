@@ -65,31 +65,35 @@ export async function getOneUser(identifier: { studentId?: number; email?: strin
 export async function createUser(userResource: UserResource): Promise<UserResource> {
     logger.info("UserService.createUser wird gestartet");
 
+    try {
+        const user = new User({
+            name: userResource.name,
+            email: userResource.email,
+            studentId: userResource.studentId,
+            password: userResource.password,
+        })
     
-    const user = new User({
-        name: userResource.name,
-        email: userResource.email,
-        studentId: userResource.studentId,
-        password: userResource.password,
-    })
-
-    await user.save();
-    const datum = new Date(); 
-    const updatedAt = userResource.updatedAt ? new Date(userResource.updatedAt) : datum;
-
-
-    return { id: user.id,
-        name: user.name,
-        admin: user.admin || false,
-        studentId: user.studentId,
-        email: user.email,
-        createdAt: userResource.createdAt,
-        updatedAt: dateToString(updatedAt),
-        department: user.department,
-        enrolledSince: user.enrolledSince ? dateToString(user.enrolledSince) : undefined,
-        CreditPoints: user.CreditPoints,
-        phone: user.phone
-    };
+        await user.save();
+        const datum = new Date(); 
+        const updatedAt = userResource.updatedAt ? new Date(userResource.updatedAt) : datum;
+    
+    
+        return { id: user.id,
+            name: user.name,
+            admin: user.admin || false,
+            studentId: user.studentId,
+            email: user.email,
+            createdAt: userResource.createdAt,
+            updatedAt: dateToString(updatedAt),
+            department: user.department,
+            enrolledSince: user.enrolledSince ? dateToString(user.enrolledSince) : undefined,
+            CreditPoints: user.CreditPoints,
+        };
+    } catch (error) {
+        logger.error("UserService: Create : " + error);
+        throw new Error("User Creation error: " + error);
+    }
+    
 }
 
 /**
@@ -98,22 +102,14 @@ export async function createUser(userResource: UserResource): Promise<UserResour
 export async function updateUser(userResource: UserResource): Promise<UserResource> {
     logger.info("UserService.updateUser wird gestartet");
 
-    if (!userResource.id) {
-        logger.error("updateUser: Benutzer-ID fehlt");
-        throw new Error("Benutzer-ID fehlt");
-    }
-
     const user = await User.findById(userResource.id).exec();
 
-    if (user) {
-        user.name = userResource.name || user.name;
-        user.email = userResource.email || user.email;
-        user.admin = userResource.admin ?? user.admin;
-
-        if (userResource.password) {
-            const hashedPassword = await bcrypt.hash(userResource.password, 10);
-            user.password = hashedPassword;
-        }
+    if (user && user !== null) {
+        if (userResource.name) user.name = userResource.name;
+        if (userResource.studentId) user.studentId = userResource.studentId;
+        if (userResource.email) user.email = userResource.email;
+        if (userResource.admin !== undefined) user.admin = userResource.admin;
+        if (userResource.password) user.password = userResource.password;
 
         await user.save();
         logger.info("UserService.updateUser: Benutzer aktualisiert mit ID: " + user.id);
@@ -130,14 +126,11 @@ export async function deleteUser(id: string): Promise<void> {
     logger.info("UserService.deleteUser wird gestartet");
     try {
         const user = await User.findById(id).exec();
-
         if (user) {
             logger.info("UserService.deleteUser: Benutzer gefunden und bereit zu löschen: " + user.name);
             await AntragZulassung.deleteMany({ creator: user._id }); // Löscht verbundene Daten
             await user.deleteOne({ _id: new Types.ObjectId(id) });
             logger.info("UserService.deleteUser: Benutzer gelöscht: " + user.name);
-        } else {
-            throw new Error("Benutzer nicht gefunden.");
         }
     } catch (error) {
         logger.error("Fehler beim Löschen des Benutzers: " + error);

@@ -1,9 +1,9 @@
 export type UserResource = {
     id?: string;
-    name: string;
+    name?: string;
     password?: string;
     admin?: boolean;
-    studentId: number;
+    studentId?: number;
     email?: string;
     createdAt?: string;
     updatedAt?: string;
@@ -14,17 +14,17 @@ export type UserResource = {
 }
 
 export type applicationZulassungResource = {
-    creator: string;
-    attach1id: string;
-    attach2id: string;
-    finalSemester: string;
-    name: string;
-    degreeProgram: string;
-    department: string;
-    email: string;
-    adresse: AdressResource;
-    fragen: applicationZulassungKontrollfragenResource[];
-    datum: Date;
+    creator?: string;
+    attach1id?: string;
+    attach2id?: string;
+    finalSemester?: string;
+    name?: string;
+    degreeProgram?: string;
+    department?: string;
+    email?: string;
+    adresse?: AdressResource;
+    fragen?: applicationZulassungKontrollfragenResource[];
+    datum?: Date;
 }
 
 export type AdressResource = {

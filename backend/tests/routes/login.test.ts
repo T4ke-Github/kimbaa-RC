@@ -42,9 +42,6 @@ test("/api/login login with correct credentials", async () => {
     expect(user.studentId).toBe(666456);
     expect(user.email).toBe("test@bht-berlin.de");
     expect(user.department).toBe("6");
-    expect(user.enrolledSince).toBe("Sun Apr 04 2021 00:00:00 GMT+0200 (Mitteleuropäische Sommerzeit)");
-    expect(user.CreditPoints).toBe(0);
-    expect(user.phone).toBe(123);
 
 
 });
