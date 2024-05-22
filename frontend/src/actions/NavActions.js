@@ -18,7 +18,6 @@ export function getNavRegistrationPageAction(){
         type: REGISTRATION
     }
 }
-
 export function getAntragPageAction(){
     return {
         type: ANTRAG

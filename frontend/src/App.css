@@ -92,6 +92,7 @@ input{
 }
 
 .cardButton{
+  margin-top: 30px;
   width: 250px;
   height: 40px;
   background-color: #004282;
@@ -170,10 +171,12 @@ input{
   display: flex;
   flex-direction: row;
   align-content: flex-start;
+  align-items: baseline;
   gap: 3%;
 }
 
 .checkbox{
   background-color:#00a0aa;
 }
+
 
