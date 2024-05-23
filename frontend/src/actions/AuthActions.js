@@ -59,7 +59,8 @@ export function loginAction(loginId, password){
         dispatch(getLoginPending());
         login(loginId, password)
             .then(mat => {
-                Cookies.set('currentPage', 'landing')
+                Cookies.set('currentPage', 'landing');
+                Cookies.set('loggedIn', true);
                 dispatch(getLoginSuccess(mat))
             })
             .catch(err => {
