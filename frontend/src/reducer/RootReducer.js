@@ -1,36 +1,21 @@
 import * as navActions from "../actions/NavActions";
 import * as authActions from "../actions/AuthActions";
+import Cookies from 'js-cookie'
 
 const initialState = {
-    page: "login"
+    page: Cookies.get('currentPage') || 'login',
 }
 
 function rootReducer(state = initialState, action) {
     switch(action.type){
         case navActions.LOGIN:
-            return{
-                ...state,
-                page: "login"
-            }
         case navActions.LANDING:
-            return{
-                ...state,
-                page: "landing"
-            }
         case navActions.REGISTRATION:
-            return{
-                ...state,
-                page: "registration"
-            }
-        case navActions.ANTRAG:
-            return{
-                ...state,
-                page: "antrag"
-            }
+        case authActions.REGISTRATION_SUCCESS:
         case authActions.LOGIN_SUCCESS:
             return{
                 ...state,
-                page: "landing"
+                page: action.payload
             }
         default:
             return{
