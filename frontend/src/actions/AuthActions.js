@@ -96,3 +96,17 @@ if login ok:
     body: userResource
     loginResult
 */
+
+export function deleteAntragAction(loginId, antrag){
+    console.log("placeholder delete " + antrag + loginId)
+}
+//function deleteAntrag(loginId, password){
+//    return "placeholder"
+//}
+
+export function editAntragAction(loginId, antrag){
+    console.log("placeholder edit " + antrag + loginId)
+}
+//function editAntrag(loginId, password){
+//    return "placeholder"
+//}

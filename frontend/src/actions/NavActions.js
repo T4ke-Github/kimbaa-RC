@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 export const LOGIN = "LOGIN";
 export const LANDING = "LANDING";
 export const REGISTRATION = "REGISTRATION";
+export const ANTRAG = "ANTRAG";
 
 export function getNavLoginAction(){
     Cookies.set('currentPage', 'login');
@@ -23,5 +24,10 @@ export function getNavRegistrationPageAction(){
     return {
         type: REGISTRATION,
         payload: 'registration'
+    }
+}
+export function getAntragPageAction(){
+    return {
+        type: ANTRAG
     }
 }
