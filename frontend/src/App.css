@@ -92,6 +92,7 @@ input{
 }
 
 .cardButton{
+  margin-top: 30px;
   width: 250px;
   height: 40px;
   background-color: #004282;
@@ -99,6 +100,7 @@ input{
   border-radius: 20px;
   border: none;
 }
+
 
 .standardButton{
   width: 340px;
@@ -139,3 +141,42 @@ input{
 .fLanding{
   margin-left: 80px;
 }
+
+.hauptantrag{
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  border-radius: 30px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 30px;
+  background-color: #ffc900;
+  max-width: 75%;
+
+}
+
+.hauptantraggruppe{
+  display: flex;
+  flex-direction: row;
+}
+
+.hauptantraggruppe2{
+  display: flex;
+  flex-direction: column;
+}
+
+.hauptantraggruppe3{
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  align-items: baseline;
+  gap: 3%;
+}
+
+.checkbox{
+  background-color:#00a0aa;
+}
+
+

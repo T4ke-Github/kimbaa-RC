@@ -6,9 +6,12 @@ import TopMenu from './components/TopMenu';
 import LandingPage from './components/LandingPage';
 import LoginPage from './components/LoginPage';
 import RegistrationPage from './components/RegistrationPage';
+import HauptAntragPage from './components/HauptAntragPage';
 
 const mapStateToProps = state => {
-  return state;
+  return {
+    page: state.root.page
+  };
 }
 
 class App extends Component{
@@ -25,6 +28,9 @@ class App extends Component{
         break;
       case "registration":
         workspace = <RegistrationPage />
+        break;
+      case "application":
+        workspace =  <HauptAntragPage />
         break;
       default:
         workspace = <LoginPage />
