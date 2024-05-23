@@ -27,8 +27,8 @@ class UserWidget extends Component{
         return(
             <>
             <style></style>
-            <Dropdown>
-                <Dropdown.Toggle>User</Dropdown.Toggle>
+            <Dropdown >
+                <Dropdown.Toggle id="dropdown-basic">User</Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item onClick={this.handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
