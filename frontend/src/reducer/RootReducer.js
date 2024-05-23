@@ -11,6 +11,7 @@ function rootReducer(state = initialState, action) {
         case navActions.LOGIN:
         case navActions.LANDING:
         case navActions.REGISTRATION:
+        case navActions.APPLICATION:
         case authActions.REGISTRATION_SUCCESS:
         case authActions.LOGIN_SUCCESS:
             return{

@@ -75,7 +75,7 @@ class LandingPage extends Component{
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    antrag: navActions.getAntragPageAction,
+    antrag: navActions.getNavApplicationPageAction,
     //deleteAntragAction: authActions.deleteAntragAction,
     //editAntragAction: authActions.editAntragAction,
 }, dispatch)

@@ -29,7 +29,7 @@ class App extends Component{
       case "registration":
         workspace = <RegistrationPage />
         break;
-      case "antrag":
+      case "application":
         workspace =  <HauptAntragPage />
         break;
       default:
