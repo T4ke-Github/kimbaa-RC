@@ -20,7 +20,7 @@ class TopMenu extends Component{
 
         let widget;
         if(this.props.loggedIn){
-            widget = <UserWidget />;
+            widget = <UserWidget className="userWidget" />;
         }
 
         return(
@@ -36,6 +36,10 @@ class TopMenu extends Component{
                     .logo img{
                         margin-right: 10px;
                         margin-left: 15px;
+                    }
+                    .userWidget {
+                        justify-item: end;
+                        margin-right: 10px;
                     }
                 `}
             </style>

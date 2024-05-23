@@ -1,4 +1,6 @@
 import * as authActions from '../actions/AuthActions';
+import * as navActions from '../actions/NavActions';
+import Cookies from 'js-cookie';
 
 const initialState = {
     matrikel: "",
@@ -13,6 +15,11 @@ function authReducer(state = initialState, action){
                 ...state,
                 matrikel: action.matrikel,
                 loggedIn: true,
+            }
+        case navActions.LOGIN:
+            return{
+                ...state,
+                loggedIn: false
             }
         default:
             return{
