@@ -1,5 +1,3 @@
-import { getNavLandingAction } from './NavActions';
-
 export const REGISTRATION_PENDING = "REGISTRATION_PENDING";
 export const REGISTRATION_FAILURE = "REGISTRATION_FAILURE";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
@@ -94,3 +92,17 @@ if login ok:
     body: userResource
     loginResult
 */
+
+export function deleteAntragAction(loginId, antrag){
+    console.log("placeholder delete " + antrag + loginId)
+}
+//function deleteAntrag(loginId, password){
+//    return "placeholder"
+//}
+
+export function editAntragAction(loginId, antrag){
+    console.log("placeholder edit " + antrag + loginId)
+}
+//function editAntrag(loginId, password){
+//    return "placeholder"
+//}
