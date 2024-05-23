@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import UserWidget from './UserWidget';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -8,22 +9,20 @@ import { bindActionCreators } from "redux";
 import * as navActions from '../actions/NavActions';
 
 const mapStateToProps = state => {
-    return state;
+    return{
+        loggedIn: state.auth.loggedIn
+    }
 }
 
 class TopMenu extends Component{
 
-    constructor(props){
-        super(props);
-        this.handleLogout = this.handleLogout.bind(this);
-    }
-
-    handleLogout(e){
-        const { logout } = this.props;
-        logout();
-    }
-
     render(){
+
+        let widget;
+        if(this.props.loggedIn){
+            widget = <UserWidget />;
+        }
+
         return(
             <>
             <style>
@@ -41,12 +40,13 @@ class TopMenu extends Component{
                 `}
             </style>
             <Navbar className="topMenu">
-                <Navbar.Brand onClick={this.handleLogout} className="logo">
+                <Navbar.Brand className="logo">
                     <img alt="" src="kimbaa_logo_256.png" width="52" height="52" className="d-inline-block align-top"/>
                 </Navbar.Brand>
                 <Nav>
                     <h2 onClick={this.handleLogout}>kimbaa</h2>
                 </Nav>
+                {widget}
             </Navbar>
             </>
         )
