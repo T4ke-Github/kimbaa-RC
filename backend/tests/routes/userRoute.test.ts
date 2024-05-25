@@ -16,7 +16,6 @@ beforeEach(async () => {
         studentId: 133769,
         email: "elza@bht-berlin.de",
         department: "6",
-        CreditPoints: 0,
     })
     const user1 = new User({
         name: "Tim",
@@ -25,7 +24,6 @@ beforeEach(async () => {
         studentId: 666456,
         email: "test@bht-berlin.de",
         department: "6",
-        CreditPoints: 0,
     });
     await user1.save();
     const user2 = new User({
@@ -35,7 +33,6 @@ beforeEach(async () => {
         studentId: 666995,
         email: "test2@bht-berlin.de",
         department: "6",
-        CreditPoints: 0,
     });
     await user2.save();
     const user3 = new User({
@@ -45,7 +42,6 @@ beforeEach(async () => {
         studentId: 666999,
         email: "test3@bht-berlin.de",
         department: "6",
-        CreditPoints: 0,
     });
     await user3.save();
 });

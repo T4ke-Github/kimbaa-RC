@@ -73,7 +73,8 @@ test("Modul.test change Modul", async () => {
     expect(await Modul.findOne({ Modulnummer: "123456" })).not.toBeNull();
     //change
     await Modul.updateOne({ Modulnummer: "123456" }, { Modulname: "test2" });
-    expect(await Modul.findOne({ Modulnummer: "123456" })).toBeNull();
+    const changemodul = await Modul.findOne({ Modulnummer: "123456" });
+    expect(changemodul!.Modulname).toBe("test2");
     logger.info("Modul.test change Modul wurde beendet");
 })
 //modul without creditpoints works
