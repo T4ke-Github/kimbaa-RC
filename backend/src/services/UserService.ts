@@ -21,8 +21,6 @@ export async function getAlleUser(): Promise<UserResource[]> {
         address: user.address || undefined,
         email: user.email,
         department: user.department || undefined,
-        CreditPoints: user.CreditPoints || undefined,
-        phone: user.phone || undefined
     }));
     return userResources; 
 }
@@ -52,8 +50,6 @@ export async function getOneUser(identifier: { studentId?: number; email?: strin
             studentId: user.studentId,
             email: user.email,
             department: user.department || undefined,
-            CreditPoints: user.CreditPoints || undefined,
-            phone: user.phone || undefined
         };
     } catch (error) {
         throw new Error("Fehler beim Abrufen des Benutzers: " + error);
@@ -86,8 +82,6 @@ export async function createUser(userResource: UserResource): Promise<UserResour
             createdAt: userResource.createdAt,
             updatedAt: dateToString(updatedAt),
             department: user.department,
-            enrolledSince: user.enrolledSince ? dateToString(user.enrolledSince) : undefined,
-            CreditPoints: user.CreditPoints,
         };
     } catch (error) {
         logger.error("UserService: Create : " + error);

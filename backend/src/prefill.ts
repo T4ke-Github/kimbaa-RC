@@ -14,7 +14,7 @@ import { createUser } from "../src/services/UserService";
  * Erzeugt einen Benutzer "Behrens" und vom ihm angelegten antrag mit Einträgen.
  * Diese Funktion benötigen wir später zu Testzwecken im Frontend.
 */
-/* export async function prefillDB(): Promise<{ heinz: UserResource}> {
+export async function prefillDB(): Promise<{ heinz: UserResource}> {
     
     await User.syncIndexes();
     //antrag
@@ -32,7 +32,7 @@ import { createUser } from "../src/services/UserService";
     logger.info(`Prefill DB with test data, user: ${UserResource.name}, password 123_abc_ABC`);
 
     return { heinz };   
-} */
+}
     /* const protokolle: ProtokollResource[] = [];
     
     const itemsPerList = [[1, 4, 2, 0], [3, 5, 7]];
