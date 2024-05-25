@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import Cookies from 'js-cookie';
-import Dropdown from 'react-bootstrap/Dropdown';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -26,13 +25,26 @@ class UserWidget extends Component{
     render(){
         return(
             <>
-            <style></style>
-            <Dropdown >
-                <Dropdown.Toggle id="dropdown-basic">User</Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item onClick={this.handleLogout}>Logout</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <style>
+                {`
+                    .logoutButton{
+                        font-family: BHTTitle;
+                        font-size: 17px;
+                        color: #ffc900;
+                        background-color: #004282;
+                        border: none;
+                        border-radius: 4px;
+                        padding-left: 8px;
+                        padding-right: 8px;
+                        padding-top: 4px;
+                        padding-bottom: 4px;
+                        margin-left: 80vw;
+                    }
+                `}
+            </style>
+            <button onClick={this.handleLogout} className="logoutButton">
+                Logout
+            </button>
             </>
         )
     }

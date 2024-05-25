@@ -37,10 +37,6 @@ class TopMenu extends Component{
                         margin-right: 10px;
                         margin-left: 15px;
                     }
-                    .userWidget {
-                        justify-item: end;
-                        margin-right: 10px;
-                    }
                 `}
             </style>
             <Navbar className="topMenu">
