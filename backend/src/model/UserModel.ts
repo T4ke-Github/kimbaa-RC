@@ -16,9 +16,6 @@ export interface IUser {
   createdAt?: Date; // Required
   updatedAt?: Date; // Optional
   department?: string; // Optional
-  enrolledSince?: Date; // Optional
-  CreditPoints?: number; // Optional
-  phone?: number; // Optional
 }
 
 interface IUserMethods {
@@ -28,20 +25,16 @@ interface IUserMethods {
 type UserModel = Model<IUser, {}, IUserMethods>;
 //ggf noch Adress verweis hinzufügen
 export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
-  name: { type: String, required: true },
-  password: { type: String, required: true },
+  //mqaximum length 100
+  name: { type: String, required: true, maxlength: 100 },
+  password: { type: String, required: true, maxlength: 100 },
   admin: { type: Boolean, default: false },
   studentId: {
     type: Number,
     required: true,
     unique: true,
-    validate: {
-      //Validator to check if the length of the studentId is at least 6 by MongoDB
-      validator: function (v: number) {
-        return v.toString().length >= 6; // studentId muss mindestens 6 Zeichen lang sein
-      },
-      message: props => `Die studentId muss mindestens 6 Zeichen lang sein, aber Sie haben ${props.value}.`
-    }
+    min: 100000,  // Mindestwert für eine 6-stellige Zahl
+    max: 999999,  // Höchstwert für eine 6-stellige Zahl
   },
   application : { type: String },
   address: { type: String },
@@ -62,7 +55,6 @@ export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   createdAt: { type: Date},
   updatedAt: { type: Date},
   department: { type: String },
-  CreditPoints: { type: Number },
 },{
   timestamps: true,
 });

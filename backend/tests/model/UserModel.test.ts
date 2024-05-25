@@ -23,7 +23,7 @@ test("UserModel.test createUser", async () => {
     expect(user.studentId).toBe(123456);
     expect(user.email).toBe("test@bht-berlin.de");
     expect(user.department).toBe("test");
-    expect(user.CreditPoints).toBe(0);
+
     logger.info("UserModel.test createUser wurde beendet");
 }); 
 

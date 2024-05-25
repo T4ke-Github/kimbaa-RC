@@ -1,0 +1,231 @@
+{
+    "Pflichtmodule": [
+      {
+        "Modulnummer": "8637_106565",
+        "Modulname": "Mathematik I"
+      },
+      {
+        "Modulnummer": "11428_106565",
+        "Modulname": "Grundlagen der Theoretischen Informatik"
+      },
+      {
+        "Modulnummer": "11429_106565",
+        "Modulname": "Mediendesign Grundlagen"
+      },
+      {
+        "Modulnummer": "8640_106565",
+        "Modulname": "Technische Grundlagen der Informatik"
+      },
+      {
+        "Modulnummer": "11430_106565",
+        "Modulname": "Programmierung I"
+      },
+      {
+        "Modulnummer": "8643_106565",
+        "Modulname": "Mathematik II"
+      },
+      {
+        "Modulnummer": "10985_106565",
+        "Modulname": "Algorithmen und Datenstrukturen"
+      },
+      {
+        "Modulnummer": "8645_106565",
+        "Modulname": "Datenbanksysteme"
+      },
+      {
+        "Modulnummer": "8646_106565",
+        "Modulname": "Programmierung II"
+      },
+      {
+        "Modulnummer": "8644_106565",
+        "Modulname": "Betriebssysteme"
+      },
+      {
+        "Modulnummer": "8649_106565",
+        "Modulname": "Software Engineering I"
+      },
+      {
+        "Modulnummer": "11431_106565",
+        "Modulname": "Computergrafik Grundlagen"
+      },
+      {
+        "Modulnummer": "11432_106565",
+        "Modulname": "Medientechnologien"
+      },
+      {
+        "Modulnummer": "10126_106565",
+        "Modulname": "Verteilte Systeme"
+      },
+      {
+        "Modulnummer": "11433_106565",
+        "Modulname": "Web Engineering I"
+      },
+      {
+        "Modulnummer": "8655_106565",
+        "Modulname": "Software Engineering II"
+      },
+      {
+        "Modulnummer": "11434_106565",
+        "Modulname": "Web Engineering II"
+      },
+      {
+        "Modulnummer": "11435_106565",
+        "Modulname": "Human–Computer Interaction"
+      },
+      {
+        "Modulnummer": "11436_106565",
+        "Modulname": "Projekt"
+      },
+      {
+        "Modulnummer": "10531_106565",
+        "Modulname": "Grundlagen wissenschaftlichen Arbeitens"
+      },
+      {
+        "Modulnummer": "8662_106565",
+        "Modulname": "Praxisprojekt"
+      }
+    ],
+    "Wahlpflichtmodule": [
+      {
+        "Modulnummer": "11437_106566",
+        "Modulname": "Interaktions- und Interface-Design"
+      },
+      {
+        "Modulnummer": "11438_106566",
+        "Modulname": "Software Engineering: Architekturen und Werkzeuge"
+      },
+      {
+        "Modulnummer": "11439_106566",
+        "Modulname": "3D Web Graphics"
+      },
+      {
+        "Modulnummer": "11440_106566",
+        "Modulname": "Softwarequalität und -test"
+      },
+      {
+        "Modulnummer": "8663_106566",
+        "Modulname": "Betriebswirtschaftslehre"
+      },
+      {
+        "Modulnummer": "11441_106566",
+        "Modulname": "Medienproduktion und -distribution"
+      },
+      {
+        "Modulnummer": "11385_106566",
+        "Modulname": "Effiziente Software Entwickeln mit C++"
+      },
+      {
+        "Modulnummer": "11442_106566",
+        "Modulname": "Programmiersprachen und -paradigmen"
+      },
+      {
+        "Modulnummer": "11443_106566",
+        "Modulname": "Anwendungsentwicklung für IOS-Geräte"
+      },
+      {
+        "Modulnummer": "11444_106566",
+        "Modulname": "Mobile Anwendungsentwicklung"
+      },
+      {
+        "Modulnummer": "11445_106566",
+        "Modulname": "Visual and Scientific Computing"
+      },
+      {
+        "Modulnummer": "11446_106566",
+        "Modulname": "Spieleentwicklung und Creative Coding"
+      },
+      {
+        "Modulnummer": "11447_106566",
+        "Modulname": "Signalverarbeitung für Audio, Bild und Video"
+      },
+      {
+        "Modulnummer": "11448_106566",
+        "Modulname": "Maschinelles Lernen"
+      },
+      {
+        "Modulnummer": "11449_106566",
+        "Modulname": "Aktuelle Webtechnologien: Frameworks und Tools"
+      },
+      {
+        "Modulnummer": "11450_106566",
+        "Modulname": "Aktuelle Themen"
+      },
+      {
+        "Modulnummer": "10385_106566",
+        "Modulname": "Maya"
+      },
+      {
+        "Modulnummer": "10386_106566",
+        "Modulname": "C++ für Java-Programmierer"
+      },
+      {
+        "Modulnummer": "11384_106566",
+        "Modulname": "AngularJS - JavaScript MV* Framework"
+      },
+      {
+        "Modulnummer": "10612_106566",
+        "Modulname": "Videoproduktion für Online-Video-Angebote"
+      },
+      {
+        "Modulnummer": "10433_106566",
+        "Modulname": "Cloud Computing"
+      },
+      {
+        "Modulnummer": "11663_106566",
+        "Modulname": "Frontend–Design Web: Fortgeschrittene Techniken"
+      },
+      {
+        "Modulnummer": "10501_106566",
+        "Modulname": "Microservice-Entwicklung: Architekturen und Entwurfsmuster"
+      },
+      {
+        "Modulnummer": "1980_106566",
+        "Modulname": "Interactive Media Objects & Web-Media Applications"
+      },
+      {
+        "Modulnummer": "1150_106566",
+        "Modulname": "Webprogrammierung mit Python"
+      },
+      {
+        "Modulnummer": "11958_106566",
+        "Modulname": "Echtzeitgrafik Grundlagen"
+      },
+      {
+        "Modulnummer": "12153_106566",
+        "Modulname": "Professionelle Web-Anwendungen umsetzen und betreiben"
+      },
+      {
+        "Modulnummer": "WP23",
+        "Modulname": "Data Science Programmierung mit Python"
+      },
+      {
+        "Modulnummer": "WP25",
+        "Modulname": "Externes Modul 1"
+      },
+      {
+        "Modulnummer": "WP26",
+        "Modulname": "Externes Modul 2"
+      },
+      {
+        "Modulnummer": "WP27",
+        "Modulname": "Externes Modul 3"
+      }
+    ],
+    "Studium Generale": [
+      {
+        "Modulnummer": "1670_106034",
+        "Modulname": "Fotografie in Theorie und Praxis"
+      },
+      {
+        "Modulnummer": "6159_106034",
+        "Modulname": "Geschichte der Stadt Berlin"
+      }
+    ],
+    "Abschlussmodul": [
+      {
+        "Modulnummer": "Abschlussmodul",
+        "Modulname": "Bachelorarbeit"
+      }
+    ]
+  }
+  
