@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 import { Model, Schema, model } from "mongoose";
-import { logger } from "../backlogger";
+
 
 
 
@@ -45,8 +45,7 @@ export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
     validate: {
       validator: function (v: string) {
         const regex = /@bht-berlin.de$/;
-        logger.info(regex.test(v));
-        logger.info(v);
+
         return regex.test(v);
       },
       message: (props) => `Die E-Mail-Adresse muss mit '@bht-berlin.de' enden, aber Sie haben '${props.value}'.`,
@@ -92,16 +91,14 @@ UserSchema.pre("updateOne", function (next) {
 UserSchema.methods.isCorrectPassword = async function (password: string) {
 
     if (password === this.password) {
-      logger.info("Fehler das Passwort ist der gespeicherte Hash.");
+      
       return false;
     }
 
     const isMatch = await bcrypt.compare(password, this.password);
     if (isMatch) {
-      logger.info("Passwort ist korrekt.");
       return true;
     } else {
-      logger.info("Passwort ist falsch.");
       return false;
     }
 

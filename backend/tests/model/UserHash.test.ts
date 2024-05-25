@@ -1,5 +1,5 @@
 import * as bcrypt from "bcryptjs";
-import { logger } from "../../src/backlogger";
+import { logger } from "../../src/logger/testLogger";
 import { User } from "../../src/model/UserModel";
 
 beforeEach(async () => {

@@ -1,4 +1,4 @@
-import { logger } from "../../src/logger";
+import { logger } from "../../src/logger/testLogger";
 import { User } from "../../src/model/UserModel";
 
 

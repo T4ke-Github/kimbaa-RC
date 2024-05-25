@@ -1,15 +1,34 @@
 // In ModuleListe.ts
-import mongoose, { Document, Schema } from 'mongoose';
-import { IModul } from './ModulModel';
+import { Schema, model, Types, Model } from "mongoose";
+import { User } from "../model/UserModel";
+
+
 
 export interface IModulList extends Document {
+  student: Types.ObjectId;
   studentId: number;
-  modules: IModul['_id'][]; // Referenz auf die Module
+  course: string;
+  datum: Date;
+  updatedAt?: Date;
 }
+type ModulListModel = Model<IModulList>;
 
 const ModulListSchema: Schema = new Schema({
-  studentId: { type: Number, required: true, unique: true },
-  modules: [{ type: Schema.Types.ObjectId, ref: 'Modul' }],
+  student: { type:Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
+  studentId: { type: Number, required: false, unique: true },
+  course: { type: String, required: true },
+  datum: { type: Date, required: true, timestamps: true },
+  updatedAt: { type: Date, required: false, timestamps: true },
 });
 
-export const ModulList = mongoose.model<IModulList>('ModulList', ModulListSchema);
+ModulListSchema.pre('save', async function(next) {
+  if (this.isModified('student')) {
+    const user = await User.findById(this.student);
+    if (user) {
+      this.studentId = user.studentId;
+    }
+  }
+  next();
+});
+
+export const ModulList = model<IModulList, ModulListModel>('ModulList', ModulListSchema);

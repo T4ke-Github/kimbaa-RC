@@ -1,17 +1,23 @@
 // In Module.ts
-import mongoose, { Document, Schema } from 'mongoose';
+import { Schema, model, Types, Model } from "mongoose";
+
 
 
 export interface IModul extends Document {
-  Modulnummer: string;
-  Modulname: string;
-  CreditPoints?: number;
+    student: Types.ObjectId;
+    modulliste: Types.ObjectId;
+    Modulnummer: string;
+    Modulname: string;
+    CreditPoints?: number;
 }
+type ModulModel = Model<IModul>;
 
 const ModulSchema: Schema = new Schema({
-  Modulnummer: { type: String, required: true },
-  Modulname: { type: String, required: true },
-  CreditPoints: { type: Number, default: 0 },
+    student: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
+    modulliste: { type: Schema.Types.ObjectId, ref: 'ModulList', required: true, unique: true },
+    Modulnummer: { type: String, required: true },
+    Modulname: { type: String, required: true },
+    CreditPoints: { type: Number, default: 0 },
 });
 
-export const Modul = mongoose.model<IModul>('Modul', ModulSchema);
+export const Modul = model<IModul, ModulModel>('Modul', ModulSchema);
