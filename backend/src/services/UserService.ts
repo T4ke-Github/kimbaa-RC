@@ -1,11 +1,68 @@
-import * as bcrypt from 'bcryptjs';
+
+import fs from 'fs';
+import path from 'path';
 import { Types } from "mongoose";
 import { UserResource } from "../Resources"; // This should be your resource interface for User
 import { logger } from "../logger/serviceLogger";
 import { User } from "../model/UserModel";
 import { AntragZulassung } from "../model/AntragZulassungModel";
 import { dateToString } from './ServiceHelper';
+import { ModulListResource } from "../Resources";
+import * as modulListService from "./ModulListService";
+import { ModulResource } from "../Resources";
+import * as modulService from "./ModulService";
 
+
+//createModulListfromJson
+async function createModulListFromJson(userId: string) {
+    try {
+        // Pfad zur JSON-Datei backend\modulListe.json
+        const jsonPath = path.resolve(__dirname, '..', 'MedieninformatikmodulListe.json');
+        logger.info("jsonPath: " + jsonPath);
+
+        // Lese die JSON-Datei
+        const jsonData = fs.readFileSync(jsonPath, 'utf-8');
+
+        // Parse die JSON-Daten
+        const modulData = JSON.parse(jsonData);
+
+        // Erstelle eine neue Modulliste für den Benutzer
+        const modulListResource = {
+            creator: userId,
+            course: 'Medieninformatik', // Setze dies auf den tatsächlichen Kurs des Benutzers
+        };
+        const newModulList = await modulListService.createModulList(modulListResource);
+
+        // Gehe durch alle Module in der JSON-Datei und erstelle sie für den Benutzer
+        for (const category in modulData) {
+            for (const modul of modulData[category]) {
+                if (!modul.Modulnummer) {
+                    logger.error('Modul hat keine Modulnummer: ' + JSON.stringify(modul));
+                    continue;
+                }
+
+                const modulResource = {
+                    creator: userId,
+                    modulList: newModulList.id,
+                    Modulnumber: modul.Modulnummer, // Achte auf die Groß-/Kleinschreibung
+                    Modulname: modul.Modulname,
+                    CreditPoints: 0, // Setze dies auf die tatsächliche Anzahl der Kreditpunkte für das Modul
+                };
+
+                logger.info("Creating modulResource: " + JSON.stringify(modulResource)); // Debug-Log
+
+                try {
+                    await modulService.createModul(modulResource);
+                    logger.info("ModulResource created: " + JSON.stringify(modulResource));
+                } catch (error) {
+                    logger.error('Error creating module: ' + JSON.stringify(modulResource) + '. Error: ' + error);
+                }
+            }
+        }
+    } catch (error) {
+        logger.error('Error: ' + error);
+    }
+}
 /**
  * Holt alle Benutzer, ohne Passwörter zurückzugeben.
  */
@@ -67,9 +124,21 @@ export async function createUser(userResource: UserResource): Promise<UserResour
             email: userResource.email,
             studentId: userResource.studentId,
             password: userResource.password,
+            department: userResource.department,
         })
     
         await user.save();
+        //create ModulList for user if department is Medieninformatik
+        if (user.department === "Medieninformatik") {
+            try {
+                await createModulListFromJson(user.id);
+                logger.info("ModulList created for user: " + user.id);
+            } catch (error) {
+                logger.error('Fehler beim Erstellen der Modulliste: ' + error);
+                throw new Error('Fehler beim Erstellen der Modulliste: ' + error);
+            }
+        }
+        
         const datum = new Date(); 
         const updatedAt = userResource.updatedAt ? new Date(userResource.updatedAt) : datum;
     

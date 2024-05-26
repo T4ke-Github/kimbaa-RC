@@ -11,8 +11,8 @@ export async function getAlleModule(modulListId: string): Promise<ModulResource[
     logger.info("Modul.Service.getAlleModule wird gestartet");
     const modulList = await ModulList.findById(modulListId).exec();
     if (!modulList) {
-        logger.info("keine gültige ID");
-        throw new Error("keine gültige ID");
+        logger.info("getAlleModule: keine gültige ID");
+        throw new Error("getAlleModule: keine gültige ID");
     } else {
         logger.info("modulListId: " + modulListId);
         const alleModule = await Modul.find({ modulList: modulListId }).exec();
@@ -34,14 +34,11 @@ export async function getModul(id: string): Promise<ModulResource> {
     const modul = await Modul.findById(id).exec();
     logger.info("modul: " + modul);
     if (modul) {
-        const user = await User.findById(modul.student).exec();
-        logger.info("Modul mit ID ${id} gefunden.");
-        logger.info("user: " + user);
-        logger.info("studentId: " + modul.student);
-        logger.info("studentName: " + user?.name);
+        const user = await User.findById(modul.creator).exec();
+
         const modulResource: ModulResource = {
             id: modul.id,
-            studentid: user?.id.toString() || '',
+            creator: user?.id.toString(),
             modulList: modul.modulList.toString() || '',
             Modulnumber: modul.Modulnumber,
             Modulname: modul.Modulname,
@@ -49,8 +46,8 @@ export async function getModul(id: string): Promise<ModulResource> {
         };
         return modulResource;
     } else {
-        logger.info("Modul mit ID ${id} nicht gefunden.");
-        throw new Error("Modul mit ID ${id} nicht gefunden.");
+        logger.info("getModul: Modul mit ID ${id} nicht gefunden.");
+        throw new Error("getModul: Modul mit ID ${id} nicht gefunden.");
     }
 }
 
@@ -60,26 +57,26 @@ export async function getModul(id: string): Promise<ModulResource> {
  * Falls die ModulList geschlossen ist, wird ein Fehler geworfen.
  */
 export async function createModul(modulResource: ModulResource): Promise<ModulResource> {
-    const user = await User.findById(modulResource.studentid).exec();
+    const user = await User.findById(modulResource.creator).exec();
     if (!user) {
-        throw new Error(`No user found with id ${modulResource.studentid}`);
+        throw new Error(`createModul: No user found with id ${modulResource.creator}`);
     }
     const modulList = await ModulList.findById(modulResource.modulList).exec();
     if (!modulList) {
-        throw new Error(`No modulList found with id ${modulResource.modulList}`);
+        throw new Error(`createModul: No modulList found with id ${modulResource.modulList}`);
     }
 
     const modul = await Modul.create({
         creator: user.id,
         modulList: modulResource.modulList,
-        Modulnummer: modulResource.Modulnumber!,
+        Modulnumber: modulResource.Modulnumber!,
         Modulname: modulResource.Modulname!,
         CreditPoints: modulResource.CreditPoints
     });
 
     return {
         id: modul.id,
-        studentid: user.id,
+        creator: user.id,
         modulList: modulList.id,
         Modulnumber: modul.Modulnumber,
         Modulname: modul.Modulname,
@@ -94,18 +91,20 @@ export async function updateModul(modulResource: ModulResource): Promise<ModulRe
     const modul = await Modul.findById(modulResource.id).exec();
 
     if (modul !== null) {
-        const user = await User.findById(modul.student).exec();
+        const user = await User.findById(modul.creator).exec();
         const modulList = await ModulList.findById(modul.modulList).exec();
 
         modul.Modulnumber = modulResource.Modulnumber!;
         modul.Modulname = modulResource.Modulname!;
-        modul.CreditPoints = modulResource.CreditPoints;
+        if (modulResource.CreditPoints) {
+            modul.CreditPoints = modulResource.CreditPoints;
+        }
 
         const updated = await modul.save();
 
         return {
             id: modul.id,
-            studentid: user?.id || '',
+            creator: user?.id,
             modulList: modulList?.id || '',
             Modulnumber: updated.Modulnumber,
             Modulname: updated.Modulname,

@@ -11,11 +11,11 @@ export type UserResource = {
 }
 export type ModulResource = {
     id?: string;
-    studentid: string;
-    modulList: string;
+    creator?: string;
+    modulList?: string;
     Modulnumber?: string;
     Modulname?: string;
-    CreditPoints: number;
+    CreditPoints?: number;
 }
 
 export type ModulListResource = {
@@ -25,6 +25,7 @@ export type ModulListResource = {
     course?: string;
     datum?: string;
     updatedAt?: string;
+    allCredits?: number;
 }
 
 

@@ -7,11 +7,11 @@ import { dateToString, stringToDate } from "./ServiceHelper";
 
 export async function getModulList(studentId: string): Promise<ModulListResource> {
     logger.info("getModulList wird gestartet");
-    const modulList = await ModulList.findById({ studentId: studentId }).exec();
+    const userId = await User.findOne({studentId: studentId }).exec();
+    const modulList = await ModulList.findOne({ creator: userId?.id}).exec();
     if (modulList) {
-        const userId = await User.findById({studentId: studentId }).exec();
         if (userId) {
-            const listmodule = await Modul.find({ student: modulList.id }).exec();
+            const listmodule = await Modul.find({ modulList: modulList.id }).exec();
             const allCredits = listmodule.reduce((sum, modul) => sum + modul.CreditPoints, 0);
 
             const modulListResource: ModulListResource = {
@@ -21,19 +21,20 @@ export async function getModulList(studentId: string): Promise<ModulListResource
                 course: modulList.course,
                 datum: dateToString(modulList.datum),
                 updatedAt: modulList.updatedAt ? dateToString(modulList.updatedAt) : undefined,
+                allCredits: allCredits
             };
             return modulListResource;
 
         }else{
-            logger.info("userId nicht gefunden");
-            throw new Error("userId nicht gefunden");
+            logger.info("GetModulList: userId nicht gefunden");
+            throw new Error("GetModulList: userId nicht gefunden");
         }
         
 
     }
     else {
-        logger.info("modulList nicht gefunden");
-        throw new Error("modulList nicht gefunden");
+        logger.info("GetModulList: modulList nicht gefunden");
+        throw new Error("GetModulList: modulList nicht gefunden");
     }
 
 }
@@ -61,7 +62,6 @@ export async function createModulList(modulListResource: ModulListResource): Pro
             datum: dateToString(modulList.datum),
             updatedAt: dateToString(updatedAt),
         };
-
     } catch (error) {
         throw new Error("Fehler beim Erstellen der ModulList: " + error);
         
@@ -138,3 +138,4 @@ export async function deleteModulList(id: string): Promise<void> {
 
     logger.info(`ModulList und zugehörige Module wurden gelöscht: ${id}`);
 }
+

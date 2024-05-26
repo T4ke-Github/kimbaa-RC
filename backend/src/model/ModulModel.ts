@@ -12,11 +12,11 @@ export interface IModul extends Document {
 type ModulModel = Model<IModul>;
 
 const ModulSchema: Schema = new Schema({
-    creator: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
-    modulList: { type: Schema.Types.ObjectId, ref: 'ModulList', required: true, unique: true },
-    Modulnumber: { type: String, required: true },
-    Modulname: { type: String, required: true },
-    CreditPoints: { type: Number,require: true, default: 0 },
+    creator: { type: Schema.Types.ObjectId, ref: 'User', required: false    },
+    modulList: { type: Schema.Types.ObjectId, ref: 'ModulList', required: false},
+    Modulnumber: { type: String, required: false },
+    Modulname: { type: String, required: false },
+    CreditPoints: { type: Number, default: 0 },
 });
 
 export const Modul = model<IModul, ModulModel>('Modul', ModulSchema);
