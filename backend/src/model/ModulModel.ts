@@ -5,7 +5,7 @@ import { Model, Schema, Types, model } from "mongoose";
 export interface IModul extends Document {
     student: Types.ObjectId;
     modulliste: Types.ObjectId;
-    Modulnummer: string;
+    Modulnumber: string;
     Modulname: string;
     CreditPoints: number;
 }
@@ -14,7 +14,7 @@ type ModulModel = Model<IModul>;
 const ModulSchema: Schema = new Schema({
     student: { type: Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
     modulliste: { type: Schema.Types.ObjectId, ref: 'ModulList', required: true, unique: true },
-    Modulnummer: { type: String, required: true },
+    Modulnumber: { type: String, required: true },
     Modulname: { type: String, required: true },
     CreditPoints: { type: Number,require: true, default: 0 },
 });

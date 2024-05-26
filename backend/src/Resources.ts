@@ -13,7 +13,7 @@ export type ModulResource = {
     id?: string;
     studentid: string;
     modulliste: string;
-    Modulnummer?: string;
+    Modulnumber?: string;
     Modulname?: string;
     CreditPoints: number;
 }
