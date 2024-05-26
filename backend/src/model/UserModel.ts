@@ -9,7 +9,7 @@ export interface IUser {
   name: string; // Required
   password: string; // Required
   admin?: boolean; // Optional, default: false
-  studentId: number; // Required, unique
+  studentId: string; // Required, unique
   application?: string;
   address?: string;
   email?: string; // Optional
@@ -30,7 +30,7 @@ export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   password: { type: String, required: true, maxlength: 100 },
   admin: { type: Boolean, default: false },
   studentId: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
     min: 100000,  // Mindestwert für eine 6-stellige Zahl

@@ -1,9 +1,9 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 
-import * as userService from "../services/UserService";
-import * as serviceHelper from "../services/ServiceHelper";
 import { UserResource } from "../Resources";
-import { logger } from '../backlogger';
+import { logger } from '../logger/routeLogger';
+import * as serviceHelper from "../services/ServiceHelper";
+import * as userService from "../services/UserService";
 
 export const userRouter = express.Router();
 
@@ -19,7 +19,7 @@ userRouter.get("/:identifier", async (req: Request, res: Response, next: NextFun
         let user;
         if (!isNaN(Number(identifier))) {
             // Wenn identifier eine Nummer ist, dann ist es eine studentId
-            user = await userService.getOneUser({ studentId: Number(identifier) });
+            user = await userService.getOneUser({ studentId: String(identifier) });
             
         } else if (serviceHelper.isEmail(identifier)) {
             // Wenn identifier das Format einer E-Mail hat, dann ist es eine email

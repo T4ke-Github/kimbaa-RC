@@ -1,6 +1,5 @@
 // In Module.ts
-import { Schema, model, Types, Model } from "mongoose";
-
+import { Model, Schema, Types, model } from "mongoose";
 
 
 export interface IModul extends Document {
@@ -8,7 +7,7 @@ export interface IModul extends Document {
     modulliste: Types.ObjectId;
     Modulnummer: string;
     Modulname: string;
-    CreditPoints?: number;
+    CreditPoints: number;
 }
 type ModulModel = Model<IModul>;
 
@@ -17,7 +16,7 @@ const ModulSchema: Schema = new Schema({
     modulliste: { type: Schema.Types.ObjectId, ref: 'ModulList', required: true, unique: true },
     Modulnummer: { type: String, required: true },
     Modulname: { type: String, required: true },
-    CreditPoints: { type: Number, default: 0 },
+    CreditPoints: { type: Number,require: true, default: 0 },
 });
 
 export const Modul = model<IModul, ModulModel>('Modul', ModulSchema);

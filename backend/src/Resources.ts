@@ -3,15 +3,30 @@ export type UserResource = {
     name?: string;
     password?: string;
     admin?: boolean;
-    studentId?: number;
+    studentId?: string;
     email?: string;
     createdAt?: string;
     updatedAt?: string;
     department?: string;
-    enrolledSince?: string;
-    CreditPoints?: number;
-    phone?: number;
 }
+export type ModulResource = {
+    id?: string;
+    studentid: string;
+    modulliste: string;
+    Modulnummer?: string;
+    Modulname?: string;
+    CreditPoints: number;
+}
+
+export type ModulListResource = {
+    id?: string;
+    student_id: string;
+    studentId: string;
+    course?: string;
+    datum?: string;
+    updatedAt?: string;
+}
+
 
 export type applicationZulassungResource = {
     creator?: string;

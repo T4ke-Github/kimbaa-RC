@@ -2,9 +2,10 @@ import supertest from "supertest";
 
 import { UserResource } from "../../src/Resources";
 import app from "../../src/app";
+import { logger } from "../../src/logger/testLogger";
 import { User } from "../../src/model/UserModel";
 import * as userService from "../../src/services/UserService";
-import { logger } from "../../src/logger";
+
 
 let Elsa: UserResource;
 //Create some USER
@@ -13,24 +14,27 @@ beforeEach(async () => {
         name: "Elsa",
         password: "test",
         admin: false,
-        studentId: 133769,
+        studentId: "133769",
         email: "elza@bht-berlin.de",
         department: "6",
+        
     })
     const user1 = new User({
         name: "Tim",
         password: "test",
         admin: false,
-        studentId: 666456,
+        studentId: "666456",
         email: "test@bht-berlin.de",
         department: "6",
+
+    
     });
     await user1.save();
     const user2 = new User({
         name: "Tom",
         password: "test",
         admin: false,
-        studentId: 666995,
+        studentId: "666995",
         email: "test2@bht-berlin.de",
         department: "6",
     });
@@ -39,7 +43,7 @@ beforeEach(async () => {
         name: "Jerry",
         password: "test",
         admin: false,
-        studentId: 666999,
+        studentId: "666999",
         email: "test3@bht-berlin.de",
         department: "6",
     });
@@ -61,7 +65,7 @@ test("/api/user/ get by studID", async () => {
     const response = await testee.get("/api/user/666456");
     expect(response.status).toBe(200);
     expect(response.body.name).toBe("Tim");
-    expect(response.body.studentId).toBe(666456);
+    expect(response.body.studentId).toBe("666456");
     expect(response.body.email).toBe("test@bht-berlin.de");
 })
 //getOne by id id not found
@@ -76,7 +80,7 @@ test("/api/user/ get by email", async () => {
     const response = await testee.get("/api/user/test@bht-berlin.de");
     expect(response.status).toBe(200);
     expect(response.body.name).toBe("Tim");
-    expect(response.body.studentId).toBe(666456);
+    expect(response.body.studentId).toBe("666456");
     expect(response.body.email).toBe("test@bht-berlin.de");
 })
 //get fail
@@ -95,7 +99,7 @@ test("/api/user/", async () => {
     const userResource: UserResource = {
         name: "uniqueUser 3000",
         password: "test",
-        studentId: 696969,
+        studentId: "696969",
         email: "uniqueUserEmail@bht-berlin.de",
     };
 
@@ -105,7 +109,7 @@ test("/api/user/", async () => {
     // Überprüfen des Statuscodes und der Antwortdaten
     expect(response.status).toBe(201);
     expect(response.body.name).toBe("uniqueUser 3000");
-    expect(response.body.studentId).toBe(696969);
+    expect(response.body.studentId).toBe("696969");
     expect(response.body.email).toBe("uniqueUserEmail@bht-berlin.de");
 
 });
@@ -121,7 +125,7 @@ test("/api/user/:id update User", async () => {
         name: "Cageolas Nice",
         password: "geheim",
         admin: false,
-        studentId: 999999,
+        studentId: "999999",
         email: "cage@bht-berlin.de",
     })
     const userResource: UserResource = {
@@ -129,7 +133,7 @@ test("/api/user/:id update User", async () => {
         name: "Nicolas Cage",
         password: "geheim",
         admin: false,
-        studentId: 999999,
+        studentId: "999999",
         email: "nicolas@bht-berlin.de",
     };
     let response = await testee.put(`/api/user/${userResource.id}`).send(userResource);
@@ -146,7 +150,7 @@ test("/api/user/:id update User id not found", async () => {
         name: "Nicolas Cage",
         password: "geheim",
         admin: false,
-        studentId: 999999,
+        studentId: "999999",
         email: "nicolas@bht-berlin.de",
     };
     let response = await testee.put(`/api/user/${fakeId}`).send(userResource);
@@ -160,7 +164,7 @@ test("/api/user/:id delete User", async () => {
         name: "Cageolas Nice",
         password: "geheim",
         admin: false,
-        studentId: 999999,
+        studentId: "999999",
         email: "cage@bht-berlin.de",
     });
     logger.info("User created for delete test:", user);

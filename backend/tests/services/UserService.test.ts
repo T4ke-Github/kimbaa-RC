@@ -1,9 +1,8 @@
-import { UserResource } from "../../src/Resources";
-import * as UserService from "../../src/services/UserService";
-import { logger } from "../../src/logger";
 import { HydratedDocument } from "mongoose";
-import { User, IUser } from "../../src/model/UserModel";
+import { logger } from "../../src/logger/testLogger";
+import { IUser, User } from "../../src/model/UserModel";
 import { login } from "../../src/services/AuthenticationService";
+import * as UserService from "../../src/services/UserService";
 
 
 beforeEach(async () => {
@@ -11,7 +10,7 @@ beforeEach(async () => {
         name: "DerOtto",
         password: "test",
         admin: false,
-        studentId: 666456,
+        studentId: "666456",
         email: "test@bht-berlin.de",
         department: "6",
     });
@@ -42,7 +41,7 @@ test("UserService.test createUser ", async () => {
         name: "Neuer Benutzer",
         password: "test",
         admin: false,
-        studentId: 666222,
+        studentId: "666222",
         email: "cuel@bht-berlin.de", 
         department: "6",
     })
@@ -55,7 +54,7 @@ test("UserService.test createUser ", async () => {
 //getOne
 test("UserService.test getOneUser by studentId(number)", async () => {
     logger.info("UserService.test getOneUser wird gestartet");
-    const user = await UserService.getOneUser({studentId: 666456});
+    const user = await UserService.getOneUser({studentId: "666456"});
     expect(user.name).toBe("DerOtto");
     logger.info("UserService.test getOneUser wurde beendet");
 }); 
@@ -71,10 +70,10 @@ test("UserService.test Create User with minimal data", async () => {
     const user = await UserService.createUser({
         name: "Neuer Benutzer",
         password: "test",
-        studentId: 666222,
+        studentId: "666222",
         email: "cuel@bht-berlin.de"
     })
-    const neuErstellterUser = await User.findOne({ studentId: 666222 });
+    const neuErstellterUser = await User.findOne({ studentId: "666222" });
 
     expect(neuErstellterUser!.name).toBe("Neuer Benutzer"); //prüfen Sie, ob der Benutzer korrekt erstellt wurde
     logger.info("UserService.test Create User with minimal data wurde beendet");
@@ -100,7 +99,7 @@ test("UserService.test deleteUser", async () => {
     const user = await UserService.createUser({
         name: "Neuer Benutzer",
         password: "test",
-        studentId: 666222,
+        studentId: "666222",
         email: "cuel@bht-berlin.de"
     })
     const findUser = await User.findOne({ studentId: 666222 });
@@ -118,7 +117,7 @@ test("UserService.test create user without password", async () => {
         const user = await UserService.createUser({
             name: "Neuer Benutzer",
             admin: false,
-            studentId: 666222,
+            studentId: "666222",
             email: "cuel@bht-berlin.de"
         })
         logger.error("UserService.test create user without password not working correctly");
@@ -135,7 +134,7 @@ test("UserService.test createUser with same studentId", async () => {
         const user = await UserService.createUser({
             name: "Neuer Benutzer",
             password: "test",
-            studentId: 666456,
+            studentId: "666456",
             email: "cuel@bht-berlin.de"
         })
         logger.error("UserService.test createUser with same studentId not working correctly");
@@ -154,7 +153,7 @@ test("UserService.test createUser with same email", async () => {
         const user = await UserService.createUser({
             name: "Neuer Benutzer",
             password: "test",
-            studentId: 666222,
+            studentId: "666222",
             email: "test@bht-berlin.de"
         })
         logger.error("UserService.test createUser with same email not working correctly");
@@ -172,7 +171,7 @@ test("UserService.test createUser with empty name", async () => {
         const user = await UserService.createUser({
             name: "",
             password: "test",
-            studentId: 666222,
+            studentId: "666222",
             email: "cuel@bht-berlin.de"
         })
         logger.error("UserService.test createUser with empty name not working correctly");
@@ -188,7 +187,7 @@ test("UserService.test updateUser name", async () => {
     const userToUpdate = await UserService.createUser({
         name: "Neuer Benutzer",
         password: "test",
-        studentId: 666222,
+        studentId: "666222",
         email: "cuel@bht-berlin.de"
     })
     expect(userToUpdate.name).toBe("Neuer Benutzer");
@@ -205,7 +204,7 @@ test("UserService.test updateUser name + password", async () => {
     const userToUpdate = await UserService.createUser({
         name: "Neuer Benutzer",
         password: "test",
-        studentId: 666222,
+        studentId: "666222",
         email: "cuel@bht-berlin.de"
     })
     expect(userToUpdate.name).toBe("Neuer Benutzer");
@@ -217,7 +216,7 @@ test("UserService.test updateUser name + password", async () => {
 
     expect(userUpdated.name).toBe("Neuer Name");
     //checl new password
-    const pwCorrect = await login(666222, "test2");
+    const pwCorrect = await login("666222", "test2");
     expect(pwCorrect).toBeTruthy();
     logger.info ("UserService.test updateUser beendet NAME + PASSWORD");
 
@@ -228,7 +227,7 @@ test("UserService.test updateUser with empty name", async () => {
     const userToUpdate = await UserService.createUser({
         name: "Neuer Benutzer",
         password: "test",
-        studentId: 666222,
+        studentId: "666222",
         email: "cuel@bht-berlin.de"
     })
     try {
@@ -247,7 +246,7 @@ test("UserService.test updateUser with empty name", async () => {
 //User wrong ID
 test("UserService.test getUser with wrong studentID", async () => {
     logger.info("UserService.test getUser with wrong ID ");
-    const fakeID = 999999;
+    const fakeID = "999999";
     try {
         const user = await UserService.getOneUser({studentId: fakeID});
         logger.error("UserService.test getUser with wrong ID not working correctly");
@@ -288,7 +287,7 @@ test("UserService.test updateUser not found", async () => {
     const user = await UserService.createUser({
         name: "Neuer Benutzer",
         password: "test",
-        studentId: 666222,
+        studentId: "666222",
         email: "cuel@bht-berlin.de"
     })
     const findUser = await User.findOne({ studentId: 666222 });

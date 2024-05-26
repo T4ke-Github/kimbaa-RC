@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcryptjs';
 import { Types } from "mongoose";
 import { UserResource } from "../Resources"; // This should be your resource interface for User
-import { logger } from "../backlogger";
+import { logger } from "../logger/serviceLogger";
 import { User } from "../model/UserModel";
 import { AntragZulassung } from "../model/AntragZulassungModel";
 import { dateToString } from './ServiceHelper';
@@ -25,7 +25,7 @@ export async function getAlleUser(): Promise<UserResource[]> {
     return userResources; 
 }
 //getOne by studentid or email
-export async function getOneUser(identifier: { studentId?: number; email?: string }): Promise<UserResource> {
+export async function getOneUser(identifier: { studentId?: string; email?: string }): Promise<UserResource> {
     logger.info("UserService.getOneUser wird gestartet");
 
     try {

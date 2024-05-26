@@ -1,12 +1,12 @@
 // In ModuleListe.ts
-import { Schema, model, Types, Model } from "mongoose";
+import { Model, Schema, Types, model } from "mongoose";
 import { User } from "../model/UserModel";
 
 
 
 export interface IModulList extends Document {
   student: Types.ObjectId;
-  studentId: number;
+  studentId: string;
   course: string;
   datum: Date;
   updatedAt?: Date;
@@ -15,7 +15,7 @@ type ModulListModel = Model<IModulList>;
 
 const ModulListSchema: Schema = new Schema({
   student: { type:Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
-  studentId: { type: Number, required: false, unique: true },
+  studentId: { type: String, required: false, unique: true },
   course: { type: String, required: true },
   datum: { type: Date, required: true, timestamps: true },
   updatedAt: { type: Date, required: false, timestamps: true },

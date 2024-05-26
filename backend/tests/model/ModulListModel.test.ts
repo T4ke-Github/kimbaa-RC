@@ -1,8 +1,7 @@
 import { HydratedDocument } from "mongoose";
 import { logger } from "../../src/logger/testLogger";
 import { ModulList } from "../../src/model/ModulListModel";
-import { Modul } from "../../src/model/ModulModel";
-import { User, IUser } from "../../src/model/UserModel";
+import { IUser, User } from "../../src/model/UserModel";
 
 
 let user: HydratedDocument<IUser>;
@@ -11,7 +10,7 @@ beforeEach(async () => {
         name: "test",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
         department: "test",
     })
@@ -28,7 +27,7 @@ test("ModulList.test create ModulList", async () => {
     await modulliste.save();
     expect(await ModulList.findOne({ student: user.id })).not.toBeNull();
     
-    expect(modulliste.studentId).toBe(123456);
+    expect(modulliste.studentId).toBe("123456");
     logger.info("ModulList.test create ModulList wurde beendet");
 })
 
@@ -59,7 +58,7 @@ test("ModulList.test change ModulList", async () => {
     modulliste.course = "Informatik";
     await modulliste.save();
     expect(modulliste.course).toBe("Informatik");
-    expect(modulliste.studentId).toBe(123456);
+    expect(modulliste.studentId).toBe("123456");
     logger.info("ModulList.test change ModulList wurde beendet");
 })
 

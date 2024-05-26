@@ -9,7 +9,7 @@ test("UserModel.test createUser", async () => {
         name: "test",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
         department: "test",
         enrolledSince: new Date(),
@@ -20,7 +20,7 @@ test("UserModel.test createUser", async () => {
     expect(user.id).toBeDefined();
     expect(user.name).toBe("test");
     expect(user.admin).toBe(false);
-    expect(user.studentId).toBe(123456);
+    expect(user.studentId).toBe("123456");
     expect(user.email).toBe("test@bht-berlin.de");
     expect(user.department).toBe("test");
 
@@ -34,7 +34,7 @@ test("UserModel.test createUser twice same name", async () => {
         name: "DerOtto",
         password: "test",
         admin: false,
-        studentId: 666456,
+        studentId: "666456",
         email: "test@bht-berlin.de",
         department: "test",
         enrolledSince: new Date(),
@@ -45,7 +45,7 @@ test("UserModel.test createUser twice same name", async () => {
         name: "DerOtto",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test2@bht-berlin.de",
         department: "test",
         enrolledSince: new Date(),
@@ -66,7 +66,7 @@ test("UserModel.test createUser twice same studentId must fail", async () => {
         name: "test",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
         department: "test",
         enrolledSince: new Date(),
@@ -77,7 +77,7 @@ test("UserModel.test createUser twice same studentId must fail", async () => {
         name: "test2",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test",
         department: "test",
         enrolledSince: new Date(), 
@@ -98,7 +98,7 @@ test("UserModel.test createUser without password must fail", async () => {
     const user = new User({
         name: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test",
         department: "test",
         enrolledSince: new Date(),
@@ -118,7 +118,7 @@ test("UserModel.test find user by name", async () => {
         name: "test",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
         failedLoginCount: 0,
         department: "test",
@@ -157,7 +157,7 @@ test("UserModel.test change name without studentId must fail", async () => {
         name: "irgendeinOtto",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
         department: "test",
         enrolledSince: new Date(),
@@ -179,7 +179,7 @@ test("UserModel.test change name with findOneandUpdate", async () => {
         name: "oldname",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
         department: "test",
         CreditPoints: 0,
@@ -204,7 +204,7 @@ test("UserModel.test change name with updateOne", async () => {
         name: "oldname",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
         failedLoginCount: 0,
         department: "test",
@@ -226,7 +226,7 @@ test("UserModel.test change name without studentId with updateOne must fail", as
         name: "oldname",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
         failedLoginCount: 0,
         department: "test",
@@ -246,12 +246,12 @@ test("UserModel.test Create User with minimal data", async () => {
     const user = new User({
         name: "test",
         password: "test",
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
     });
     await user.save();
     expect(user?.name).toBe("test");
-    expect(user?.studentId).toBe(123456);
+    expect(user?.studentId).toBe("123456");
     logger.info("UserModel.test Create User with minimal data wurde beendet");
 })
 
