@@ -12,7 +12,7 @@ export type UserResource = {
 export type ModulResource = {
     id?: string;
     studentid: string;
-    modulliste: string;
+    modulList: string;
     Modulnumber?: string;
     Modulname?: string;
     CreditPoints: number;
@@ -20,8 +20,8 @@ export type ModulResource = {
 
 export type ModulListResource = {
     id?: string;
-    student_id: string;
-    studentId: string;
+    creator?: string;
+    studentId?: string;
     course?: string;
     datum?: string;
     updatedAt?: string;

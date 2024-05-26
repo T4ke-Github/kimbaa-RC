@@ -1,7 +1,8 @@
 import { HydratedDocument } from "mongoose";
 import { logger } from "../../src/logger/testLogger";
 import { ModulList } from "../../src/model/ModulListModel";
-import { IUser, User } from "../../src/model/UserModel";
+import { Modul } from "../../src/model/ModulModel";
+import { User, IUser } from "../../src/model/UserModel";
 
 
 let user: HydratedDocument<IUser>;
@@ -10,7 +11,7 @@ beforeEach(async () => {
         name: "test",
         password: "test",
         admin: false,
-        studentId: "123456",
+        studentId: 123456,
         email: "test@bht-berlin.de",
         department: "test",
     })
@@ -20,21 +21,21 @@ beforeEach(async () => {
 test("ModulList.test create ModulList", async () => {
     logger.info("ModulList.test create ModulList wird gestartet");
     const modulliste = new ModulList({
-        student: user.id,
+        creator: user.id,
         course: "Medieninformatik",
         datum: new Date(),
     })
     await modulliste.save();
-    expect(await ModulList.findOne({ student: user.id })).not.toBeNull();
-    
-    expect(modulliste.studentId).toBe("123456");
+    const foundlist = await ModulList.findById(modulliste.id);
+    expect(foundlist).not.toBeNull();
+    expect(foundlist!.studentId).toBe("123456");
     logger.info("ModulList.test create ModulList wurde beendet");
 })
 
 test("ModulList.test remove ModulList", async () => {
     logger.info("ModulList.test remove ModulList wird gestartet");
     const modulliste = new ModulList({
-        student: user.id,
+        creator: user.id,
         course: "Medieninformatik",
         datum: new Date(),
     })
@@ -50,7 +51,7 @@ test("ModulList.test remove ModulList", async () => {
 test("ModulList.test change ModulList", async () => {
     logger.info("ModulList.test change ModulList wird gestartet");
     const modulliste = new ModulList({
-        student: user.id,
+        creator: user.id,
         course: "Medieninformatik",
         datum: new Date(),
     })

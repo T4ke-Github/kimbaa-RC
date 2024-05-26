@@ -5,7 +5,7 @@ import { User } from "../model/UserModel";
 
 
 export interface IModulList extends Document {
-  student: Types.ObjectId;
+  creator: Types.ObjectId;
   studentId: string;
   course: string;
   datum: Date;
@@ -14,7 +14,7 @@ export interface IModulList extends Document {
 type ModulListModel = Model<IModulList>;
 
 const ModulListSchema: Schema = new Schema({
-  student: { type:Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
+  creator: { type:Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
   studentId: { type: String, required: false, unique: true },
   course: { type: String, required: true },
   datum: { type: Date, required: true, timestamps: true },
@@ -22,11 +22,9 @@ const ModulListSchema: Schema = new Schema({
 });
 
 ModulListSchema.pre('save', async function(next) {
-  if (this.isModified('student')) {
-    const user = await User.findById(this.student);
-    if (user) {
-      this.studentId = user.studentId;
-    }
+  const user = await User.findById(this.creator).exec();
+  if (user) {
+    this.studentId = user.studentId;
   }
   next();
 });
