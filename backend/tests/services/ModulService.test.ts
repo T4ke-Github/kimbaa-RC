@@ -81,20 +81,23 @@ test("ModulService.test updateModule by list to solved", async () => {
 
     const updatelist: ModulResource[] = [
         {
+            creator: user.id,
             modulname: "Mathematik I",
             solved: true
         },
         {
+            creator: user.id,
             modulname: "Grundlagen der Theoretischen Informatik",
             solved: true
         },
         {
+            creator: user.id,
             modulname: "Mathematik II",
             solved: true
         }
     ]
     const userID = user.id;
-    const result = await ModulService.updateModulesByModuleNameAndUserId(updatelist, userID!);
+    const result = await ModulService.updateModulesByModuleNameAndUserId(updatelist);
 
     const modulList = await ModulList.findOne({ creator: user.id });
     const alleEintraege = await ModulService.getAlleModule(modulList?.id);
@@ -125,20 +128,23 @@ test("ModulService.test calculateSolvedModuls", async () => {
 
     const updatelist: ModulResource[] = [
         {
+            creator: user.id,
             modulname: "Mathematik I",
             solved: true
         },
         {
+            creator: user.id,
             modulname: "Grundlagen der Theoretischen Informatik",
             solved: true
         },
-        {
+        {   
+            creator: user.id,
             modulname: "Mathematik II",
             solved: true
         }
     ]
     const userID = user.id;
-    const result = await ModulService.updateModulesByModuleNameAndUserId(updatelist, userID!);
+    const result = await ModulService.updateModulesByModuleNameAndUserId(updatelist);
 
     const modulList = await ModulList.findOne({ creator: user.id });
     const alleEintraege = await ModulService.getAlleModule(modulList?.id);

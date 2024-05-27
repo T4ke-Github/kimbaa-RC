@@ -7,9 +7,10 @@ import { User } from "../model/UserModel";
  * Gibt alle Module in einer ModulList zurück.
  * Wenn die ModulList nicht gefunden wurde, wird ein Fehler geworfen.
  */
-export async function getAlleModule(modulListId: string): Promise<ModulResource[]> {
+export async function getAlleModule(studentId: string): Promise<ModulResource[]> { 
     logger.info("Modul.Service.getAlleModule wird gestartet");
-    const modulList = await ModulList.findById(modulListId).exec();
+    const modulList = await ModulList.findOne({ studentId: studentId }).exec();
+    const modulListId = modulList?.id;
     if (!modulList) {
         logger.info("getAlleModule: keine gültige ID");
         throw new Error("getAlleModule: keine gültige ID");
@@ -138,16 +139,16 @@ export async function deleteModul(id: string): Promise<void> {
 
 
 //modulupdating
-export async function updateModulesByModuleNameAndUserId(modules: ModulResource[], userId: string): Promise<void> {
+export async function updateModulesByModuleNameAndUserId(modules: ModulResource[]): Promise<void> {
     for (const module of modules) {
         try {
             const existingModule = await Modul.findOne({
-                creator: userId,
+                creator: module.creator,
                 modulname: module.modulname,
             }).exec();
 
             if (!existingModule) {
-                throw new Error(`Modul mit Modulname "${module.modulname}" und Ersteller-ID ${userId} nicht gefunden.`);
+                throw new Error(`Modul mit Modulname "${module.modulname}" und Ersteller-ID ${module.creator} nicht gefunden.`);
             }
 
             // Hier kannst du den Solved-Wert aktualisieren

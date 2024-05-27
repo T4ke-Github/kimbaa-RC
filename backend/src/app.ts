@@ -5,6 +5,7 @@ import "express-async-errors"; // needs to be imported before routers and other 
 import cors from 'cors';
 import { userRouter } from './routes/userRout';
 import { loginRouter } from './routes/loginRoute';
+import { modulRouter } from './routes/modulRoute';
 
 
 
@@ -25,5 +26,6 @@ app.use('*', express.json()) //
 // Routes
 app.use("/api/login", loginRouter)   
 app.use("/api/user", userRouter)
+app.use("/api/modul", modulRouter)
 
 export default app;

@@ -4,6 +4,9 @@ import { IModulList, ModulList } from "../../src/model/ModulListModel";
 import { Modul } from "../../src/model/ModulModel";
 import { IUser, User } from "../../src/model/UserModel";
 import * as ModulListService from "../../src/services/ModulListService";
+import * as ModulService from "../../src/services/ModulService";
+import * as UserService from "../../src/services/UserService";
+import { ModulResource } from "../../src/Resources";
 
 // User before each test
 let user1: HydratedDocument<IUser>;
@@ -153,6 +156,8 @@ test("ModulListService.test getModulList allCredits", async () => {
         modulnumber: "123456",
         modulname: "test",
         creditPoints: 5,
+        solved: true,
+        required: true
     })
     const modul2 = new Modul({
         creator: user1.id,
@@ -160,6 +165,8 @@ test("ModulListService.test getModulList allCredits", async () => {
         modulnumber: "654321",
         modulname: "test2",
         creditPoints: 5,
+        solved: true,
+        required: true
     })
     const modul3 = new Modul({
         creator: user1.id,
@@ -167,13 +174,18 @@ test("ModulListService.test getModulList allCredits", async () => {
         modulnumber: "1234567",
         modulname: "test3",
         creditPoints: 5,
+        solved: true,
+        required: true
     })
     await modul1.save();
     await modul2.save();
     await modul3.save();
     const foundlist = await ModulListService.getModulList("123456");
     expect(foundlist).toBeTruthy();
-    expect(foundlist!.allCredits).toBe(15);
+    //modulService calculates all credits
+    const UserID = user1.id;
+    const result = await ModulService.calculateModuleSummary(UserID);
+    expect(result.credits).toBe(15);
     logger.info("ModulListService.test getModulList allCredits wurde beendet"); 
 });
 

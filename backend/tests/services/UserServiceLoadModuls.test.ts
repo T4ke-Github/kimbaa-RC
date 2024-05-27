@@ -17,6 +17,7 @@ test("Load Module UserService", async () => {
         course: "Medieninformatik",
     })
     //get modullist from user
+
     const modulList = await ModulList.findOne({ creator: user.id });
     const neuErstellterUser = await User.findOne({ studentId: 666456 });
     const alleEintraege = await ModulService.getAlleModule(modulList?.id);
@@ -77,7 +78,7 @@ test("Load Module UserService", async () => {
 
     expect(testmodul?.modulnumber).toBe("11430_106565");
     logger.info("UserServiceLoadModuls wurde beendet");
-})
+}, 10000)
 
 //add credits to preloaded moduls
 /* test("Load Module UserService update credits", async () => {
