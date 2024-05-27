@@ -12,7 +12,7 @@ export async function getModulList(studentId: string): Promise<ModulListResource
     if (modulList) {
         if (userId) {
             const listmodule = await Modul.find({ modulList: modulList.id }).exec();
-            const allCredits = listmodule.reduce((sum, modul) => sum + modul.CreditPoints, 0);
+            
 
             const modulListResource: ModulListResource = {
                 id: modulList.id,
@@ -21,7 +21,7 @@ export async function getModulList(studentId: string): Promise<ModulListResource
                 course: modulList.course,
                 datum: dateToString(modulList.datum),
                 updatedAt: modulList.updatedAt ? dateToString(modulList.updatedAt) : undefined,
-                allCredits: allCredits
+                
             };
             return modulListResource;
 

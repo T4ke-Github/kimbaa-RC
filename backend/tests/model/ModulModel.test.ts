@@ -29,15 +29,15 @@ test("Modul.test create Modul", async () => {
     const modul = new Modul({
         creator: user.id,
         modulList: moduleList.id,
-        Modulnumber: "123456",
-        Modulname: "test",
-        CreditPoints: 5,
+        modulnumber: "123456",
+        modulname: "test",
+        creditPoints: 5,
     })
     await modul.save();
     expect(modul.id).toBeDefined();
-    expect(modul.Modulnumber).toBe("123456");
-    expect(modul.Modulname).toBe("test");
-    expect(modul.CreditPoints).toBe(5);
+    expect(modul.modulnumber).toBe("123456");
+    expect(modul.modulname).toBe("test");
+    expect(modul.creditPoints).toBe(5);
     logger.info("Modul.test create Modul wurde beendet");
 })
 //remove
@@ -46,16 +46,16 @@ test("Modul.test remove Modul", async () => {
     const modul = new Modul({
         creator: user.id,
         modulList: moduleList.id,
-        Modulnumber: "123456",
-        Modulname: "test",
-        CreditPoints: 5,
+        modulnumber: "123456",
+        modulname: "test",
+        creditPoints: 5,
     })
     await modul.save();
     //check if exist
-    expect(await Modul.findOne({ Modulnumber: "123456" })).not.toBeNull();
+    expect(await Modul.findOne({ modulnumber: "123456" })).not.toBeNull();
     //delete
-    await Modul.deleteOne({ Modulnumber: "123456" });
-    expect(await Modul.findOne({ Modulnumber: "123456" })).toBeNull();
+    await Modul.deleteOne({ modulnumber: "123456" });
+    expect(await Modul.findOne({ modulnumber: "123456" })).toBeNull();
     logger.info("Modul.test remove Modul wurde beendet");
 })
 //change
@@ -64,17 +64,17 @@ test("Modul.test change Modul", async () => {
     const modul = new Modul({
         creator: user.id,
         modulList: moduleList.id,
-        Modulnumber: "123456",
-        Modulname: "test",
-        CreditPoints: 5,
+        modulnumber: "123456",
+        modulname: "test",
+        creditPoints: 5,
     })
     await modul.save();
     //check if exist
-    expect(await Modul.findOne({ Modulnumber: "123456" })).not.toBeNull();
+    expect(await Modul.findOne({ modulnumber: "123456" })).not.toBeNull();
     //change
-    await Modul.updateOne({ Modulnumber: "123456" }, { Modulname: "test2" });
-    const changemodul = await Modul.findOne({ Modulnumber: "123456" });
-    expect(changemodul!.Modulname).toBe("test2");
+    await Modul.updateOne({ modulnumber: "123456" }, { modulname: "test2" });
+    const changemodul = await Modul.findOne({ modulnumber: "123456" });
+    expect(changemodul!.modulname).toBe("test2");
     logger.info("Modul.test change Modul wurde beendet");
 })
 //modul without creditpoints works
@@ -83,16 +83,16 @@ test("Modul.test change Modul without creditpoints", async () => {
     const modul = new Modul({
         creator: user.id,
         modulList: moduleList.id,
-        Modulnumber: "123456",
-        Modulname: "test",
+        modulnumber: "123456",
+        modulname: "test",
     })
     await modul.save();
     //check if exist
-    expect(await Modul.findOne({ Modulnumber: "123456" })).not.toBeNull();
+    expect(await Modul.findOne({ modulnumber: "123456" })).not.toBeNull();
     //change
-    await Modul.updateOne({ Modulnumber: "123456" }, { Modulname: "test2" }); 
-    const changemodul = await Modul.findOne({ Modulnumber: "123456" });
-    expect(changemodul!.Modulname).toBe("test2");
+    await Modul.updateOne({ modulnumber: "123456" }, { modulname: "test2" }); 
+    const changemodul = await Modul.findOne({ modulnumber: "123456" });
+    expect(changemodul!.modulname).toBe("test2");
     logger.info("Modul.test change Modul without creditpoints wurde beendet")
 
 })

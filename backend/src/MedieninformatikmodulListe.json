@@ -2,229 +2,229 @@
     "Pflichtmodule": [
       {
         "Modulnummer": "8637_106565",
-        "Modulname": "Mathematik I"
+        "modulname": "Mathematik I"
       },
       {
         "Modulnummer": "11428_106565",
-        "Modulname": "Grundlagen der Theoretischen Informatik"
+        "modulname": "Grundlagen der Theoretischen Informatik"
       },
       {
         "Modulnummer": "11429_106565",
-        "Modulname": "Mediendesign Grundlagen"
+        "modulname": "Mediendesign Grundlagen"
       },
       {
         "Modulnummer": "8640_106565",
-        "Modulname": "Technische Grundlagen der Informatik"
+        "modulname": "Technische Grundlagen der Informatik"
       },
       {
         "Modulnummer": "11430_106565",
-        "Modulname": "Programmierung I"
+        "modulname": "Programmierung I"
       },
       {
         "Modulnummer": "8643_106565",
-        "Modulname": "Mathematik II"
+        "modulname": "Mathematik II"
       },
       {
         "Modulnummer": "10985_106565",
-        "Modulname": "Algorithmen und Datenstrukturen"
+        "modulname": "Algorithmen und Datenstrukturen"
       },
       {
         "Modulnummer": "8645_106565",
-        "Modulname": "Datenbanksysteme"
+        "modulname": "Datenbanksysteme"
       },
       {
         "Modulnummer": "8646_106565",
-        "Modulname": "Programmierung II"
+        "modulname": "Programmierung II"
       },
       {
         "Modulnummer": "8644_106565",
-        "Modulname": "Betriebssysteme"
+        "modulname": "Betriebssysteme"
       },
       {
         "Modulnummer": "8649_106565",
-        "Modulname": "Software Engineering I"
+        "modulname": "Software Engineering I"
       },
       {
         "Modulnummer": "11431_106565",
-        "Modulname": "Computergrafik Grundlagen"
+        "modulname": "Computergrafik Grundlagen"
       },
       {
         "Modulnummer": "11432_106565",
-        "Modulname": "Medientechnologien"
+        "modulname": "Medientechnologien"
       },
       {
         "Modulnummer": "10126_106565",
-        "Modulname": "Verteilte Systeme"
+        "modulname": "Verteilte Systeme"
       },
       {
         "Modulnummer": "11433_106565",
-        "Modulname": "Web Engineering I"
+        "modulname": "Web Engineering I"
       },
       {
         "Modulnummer": "8655_106565",
-        "Modulname": "Software Engineering II"
+        "modulname": "Software Engineering II"
       },
       {
         "Modulnummer": "11434_106565",
-        "Modulname": "Web Engineering II"
+        "modulname": "Web Engineering II"
       },
       {
         "Modulnummer": "11435_106565",
-        "Modulname": "Human–Computer Interaction"
+        "modulname": "Human–Computer Interaction"
       },
       {
         "Modulnummer": "11436_106565",
-        "Modulname": "Projekt"
+        "modulname": "Projekt"
       },
       {
         "Modulnummer": "10531_106565",
-        "Modulname": "Grundlagen wissenschaftlichen Arbeitens"
+        "modulname": "Grundlagen wissenschaftlichen Arbeitens"
       },
       {
         "Modulnummer": "8662_106565",
-        "Modulname": "Praxisprojekt"
+        "modulname": "Praxisprojekt"
       }
     ],
     "Wahlpflichtmodule": [
       {
         "Modulnummer": "11437_106566",
-        "Modulname": "Interaktions- und Interface-Design"
+        "modulname": "Interaktions- und Interface-Design"
       },
       {
         "Modulnummer": "11438_106566",
-        "Modulname": "Software Engineering: Architekturen und Werkzeuge"
+        "modulname": "Software Engineering: Architekturen und Werkzeuge"
       },
       {
         "Modulnummer": "11439_106566",
-        "Modulname": "3D Web Graphics"
+        "modulname": "3D Web Graphics"
       },
       {
         "Modulnummer": "11440_106566",
-        "Modulname": "Softwarequalität und -test"
+        "modulname": "Softwarequalität und -test"
       },
       {
         "Modulnummer": "8663_106566",
-        "Modulname": "Betriebswirtschaftslehre"
+        "modulname": "Betriebswirtschaftslehre"
       },
       {
         "Modulnummer": "11441_106566",
-        "Modulname": "Medienproduktion und -distribution"
+        "modulname": "Medienproduktion und -distribution"
       },
       {
         "Modulnummer": "11385_106566",
-        "Modulname": "Effiziente Software Entwickeln mit C++"
+        "modulname": "Effiziente Software Entwickeln mit C++"
       },
       {
         "Modulnummer": "11442_106566",
-        "Modulname": "Programmiersprachen und -paradigmen"
+        "modulname": "Programmiersprachen und -paradigmen"
       },
       {
         "Modulnummer": "11443_106566",
-        "Modulname": "Anwendungsentwicklung für IOS-Geräte"
+        "modulname": "Anwendungsentwicklung für IOS-Geräte"
       },
       {
         "Modulnummer": "11444_106566",
-        "Modulname": "Mobile Anwendungsentwicklung"
+        "modulname": "Mobile Anwendungsentwicklung"
       },
       {
         "Modulnummer": "11445_106566",
-        "Modulname": "Visual and Scientific Computing"
+        "modulname": "Visual and Scientific Computing"
       },
       {
         "Modulnummer": "11446_106566",
-        "Modulname": "Spieleentwicklung und Creative Coding"
+        "modulname": "Spieleentwicklung und Creative Coding"
       },
       {
         "Modulnummer": "11447_106566",
-        "Modulname": "Signalverarbeitung für Audio, Bild und Video"
+        "modulname": "Signalverarbeitung für Audio, Bild und Video"
       },
       {
         "Modulnummer": "11448_106566",
-        "Modulname": "Maschinelles Lernen"
+        "modulname": "Maschinelles Lernen"
       },
       {
         "Modulnummer": "11449_106566",
-        "Modulname": "Aktuelle Webtechnologien: Frameworks und Tools"
+        "modulname": "Aktuelle Webtechnologien: Frameworks und Tools"
       },
       {
         "Modulnummer": "11450_106566",
-        "Modulname": "Aktuelle Themen"
+        "modulname": "Aktuelle Themen"
       },
       {
         "Modulnummer": "10385_106566",
-        "Modulname": "Maya"
+        "modulname": "Maya"
       },
       {
         "Modulnummer": "10386_106566",
-        "Modulname": "C++ für Java-Programmierer"
+        "modulname": "C++ für Java-Programmierer"
       },
       {
         "Modulnummer": "11384_106566",
-        "Modulname": "AngularJS - JavaScript MV* Framework"
+        "modulname": "AngularJS - JavaScript MV* Framework"
       },
       {
         "Modulnummer": "10612_106566",
-        "Modulname": "Videoproduktion für Online-Video-Angebote"
+        "modulname": "Videoproduktion für Online-Video-Angebote"
       },
       {
         "Modulnummer": "10433_106566",
-        "Modulname": "Cloud Computing"
+        "modulname": "Cloud Computing"
       },
       {
         "Modulnummer": "11663_106566",
-        "Modulname": "Frontend–Design Web: Fortgeschrittene Techniken"
+        "modulname": "Frontend–Design Web: Fortgeschrittene Techniken"
       },
       {
         "Modulnummer": "10501_106566",
-        "Modulname": "Microservice-Entwicklung: Architekturen und Entwurfsmuster"
+        "modulname": "Microservice-Entwicklung: Architekturen und Entwurfsmuster"
       },
       {
         "Modulnummer": "1980_106566",
-        "Modulname": "Interactive Media Objects & Web-Media Applications"
+        "modulname": "Interactive Media Objects & Web-Media Applications"
       },
       {
         "Modulnummer": "1150_106566",
-        "Modulname": "Webprogrammierung mit Python"
+        "modulname": "Webprogrammierung mit Python"
       },
       {
         "Modulnummer": "11958_106566",
-        "Modulname": "Echtzeitgrafik Grundlagen"
+        "modulname": "Echtzeitgrafik Grundlagen"
       },
       {
         "Modulnummer": "12153_106566",
-        "Modulname": "Professionelle Web-Anwendungen umsetzen und betreiben"
+        "modulname": "Professionelle Web-Anwendungen umsetzen und betreiben"
       },
       {
         "Modulnummer": "WP23",
-        "Modulname": "Data Science Programmierung mit Python"
+        "modulname": "Data Science Programmierung mit Python"
       },
       {
         "Modulnummer": "WP25",
-        "Modulname": "Externes Modul 1"
+        "modulname": "Externes Modul 1"
       },
       {
         "Modulnummer": "WP26",
-        "Modulname": "Externes Modul 2"
+        "modulname": "Externes Modul 2"
       },
       {
         "Modulnummer": "WP27",
-        "Modulname": "Externes Modul 3"
+        "modulname": "Externes Modul 3"
       }
     ],
     "Studium Generale": [
       {
         "Modulnummer": "xxxx_106034",
-        "Modulname": "trage einen Modulnamen ein "
+        "modulname": "trage einen modulnamen ein "
       },
       {
         "Modulnummer": "xxxx_106034",
-        "Modulname": "trage einen Modulnamen ein "
+        "modulname": "trage einen modulnamen ein "
       }
     ],
     "Abschlussmodul": [
       {
         "Modulnummer": "Abschlussmodul",
-        "Modulname": "Bachelorarbeit"
+        "modulname": "Bachelorarbeit"
       }
     ]
   }

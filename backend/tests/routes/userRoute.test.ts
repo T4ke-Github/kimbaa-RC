@@ -4,6 +4,9 @@ import { UserResource } from "../../src/Resources";
 import app from "../../src/app";
 import { logger } from "../../src/logger/testLogger";
 import { User } from "../../src/model/UserModel";
+import { Modul } from "../../src/model/ModulModel";
+import { ModulList } from "../../src/model/ModulListModel";
+import * as ModulService from "../../src/services/ModulService";
 import * as userService from "../../src/services/UserService";
 
 
@@ -181,3 +184,30 @@ test("/api/user/:id delete User id not found", async () => {
     logger.info("Attempted to delete non-existent user:", response.body);
     expect(response.statusCode).toBe(400);
 });
+
+//CreateUser and test for preload
+test("/api/user/ create User Medieninformatik and test for moduls", async () => {
+    const testee = supertest(app);
+
+    const userResource: UserResource = {
+        name: "Nicolas Cage",
+        password: "geheim",
+        admin: false,
+        studentId: "999999",
+        email: "nicolas@bht-berlin.de",
+        course: "Medieninformatik",
+    };
+    let response = await testee.post(`/api/user/`).send(userResource);
+    logger.info("Attempted to create user:", response.body);
+    expect(response.statusCode).toBe(201);
+    const user = await User.findById(response.body.id).exec();
+    expect(user).not.toBeNull();
+    expect(user!.course).toBe("Medieninformatik");
+
+    const modulList = await ModulList.findOne({ creator: response.body.id });
+    const alleEintraege = await ModulService.getAlleModule(modulList?.id);
+    expect(alleEintraege.length).toBe(55);
+
+});
+    
+    

@@ -25,7 +25,7 @@ export async function prefillDB(): Promise<{ heinz: UserResource}> {
         admin: true,
         email: "",
         department: "",
-        CreditPoints: 0,
+        creditPoints: 0,
         phone: 0
     }
     const heinz = await createUser(UserResource);

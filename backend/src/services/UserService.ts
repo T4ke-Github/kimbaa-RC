@@ -12,10 +12,10 @@ import { dateToString } from './ServiceHelper';
 
 
 //createModulListfromJson
-async function createModulListFromJson(userId: string) {
+async function createModulListFromJson(userId: string, course: string) {
     try {
         // Pfad zur JSON-Datei backend\modulListe.json
-        const jsonPath = path.resolve(__dirname, '..', 'MedieninformatikmodulListe.json');
+        const jsonPath = path.resolve(__dirname, '..', 'MedieninformatikModule.json');
         logger.info("jsonPath: " + jsonPath);
 
         // Lese die JSON-Datei
@@ -27,7 +27,7 @@ async function createModulListFromJson(userId: string) {
         // Erstelle eine neue Modulliste für den Benutzer
         const modulListResource = {
             creator: userId,
-            course: 'Medieninformatik', // Setze dies auf den tatsächlichen Kurs des Benutzers
+            course: course, // Setze dies auf den tatsächlichen Kurs des Benutzers
         };
         const newModulList = await modulListService.createModulList(modulListResource);
 
@@ -42,9 +42,12 @@ async function createModulListFromJson(userId: string) {
                 const modulResource = {
                     creator: userId,
                     modulList: newModulList.id,
-                    Modulnumber: modul.Modulnummer, // Achte auf die Groß-/Kleinschreibung
-                    Modulname: modul.Modulname,
-                    CreditPoints: 0, // Setze dies auf die tatsächliche Anzahl der Kreditpunkte für das Modul
+                    modulnumber: modul.Modulnummer, // Achte auf die Groß-/Kleinschreibung
+                    modulname: modul.modulname,
+                    creditPoints: modul.creditPoints, // Setze dies auf die tatsächliche Anzahl der Kreditpunkte für das Modul
+                    //convert string to boolean
+                    solved: modul.solved,
+                    required: modul.required,
                 };
 
                 logger.info("Creating modulResource: " + JSON.stringify(modulResource)); // Debug-Log
@@ -129,7 +132,7 @@ export async function createUser(userResource: UserResource): Promise<UserResour
         //create ModulList for user if course is Medieninformatik
         if (user.course === "Medieninformatik") {
             try {
-                await createModulListFromJson(user.id);
+                await createModulListFromJson(user.id, user.course);
                 logger.info("ModulList created for user: " + user.id);
             } catch (error) {
                 logger.error('Fehler beim Erstellen der Modulliste: ' + error);

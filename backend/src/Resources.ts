@@ -27,7 +27,6 @@ export type ModulListResource = {
     course?: string;
     datum?: string;
     updatedAt?: string;
-    allCredits?: number;
 }
 
 

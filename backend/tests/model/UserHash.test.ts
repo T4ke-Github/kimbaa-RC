@@ -52,7 +52,7 @@ test("UserHash.test.js Passwort Änderung", async () => {
     failedLoginCount: 0,
     course: "6",
     enrolledSince: new Date(),
-    CreditPoints: 0,
+    creditPoints: 0,
     phone: 123
   });
   await user.save();
@@ -89,7 +89,7 @@ test("UserHash.test.js Passwort bleibt unverändert, wenn nicht geändert", asyn
     failedLoginCount: 0,
     course: "6",
     enrolledSince: new Date(),
-    CreditPoints: 0,
+    creditPoints: 0,
     phone: 123
   });
   await user.save();

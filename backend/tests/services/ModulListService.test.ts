@@ -150,23 +150,23 @@ test("ModulListService.test getModulList allCredits", async () => {
     const modul1 = new Modul({
         creator: user1.id,
         modulList: testliste.id,
-        Modulnumber: "123456",
-        Modulname: "test",
-        CreditPoints: 5,
+        modulnumber: "123456",
+        modulname: "test",
+        creditPoints: 5,
     })
     const modul2 = new Modul({
         creator: user1.id,
         modulList: testliste.id,
-        Modulnumber: "654321",
-        Modulname: "test2",
-        CreditPoints: 5,
+        modulnumber: "654321",
+        modulname: "test2",
+        creditPoints: 5,
     })
     const modul3 = new Modul({
         creator: user1.id,
         modulList: testliste.id,
-        Modulnumber: "1234567",
-        Modulname: "test3",
-        CreditPoints: 5,
+        modulnumber: "1234567",
+        modulname: "test3",
+        creditPoints: 5,
     })
     await modul1.save();
     await modul2.save();

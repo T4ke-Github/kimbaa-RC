@@ -67,13 +67,15 @@ export async function createModul(modulResource: ModulResource): Promise<ModulRe
     if (!modulList) {
         throw new Error(`createModul: No modulList found with id ${modulResource.modulList}`);
     }
-
+    
     const modul = await Modul.create({
         creator: user.id,
         modulList: modulResource.modulList,
-        Modulnumber: modulResource.modulnumber!,
-        Modulname: modulResource.modulname!,
-        CreditPoints: modulResource.creditPoints
+        modulnumber: modulResource.modulnumber!,
+        modulname: modulResource.modulname!,
+        creditPoints: modulResource.creditPoints!,
+        solved: modulResource.solved,
+        required: modulResource.required,
     });
 
     return {
@@ -82,12 +84,14 @@ export async function createModul(modulResource: ModulResource): Promise<ModulRe
         modulList: modulList.id,
         modulnumber: modul.modulnumber,
         modulname: modul.modulname,
-        creditPoints: modul.creditPoints
+        creditPoints: modul.creditPoints,
+        solved: modul.solved,
+        required: modul.required,
     }
 }
 
 /**
- * Updated ein Modul. Es können nur Modulnummer, Modulname und CreditPoints geändert werden.
+ * Updated ein Modul. Es können nur Modulnummer, modulname und creditPoints geändert werden.
  */
 export async function updateModul(modulResource: ModulResource): Promise<ModulResource> {
     const modul = await Modul.findById(modulResource.id).exec();
@@ -110,7 +114,9 @@ export async function updateModul(modulResource: ModulResource): Promise<ModulRe
             modulList: modulList?.id || '',
             modulnumber: updated.modulnumber,
             modulname: updated.modulname,
-            creditPoints: updated.creditPoints
+            creditPoints: updated.creditPoints,
+            solved: updated.solved,
+            required: updated.required,
         };
     } else {
         throw new Error("No ModulID: " + modulResource.id + " found");
@@ -128,4 +134,58 @@ export async function deleteModul(id: string): Promise<void> {
     }else{
         throw new Error("Fehler beim Loeschen des Moduls");
     }
+}
+
+
+//modulupdating
+export async function updateModulesByModuleNameAndUserId(modules: ModulResource[], userId: string): Promise<void> {
+    for (const module of modules) {
+        try {
+            const existingModule = await Modul.findOne({
+                creator: userId,
+                modulname: module.modulname,
+            }).exec();
+
+            if (!existingModule) {
+                throw new Error(`Modul mit Modulname "${module.modulname}" und Ersteller-ID ${userId} nicht gefunden.`);
+            }
+
+            // Hier kannst du den Solved-Wert aktualisieren
+            existingModule.solved = module.solved;
+
+            // Speichere die Änderungen
+            await existingModule.save();
+        } catch (error) {
+            console.error(`Fehler beim Aktualisieren des Moduls mit Modulname "${module.modulname}": ${error}`);
+        }
+    }
+}
+
+export async function calculateModuleSummary(userId: string): Promise<{
+    credits: number;
+    allrequired: boolean;
+    minreqCredits: boolean;
+}> {
+    const modules = await Modul.find({ creator: userId }).exec();
+
+    let totalCredits = 0;
+    let allRequired = true;
+
+    for (const module of modules) {
+        if (module.solved) {
+            totalCredits += module.creditPoints!;
+            if (module.required && module.modulname !== 'Abschlussarbeit') {
+                // Wenn ein erforderliches Modul nicht gelöst ist (außer Abschlussarbeit), allRequired auf false setzen
+                allRequired = false;
+            }
+        }
+    }
+
+    const minReqCredits = allRequired && totalCredits >= 155;
+
+    return {
+        credits: totalCredits,
+        allrequired: allRequired,
+        minreqCredits: minReqCredits,
+    };
 }
