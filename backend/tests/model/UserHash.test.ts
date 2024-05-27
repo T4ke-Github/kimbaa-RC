@@ -9,7 +9,7 @@ beforeEach(async () => {
     admin: false,
     studentId: "666456",
     email: "test@bht-berlin.de",
-    department: "6",
+    course: "6",
 
   });
   await user1.save();
@@ -50,7 +50,7 @@ test("UserHash.test.js Passwort Änderung", async () => {
     lastLogin: new Date(),
     pwChangeDate: new Date(),
     failedLoginCount: 0,
-    department: "6",
+    course: "6",
     enrolledSince: new Date(),
     CreditPoints: 0,
     phone: 123
@@ -87,7 +87,7 @@ test("UserHash.test.js Passwort bleibt unverändert, wenn nicht geändert", asyn
     lastLogin: new Date(),
     pwChangeDate: new Date(),
     failedLoginCount: 0,
-    department: "6",
+    course: "6",
     enrolledSince: new Date(),
     CreditPoints: 0,
     phone: 123

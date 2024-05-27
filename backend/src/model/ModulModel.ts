@@ -5,9 +5,11 @@ import { Model, Schema, Types, model } from "mongoose";
 export interface IModul extends Document {
     creator: Types.ObjectId;
     modulList: Types.ObjectId;
-    Modulnumber: string;
-    Modulname: string;
-    CreditPoints: number;
+    modulnumber: string;
+    modulname: string;
+    creditPoints: number;
+    solved: boolean;
+    required: boolean;
 }
 type ModulModel = Model<IModul>;
 
@@ -17,6 +19,8 @@ const ModulSchema: Schema = new Schema({
     Modulnumber: { type: String, required: false },
     Modulname: { type: String, required: false },
     CreditPoints: { type: Number, default: 0 },
+    solved: { type: Boolean, default: false },
+    required: { type: Boolean, default: false },
 });
 
 export const Modul = model<IModul, ModulModel>('Modul', ModulSchema);

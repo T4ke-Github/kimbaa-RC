@@ -1,8 +1,7 @@
 import { HydratedDocument } from "mongoose";
 import { logger } from "../../src/logger/testLogger";
 import { ModulList } from "../../src/model/ModulListModel";
-import { Modul } from "../../src/model/ModulModel";
-import { User, IUser } from "../../src/model/UserModel";
+import { IUser, User } from "../../src/model/UserModel";
 
 
 let user: HydratedDocument<IUser>;
@@ -13,7 +12,7 @@ beforeEach(async () => {
         admin: false,
         studentId: 123456,
         email: "test@bht-berlin.de",
-        department: "test",
+        course: "test",
     })
     await user.save();
 })

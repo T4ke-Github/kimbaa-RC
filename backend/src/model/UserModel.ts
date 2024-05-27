@@ -15,7 +15,7 @@ export interface IUser {
   email?: string; // Optional
   createdAt?: Date; // Required
   updatedAt?: Date; // Optional
-  department?: string; // Optional
+  course?: string; // Optional
 }
 
 interface IUserMethods {
@@ -53,7 +53,7 @@ export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
   },
   createdAt: { type: Date},
   updatedAt: { type: Date},
-  department: { type: String },
+  course: { type: String },
 },{
   timestamps: true,
 });

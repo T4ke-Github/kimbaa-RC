@@ -13,7 +13,7 @@ beforeEach(async () => {
         admin: false,
         studentId: "123456",
         email: "test@bht-berlin.de",
-        department: "test",
+        course: "test",
     })
     await user.save();
     moduleList = new ModulList({

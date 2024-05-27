@@ -16,14 +16,14 @@ beforeEach(async () => {
         password: "test1",
         studentId: "123456",
         email: "test1@bht-berlin.de",
-        department: "test",
+        course: "test",
     });
     user2 = new User({
         name: "test2",
         password: "test2",
         studentId: "654321",
         email: "test2@bht-berlin.de"
-        , department: "test",
+        , course: "test",
     });
     await user1.save();
     await user2.save();

@@ -40,9 +40,11 @@ export async function getModul(id: string): Promise<ModulResource> {
             id: modul.id,
             creator: user?.id.toString(),
             modulList: modul.modulList.toString() || '',
-            Modulnumber: modul.Modulnumber,
-            Modulname: modul.Modulname,
-            CreditPoints: modul.CreditPoints
+            modulnumber: modul.modulnumber,
+            modulname: modul.modulname,
+            creditPoints: modul.creditPoints,
+            solved: modul.solved,
+            required: modul.required,
         };
         return modulResource;
     } else {
@@ -69,18 +71,18 @@ export async function createModul(modulResource: ModulResource): Promise<ModulRe
     const modul = await Modul.create({
         creator: user.id,
         modulList: modulResource.modulList,
-        Modulnumber: modulResource.Modulnumber!,
-        Modulname: modulResource.Modulname!,
-        CreditPoints: modulResource.CreditPoints
+        Modulnumber: modulResource.modulnumber!,
+        Modulname: modulResource.modulname!,
+        CreditPoints: modulResource.creditPoints
     });
 
     return {
         id: modul.id,
         creator: user.id,
         modulList: modulList.id,
-        Modulnumber: modul.Modulnumber,
-        Modulname: modul.Modulname,
-        CreditPoints: modul.CreditPoints
+        modulnumber: modul.modulnumber,
+        modulname: modul.modulname,
+        creditPoints: modul.creditPoints
     }
 }
 
@@ -94,10 +96,10 @@ export async function updateModul(modulResource: ModulResource): Promise<ModulRe
         const user = await User.findById(modul.creator).exec();
         const modulList = await ModulList.findById(modul.modulList).exec();
 
-        modul.Modulnumber = modulResource.Modulnumber!;
-        modul.Modulname = modulResource.Modulname!;
-        if (modulResource.CreditPoints) {
-            modul.CreditPoints = modulResource.CreditPoints;
+        modul.modulnumber = modulResource.modulnumber!;
+        modul.modulname = modulResource.modulname!;
+        if (modulResource.creditPoints) {
+            modul.creditPoints = modulResource.creditPoints;
         }
 
         const updated = await modul.save();
@@ -106,9 +108,9 @@ export async function updateModul(modulResource: ModulResource): Promise<ModulRe
             id: modul.id,
             creator: user?.id,
             modulList: modulList?.id || '',
-            Modulnumber: updated.Modulnumber,
-            Modulname: updated.Modulname,
-            CreditPoints: updated.CreditPoints
+            modulnumber: updated.modulnumber,
+            modulname: updated.modulname,
+            creditPoints: updated.creditPoints
         };
     } else {
         throw new Error("No ModulID: " + modulResource.id + " found");

@@ -1,16 +1,14 @@
 
 import fs from 'fs';
-import path from 'path';
 import { Types } from "mongoose";
+import path from 'path';
 import { UserResource } from "../Resources"; // This should be your resource interface for User
 import { logger } from "../logger/serviceLogger";
-import { User } from "../model/UserModel";
 import { AntragZulassung } from "../model/AntragZulassungModel";
-import { dateToString } from './ServiceHelper';
-import { ModulListResource } from "../Resources";
+import { User } from "../model/UserModel";
 import * as modulListService from "./ModulListService";
-import { ModulResource } from "../Resources";
 import * as modulService from "./ModulService";
+import { dateToString } from './ServiceHelper';
 
 
 //createModulListfromJson
@@ -77,7 +75,7 @@ export async function getAlleUser(): Promise<UserResource[]> {
         application: user.application || undefined,
         address: user.address || undefined,
         email: user.email,
-        department: user.department || undefined,
+        course: user.course || undefined,
     }));
     return userResources; 
 }
@@ -106,7 +104,7 @@ export async function getOneUser(identifier: { studentId?: string; email?: strin
             admin: user.admin || false,
             studentId: user.studentId,
             email: user.email,
-            department: user.department || undefined,
+            course: user.course || undefined,
         };
     } catch (error) {
         throw new Error("Fehler beim Abrufen des Benutzers: " + error);
@@ -124,12 +122,12 @@ export async function createUser(userResource: UserResource): Promise<UserResour
             email: userResource.email,
             studentId: userResource.studentId,
             password: userResource.password,
-            department: userResource.department,
+            course: userResource.course,
         })
     
         await user.save();
-        //create ModulList for user if department is Medieninformatik
-        if (user.department === "Medieninformatik") {
+        //create ModulList for user if course is Medieninformatik
+        if (user.course === "Medieninformatik") {
             try {
                 await createModulListFromJson(user.id);
                 logger.info("ModulList created for user: " + user.id);
@@ -150,7 +148,7 @@ export async function createUser(userResource: UserResource): Promise<UserResour
             email: user.email,
             createdAt: userResource.createdAt,
             updatedAt: dateToString(updatedAt),
-            department: user.department,
+            course: user.course,
         };
     } catch (error) {
         logger.error("UserService: Create : " + error);

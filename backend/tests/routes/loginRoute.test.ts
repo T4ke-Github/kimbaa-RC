@@ -9,7 +9,7 @@ beforeEach(async () => {
         admin: false,
         studentId: "666456",
         email: "test@bht-berlin.de",
-        department: "6",
+        course: "6",
         
     });
     await user1.save();
@@ -40,7 +40,7 @@ test("/api/login login with correct credentials", async () => {
     expect(user.name).toBe("Tim");
     expect(user.studentId).toBe("666456");
     expect(user.email).toBe("test@bht-berlin.de");
-    expect(user.department).toBe("6");
+    expect(user.course).toBe("6");
 
 
 });

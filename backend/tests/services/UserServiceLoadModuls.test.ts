@@ -1,12 +1,11 @@
-import { HydratedDocument } from "mongoose";
 import { logger } from "../../src/logger/testLogger";
-import { IUser, User } from "../../src/model/UserModel";
-import { login } from "../../src/services/AuthenticationService";
-import * as UserService from "../../src/services/UserService";
-import * as ModulService from "../../src/services/ModulService";
-import * as ModulListService from "../../src/services/ModulListService";
 import { ModulList } from "../../src/model/ModulListModel";
 import { Modul } from "../../src/model/ModulModel";
+import { User } from "../../src/model/UserModel";
+import * as ModulService from "../../src/services/ModulService";
+import * as ModulListService from "../../src/services/ModulListService";
+import * as UserService from "../../src/services/UserService";
+import { ModulResource } from "../../src/Resources";
 
 test("Load Module UserService", async () => {
     logger.info("UserServiceLoadModuls wird gestartet");
@@ -16,7 +15,7 @@ test("Load Module UserService", async () => {
         admin: false,
         studentId: "666456",
         email: "test@bht-berlin.de",
-        department: "Medieninformatik",
+        course: "Medieninformatik",
     })
     //get modullist from user
     const modulList = await ModulList.findOne({ creator: user.id });
@@ -37,3 +36,26 @@ test("Load Module UserService", async () => {
 
     logger.info("UserServiceLoadModuls wurde beendet");
 })
+
+//add credits to preloaded moduls
+/* test("Load Module UserService update credits", async () => {
+    const user = await UserService.createUser({
+        name: "DerOtto",
+        password: "test",
+        admin: false,
+        studentId: "666456",
+        email: "test@bht-berlin.de",
+        course: "Medieninformatik",
+    })
+    //get modullist from user
+    const modulList = await ModulList.findOne({ creator: user.id });
+    const neuErstellterUser = await User.findOne({ studentId: 666456 });
+    const alleEintraege = await ModulService.getAlleModule(modulList?.id);
+    expect(alleEintraege.length).toBe(55);
+    //get credits
+    const modulliste1 = await ModulListService.getModulList(modulList?.id);
+    const creditsNix = modulliste1.allCredits;
+    expect(creditsNix).toBe(0)
+    //Update modul with credits
+    const modulUpdate = await ModulService.updateModul({
+         */

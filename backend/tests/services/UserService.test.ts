@@ -12,7 +12,7 @@ beforeEach(async () => {
         admin: false,
         studentId: "666456",
         email: "test@bht-berlin.de",
-        department: "6",
+        course: "6",
     });
     await user1.save();
     const user2 = new User({
@@ -21,7 +21,7 @@ beforeEach(async () => {
         admin: false,
         studentId: 666999,
         email: "test2@bht-berlin.de",
-        department: "6",
+        course: "6",
     });
     await user2.save();
 
@@ -43,7 +43,7 @@ test("UserService.test createUser ", async () => {
         admin: false,
         studentId: "666222",
         email: "cuel@bht-berlin.de", 
-        department: "6",
+        course: "6",
     })
     const neuErstellterUser = await User.findOne({ studentId: 666222 });
 

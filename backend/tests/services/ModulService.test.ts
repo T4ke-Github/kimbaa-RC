@@ -62,6 +62,55 @@ test("ModulService.test getAlleModule create many Modul into modullist", async (
     expect(alleEintraege[2].Modulnumber).toBe("1234567");
     logger.info("ModulService.test create many Modul into modullist wurde beendet");
 })
+
+//UpdateModul by creatorid
+test("ModulService.test updateModul", async () => {
+    logger.info("ModulService.test updateModul wird gestartet");
+    const modul1 = new Modul({
+        creator: user1.id,
+        modulList: modulList.id,
+        Modulnumber: "123456",
+        Modulname: "test",
+        CreditPoints: 0,
+    })
+    const modul2 = new Modul({
+        creator: user1.id,
+        modulList: modulList.id,
+        Modulnumber: "654321",
+        Modulname: "test2",
+        CreditPoints: 0,
+    })
+    const modul3 = new Modul({
+        creator: user1.id,
+        modulList: modulList.id,
+        Modulnumber: "1234567",
+        Modulname: "test3",
+        CreditPoints: 0,
+    })
+
+    await modul1.save();
+    await modul2.save();
+    await modul3.save();
+
+    //update modul
+    const modulneu = await ModulService.updateModul({ id: user1.id, Modulnumber: "1234567", Modulname: "test",  CreditPoints: 5 });
+    //get alle module
+    const alleEintraege = await ModulService.getAlleModule(modulList.id);
+    expect(alleEintraege.length).toBe(3);
+    expect(alleEintraege[0].Modulnumber).toBe("123456");
+    expect(alleEintraege[1].Modulnumber).toBe("654321");
+    expect(alleEintraege[2].Modulnumber).toBe("1234567");
+    //checkt credits
+    expect(modulneu.CreditPoints).toBe(5);
+    //get modul by name
+    const modulname = await ModulService.getModul(modulList.id, {Modulname: "test"});
+
+    logger.info("ModulService.test updateModul wurde beendet");
+
+
+
+
+
 /* 
 test("EintragService.test getalleEintraege protokolliderror", async () => {
     logger.info("EintragService.test getalleEintraege protokollID error wird gestartet");

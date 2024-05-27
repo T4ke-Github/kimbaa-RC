@@ -7,15 +7,17 @@ export type UserResource = {
     email?: string;
     createdAt?: string;
     updatedAt?: string;
-    department?: string;
+    course?: string;
 }
 export type ModulResource = {
     id?: string;
     creator?: string;
     modulList?: string;
-    Modulnumber?: string;
-    Modulname?: string;
-    CreditPoints?: number;
+    modulnumber?: string;
+    modulname?: string;
+    creditPoints?: number;
+    solved?: boolean;
+    required?: boolean;
 }
 
 export type ModulListResource = {
@@ -36,6 +38,7 @@ export type applicationZulassungResource = {
     finalSemester?: string;
     name?: string;
     degreeProgram?: string;
+    course?: string;
     department?: string;
     email?: string;
     adresse?: AdressResource;
