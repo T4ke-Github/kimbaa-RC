@@ -12,7 +12,7 @@ export const logger = winston.createLogger({
             ),
         }),
         new winston.transports.File({
-            filename: 'backlog.log',
+            filename: '../backend/logFiles/services.log',
             format: winston.format.simple()
         })
     ]

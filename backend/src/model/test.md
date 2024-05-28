@@ -11,9 +11,9 @@ Add descriptive comments to each field to explain its purpose.
 
 ```typescript
 const ExampleSchema = new Schema({
-  name: { type: String, required: true }, // User's name
+  name: { type: string, required: true }, // User's name
   age: { type: Number, min: 0 }, // Age with a minimum value
-  email: { type: String, unique: true, required: true }, // Unique email
+  email: { type: string, unique: true, required: true }, // Unique email
 ```
 
 ### 2. Field Validation
@@ -24,12 +24,13 @@ Ensure validation messages are clear and informative.
 ```typescript
 const UserSchema = new Schema({
   studentId: {
-    type: Number,
+    type: string,
     required: true,
     unique: true,
     validate: {
-      validator: (v) => v.toString().length >= 6,
+      validator: (v) => v.tostring().length >= 6,
       message: "Student ID must be at least 6 characters long.",
+
     },
   },
  });

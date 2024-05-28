@@ -102,7 +102,7 @@ Port 9229 is used for debugging purposes within the Node.js environment. When yo
 |/api/user/alle|Get|-|UserResource|
 | /api/user/getOnestudentId/:studentId| GET     | -                                                                          | UserResource                  |
 | /api/user/getOneEmail/:email        | GET     | -                                                                          | UserResource                  |
-| /api/user/create                    | POST    | { "name": "string", "password": "string", "studentId": "number", "email": "string" } | UserResource                  |
+| /api/user/create                    | POST    | { "name": "string", "password": "string", "studentId": "string", "email": "string" } | UserResource                  |
 |:-----|:--------|:----------------------------:|:---------------------------|
 |:-----|:--------|:----------------------------:|:---------------------------|
 
