@@ -6,7 +6,7 @@ dotenv.config() // read ".env"
 import http from "http";
 import mongoose from 'mongoose';
 import app from "./app";
-import { logger } from "./logger"
+import { logger } from "./logger/authenticationLogger";
 import { prefillDB } from "./prefill";
 //import { prefillDB } from "./prefill";
 
