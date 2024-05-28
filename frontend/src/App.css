@@ -100,6 +100,9 @@ input{
   border-radius: 20px;
   border: none;
 }
+.cardButton:hover{
+  background-color: #00a0aa;
+}
 
 
 .standardButton{
@@ -178,5 +181,4 @@ input{
 .checkbox{
   background-color:#00a0aa;
 }
-
 
