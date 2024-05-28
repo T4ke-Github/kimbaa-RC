@@ -1,217 +1,239 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="94" failures="0" errors="0" time="65.504">
-  <testsuite name="userRoute.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:55:25" time="21.345" tests="12">
-    <testcase classname=" /api/user getAlleUser" name=" /api/user getAlleUser" time="2.388">
+<testsuites name="jest tests" tests="104" failures="0" errors="0" time="78.138">
+  <testsuite name="ModulService.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:14:29" time="13.411" tests="10">
+    <testcase classname=" ModulService.test getAlleModule create many Modul into modullist" name=" ModulService.test getAlleModule create many Modul into modullist" time="0.591">
     </testcase>
-    <testcase classname=" /api/user/ get by studID" name=" /api/user/ get by studID" time="1.294">
+    <testcase classname=" ModulService.test updateModule by list to solved" name=" ModulService.test updateModule by list to solved" time="3.282">
     </testcase>
-    <testcase classname=" /api/user/ get by id not found" name=" /api/user/ get by id not found" time="1.035">
+    <testcase classname=" ModulService.test calculateSolvedModuls" name=" ModulService.test calculateSolvedModuls" time="3.276">
     </testcase>
-    <testcase classname=" /api/user/ get by email" name=" /api/user/ get by email" time="0.915">
+    <testcase classname=" ModulService.test getalleModule liste error" name=" ModulService.test getalleModule liste error" time="0.208">
     </testcase>
-    <testcase classname=" /api/user/:identifier error handling" name=" /api/user/:identifier error handling" time="0.848">
+    <testcase classname=" ModulService.test getalleModule listeID error" name=" ModulService.test getalleModule listeID error" time="0.203">
     </testcase>
-    <testcase classname=" /api/user/" name=" /api/user/" time="1.047">
+    <testcase classname=" ModulService.test getModul with wrong id" name=" ModulService.test getModul with wrong id" time="0.202">
     </testcase>
-    <testcase classname=" /api/user/:id create User fail" name=" /api/user/:id create User fail" time="0.854">
+    <testcase classname=" ModulService.test createModul without user" name=" ModulService.test createModul without user" time="0.218">
     </testcase>
-    <testcase classname=" /api/user/:id update User" name=" /api/user/:id update User" time="1.203">
+    <testcase classname=" ModulService.test createModul with valid user but no list" name=" ModulService.test createModul with valid user but no list" time="0.408">
     </testcase>
-    <testcase classname=" /api/user/:id update User id not found" name=" /api/user/:id update User id not found" time="0.818">
+    <testcase classname=" ModulService.test updateModul successfully" name=" ModulService.test updateModul successfully" time="0.407">
     </testcase>
-    <testcase classname=" /api/user/:id delete User" name=" /api/user/:id delete User" time="1.16">
-    </testcase>
-    <testcase classname=" /api/user/:id delete User id not found" name=" /api/user/:id delete User id not found" time="1.017">
-    </testcase>
-    <testcase classname=" /api/user/ create User Medieninformatik and test for moduls" name=" /api/user/ create User Medieninformatik and test for moduls" time="5.422">
+    <testcase classname=" ModulService.test updateModul with invalid id" name=" ModulService.test updateModul with invalid id" time="0.205">
     </testcase>
   </testsuite>
-  <testsuite name="UserService.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:55:48" time="10.913" tests="18">
-    <testcase classname=" UserService.test getAlleUser" name=" UserService.test getAlleUser" time="0.86">
+  <testsuite name="userRoute.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:14:44" time="13.529" tests="12">
+    <testcase classname=" /api/user getAlleUser" name=" /api/user getAlleUser" time="0.919">
     </testcase>
-    <testcase classname=" UserService.test createUser " name=" UserService.test createUser " time="1.119">
+    <testcase classname=" /api/user/ get by studID" name=" /api/user/ get by studID" time="0.603">
     </testcase>
-    <testcase classname=" UserService.test getOneUser by studentId(number)" name=" UserService.test getOneUser by studentId(number)" time="0.655">
+    <testcase classname=" /api/user/ get by id not found" name=" /api/user/ get by id not found" time="0.7">
     </testcase>
-    <testcase classname=" UserService.test getOneUser by email" name=" UserService.test getOneUser by email" time="0.517">
+    <testcase classname=" /api/user/ get by email" name=" /api/user/ get by email" time="0.713">
     </testcase>
-    <testcase classname=" UserService.test Create User with minimal data" name=" UserService.test Create User with minimal data" time="0.57">
+    <testcase classname=" /api/user/:identifier error handling" name=" /api/user/:identifier error handling" time="0.673">
     </testcase>
-    <testcase classname=" UserService.test deleteUser" name=" UserService.test deleteUser" time="0.497">
+    <testcase classname=" /api/user/" name=" /api/user/" time="0.829">
     </testcase>
-    <testcase classname=" UserService.test create user without password" name=" UserService.test create user without password" time="0.307">
+    <testcase classname=" /api/user/:id create User fail" name=" /api/user/:id create User fail" time="0.657">
     </testcase>
-    <testcase classname=" UserService.test createUser with same studentId" name=" UserService.test createUser with same studentId" time="0.404">
+    <testcase classname=" /api/user/:id update User" name=" /api/user/:id update User" time="0.856">
     </testcase>
-    <testcase classname=" UserService.test createUser with same email" name=" UserService.test createUser with same email" time="0.417">
+    <testcase classname=" /api/user/:id update User id not found" name=" /api/user/:id update User id not found" time="0.644">
     </testcase>
-    <testcase classname=" UserService.test createUser with empty name" name=" UserService.test createUser with empty name" time="0.349">
+    <testcase classname=" /api/user/:id delete User" name=" /api/user/:id delete User" time="0.812">
     </testcase>
-    <testcase classname=" UserService.test updateUser name" name=" UserService.test updateUser name" time="0.5">
+    <testcase classname=" /api/user/:id delete User id not found" name=" /api/user/:id delete User id not found" time="0.63">
     </testcase>
-    <testcase classname=" UserService.test updateUser name + password" name=" UserService.test updateUser name + password" time="0.708">
-    </testcase>
-    <testcase classname=" UserService.test updateUser with empty name" name=" UserService.test updateUser with empty name" time="0.393">
-    </testcase>
-    <testcase classname=" UserService.test getUser with wrong studentID" name=" UserService.test getUser with wrong studentID" time="0.289">
-    </testcase>
-    <testcase classname=" UserService.test deleteUser not found" name=" UserService.test deleteUser not found" time="0.375">
-    </testcase>
-    <testcase classname=" UserService.test getOneUser without studentId and email must fail" name=" UserService.test getOneUser without studentId and email must fail" time="0.33">
-    </testcase>
-    <testcase classname=" UserService.test updateUser not found" name=" UserService.test updateUser not found" time="0.5">
-    </testcase>
-    <testcase classname=" UserService.test deleteUser not found" name=" UserService.test deleteUser not found" time="0.293">
+    <testcase classname=" /api/user/ create User Medieninformatik and test for moduls" name=" /api/user/ create User Medieninformatik and test for moduls" time="3.74">
     </testcase>
   </testsuite>
-  <testsuite name="modulRoute.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:55:59" time="7.016" tests="3">
-    <testcase classname=" /api/modul getAlleModule" name=" /api/modul getAlleModule" time="2.371">
+  <testsuite name="UserService.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:14:58" time="8.849" tests="18">
+    <testcase classname=" UserService.test getAlleUser" name=" UserService.test getAlleUser" time="0.526">
     </testcase>
-    <testcase classname=" /api/modul updateModulesByModuleNameAndUserId" name=" /api/modul updateModulesByModuleNameAndUserId" time="2">
+    <testcase classname=" UserService.test createUser " name=" UserService.test createUser " time="0.491">
     </testcase>
-    <testcase classname=" /api/modul calculateModuleSummary" name=" /api/modul calculateModuleSummary" time="1.818">
+    <testcase classname=" UserService.test getOneUser by studentId(number)" name=" UserService.test getOneUser by studentId(number)" time="0.346">
     </testcase>
-  </testsuite>
-  <testsuite name="UserHash.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:56:07" time="3.913" tests="10">
-    <testcase classname=" UserHash.test. Passwort wird korrekt gehasht" name=" UserHash.test. Passwort wird korrekt gehasht" time="0.39">
+    <testcase classname=" UserService.test getOneUser by email" name=" UserService.test getOneUser by email" time="0.307">
     </testcase>
-    <testcase classname=" UserHash.test.js Passwort Änderung" name=" UserHash.test.js Passwort Änderung" time="0.593">
+    <testcase classname=" UserService.test Create User with minimal data" name=" UserService.test Create User with minimal data" time="0.525">
     </testcase>
-    <testcase classname=" UserHash.test.js Passwort bleibt unverändert, wenn nicht geändert" name=" UserHash.test.js Passwort bleibt unverändert, wenn nicht geändert" time="0.368">
+    <testcase classname=" UserService.test deleteUser" name=" UserService.test deleteUser" time="0.539">
     </testcase>
-    <testcase classname=" UserHash.test.js isCorrectPassword gibt true für korrektes Passwort" name=" UserHash.test.js isCorrectPassword gibt true für korrektes Passwort" time="0.322">
+    <testcase classname=" UserService.test create user without password" name=" UserService.test create user without password" time="0.343">
     </testcase>
-    <testcase classname=" UserHash.test.js isCorrectPassword gibt false für ungültiges Passwort" name=" UserHash.test.js isCorrectPassword gibt false für ungültiges Passwort" time="0.298">
+    <testcase classname=" UserService.test createUser with same studentId" name=" UserService.test createUser with same studentId" time="0.5">
     </testcase>
-    <testcase classname=" UserHash.test.js User kann nicht mit leerem Passwort erstellt werden" name=" UserHash.test.js User kann nicht mit leerem Passwort erstellt werden" time="0.182">
+    <testcase classname=" UserService.test createUser with same email" name=" UserService.test createUser with same email" time="0.474">
     </testcase>
-    <testcase classname=" UserHash.test.js isCorrectPassword gibt false wenn falsches Passwort bei gespeichertem User eingegeben wird" name=" UserHash.test.js isCorrectPassword gibt false wenn falsches Passwort bei gespeichertem User eingegeben wird" time="0.303">
+    <testcase classname=" UserService.test createUser with empty name" name=" UserService.test createUser with empty name" time="0.328">
     </testcase>
-    <testcase classname=" UserHash.test.js isCorrectPassword gibt false wenn der Passworthash bei gespeichertem User eingegeben wird" name=" UserHash.test.js isCorrectPassword gibt false wenn der Passworthash bei gespeichertem User eingegeben wird" time="0.155">
+    <testcase classname=" UserService.test updateUser name" name=" UserService.test updateUser name" time="0.547">
     </testcase>
-    <testcase classname=" UserHash.test.js isCorrectPassword gibt fehler wenn der Passwortänderung nicht gespeichert wird" name=" UserHash.test.js isCorrectPassword gibt fehler wenn der Passwortänderung nicht gespeichert wird" time="0.27">
+    <testcase classname=" UserService.test updateUser name + password" name=" UserService.test updateUser name + password" time="0.866">
     </testcase>
-    <testcase classname=" UserHash.test.js isCorrectPassword gibt false wenn kein Passwort und kein Passwort eingegeben wird" name=" UserHash.test.js isCorrectPassword gibt false wenn kein Passwort und kein Passwort eingegeben wird" time="0.259">
+    <testcase classname=" UserService.test updateUser with empty name" name=" UserService.test updateUser with empty name" time="0.513">
     </testcase>
-  </testsuite>
-  <testsuite name="ModulListService.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:56:11" time="3.262" tests="9">
-    <testcase classname=" ModulListService.test createModulList" name=" ModulListService.test createModulList" time="0.383">
+    <testcase classname=" UserService.test getUser with wrong studentID" name=" UserService.test getUser with wrong studentID" time="0.301">
     </testcase>
-    <testcase classname=" ModulListService.test deleteModulList" name=" ModulListService.test deleteModulList" time="0.301">
+    <testcase classname=" UserService.test deleteUser not found" name=" UserService.test deleteUser not found" time="0.314">
     </testcase>
-    <testcase classname=" ModulListService.test updateModulList with list.id" name=" ModulListService.test updateModulList with list.id" time="0.318">
+    <testcase classname=" UserService.test getOneUser without studentId and email must fail" name=" UserService.test getOneUser without studentId and email must fail" time="0.303">
     </testcase>
-    <testcase classname=" ModulListService.test updateModulList with creator" name=" ModulListService.test updateModulList with creator" time="0.286">
+    <testcase classname=" UserService.test updateUser not found" name=" UserService.test updateUser not found" time="0.498">
     </testcase>
-    <testcase classname=" ModulListService.test updateModulList with studentId" name=" ModulListService.test updateModulList with studentId" time="0.287">
-    </testcase>
-    <testcase classname=" ModulListService.test getModulList" name=" ModulListService.test getModulList" time="0.286">
-    </testcase>
-    <testcase classname=" ModulListService.test createModulList without datum throws error" name=" ModulListService.test createModulList without datum throws error" time="0.242">
-    </testcase>
-    <testcase classname=" ModulListService.test createModulList without studentId throws error" name=" ModulListService.test createModulList without studentId throws error" time="0.248">
-    </testcase>
-    <testcase classname=" ModulListService.test getModulList allCredits" name=" ModulListService.test getModulList allCredits" time="0.34">
+    <testcase classname=" UserService.test deleteUser not found" name=" UserService.test deleteUser not found" time="0.277">
     </testcase>
   </testsuite>
-  <testsuite name="UserServiceLoadModuls.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:56:14" time="3.042" tests="1">
-    <testcase classname=" Load Module UserService" name=" Load Module UserService" time="2.438">
+  <testsuite name="modulRoute.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:15:07" time="7.675" tests="3">
+    <testcase classname=" /api/modul getAlleModule" name=" /api/modul getAlleModule" time="3.039">
+    </testcase>
+    <testcase classname=" /api/modul updateModulesByModuleNameAndUserId" name=" /api/modul updateModulesByModuleNameAndUserId" time="1.722">
+    </testcase>
+    <testcase classname=" /api/modul calculateModuleSummary" name=" /api/modul calculateModuleSummary" time="1.682">
     </testcase>
   </testsuite>
-  <testsuite name="AuthenticationService.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:56:17" time="2.679" tests="7">
-    <testcase classname=" AuthenticationService.test Loggin Password correct" name=" AuthenticationService.test Loggin Password correct" time="0.396">
-    </testcase>
-    <testcase classname=" AuthenticationService.test Loggin Password not correct" name=" AuthenticationService.test Loggin Password not correct" time="0.285">
-    </testcase>
-    <testcase classname=" AuthenticationService.test Loggin User not found" name=" AuthenticationService.test Loggin User not found" time="0.167">
-    </testcase>
-    <testcase classname=" AuthenticationService.test Loggin Password not found" name=" AuthenticationService.test Loggin Password not found" time="0.167">
-    </testcase>
-    <testcase classname=" AuthenticationService.test Loggin Admin" name=" AuthenticationService.test Loggin Admin" time="0.423">
-    </testcase>
-    <testcase classname=" AuthenticationService.test Loggin User" name=" AuthenticationService.test Loggin User" time="0.291">
-    </testcase>
-    <testcase classname=" AuthenticationService.test Loggin Default" name=" AuthenticationService.test Loggin Default" time="0.283">
+  <testsuite name="UserServiceLoadModuls.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:15:15" time="4.603" tests="1">
+    <testcase classname=" Load Module UserService" name=" Load Module UserService" time="3.771">
     </testcase>
   </testsuite>
-  <testsuite name="UserModel.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:56:20" time="2.079" tests="11">
-    <testcase classname=" UserModel.test createUser" name=" UserModel.test createUser" time="0.199">
+  <testsuite name="ModulListService.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:15:20" time="4.622" tests="9">
+    <testcase classname=" ModulListService.test createModulList" name=" ModulListService.test createModulList" time="0.542">
     </testcase>
-    <testcase classname=" UserModel.test createUser twice same name" name=" UserModel.test createUser twice same name" time="0.248">
+    <testcase classname=" ModulListService.test deleteModulList" name=" ModulListService.test deleteModulList" time="0.415">
     </testcase>
-    <testcase classname=" UserModel.test createUser twice same studentId must fail" name=" UserModel.test createUser twice same studentId must fail" time="0.125">
+    <testcase classname=" ModulListService.test updateModulList with list.id" name=" ModulListService.test updateModulList with list.id" time="0.402">
     </testcase>
-    <testcase classname=" UserModel.test createUser without password must fail" name=" UserModel.test createUser without password must fail" time="0.013">
+    <testcase classname=" ModulListService.test updateModulList with creator" name=" ModulListService.test updateModulList with creator" time="0.415">
     </testcase>
-    <testcase classname=" UserModel.test find user by name" name=" UserModel.test find user by name" time="0.141">
+    <testcase classname=" ModulListService.test updateModulList with studentId" name=" ModulListService.test updateModulList with studentId" time="0.396">
     </testcase>
-    <testcase classname=" UserModel.test studentId must min 6 chars" name=" UserModel.test studentId must min 6 chars" time="0.021">
+    <testcase classname=" ModulListService.test getModulList" name=" ModulListService.test getModulList" time="0.377">
     </testcase>
-    <testcase classname=" UserModel.test change name without studentId must fail" name=" UserModel.test change name without studentId must fail" time="0.13">
+    <testcase classname=" ModulListService.test createModulList without datum throws error" name=" ModulListService.test createModulList without datum throws error" time="0.294">
     </testcase>
-    <testcase classname=" UserModel.test change name with findOneandUpdate" name=" UserModel.test change name with findOneandUpdate" time="0.163">
+    <testcase classname=" ModulListService.test createModulList without studentId throws error" name=" ModulListService.test createModulList without studentId throws error" time="0.29">
     </testcase>
-    <testcase classname=" UserModel.test change name with updateOne" name=" UserModel.test change name with updateOne" time="0.171">
-    </testcase>
-    <testcase classname=" UserModel.test change name without studentId with updateOne must fail" name=" UserModel.test change name without studentId with updateOne must fail" time="0.15">
-    </testcase>
-    <testcase classname=" UserModel.test Create User with minimal data" name=" UserModel.test Create User with minimal data" time="0.144">
+    <testcase classname=" ModulListService.test getModulList allCredits" name=" ModulListService.test getModulList allCredits" time="0.396">
     </testcase>
   </testsuite>
-  <testsuite name="loginRoute.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:56:22" time="1.498" tests="2">
-    <testcase classname=" /api/login login with correct credentials" name=" /api/login login with correct credentials" time="0.436">
+  <testsuite name="UserHash.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:15:25" time="5.231" tests="10">
+    <testcase classname=" UserHash.test. Passwort wird korrekt gehasht" name=" UserHash.test. Passwort wird korrekt gehasht" time="0.57">
     </testcase>
-    <testcase classname=" /api/login login with wrong credentials" name=" /api/login login with wrong credentials" time="0.294">
+    <testcase classname=" UserHash.test.js Passwort Änderung" name=" UserHash.test.js Passwort Änderung" time="0.787">
     </testcase>
-  </testsuite>
-  <testsuite name="ModulListModel.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:56:24" time="1.589" tests="4">
-    <testcase classname=" ModulList.test create ModulList" name=" ModulList.test create ModulList" time="0.281">
+    <testcase classname=" UserHash.test.js Passwort bleibt unverändert, wenn nicht geändert" name=" UserHash.test.js Passwort bleibt unverändert, wenn nicht geändert" time="0.388">
     </testcase>
-    <testcase classname=" ModulList.test remove ModulList" name=" ModulList.test remove ModulList" time="0.169">
+    <testcase classname=" UserHash.test.js isCorrectPassword gibt true für korrektes Passwort" name=" UserHash.test.js isCorrectPassword gibt true für korrektes Passwort" time="0.392">
     </testcase>
-    <testcase classname=" ModulList.test change ModulList" name=" ModulList.test change ModulList" time="0.195">
+    <testcase classname=" UserHash.test.js isCorrectPassword gibt false für ungültiges Passwort" name=" UserHash.test.js isCorrectPassword gibt false für ungültiges Passwort" time="0.394">
     </testcase>
-    <testcase classname=" ModulList.test change ModulList without date" name=" ModulList.test change ModulList without date" time="0.17">
+    <testcase classname=" UserHash.test.js User kann nicht mit leerem Passwort erstellt werden" name=" UserHash.test.js User kann nicht mit leerem Passwort erstellt werden" time="0.238">
     </testcase>
-  </testsuite>
-  <testsuite name="ModulModel.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:56:25" time="1.54" tests="4">
-    <testcase classname=" Modul.test create Modul" name=" Modul.test create Modul" time="0.295">
+    <testcase classname=" UserHash.test.js isCorrectPassword gibt false wenn falsches Passwort bei gespeichertem User eingegeben wird" name=" UserHash.test.js isCorrectPassword gibt false wenn falsches Passwort bei gespeichertem User eingegeben wird" time="0.389">
     </testcase>
-    <testcase classname=" Modul.test remove Modul" name=" Modul.test remove Modul" time="0.175">
+    <testcase classname=" UserHash.test.js isCorrectPassword gibt false wenn der Passworthash bei gespeichertem User eingegeben wird" name=" UserHash.test.js isCorrectPassword gibt false wenn der Passworthash bei gespeichertem User eingegeben wird" time="0.202">
     </testcase>
-    <testcase classname=" Modul.test change Modul" name=" Modul.test change Modul" time="0.194">
+    <testcase classname=" UserHash.test.js isCorrectPassword gibt fehler wenn der Passwortänderung nicht gespeichert wird" name=" UserHash.test.js isCorrectPassword gibt fehler wenn der Passwortänderung nicht gespeichert wird" time="0.342">
     </testcase>
-    <testcase classname=" Modul.test change Modul without creditpoints" name=" Modul.test change Modul without creditpoints" time="0.188">
+    <testcase classname=" UserHash.test.js isCorrectPassword gibt false wenn kein Passwort und kein Passwort eingegeben wird" name=" UserHash.test.js isCorrectPassword gibt false wenn kein Passwort und kein Passwort eingegeben wird" time="0.339">
     </testcase>
   </testsuite>
-  <testsuite name="ServiceHelper.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:56:27" time="0.544" tests="12">
-    <testcase classname=" dateToString zweistellig" name=" dateToString zweistellig" time="0.007">
+  <testsuite name="AuthenticationService.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:15:31" time="3.873" tests="7">
+    <testcase classname=" AuthenticationService.test Loggin Password correct" name=" AuthenticationService.test Loggin Password correct" time="0.722">
     </testcase>
-    <testcase classname=" dateToString einstellig" name=" dateToString einstellig" time="0.003">
+    <testcase classname=" AuthenticationService.test Loggin Password not correct" name=" AuthenticationService.test Loggin Password not correct" time="0.446">
+    </testcase>
+    <testcase classname=" AuthenticationService.test Loggin User not found" name=" AuthenticationService.test Loggin User not found" time="0.213">
+    </testcase>
+    <testcase classname=" AuthenticationService.test Loggin Password not found" name=" AuthenticationService.test Loggin Password not found" time="0.217">
+    </testcase>
+    <testcase classname=" AuthenticationService.test Loggin Admin" name=" AuthenticationService.test Loggin Admin" time="0.544">
+    </testcase>
+    <testcase classname=" AuthenticationService.test Loggin User" name=" AuthenticationService.test Loggin User" time="0.336">
+    </testcase>
+    <testcase classname=" AuthenticationService.test Loggin Default" name=" AuthenticationService.test Loggin Default" time="0.364">
+    </testcase>
+  </testsuite>
+  <testsuite name="UserModel.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:15:34" time="2.928" tests="11">
+    <testcase classname=" UserModel.test createUser" name=" UserModel.test createUser" time="0.258">
+    </testcase>
+    <testcase classname=" UserModel.test createUser twice same name" name=" UserModel.test createUser twice same name" time="0.41">
+    </testcase>
+    <testcase classname=" UserModel.test createUser twice same studentId must fail" name=" UserModel.test createUser twice same studentId must fail" time="0.213">
+    </testcase>
+    <testcase classname=" UserModel.test createUser without password must fail" name=" UserModel.test createUser without password must fail" time="0.03">
+    </testcase>
+    <testcase classname=" UserModel.test find user by name" name=" UserModel.test find user by name" time="0.239">
+    </testcase>
+    <testcase classname=" UserModel.test studentId must min 6 chars" name=" UserModel.test studentId must min 6 chars" time="0.035">
+    </testcase>
+    <testcase classname=" UserModel.test change name without studentId must fail" name=" UserModel.test change name without studentId must fail" time="0.203">
+    </testcase>
+    <testcase classname=" UserModel.test change name with findOneandUpdate" name=" UserModel.test change name with findOneandUpdate" time="0.222">
+    </testcase>
+    <testcase classname=" UserModel.test change name with updateOne" name=" UserModel.test change name with updateOne" time="0.224">
+    </testcase>
+    <testcase classname=" UserModel.test change name without studentId with updateOne must fail" name=" UserModel.test change name without studentId with updateOne must fail" time="0.186">
+    </testcase>
+    <testcase classname=" UserModel.test Create User with minimal data" name=" UserModel.test Create User with minimal data" time="0.195">
+    </testcase>
+  </testsuite>
+  <testsuite name="loginRoute.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:15:38" time="3.419" tests="2">
+    <testcase classname=" /api/login login with correct credentials" name=" /api/login login with correct credentials" time="0.977">
+    </testcase>
+    <testcase classname=" /api/login login with wrong credentials" name=" /api/login login with wrong credentials" time="0.575">
+    </testcase>
+  </testsuite>
+  <testsuite name="ModulListModel.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:15:41" time="2.61" tests="4">
+    <testcase classname=" ModulList.test create ModulList" name=" ModulList.test create ModulList" time="0.447">
+    </testcase>
+    <testcase classname=" ModulList.test remove ModulList" name=" ModulList.test remove ModulList" time="0.29">
+    </testcase>
+    <testcase classname=" ModulList.test change ModulList" name=" ModulList.test change ModulList" time="0.292">
+    </testcase>
+    <testcase classname=" ModulList.test change ModulList without date" name=" ModulList.test change ModulList without date" time="0.316">
+    </testcase>
+  </testsuite>
+  <testsuite name="ModulModel.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:15:44" time="2.006" tests="4">
+    <testcase classname=" Modul.test create Modul" name=" Modul.test create Modul" time="0.425">
+    </testcase>
+    <testcase classname=" Modul.test remove Modul" name=" Modul.test remove Modul" time="0.256">
+    </testcase>
+    <testcase classname=" Modul.test change Modul" name=" Modul.test change Modul" time="0.235">
+    </testcase>
+    <testcase classname=" Modul.test change Modul without creditpoints" name=" Modul.test change Modul without creditpoints" time="0.197">
+    </testcase>
+  </testsuite>
+  <testsuite name="ServiceHelper.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:15:46" time="0.695" tests="12">
+    <testcase classname=" dateToString zweistellig" name=" dateToString zweistellig" time="0.011">
+    </testcase>
+    <testcase classname=" dateToString einstellig" name=" dateToString einstellig" time="0.002">
     </testcase>
     <testcase classname=" stringToDate zweistellig" name=" stringToDate zweistellig" time="0.002">
     </testcase>
     <testcase classname=" stringToDate einstellig mit Null" name=" stringToDate einstellig mit Null" time="0.001">
     </testcase>
-    <testcase classname=" stringToDate einstellig ohne Null" name=" stringToDate einstellig ohne Null" time="0.001">
+    <testcase classname=" stringToDate einstellig ohne Null" name=" stringToDate einstellig ohne Null" time="0.002">
     </testcase>
-    <testcase classname=" isEmail test@bht-berlin.de" name=" isEmail test@bht-berlin.de" time="0.003">
+    <testcase classname=" isEmail test@bht-berlin.de" name=" isEmail test@bht-berlin.de" time="0.002">
     </testcase>
     <testcase classname=" isEmail test2@bht-berlin.de" name=" isEmail test2@bht-berlin.de" time="0.002">
     </testcase>
-    <testcase classname=" isEmail test3@bht-berlin.de" name=" isEmail test3@bht-berlin.de" time="0.002">
+    <testcase classname=" isEmail test3@bht-berlin.de" name=" isEmail test3@bht-berlin.de" time="0.003">
     </testcase>
-    <testcase classname=" isEmail invalid@domain.com" name=" isEmail invalid@domain.com" time="0.001">
+    <testcase classname=" isEmail invalid@domain.com" name=" isEmail invalid@domain.com" time="0.004">
     </testcase>
     <testcase classname=" isEmail another-invalid-email" name=" isEmail another-invalid-email" time="0.002">
     </testcase>
-    <testcase classname=" isEmail @bht-berlin.de" name=" isEmail @bht-berlin.de" time="0.002">
+    <testcase classname=" isEmail @bht-berlin.de" name=" isEmail @bht-berlin.de" time="0.001">
     </testcase>
     <testcase classname=" isEmail test@bht-berlin" name=" isEmail test@bht-berlin" time="0.002">
     </testcase>
   </testsuite>
-  <testsuite name="test.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T10:56:28" time="0.61" tests="1">
-    <testcase classname=" test" name=" test" time="0.003">
+  <testsuite name="test.test.ts" errors="0" failures="0" skipped="0" timestamp="2024-05-28T11:15:47" time="0.629" tests="1">
+    <testcase classname=" test" name=" test" time="0.005">
     </testcase>
   </testsuite>
 </testsuites>

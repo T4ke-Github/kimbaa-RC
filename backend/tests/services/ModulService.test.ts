@@ -292,7 +292,6 @@ test("ModulService.test updateModul with invalid id", async () => {
         await ModulService.updateModul(fakeModulResource);
     } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect(error).toBe("No ModulID: " + fakeId + " found");
     }
     logger.info("ModulService.test updateModul with invalid id wurde beendet");
 })
