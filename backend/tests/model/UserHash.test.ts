@@ -1,5 +1,5 @@
 import * as bcrypt from "bcryptjs";
-import { logger } from "../../src/backlogger";
+import { logger } from "../../src/logger/testLogger";
 import { User } from "../../src/model/UserModel";
 
 beforeEach(async () => {
@@ -7,16 +7,10 @@ beforeEach(async () => {
     name: "DerOtto",
     password: "test",
     admin: false,
-    studentId: 666456,
+    studentId: "666456",
     email: "test@bht-berlin.de",
-    firstLogin: new Date(),
-    lastLogin: new Date(),
-    pwChangeDate: new Date(),
-    failedLoginCount: 0,
-    department: "6",
-    enrolledSince: new Date(),
-    CreditPoints: 0,
-    phone: 123
+    course: "6",
+
   });
   await user1.save();
 
@@ -50,21 +44,21 @@ test("UserHash.test.js Passwort Änderung", async () => {
     name: "User1",
     password: "unchangedpassword",
     admin: false,
-    studentId: 133799,
+    studentId: "133799",
     email: "test2@bht-berlin.de",
     firstLogin: new Date(),
     lastLogin: new Date(),
     pwChangeDate: new Date(),
     failedLoginCount: 0,
-    department: "6",
+    course: "6",
     enrolledSince: new Date(),
-    CreditPoints: 0,
+    creditPoints: 0,
     phone: 123
   });
   await user.save();
   user.password = "newpassword";
   await user.save();
-  const foundUser = await User.findOne({ studentId: 133799 });
+  const foundUser = await User.findOne({ studentId: "133799" });
   if (foundUser) {
     const isMatch = await bcrypt.compare("newpassword", user.password);
     if (!isMatch) {
@@ -87,15 +81,15 @@ test("UserHash.test.js Passwort bleibt unverändert, wenn nicht geändert", asyn
     name: "User1",
     password: "unchangedpassword",
     admin: false,
-    studentId: 133799,
+    studentId: "133799",
     email: "test100@bht-berlin.de",
     firstLogin: new Date(),
     lastLogin: new Date(),
     pwChangeDate: new Date(),
     failedLoginCount: 0,
-    department: "6",
+    course: "6",
     enrolledSince: new Date(),
-    CreditPoints: 0,
+    creditPoints: 0,
     phone: 123
   });
   await user.save();
@@ -125,7 +119,7 @@ test("UserHash.test.js isCorrectPassword gibt true für korrektes Passwort", asy
   logger.info("UserHash.test.js isCorrectPassword gibt true für korrektes Passwort wird gestartet");
   /*   const user = new User({ name: "User1", password: "password", admin: false });
     await user.save(); */
-  let user1 = await User.findOne({ studentId: 666456 });
+  let user1 = await User.findOne({ studentId: "666456" });
   const isCorrect = await user1!.isCorrectPassword("test");
   expect(isCorrect).toBe(true);
   logger.info("UserHash.test.js isCorrectPassword gibt true für korrektes Passwort wird beendet");
@@ -133,7 +127,7 @@ test("UserHash.test.js isCorrectPassword gibt true für korrektes Passwort", asy
 
 test("UserHash.test.js isCorrectPassword gibt false für ungültiges Passwort", async () => {
   logger.info("isCorrectPassword gibt false für ungültiges Passwort wird gestartet");
-  const user = await User.findOne({ studentId: 666456 });
+  const user = await User.findOne({ studentId: "666456" });
 
   const isCorrect = await user!.isCorrectPassword("wrongpassword");
   if (isCorrect) {
@@ -161,21 +155,21 @@ test("UserHash.test.js User kann nicht mit leerem Passwort erstellt werden", asy
 
 test("UserHash.test.js isCorrectPassword gibt false wenn falsches Passwort bei gespeichertem User eingegeben wird", async () => {
   logger.info("isCorrectPassword gibt false wenn falsches Passwort bei gespeichertem User eingegeben wird wird gestartet");
-  const user = await User.findOne({ studentId: 666456 });
+  const user = await User.findOne({ studentId: "666456" });
   const isCorrect = await user!.isCorrectPassword("wrongpassword");
   expect(isCorrect).toBe(false);
   logger.info("isCorrectPassword gibt false wenn falsches Passwort bei gespeichertem User eingegeben wird wird beendet");
 });
 test("UserHash.test.js isCorrectPassword gibt false wenn der Passworthash bei gespeichertem User eingegeben wird", async () => {
   logger.info("isCorrectPassword gibt false wenn der Passworthash bei gespeichertem User eingegeben wird wird gestartet");
-  const user = await User.findOne({ studentId: 666456 });
+  const user = await User.findOne({ studentId: "666456" });
   const isCorrect = await user!.isCorrectPassword(user!.password);
   expect(isCorrect).toBe(false);
   logger.info("isCorrectPassword gibt false wenn der Passworthash bei gespeichertem User eingegeben wird wird beendet");
 });
 test("UserHash.test.js isCorrectPassword gibt fehler wenn der Passwortänderung nicht gespeichert wird", async () => {
   logger.info("isCorrectPassword gibt fehler wenn der Passwort Änderung nicht gespeichert wird wird gestartet");
-  const user = await User.findOne({ studentId: 666456 });
+  const user = await User.findOne({ studentId: "666456" });
   const isCorrect = await user!.isCorrectPassword("newpassword");
   if (isCorrect) {
     logger.error("is Correct Password: Ein ungültiges Passwort hat korrekt einen fehler ausgelösst.");
@@ -189,7 +183,7 @@ test("UserHash.test.js isCorrectPassword gibt fehler wenn der Passwortänderung 
 //Test compare no passwort with no passwort
 test("UserHash.test.js isCorrectPassword gibt false wenn kein Passwort und kein Passwort eingegeben wird", async () => {
   logger.info("isCorrectPassword gibt false wenn kein Passwort und kein Passwort eingegeben wird wird gestartet");
-  const user = await User.findOne({ studentId: 666456 });
+  const user = await User.findOne({ studentId: "666456" });
   try {
     const isCorrect = await user!.isCorrectPassword("");
     expect(isCorrect).toBe(false);

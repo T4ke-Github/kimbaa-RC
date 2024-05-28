@@ -2,7 +2,7 @@
 
 /*Vorlagen .*/
 
-import { UserResource} from "../src/Resources";
+import { UserResource } from "../src/Resources";
 import { logger } from "./logger";
 
 import { User } from "../src/model/UserModel";
@@ -20,12 +20,12 @@ export async function prefillDB(): Promise<{ heinz: UserResource}> {
     //antrag
     const UserResource: UserResource = {
         name: "Behrens",
-        studentId: 123456,
+        studentId: "123456",
         password: "123_abc_ABC",
         admin: true,
         email: "",
         department: "",
-        CreditPoints: 0,
+        creditPoints: 0,
         phone: 0
     }
     const heinz = await createUser(UserResource);

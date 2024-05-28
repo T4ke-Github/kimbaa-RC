@@ -22,7 +22,7 @@ export interface IAntragZulassung {
   finalSemester: string; // Required
   name: string; // Required
   degreeProgram: string; // Required
-  department: string; // Optional
+  course: string; // Optional
   email: string; // Required
   adress: IAdress; // Required
   extension: IAntragZulassungKontrollfragen[]; // Optional
@@ -40,7 +40,7 @@ const AntragZulassungSchema = new Schema<IAntragZulassung>({
   finalSemester: { type: String, required: false },
   name: { type: String, required: false },
   degreeProgram: { type: String, required: false },
-  department: { type: String },
+  course: { type: String },
   email: { type: String, required: false },
   adress: { type: String, required: false },
   extension: 
