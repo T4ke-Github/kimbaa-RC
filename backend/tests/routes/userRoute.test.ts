@@ -197,6 +197,7 @@ test("/api/user/ create User Medieninformatik and test for moduls", async () => 
         email: "nicolas@bht-berlin.de",
         course: "Medieninformatik",
     };
+    const studentID = "999999";
     let response = await testee.post(`/api/user/`).send(userResource);
     logger.info("Attempted to create user:", response.body);
     expect(response.statusCode).toBe(201);
@@ -205,7 +206,7 @@ test("/api/user/ create User Medieninformatik and test for moduls", async () => 
     expect(user!.course).toBe("Medieninformatik");
 
     const modulList = await ModulList.findOne({ creator: response.body.id });
-    const alleEintraege = await ModulService.getAlleModule(modulList?.id);
+    const alleEintraege = await ModulService.getAlleModule(studentID);
     expect(alleEintraege.length).toBe(55);
 
 });

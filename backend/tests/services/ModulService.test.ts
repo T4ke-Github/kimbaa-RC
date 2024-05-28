@@ -57,8 +57,9 @@ test("ModulService.test getAlleModule create many Modul into modullist", async (
     await modul2.save();
     await modul3.save();
 
+    const studentID = user1.studentId;
     //get alle module
-    const alleEintraege = await ModulService.getAlleModule(modulList.id);
+    const alleEintraege = await ModulService.getAlleModule(studentID);
     expect(alleEintraege.length).toBe(3);
     expect(alleEintraege[0].modulnumber).toBe("123456");
     expect(alleEintraege[1].modulnumber).toBe("654321");
@@ -96,11 +97,11 @@ test("ModulService.test updateModule by list to solved", async () => {
             solved: true
         }
     ]
-    const userID = user.id;
+    const studentID = user.studentId;
     const result = await ModulService.updateModulesByModuleNameAndUserId(updatelist);
 
     const modulList = await ModulList.findOne({ creator: user.id });
-    const alleEintraege = await ModulService.getAlleModule(modulList?.id);
+    const alleEintraege = await ModulService.getAlleModule(studentID!);
     const mathe = await Modul.findOne({ modulname: "Mathematik I" });
     const gti = await Modul.findOne({ modulname: "Grundlagen der Theoretischen Informatik" });
     const mathe2 = await Modul.findOne({ modulname: "Mathematik II" });
@@ -144,10 +145,11 @@ test("ModulService.test calculateSolvedModuls", async () => {
         }
     ]
     const userID = user.id;
+    const studentID = user.studentId;
     const result = await ModulService.updateModulesByModuleNameAndUserId(updatelist);
 
     const modulList = await ModulList.findOne({ creator: user.id });
-    const alleEintraege = await ModulService.getAlleModule(modulList?.id);
+    const alleEintraege = await ModulService.getAlleModule(studentID!);
     const solvedModules = await ModulService.calculateModuleSummary(user.id!);
     expect(solvedModules.credits).toBe(15);
     expect(solvedModules.allrequired).toBe(false);
