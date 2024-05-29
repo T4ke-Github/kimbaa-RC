@@ -1,0 +1,395 @@
+{
+    "Pflichtmodule": [
+        {
+            "Modulnummer": "8637_106565",
+            "modulname": "Mathematik I",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "11428_106565",
+            "modulname": "Grundlagen der Theoretischen Informatik",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "11429_106565",
+            "modulname": "Mediendesign Grundlagen",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "8640_106565",
+            "modulname": "Technische Grundlagen der Informatik",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "11430_106565",
+            "modulname": "Programmierung I",
+            "creditPoints": 10,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "8643_106565",
+            "modulname": "Mathematik II",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "10985_106565",
+            "modulname": "Algorithmen und Datenstrukturen",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "8645_106565",
+            "modulname": "Datenbanksysteme",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "8646_106565",
+            "modulname": "Programmierung II",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "8644_106565",
+            "modulname": "Betriebssysteme",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "8649_106565",
+            "modulname": "Software Engineering I",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "11431_106565",
+            "modulname": "Computergrafik Grundlagen",
+            "creditPoints": 7,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "11432_106565",
+            "modulname": "Medientechnologien",
+            "creditPoints": 8,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "10126_106565",
+            "modulname": "Verteilte Systeme",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "11433_106565",
+            "modulname": "Web Engineering I",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "8655_106565",
+            "modulname": "Software Engineering II",
+            "creditPoints": 8,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11434_106565",
+            "modulname": "Web Engineering II",
+            "creditPoints": 7,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11435_106565",
+            "modulname": "Human–Computer Interaction",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11436_106565",
+            "modulname": "Projekt",
+            "creditPoints": 15,
+            "solved": "false",
+            "required": "true"
+        },
+        {
+            "Modulnummer": "10531_106565",
+            "modulname": "Grundlagen wissenschaftlichen Arbeitens",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "8662_106565",
+            "modulname": "Praxisprojekt",
+            "creditPoints": 15,
+            "solved": "false",
+            "required": "true"
+        }
+    ],
+    "Wahlpflichtmodule": [
+        {
+            "Modulnummer": "11437_106566",
+            "modulname": "Interaktions- und Interface-Design",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11438_106566",
+            "modulname": "Software Engineering: Architekturen und Werkzeuge",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11439_106566",
+            "modulname": "3D Web Graphics",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11440_106566",
+            "modulname": "Softwarequalität und -test",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "8663_106566",
+            "modulname": "Betriebswirtschaftslehre",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11441_106566",
+            "modulname": "Medienproduktion und -distribution",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11385_106566",
+            "modulname": "Effiziente Software Entwickeln mit C++",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11442_106566",
+            "modulname": "Programmiersprachen und -paradigmen",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11443_106566",
+            "modulname": "Anwendungsentwicklung für IOS-Geräte",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11444_106566",
+            "modulname": "Mobile Anwendungsentwicklung",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11445_106566",
+            "modulname": "Visual and Scientific Computing",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11446_106566",
+            "modulname": "Spieleentwicklung und Creative Coding",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11447_106566",
+            "modulname": "Signalverarbeitung für Audio, Bild und Video",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11448_106566",
+            "modulname": "Maschinelles Lernen",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11449_106566",
+            "modulname": "Aktuelle Webtechnologien: Frameworks und Tools",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11450_106566",
+            "modulname": "Aktuelle Themen",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "10385_106566",
+            "modulname": "Maya",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "10386_106566",
+            "modulname": "C++ für Java-Programmierer",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11384_106566",
+            "modulname": "AngularJS - JavaScript MV* Framework",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "10612_106566",
+            "modulname": "Videoproduktion für Online-Video-Angebote",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "10433_106566",
+            "modulname": "Cloud Computing",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11663_106566",
+            "modulname": "Frontend–Design Web: Fortgeschrittene Techniken",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "10501_106566",
+            "modulname": "Microservice-Entwicklung: Architekturen und Entwurfsmuster",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "1980_106566",
+            "modulname": "Interactive Media Objects & Web-Media Applications",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "1150_106566",
+            "modulname": "Webprogrammierung mit Python",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "11958_106566",
+            "modulname": "Echtzeitgrafik Grundlagen",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "12153_106566",
+            "modulname": "Professionelle Web-Anwendungen umsetzen und betreiben",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "WP23",
+            "modulname": "Data Science Programmierung mit Python",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "WP25",
+            "modulname": "Externes Modul 1",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "WP26",
+            "modulname": "Externes Modul 2",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "WP27",
+            "modulname": "Externes Modul 3",
+            "creditPoints": 5,
+            "solved": "false",
+            "required": "false"
+        }
+    ],
+    "Studium Generale": [
+        {
+            "Modulnummer": "xxxx_106034",
+            "modulname": "trage einen modulnamen ein ",
+            "creditPoints": 2.5,
+            "solved": "false",
+            "required": "false"
+        },
+        {
+            "Modulnummer": "xxxx_106034",
+            "modulname": "trage einen modulnamen ein ",
+            "creditPoints": 2.5,
+            "solved": "false",
+            "required": "false"
+        }
+    ],
+    "Abschlussmodul": [
+        {
+            "Modulnummer": "Abschlussmodul",
+            "modulname": "Bachelorarbeit",
+            "creditPoints": 12,
+            "solved": "false",
+            "required": "true"
+        }
+    ]
+}
