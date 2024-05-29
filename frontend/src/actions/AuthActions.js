@@ -29,15 +29,12 @@ export function registerUserAction(matrikel, name, email, password){
             })
     }
 }
-function registerUser(matrikel, name, email, password, admin, department, creditPoints){
+function registerUser(matrikel, name, email, password){
     const registrationForm = {
         name: name,
         password: password,
         studentId: matrikel,
-        email: email,
-        admin: admin,
-        department: department,
-        creditPoints: creditPoints
+        email: email
     }
 
     const requestOptions = {

@@ -54,14 +54,13 @@ class RegistrationPage extends Component{
         const { regMatrikel, regName, regEmail, regAdmin, regCreditPoints, regDepartment, regPassword, regPasswordRe } = this.state;
         const { register } = this.props;
         if(regPassword !== regPasswordRe){
-            console.log("Time to doxx the new user! Matrikel: "+regMatrikel+", Name: "+regName+", Email: "+regEmail+", Admin: "+regAdmin+", CreditPoints: "+regCreditPoints+", Department: "+regDepartment);
             this.setState({noMatch: true});
             this.setState({regPassword: ""});
             this.setState({regPasswordRe: ""});
             return;
         }
-        console.log(regPassword+", "+regPasswordRe);
-        register(regMatrikel, regName, regEmail, regAdmin, regDepartment, regCreditPoints, regPassword);
+        console.log("Time to doxx the new user! Matrikel: "+regMatrikel+", Name: "+regName+", Email: "+regEmail+", Admin: "+regAdmin+", CreditPoints: "+regCreditPoints+", Department: "+regDepartment+", Password: "+regPassword);
+        register(regMatrikel, regName, regEmail, regPassword);
     }
 
     render(){
