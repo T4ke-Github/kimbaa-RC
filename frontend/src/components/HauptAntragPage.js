@@ -30,6 +30,8 @@ class HauptAntragPage extends Component{
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleCheckbox = this.handleCheckbox.bind(this);
         this.saveAntrag = this.saveAntrag.bind(this);
+        this.handleSemester = this.handleSemester.bind(this);
+        this.handleBM = this.handleBM.bind(this);
     }
 
     handleInputChange(e){
@@ -40,7 +42,26 @@ class HauptAntragPage extends Component{
     handleCheckbox(e){
         const { name, checked } = e.target;
         this.setState({[name]: checked });
-        //console.log(name + checked)
+    }
+
+    handleSemester(e){
+        const { name, checked } = e.target;
+        this.setState({[name]: checked });
+        if(name === "winters"){
+            this.setState({"sommers": !checked });
+        }else if(name === "sommers"){
+            this.setState({"winters": !checked });
+        }
+    }
+
+    handleBM(e){
+        const { name, checked } = e.target;
+        this.setState({[name]: checked });
+        if(name === "bachelor"){
+            this.setState({"master": !checked });
+        }else if(name === "master"){
+            this.setState({"bachelor": !checked });
+        }
     }
 
     saveAntrag(){
@@ -61,7 +82,7 @@ class HauptAntragPage extends Component{
         ", anlage2: " + this.state.anlage2 + 
         ", nvorschlag: " + this.state.nvorschlag + 
         ", praxisp: " + this.state.praxisp + 
-        ", annerkennung: " + this.state.annerkennung )
+        ", annerkennung: " + this.state.annerkennung + "}")
     }
 
     render(){
@@ -70,8 +91,8 @@ class HauptAntragPage extends Component{
             <Form className="hauptantrag">
                 <Form.Group className="hauptantraggruppe">
                     <Form.Label><h2>Zulassung zur Abschlussprüfung im</h2></Form.Label>
-                    <Form.Check name="sommers" label="Sommersemester" value={this.state.sommers} onChange={this.handleCheckbox} />
-                    <Form.Check name="winters" label="Wintersemester" value={this.state.winters} onChange={this.handleCheckbox} />
+                    <Form.Check name="sommers" label="Sommersemester" checked={this.state.sommers} onChange={this.handleSemester} />
+                    <Form.Check name="winters" label="Wintersemester" checked={(this.state.winters)} onChange={this.handleSemester} />
                 </Form.Group>
                 <Form.Group className="hauptantraggruppe3">
                     <Form.Label ><h3>Persöhnliche Daten</h3></Form.Label>
@@ -86,8 +107,8 @@ class HauptAntragPage extends Component{
                 </Form.Group>
                 <Form.Group className="hauptantraggruppe">
                     <input type="text" name="studiengang"  placeholder="Studiengang" value={this.state.studiengang} onChange={this.handleInputChange} /> 
-                    <Form.Check label="Bachelor"  name="bachelor" value={this.state.bachelor}  onChange={this.handleCheckbox} /> 
-                    <Form.Check label="Master"  name="master" value={this.state.master}  onChange={this.handleCheckbox} /> 
+                    <Form.Check label="Bachelor"  name="bachelor" checked={this.state.bachelor}  onChange={this.handleBM} /> 
+                    <Form.Check label="Master"  name="master" checked={this.state.master}  onChange={this.handleBM} /> 
                 </Form.Group>
                 <Form.Group className="hauptantraggruppe3" >
                     <Form.Label>E-Mail</Form.Label><input type="text" name="email"  value={this.state.email} placeholder="" onChange={this.handleInputChange} />  
