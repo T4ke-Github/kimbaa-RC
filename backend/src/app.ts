@@ -14,11 +14,16 @@ import { modulRouter } from './routes/modulRoute';
 const app = express();
 
 // Middleware:
+
 app.use(cors({
-    //origin: 'http://localhost:8080', // Replace with your frontend URL
-
-    origin: 'http://localhost:3000'
-
+    origin: function (origin, callback) {
+        const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000'];
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
 }));
 app.use('*', express.json()) //
 

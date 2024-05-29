@@ -45,7 +45,7 @@ function registerUser(matrikel, name, email, password){
         body: JSON.stringify(registrationForm)
     }
 
-    return fetch('http://localhost:8081/api/user/create', requestOptions)
+    return fetch('http://localhost:8081/api/user/', requestOptions)
         .then(response => {
             if(!response.ok){
                 throw new Error('Error while registrating');
