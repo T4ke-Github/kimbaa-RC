@@ -143,13 +143,3 @@ dist
 
 # Built Visual Studio Code Extensions
 *.vsix
-
-#frontend
-<<<<<<< HEAD
-# /frontend
-=======
-/frontend
->>>>>>> sascha-dev-merge
-
-#gitignore
-.gitignore
