@@ -145,7 +145,11 @@ dist
 *.vsix
 
 #frontend
+<<<<<<< HEAD
 # /frontend
+=======
+/frontend
+>>>>>>> sascha-dev-merge
 
 #gitignore
 .gitignore
