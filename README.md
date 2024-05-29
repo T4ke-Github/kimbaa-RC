@@ -18,7 +18,7 @@ KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen
     - Aufrufen
 
 - Automatisches Einlesen der Credits des Studierenden
-    - Webcrawler
+    - Import von Studiendaten über Polli API
     - PDF parsen 
 
 - Beantworten von Fragen zu spezifischen Modulen wie Praktikum und Projekt
@@ -37,8 +37,9 @@ KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen
     - Bereitstellung aussagekräftiger Beschreibungen
 
 - Abgabe der gesammelten Informationen
-    - Druckfunktion..
-    - Online-Einreichung.
+    - Druckfunktion
+    - PDF Export
+    - Online-Einreichung
 
 ---
 
