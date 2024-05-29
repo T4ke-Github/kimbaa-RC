@@ -82,11 +82,11 @@ KiMBAA Data-Scraper-Web-App zum Extrahieren von Daten und Stellen von Anträgen
 
 Product Owner: Sascha Benjamin
 
-Scrum-Master:  Trung Nguyen Quoc
+Scrum-Master:  Trung Nguyen
 
-QA: Ivo Ilschner
+QA: Trung Nguyen
 
-Frontend: 
+Frontend: Arthur Goldenbaum & Marc Ewert
 
 Backend: Sascha Benjamin
 
