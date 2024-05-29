@@ -16,7 +16,7 @@ class RegistrationPage extends Component{
         super(props);
 
         this.state = {
-            regMatrikel: null,
+            regMatrikel: "",
             regName: "",
             regEmail: "",
             regPassword: "",
@@ -49,7 +49,7 @@ class RegistrationPage extends Component{
     handleRegistration(e){
         e.preventDefault();
         const { regMatrikel, regName, regEmail, regPassword, regPasswordRe } = this.state;
-        const { register, close } = this.props;
+        const { register } = this.props;
         if(regPassword !== regPasswordRe){
             console.log("HERE")
             this.setState({noMatch: true});
@@ -59,8 +59,6 @@ class RegistrationPage extends Component{
         }
         console.log(regPassword+", "+regPasswordRe);
         register(regMatrikel, regName, regEmail, regPassword);
-        setTimeout(() => {}, 1000);
-        close();
     }
 
     render(){
