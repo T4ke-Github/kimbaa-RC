@@ -45,7 +45,7 @@ function registerUser(matrikel, name, email, password){
         body: JSON.stringify(registrationForm)
     }
 
-    return fetch('http://localhost:8081/api/user/', requestOptions)
+    return fetch('http://localhost:8081/api/user', requestOptions)
         .then(response => {
             if(!response.ok){
                 throw new Error('Error while registrating');
@@ -59,7 +59,8 @@ export function loginAction(loginId, password){
         dispatch(getLoginPending());
         login(loginId, password)
             .then(mat => {
-                Cookies.set('currentPage', 'landing')
+                Cookies.set('currentPage', 'landing');
+                Cookies.set('loggedIn', true);
                 dispatch(getLoginSuccess(mat))
             })
             .catch(err => {

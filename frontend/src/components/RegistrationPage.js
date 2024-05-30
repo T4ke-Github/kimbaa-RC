@@ -19,6 +19,9 @@ class RegistrationPage extends Component{
             regMatrikel: "",
             regName: "",
             regEmail: "",
+            regAdmin: false,
+            regDepartment: "",
+            regCreditPoints: "",
             regPassword: "",
             regPasswordRe: "",
             noMatch: false,
@@ -48,16 +51,15 @@ class RegistrationPage extends Component{
 
     handleRegistration(e){
         e.preventDefault();
-        const { regMatrikel, regName, regEmail, regPassword, regPasswordRe } = this.state;
+        const { regMatrikel, regName, regEmail, regAdmin, regCreditPoints, regDepartment, regPassword, regPasswordRe } = this.state;
         const { register } = this.props;
         if(regPassword !== regPasswordRe){
-            console.log("HERE")
             this.setState({noMatch: true});
             this.setState({regPassword: ""});
             this.setState({regPasswordRe: ""});
             return;
         }
-        console.log(regPassword+", "+regPasswordRe);
+        console.log("Time to doxx the new user! Matrikel: "+regMatrikel+", Name: "+regName+", Email: "+regEmail+", Admin: "+regAdmin+", CreditPoints: "+regCreditPoints+", Department: "+regDepartment+", Password: "+regPassword);
         register(regMatrikel, regName, regEmail, regPassword);
     }
 
@@ -96,15 +98,27 @@ class RegistrationPage extends Component{
                         .warn{
                             color: #ffffff;
                         }
+                        .adminCheck{
+                            color: #ffffff;
+                            display: flex;
+                            align-items: flex-end;
+                        }
                     `}
                 </style>
                 <div className="formPage">
                     <div className="fAlignmentHelp">
-                        <h1>Registriere dich hier als neuen Nutzer: </h1>
+                        <h1>Ist die Zeit für deine Bachelorarbeit gekommen?</h1>
+                        <h2>Kein Problem - registriere dich hier!</h2>
                         <form className="fBody">
                             <input type="number" id="matrikel" name="regMatrikel" value={this.state.regMatrikel} placeholder="Matrikelnr." className="spaceTop" onChange={this.handleInputChange}/>
                             <input type="text" id="name" name="regName" value={this.state.regName} placeholder="Name" onChange={this.handleInputChange}/>
                             <input type="email" id="email" name="regEmail" value={this.state.regEmail}placeholder="Email" onChange={this.handleInputChange}/>
+                            <input type="number" id="department" name="regDepartment" value={this.state.regDepartment} placeholder="Fachbereich" onChange={this.handleInputChange}/>
+                            <input type="number" id="creditPoints" name="regCreditPoints" value={this.state.regCreditPoints} placeholder="Credit Points" onChange={this.handleInputChange}/>
+                            <div className="adminCheck">
+                                <p>Bist du ein Admin? Sei ehrlich!</p>
+                                <input type="checkbox" className="box" id="admin" name="regAdmin" checked={this.state.regAdmin} onChange={this.handleInputChange} />
+                            </div>
                             <input type="password" id="password" name="regPassword" value={this.state.regPassword} placeholder="Passwort" className="spaceTop" onChange={this.handleInputChange}/>
                             <input type="password" id="passwordRe" name="regPasswordRe" value={this.state.regPasswordRe} placeholder="Passwort widerholen" className="spaceBottom" onChange={this.handleInputChange}/>
                             { warning }
