@@ -23,6 +23,7 @@ class LandingDemo extends Component{
         this.doLogin = this.doLogin.bind(this);
         this.getRegistrationForm = this.getRegistrationForm.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
     doLogin(){
@@ -41,10 +42,17 @@ class LandingDemo extends Component{
         moveToRegister();
     }
 
+    handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.doLogin();
+        }
+    }
+
     render(){
         return(
             <>
-                <div className="formPage">
+                <div className="formPage" onKeyDown={this.handleKeyPress}>
                     <div className="fAlignmentHelp">
                         <h1>Willkommen bei kimbaa!</h1>
                         <p>Melde dich an, um deine Sitzung fortzusetzen.</p>
@@ -55,7 +63,7 @@ class LandingDemo extends Component{
                                 <div>
                                     <button onClick={this.getRegistrationForm} className="linkStyleButton"><u>Registrieren</u></button>
                                 </div>
-                                <Button onClick={this.doLogin} className="standardButton">Anmelden</Button>
+                                <Button type="submit" onClick={this.doLogin} className="standardButton">Anmelden</Button>
                         </div>
                     </div>
                     <img alt="kimbaa_login_logo" src="kimbaa_high_login.png"/>
