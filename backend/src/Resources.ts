@@ -1,30 +1,48 @@
 export type UserResource = {
     id?: string;
-    name: string;
+    name?: string;
     password?: string;
     admin?: boolean;
-    studentId: number;
+    studentId?: string;
     email?: string;
     createdAt?: string;
     updatedAt?: string;
-    department?: string;
-    enrolledSince?: string;
-    CreditPoints?: number;
-    phone?: number;
+    course?: string;
+}
+export type ModulResource = {
+    id?: string;
+    creator?: string;
+    modulList?: string;
+    modulnumber?: string;
+    modulname?: string;
+    creditPoints?: number;
+    solved?: boolean;
+    required?: boolean;
 }
 
+export type ModulListResource = {
+    id?: string;
+    creator?: string;
+    studentId?: string;
+    course?: string;
+    datum?: string;
+    updatedAt?: string;
+}
+
+
 export type applicationZulassungResource = {
-    creator: string;
-    attach1id: string;
-    attach2id: string;
-    finalSemester: string;
-    name: string;
-    degreeProgram: string;
-    department: string;
-    email: string;
-    adresse: AdressResource;
-    fragen: applicationZulassungKontrollfragenResource[];
-    datum: Date;
+    creator?: string;
+    attach1id?: string;
+    attach2id?: string;
+    finalSemester?: string;
+    name?: string;
+    degreeProgram?: string;
+    course?: string;
+    department?: string;
+    email?: string;
+    adresse?: AdressResource;
+    fragen?: applicationZulassungKontrollfragenResource[];
+    datum?: Date;
 }
 
 export type AdressResource = {

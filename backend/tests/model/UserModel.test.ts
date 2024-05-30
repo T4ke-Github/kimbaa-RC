@@ -1,4 +1,4 @@
-import { logger } from "../../src/logger";
+import { logger } from "../../src/logger/testLogger";
 import { User } from "../../src/model/UserModel";
 
 
@@ -9,23 +9,21 @@ test("UserModel.test createUser", async () => {
         name: "test",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
-        department: "test",
+        course: "test",
         enrolledSince: new Date(),
-        CreditPoints: 0,
+        creditPoints: 0,
         phone: 123
     });
     await user.save();
     expect(user.id).toBeDefined();
     expect(user.name).toBe("test");
     expect(user.admin).toBe(false);
-    expect(user.studentId).toBe(123456);
+    expect(user.studentId).toBe("123456");
     expect(user.email).toBe("test@bht-berlin.de");
-    expect(user.department).toBe("test");
-    expect(user.enrolledSince).toBeDefined();
-    expect(user.CreditPoints).toBe(0);
-    expect(user.phone).toBe(123);
+    expect(user.course).toBe("test");
+
     logger.info("UserModel.test createUser wurde beendet");
 }); 
 
@@ -36,22 +34,22 @@ test("UserModel.test createUser twice same name", async () => {
         name: "DerOtto",
         password: "test",
         admin: false,
-        studentId: 666456,
+        studentId: "666456",
         email: "test@bht-berlin.de",
-        department: "test",
+        course: "test",
         enrolledSince: new Date(),
-        CreditPoints: 0,
+        creditPoints: 0,
         phone: 123
     });
     const user2 = new User({
         name: "DerOtto",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test2@bht-berlin.de",
-        department: "test",
+        course: "test",
         enrolledSince: new Date(),
-        CreditPoints: 0,
+        creditPoints: 0,
         phone: 123
     });
     await user1.save();
@@ -68,22 +66,22 @@ test("UserModel.test createUser twice same studentId must fail", async () => {
         name: "test",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
-        department: "test",
+        course: "test",
         enrolledSince: new Date(),
-        CreditPoints: 0,
+        creditPoints: 0,
         phone: 123
     });
     const user2 = new User({
         name: "test2",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test",
-        department: "test",
+        course: "test",
         enrolledSince: new Date(), 
-        CreditPoints: 0,
+        creditPoints: 0,
         phone: 123
     });
     await user1.save();
@@ -100,11 +98,11 @@ test("UserModel.test createUser without password must fail", async () => {
     const user = new User({
         name: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test",
-        department: "test",
+        course: "test",
         enrolledSince: new Date(),
-        CreditPoints: 0,
+        creditPoints: 0,
         phone: 123
     });
     try {
@@ -120,12 +118,12 @@ test("UserModel.test find user by name", async () => {
         name: "test",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
         failedLoginCount: 0,
-        department: "test",
+        course: "test",
         enrolledSince: new Date(),
-        CreditPoints: 0,
+        creditPoints: 0,
         phone: 123
     })
     const user = await User.findOne({ name: "test" });
@@ -141,9 +139,9 @@ test("UserModel.test studentId must min 6 chars", async () => {
         studentId: 12345,
         email: "test",
         failedLoginCount: 0,
-        department: "test",
+        course: "test",
         enrolledSince: new Date(),
-        CreditPoints: 0,
+        creditPoints: 0,
         phone: 123
     });
     try {
@@ -159,11 +157,11 @@ test("UserModel.test change name without studentId must fail", async () => {
         name: "irgendeinOtto",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
-        department: "test",
+        course: "test",
         enrolledSince: new Date(),
-        CreditPoints: 0,
+        creditPoints: 0,
         phone: 123
     });
     await user.save();
@@ -181,12 +179,10 @@ test("UserModel.test change name with findOneandUpdate", async () => {
         name: "oldname",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
-        department: "test",
-        enrolledSince: new Date(),
-        CreditPoints: 0,
-        phone: 123
+        course: "test",
+        creditPoints: 0,
     })
     await user.save();
     expect(user?.name).toBe("oldname");
@@ -208,13 +204,11 @@ test("UserModel.test change name with updateOne", async () => {
         name: "oldname",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
         failedLoginCount: 0,
-        department: "test",
-        enrolledSince: new Date(),
-        CreditPoints: 0,
-        phone: 123
+        course: "test",
+        creditPoints: 0,
     })
     await user.save();
     expect(user?.name).toBe("oldname");
@@ -232,13 +226,11 @@ test("UserModel.test change name without studentId with updateOne must fail", as
         name: "oldname",
         password: "test",
         admin: false,
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
         failedLoginCount: 0,
-        department: "test",
-        enrolledSince: new Date(),
-        CreditPoints: 0,
-        phone: 123
+        course: "test",
+        creditPoints: 0,
     })
     await user.save();
     try {
@@ -254,11 +246,14 @@ test("UserModel.test Create User with minimal data", async () => {
     const user = new User({
         name: "test",
         password: "test",
-        studentId: 123456,
+        studentId: "123456",
         email: "test@bht-berlin.de",
     });
     await user.save();
     expect(user?.name).toBe("test");
-    expect(user?.studentId).toBe(123456);
+    expect(user?.studentId).toBe("123456");
     logger.info("UserModel.test Create User with minimal data wurde beendet");
 })
+
+//let fail isCorrect passwort
+

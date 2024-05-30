@@ -1,11 +1,69 @@
-import * as bcrypt from 'bcryptjs';
+
+import fs from 'fs';
 import { Types } from "mongoose";
+import path from 'path';
 import { UserResource } from "../Resources"; // This should be your resource interface for User
-import { logger } from "../backlogger";
-import { User } from "../model/UserModel";
+import { logger } from "../logger/serviceLogger";
 import { AntragZulassung } from "../model/AntragZulassungModel";
+import { User } from "../model/UserModel";
+import * as modulListService from "./ModulListService";
+import * as modulService from "./ModulService";
 import { dateToString } from './ServiceHelper';
 
+
+//createModulListfromJson
+async function createModulListFromJson(userId: string, course: string) {
+    try {
+        // Pfad zur JSON-Datei backend\modulListe.json
+        const jsonPath = path.resolve(__dirname, '..', 'MedieninformatikModule.json');
+        logger.info("jsonPath: " + jsonPath);
+
+        // Lese die JSON-Datei
+        const jsonData = fs.readFileSync(jsonPath, 'utf-8');
+
+        // Parse die JSON-Daten
+        const modulData = JSON.parse(jsonData);
+
+        // Erstelle eine neue Modulliste für den Benutzer
+        const modulListResource = {
+            creator: userId,
+            course: course, // Setze dies auf den tatsächlichen Kurs des Benutzers
+        };
+        const newModulList = await modulListService.createModulList(modulListResource);
+
+        // Gehe durch alle Module in der JSON-Datei und erstelle sie für den Benutzer
+        for (const category in modulData) {
+            for (const modul of modulData[category]) {
+                if (!modul.Modulnummer) {
+                    logger.error('Modul hat keine Modulnummer: ' + JSON.stringify(modul));
+                    continue;
+                }
+
+                const modulResource = {
+                    creator: userId,
+                    modulList: newModulList.id,
+                    modulnumber: modul.Modulnummer, // Achte auf die Groß-/Kleinschreibung
+                    modulname: modul.modulname,
+                    creditPoints: modul.creditPoints, // Setze dies auf die tatsächliche Anzahl der Kreditpunkte für das Modul
+                    //convert string to boolean
+                    solved: modul.solved,
+                    required: modul.required,
+                };
+
+                logger.info("Creating modulResource: " + JSON.stringify(modulResource)); // Debug-Log
+
+                try {
+                    await modulService.createModul(modulResource);
+                    logger.info("ModulResource created: " + JSON.stringify(modulResource));
+                } catch (error) {
+                    logger.error('Error creating module: ' + JSON.stringify(modulResource) + '. Error: ' + error);
+                }
+            }
+        }
+    } catch (error) {
+        logger.error('Error: ' + error);
+    }
+}
 /**
  * Holt alle Benutzer, ohne Passwörter zurückzugeben.
  */
@@ -20,14 +78,12 @@ export async function getAlleUser(): Promise<UserResource[]> {
         application: user.application || undefined,
         address: user.address || undefined,
         email: user.email,
-        department: user.department || undefined,
-        CreditPoints: user.CreditPoints || undefined,
-        phone: user.phone || undefined
+        course: user.course || undefined,
     }));
     return userResources; 
 }
 //getOne by studentid or email
-export async function getOneUser(identifier: { studentId?: number; email?: string }): Promise<UserResource> {
+export async function getOneUser(identifier: { studentId?: string; email?: string }): Promise<UserResource> {
     logger.info("UserService.getOneUser wird gestartet");
 
     try {
@@ -51,9 +107,7 @@ export async function getOneUser(identifier: { studentId?: number; email?: strin
             admin: user.admin || false,
             studentId: user.studentId,
             email: user.email,
-            department: user.department || undefined,
-            CreditPoints: user.CreditPoints || undefined,
-            phone: user.phone || undefined
+            course: user.course || undefined,
         };
     } catch (error) {
         throw new Error("Fehler beim Abrufen des Benutzers: " + error);
@@ -65,31 +119,45 @@ export async function getOneUser(identifier: { studentId?: number; email?: strin
 export async function createUser(userResource: UserResource): Promise<UserResource> {
     logger.info("UserService.createUser wird gestartet");
 
+    try {
+        const user = new User({
+            name: userResource.name,
+            email: userResource.email,
+            studentId: userResource.studentId,
+            password: userResource.password,
+            course: userResource.course,
+        })
     
-    const user = new User({
-        name: userResource.name,
-        email: userResource.email,
-        studentId: userResource.studentId,
-        password: userResource.password,
-    })
-
-    await user.save();
-    const datum = new Date(); 
-    const updatedAt = userResource.updatedAt ? new Date(userResource.updatedAt) : datum;
-
-
-    return { id: user.id,
-        name: user.name,
-        admin: user.admin || false,
-        studentId: user.studentId,
-        email: user.email,
-        createdAt: userResource.createdAt,
-        updatedAt: dateToString(updatedAt),
-        department: user.department,
-        enrolledSince: user.enrolledSince ? dateToString(user.enrolledSince) : undefined,
-        CreditPoints: user.CreditPoints,
-        phone: user.phone
-    };
+        await user.save();
+        //create ModulList for user if course is Medieninformatik
+        if (user.course === "Medieninformatik") {
+            try {
+                await createModulListFromJson(user.id, user.course);
+                logger.info("ModulList created for user: " + user.id);
+            } catch (error) {
+                logger.error('Fehler beim Erstellen der Modulliste: ' + error);
+                throw new Error('Fehler beim Erstellen der Modulliste: ' + error);
+            }
+        }
+        
+        const datum = new Date(); 
+        const updatedAt = userResource.updatedAt ? new Date(userResource.updatedAt) : datum;
+    
+    
+        return { id: user.id,
+            name: user.name,
+            admin: user.admin || false,
+            studentId: user.studentId,
+            email: user.email,
+            createdAt: userResource.createdAt,
+            updatedAt: dateToString(updatedAt),
+            course: user.course,
+        };
+    } catch (error) {
+        logger.error("UserService: Create : " + error);
+        throw new Error("User Creation error: " + error);
+    }
+    
 }
 
 /**
@@ -98,22 +166,14 @@ export async function createUser(userResource: UserResource): Promise<UserResour
 export async function updateUser(userResource: UserResource): Promise<UserResource> {
     logger.info("UserService.updateUser wird gestartet");
 
-    if (!userResource.id) {
-        logger.error("updateUser: Benutzer-ID fehlt");
-        throw new Error("Benutzer-ID fehlt");
-    }
-
     const user = await User.findById(userResource.id).exec();
 
-    if (user) {
-        user.name = userResource.name || user.name;
-        user.email = userResource.email || user.email;
-        user.admin = userResource.admin ?? user.admin;
-
-        if (userResource.password) {
-            const hashedPassword = await bcrypt.hash(userResource.password, 10);
-            user.password = hashedPassword;
-        }
+    if (user && user !== null) {
+        if (userResource.name) user.name = userResource.name;
+        if (userResource.studentId) user.studentId = userResource.studentId;
+        if (userResource.email) user.email = userResource.email;
+        if (userResource.admin !== undefined) user.admin = userResource.admin;
+        if (userResource.password) user.password = userResource.password;
 
         await user.save();
         logger.info("UserService.updateUser: Benutzer aktualisiert mit ID: " + user.id);
@@ -128,19 +188,17 @@ export async function updateUser(userResource: UserResource): Promise<UserResour
  */
 export async function deleteUser(id: string): Promise<void> {
     logger.info("UserService.deleteUser wird gestartet");
-    try {
+
         const user = await User.findById(id).exec();
 
-        if (user) {
+        if (user === null || user.name === null) {
+            throw new Error("Benutzer nicht gefunden.");
+        }
+        if (user !== null) {
             logger.info("UserService.deleteUser: Benutzer gefunden und bereit zu löschen: " + user.name);
             await AntragZulassung.deleteMany({ creator: user._id }); // Löscht verbundene Daten
             await user.deleteOne({ _id: new Types.ObjectId(id) });
             logger.info("UserService.deleteUser: Benutzer gelöscht: " + user.name);
-        } else {
-            throw new Error("Benutzer nicht gefunden.");
         }
-    } catch (error) {
-        logger.error("Fehler beim Löschen des Benutzers: " + error);
-        throw new Error("Fehler beim Löschen des Benutzers.");
-    }
+
 }
