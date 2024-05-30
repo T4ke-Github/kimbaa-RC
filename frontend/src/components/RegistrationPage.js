@@ -30,6 +30,14 @@ class RegistrationPage extends Component{
         this.handleCancel = this.handleCancel.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleRegistration = this.handleRegistration.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
+    }
+
+    handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.handleRegistration(e);
+        }
     }
 
     handleCancel(e){
@@ -105,7 +113,7 @@ class RegistrationPage extends Component{
                         }
                     `}
                 </style>
-                <div className="formPage">
+                <div className="formPage" onKeyDown={this.handleKeyPress}>
                     <div className="fAlignmentHelp">
                         <h1>Ist die Zeit für deine Bachelorarbeit gekommen?</h1>
                         <h2>Kein Problem - registriere dich hier!</h2>
