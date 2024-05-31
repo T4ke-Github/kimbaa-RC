@@ -16,6 +16,20 @@ const mapStateToProps = state => {
 
 class TopMenu extends Component{
 
+    constructor(props){
+        super(props);
+        this.contextualLogoAction = this.contextualLogoAction.bind(this);
+    }
+
+    contextualLogoAction(){
+        const { getLandingPage, getLoginPage } = this.props;
+        if(this.props.loggedIn){
+            getLandingPage();
+        }else{
+            getLoginPage();
+        }
+    }
+
     render(){
 
         let widget;
@@ -44,7 +58,7 @@ class TopMenu extends Component{
                     <img alt="" src="kimbaa_logo_256.png" width="52" height="52" className="d-inline-block align-top"/>
                 </Navbar.Brand>
                 <Nav>
-                    <h2 onClick={this.handleLogout}>kimbaa</h2>
+                    <h2 onClick={this.contextualLogoAction}>kimbaa</h2>
                 </Nav>
                 {widget}
             </Navbar>
@@ -55,6 +69,8 @@ class TopMenu extends Component{
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     logout: navActions.getNavLoginAction,
+    getLandingPage: navActions.getNavLandingAction,
+    getLoginPage: navActions.getNavLoginAction,
 }, dispatch);
 
 const ConnectedTopMenu = connect(mapStateToProps, mapDispatchToProps)(TopMenu);

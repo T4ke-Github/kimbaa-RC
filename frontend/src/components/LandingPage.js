@@ -54,9 +54,9 @@ class LandingPage extends Component{
                                 </Card.Text>
                         </Card.Body>
                     </Card>
-                    {['bachelor medieninfo'].map((antrag) => (
-                        <Card style={{ width: '18rem' }} className="card">
-                            <Card.Img variant="top" src="kimbaa_logo_clean.png" />
+                    {['Bachelor Medieninformatik'].map((antrag, index) => (
+                        <Card key={index} style={{ width: '18rem' }} className="card">
+                            <Card.Img variant="top" src="kimbaa_logo_256.png" />
                             <Card.Body>
                                 <Card.Title>
                                     {antrag}
