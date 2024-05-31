@@ -17,7 +17,8 @@ class LandingDemo extends Component{
 
         this.state = {
             matrikel: "",
-            password: ""
+            password: "",
+            loginState: "idle",
         }
 
         this.doLogin = this.doLogin.bind(this);
@@ -30,11 +31,18 @@ class LandingDemo extends Component{
         const { matrikel, password } = this.state;
         const { loginAction } = this.props;
         loginAction(matrikel, password);
+        this.setState({loginState: "waiting"});
+        setTimeout(() => {
+            this.setState({ loginState: "failed" });
+        }, 2000);
     }
 
     handleInputChange(e){
         const { name, value } = e.target;
-        this.setState({[name]: value});
+        this.setState({
+            [name]: value,
+            loginState: "idle",
+        });
     }
 
     getRegistrationForm(){
@@ -50,8 +58,36 @@ class LandingDemo extends Component{
     }
 
     render(){
+        let loginMessage;
+        switch(this.state.loginState){
+            case "idle":
+                loginMessage = <></>;
+                break;
+            case "waiting":
+                loginMessage = <p className="blue shiftRight">Login wird verarbeitet...</p>;
+                break;
+            case "failed":
+                loginMessage = <p className="red shiftRight">Login fehlgeschlagen!</p>;
+                break;
+            default:
+                loginMessage = <></>;
+                break;
+        }
         return(
             <>
+                <style>
+                    {`
+                        .blue{
+                            color: #004282;
+                        }
+                        .red{
+                            color: #ea3b07;
+                        }
+                        .shiftRight{
+                            padding-left: 12px;
+                        }
+                    `}
+                </style>
                 <div className="formPage" onKeyDown={this.handleKeyPress}>
                     <div className="fAlignmentHelp">
                         <h1>Willkommen bei kimbaa!</h1>
@@ -61,8 +97,9 @@ class LandingDemo extends Component{
                                 <input type="number" name="matrikel" value={this.state.matrikel} placeholder="Matrikelnr." onChange={this.handleInputChange}/>
                                 <input type="password" name="password"value={this.state.password} placeholder="Passwort" onChange={this.handleInputChange}/>
                                 <div>
-                                    <button onClick={this.getRegistrationForm} className="linkStyleButton"><u>Registrieren</u></button>
+                                    <button onClick={this.getRegistrationForm} className="linkStyleButton red"><u>Registrieren</u></button>
                                 </div>
+                                {loginMessage}
                                 <Button type="submit" onClick={this.doLogin} className="standardButton">Anmelden</Button>
                         </div>
                     </div>

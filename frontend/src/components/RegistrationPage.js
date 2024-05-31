@@ -102,11 +102,11 @@ class RegistrationPage extends Component{
     render(){
         let warning;
         if(this.state.noMatch && !this.state.incorrectEmailFormat){
-            warning = <div className="warn"><p>Beide Passwörter müssen übereinstimmen!</p></div>
+            warning = <div className="fMessage white"><p>Beide Passwörter müssen übereinstimmen!</p></div>
         }else if(!this.state.noMatch && this.state.incorrectEmailFormat){
-            warning = <div className="warn"><p>Falsches Emailformat (muss auf @bht-berlin.de enden)!</p></div>
+            warning = <div className="fMessage white"><p>Falsches Emailformat (muss auf @bht-berlin.de enden)!</p></div>
         }else if(this.state.noMatch && this.state.incorrectEmailFormat){
-            warning = <div className="warn"><p>Beide Passwörter müssen übereinstimmen!</p><p>Falsches Emailformat (muss auf @bht-berlin.de enden)!</p></div>
+            warning = <div className="fMessage white"><p>Beide Passwörter müssen übereinstimmen!</p><p>Falsches Emailformat (muss auf @bht-berlin.de enden)!</p></div>
         }else{
             warning=<p></p>
         }
@@ -135,13 +135,9 @@ class RegistrationPage extends Component{
                             background-color: #60a2d2;
                             color: #004282;
                         }
-                        .warn{
+                        .white{
                             color: #ffffff;
                             border-color: #ffffff;
-                            border: 2px solid;
-                            padding-left: 12px;
-                            border-radius: 10px;
-                            width: 326px;
                             margin-top: 20px;
                         }
                         .adminCheck{
