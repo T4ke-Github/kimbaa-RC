@@ -9,7 +9,7 @@ import { bindActionCreators } from "redux";
 import * as navActions from '../actions/NavActions';
 
 const mapStateToProps = state => {
-    return{
+    return {
         loggedIn: state.auth.loggedIn
     }
 }
