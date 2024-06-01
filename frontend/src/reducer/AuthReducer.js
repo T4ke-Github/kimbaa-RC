@@ -11,10 +11,11 @@ const initialState = {
 function authReducer(state = initialState, action){
     switch(action.type){
         case authActions.LOGIN_SUCCESS:
+            console.log("Received resource at Reducer: ", action.userResource);
             return{
                 ...state,
-                userResource: action.userResource,
                 loggedIn: true,
+                userResource: action.userResource,
             }
         case navActions.LOGIN:
             return{

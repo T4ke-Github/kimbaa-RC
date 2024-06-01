@@ -33,14 +33,14 @@ class LandingPage extends Component{
 
 
     render(){
-        
-        let name = this.props.userResource.name || "John Default";
+
+        let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
 
         return (
             <>
                 <Container className="fLanding" >
                     <h1>Willkommen bei kimbaa!</h1>
-                    <p> Du hast dich erfolgreich eingeloggt, {name}</p>
+                    <p> Du hast dich erfolgreich eingeloggt, {name}!</p>
                 </Container>
                 <Container className="fGrid">
                     <Card style={{ width: '18rem' }} className="card">

@@ -14,7 +14,7 @@ function getRegistrationSuccess(){ return { type: REGISTRATION_SUCCESS, payload:
 
 function getLoginPending(){ return { type: LOGIN_PENDING } }
 function getLoginFail(err){ return { type: LOGIN_FAILURE, err: err } }
-function getLoginSuccess(user){ return { type: LOGIN_SUCCESS, userResoure: user, payload: 'landing' } }
+function getLoginSuccess(user){ return { type: LOGIN_SUCCESS, userResource: user, payload: 'landing' } }
 
 export function registerUserAction(matrikel, name, email, password){
     return dispatch => {
