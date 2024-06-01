@@ -14,7 +14,7 @@ function getRegistrationSuccess(){ return { type: REGISTRATION_SUCCESS, payload:
 
 function getLoginPending(){ return { type: LOGIN_PENDING } }
 function getLoginFail(err){ return { type: LOGIN_FAILURE, err: err } }
-function getLoginSuccess(matrikel){ return { type: LOGIN_SUCCESS, matrikel: matrikel, payload: 'landing' } }
+function getLoginSuccess(user){ return { type: LOGIN_SUCCESS, userResoure: user, payload: 'landing' } }
 
 export function registerUserAction(matrikel, name, email, password){
     return dispatch => {
@@ -58,10 +58,10 @@ export function loginAction(loginId, password){
     return dispatch => {
         dispatch(getLoginPending());
         login(loginId, password)
-            .then(mat => {
+            .then(user => {
                 Cookies.set('currentPage', 'landing');
                 Cookies.set('loggedIn', true);
-                dispatch(getLoginSuccess(mat))
+                dispatch(getLoginSuccess(user))
             })
             .catch(err => {
                 dispatch(getLoginFail(err))
@@ -87,7 +87,10 @@ function login(loginId, password){
             if(!response.ok){
                 throw new Error('Error logging in');
             }
-            return loginId;
+            return response.json();
+        })
+        .then(data => {
+            return data.user;
         })
 }
 

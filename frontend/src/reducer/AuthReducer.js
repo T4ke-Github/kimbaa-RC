@@ -3,8 +3,8 @@ import * as navActions from '../actions/NavActions';
 import Cookies from 'js-cookie';
 
 const initialState = {
-    matrikel: "",
     loggedIn: Cookies.get('loggedIn') === 'true' || false,
+    userResource: null,
     err: null
 }
 
@@ -13,13 +13,14 @@ function authReducer(state = initialState, action){
         case authActions.LOGIN_SUCCESS:
             return{
                 ...state,
-                matrikel: action.matrikel,
+                userResource: action.userResource,
                 loggedIn: true,
             }
         case navActions.LOGIN:
             return{
                 ...state,
-                loggedIn: false
+                loggedIn: false,
+                userResource: null
             }
         default:
             return{
