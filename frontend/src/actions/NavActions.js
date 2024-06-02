@@ -7,6 +7,7 @@ export const APPLICATION = "APPLICATION";
 
 export function getNavLoginAction(){
     Cookies.set('currentPage', 'login');
+    Cookies.remove('userResource');
     return {
         type: LOGIN,
         payload: 'login'

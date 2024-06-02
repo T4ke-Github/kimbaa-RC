@@ -61,6 +61,7 @@ export function loginAction(loginId, password){
             .then(user => {
                 Cookies.set('currentPage', 'landing');
                 Cookies.set('loggedIn', true);
+                Cookies.set('userResource', JSON.stringify(user));
                 dispatch(getLoginSuccess(user))
             })
             .catch(err => {
