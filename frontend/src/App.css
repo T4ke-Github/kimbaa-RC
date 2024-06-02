@@ -182,6 +182,7 @@ h1, h2, h3 {
 .mainApplicationPage{
   padding-left: 5vw;
   padding-top: 4vh;
+  margin-bottom: 80px;
 }
 .mainApplicationForm{
   padding-left: 4vw;
@@ -198,6 +199,8 @@ h1, h2, h3 {
 
 .modal{
   width: 30vw;
-  height: 30vh;
+  height: 180px;
   background-color: var(--yellow);
+  border: none;
+  border-radius: 20px;
 }

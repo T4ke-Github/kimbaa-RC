@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {createRef, Component} from "react";
 import { connect } from "react-redux";
 
 import * as navActions from '../actions/NavActions';
@@ -7,7 +7,6 @@ import { bindActionCreators } from "redux";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
 
 const mapStateToProps = state => {
     return{
@@ -20,13 +19,15 @@ class MainApplicationPage extends Component{
     constructor(props){
         super(props);
 
+        let userResource = this.props.userResource;
+
         this.state = {
             appSemWinter: true,
             appSemSummer: false,
-            appMatrikel: "",
+            appMatrikel: userResource.studentId ? userResource.studentId : "",
             appDepartment: "",
-            appName: "",
-            appEmail: "",
+            appName: userResource.name ? userResource.name : "",
+            appEmail: userResource.email ? userResource.email : "",
             appPhone: "",
             appStreet: "",
             appPlace: "",
@@ -40,16 +41,17 @@ class MainApplicationPage extends Component{
             appNoTopicProposition: false,
             appPracticalSemesterDone: false,
             appPracticalSemesterAcknowledgement: false,
-            showCancelDialogue: false,
         }
+
+        this.dialogRef = createRef();
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSemester = this.handleSemester.bind(this);
         this.handleDegree = this.handleDegree.bind(this);
         this.handleCheckChange = this.handleCheckChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
-        this.handleCloseDialogue = this.handleCloseDialogue.bind(this);
-        this.handleOpenDialogue = this.handleOpenDialogue.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     handleInputChange(e){
@@ -94,14 +96,14 @@ class MainApplicationPage extends Component{
         saveApplication(appSemSummer, appMatrikel, appDepartment, appName, appEmail, appPhone, appStreet, appPlace, appPostal, appCourse, appMaster, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, appPracticalSemesterDone, appPracticalSemesterAcknowledgement);
     }
 
-    handleCloseDialogue(e){
-        this.setState({"showCancelDialogue": false});       
-    }
-    handleOpenDialogue(e){
-        this.setState({"showCancelDialogue": true});       
-    }
+    handleClose(){
+        this.dialogRef.current.close();
+    };
+    handleOpen(){
+        this.dialogRef.current.showModal();
+    };
 
-    render(){
+    render(){        
 
         return(
             <>
@@ -155,8 +157,15 @@ class MainApplicationPage extends Component{
                             background-color: #ffffff;
                             color: #ea3b07;
                         }
-                        .modal {
-                            z-index: 1050;
+                        .diaContent{
+                            margin-left: 1vw;
+                            margin-right: 1vw;
+                        }
+                        .dia{
+                            width: 12vw;
+                        }
+                        .dLeft{
+                            margin-right: 3vw;
                         }
                     `}
                 </style>
@@ -210,21 +219,19 @@ class MainApplicationPage extends Component{
                         </Form.Group>
                         <Form.Group controlId="Submit or Leave" className="spaceTop spaceBottom">
                             <div className="itemInlineRow">
-                                <Button className="standardButton buttonWidth aCancel" onClick={this.handleOpenDialogue}>Abbrechen</Button>
+                                <Button className="standardButton buttonWidth aCancel" onClick={this.handleOpen}>Abbrechen</Button>
                                 <Button className="standardButton buttonWidth" onClick={this.handleSave}>Speichern</Button>
                             </div>
                         </Form.Group>
                     </Form>
+                    <dialog ref={this.dialogRef} className="modal">
+                        <div className="diaContent">
+                            <h2>Bist du sicher dass du deine Änderungen verwerfen willst?</h2>
+                            <button className="standardButton dia dLeft" onClick={this.handleClose}>Zurück</button>
+                            <button className="standardButton dia" onClick={this.props.moveToLanding}>Antrag Schließen</button>
+                        </div>
+                    </dialog>
                 </div>
-                <Modal className="modal" show={this.state.showCancelDialogue} onHide={this.handleCloseDialogue}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Bist du sicher, dass du diesen Entwurf verwerfen möchtest?</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Footer>
-                        <Button className="standardButton" onClick={this.handleCloseDialogue}>Zurück</Button>
-                        <Button className="standardButton" onClick={this.props.moveToLanding}>Save Changes</Button>
-                    </Modal.Footer>
-                </Modal>
             </>
         )
     }

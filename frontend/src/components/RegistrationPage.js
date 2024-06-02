@@ -20,8 +20,6 @@ class RegistrationPage extends Component{
             regName: "",
             regEmail: "",
             regAdmin: false,
-            regDepartment: "",
-            regCreditPoints: "",
             regPassword: "",
             regPasswordRe: "",
             noMatch: false,
@@ -162,8 +160,6 @@ class RegistrationPage extends Component{
                             <input type="number" id="matrikel" name="regMatrikel" value={this.state.regMatrikel} placeholder="Matrikelnr." className="spaceTop" onChange={this.handleInputChange}/>
                             <input type="text" id="name" name="regName" value={this.state.regName} placeholder="Name" onChange={this.handleInputChange}/>
                             <input type="email" id="email" name="regEmail" value={this.state.regEmail}placeholder="Email" onChange={this.handleInputChange}/>
-                            <input type="number" id="department" name="regDepartment" value={this.state.regDepartment} placeholder="Fachbereich" onChange={this.handleInputChange}/>
-                            <input type="number" id="creditPoints" name="regCreditPoints" value={this.state.regCreditPoints} placeholder="Credit Points" onChange={this.handleInputChange}/>
                             <div className="adminCheck">
                                 <p>Bist du ein Admin? Sei ehrlich!</p>
                                 <input type="checkbox" className="box" id="admin" name="regAdmin" checked={this.state.regAdmin} onChange={this.handleInputChange} />
