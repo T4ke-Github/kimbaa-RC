@@ -145,6 +145,13 @@ class RegistrationPage extends Component{
                             display: flex;
                             align-items: flex-end;
                         }
+                        input{
+                            width: 340px;
+                            height: 26px;
+                            border-radius: 10px;
+                            border: 0;
+                            margin-top: 10px;
+                          }
                     `}
                 </style>
                 <div className="formPage" onKeyDown={this.handleKeyPress}>

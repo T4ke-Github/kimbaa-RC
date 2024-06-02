@@ -34,8 +34,8 @@ h1, h2, h3 {
   flex-direction: row;
   align-items: flex-start;
   height: 100vh;
-  padding-left: 100px;
-  padding-top: 2%;
+  padding-left: 5vw;
+  padding-top: 4vh;
 }
 .formPage img {
   width: auto;
@@ -64,14 +64,6 @@ h1, h2, h3 {
   width: 400px;
   background-color: #ffc900;
   border-radius: 30px;
-}
-
-input{
-  width: 340px;
-  height: 26px;
-  border-radius: 10px;
-  border: 0;
-  margin-top: 10px;
 }
 
 .fGrid{
@@ -112,7 +104,6 @@ input{
 }
 
 .standardButton{
-  width: 340px;
   height: 40px;
   background-color: #004282;
   color: #ffffff;
@@ -120,7 +111,8 @@ input{
   border: none;
 }
 .standardButton:hover{
-  background-color: #00a0aa;
+  background-color: #ffffff;
+  color: var(--blue);
 }
 
 .linkStyleButton{
@@ -185,4 +177,27 @@ input{
 
 .checkbox{
   background-color:#00a0aa;
+}
+
+.mainApplicationPage{
+  padding-left: 5vw;
+  padding-top: 4vh;
+}
+.mainApplicationForm{
+  padding-left: 4vw;
+  padding-right: 4vw;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  width: 55vw;
+  background-color: var(--petrol);
+  border-radius: 40px;
+}
+.mainApplicationLabel{
+  font-family: BHTTitle;
+}
+
+.modal{
+  width: 30vw;
+  height: 30vh;
+  background-color: var(--yellow);
 }
