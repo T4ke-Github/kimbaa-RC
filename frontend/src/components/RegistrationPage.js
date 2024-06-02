@@ -1,7 +1,9 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 import * as navActions from '../actions/NavActions';
 import * as authActions from '../actions/AuthActions';
@@ -31,6 +33,7 @@ class RegistrationPage extends Component{
         this.handleRegistration = this.handleRegistration.bind(this);
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.checkEmail = this.checkEmail.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
     }
 
     handleKeyPress(e) {
@@ -43,6 +46,11 @@ class RegistrationPage extends Component{
     handleCancel(e){
         const { close } = this.props;
         close();
+    }
+
+    handleCheck(e){
+        const { name, checked } = e.target;
+        this.setState({[name]: checked});
     }
 
     handleInputChange(e){
@@ -69,7 +77,7 @@ class RegistrationPage extends Component{
 
     handleRegistration(e){
         e.preventDefault();
-        const { regMatrikel, regName, regEmail, regAdmin, regCreditPoints, regDepartment, regPassword, regPasswordRe } = this.state;
+        const { regMatrikel, regName, regEmail, regAdmin, regPassword, regPasswordRe } = this.state;
         const { register } = this.props;
         if(regPassword !== regPasswordRe){
             this.setState({
@@ -93,7 +101,7 @@ class RegistrationPage extends Component{
             });
             return;
         }
-        console.log("Time to doxx the new user! Matrikel: "+regMatrikel+", Name: "+regName+", Email: "+regEmail+", Admin: "+regAdmin+", CreditPoints: "+regCreditPoints+", Department: "+regDepartment+", Password: "+regPassword);
+        console.log("Time to doxx the new user! Matrikel: "+regMatrikel+", Name: "+regName+", Email: "+regEmail+", Admin: "+regAdmin+", Password: "+regPassword);
         register(regMatrikel, regName, regEmail, regPassword);
     }
 
@@ -118,7 +126,8 @@ class RegistrationPage extends Component{
                         .rCancel{
                             background-color: #ffffff;
                             color: #ea3b07;
-                            margin-right: 20px
+                            width: 15vw;
+                            margin-right: 5vw;
                         }
                         .rCancel:hover{
                             background-color: #ea3b07;
@@ -127,7 +136,9 @@ class RegistrationPage extends Component{
                         .regButtonAlign{
                             display: flex;
                             flex-direction: row;
-                            padding-right: 50px
+                        }
+                        .submit{
+                            width: 15vw;
                         }
                         .submit:hover{
                             background-color: #60a2d2;
@@ -140,38 +151,40 @@ class RegistrationPage extends Component{
                         }
                         .adminCheck{
                             color: #ffffff;
-                            display: flex;
-                            align-items: flex-end;
+                            margin-top: 20px;
+                            margin-bottom: 10px
                         }
-                        input{
-                            width: 340px;
+                        .regIn{
+                            width: 35vw;
                             height: 26px;
                             border-radius: 10px;
-                            border: 0;
+                            border: none;
                             margin-top: 10px;
-                          }
+                        }
+                        .firstItem{
+                            margin-top: 30px;
+                        }
                     `}
                 </style>
                 <div className="formPage" onKeyDown={this.handleKeyPress}>
                     <div className="fAlignmentHelp">
                         <h1>Ist die Zeit für deine Bachelorarbeit gekommen?</h1>
                         <h2>Kein Problem - registriere dich hier!</h2>
-                        <form className="fBody">
-                            <input type="number" id="matrikel" name="regMatrikel" value={this.state.regMatrikel} placeholder="Matrikelnr." className="spaceTop" onChange={this.handleInputChange}/>
-                            <input type="text" id="name" name="regName" value={this.state.regName} placeholder="Name" onChange={this.handleInputChange}/>
-                            <input type="email" id="email" name="regEmail" value={this.state.regEmail}placeholder="Email" onChange={this.handleInputChange}/>
+                        <Form className="fBody">
+                            <input className="regIn firstItem" type="number" id="matrikel" name="regMatrikel" value={this.state.regMatrikel} placeholder="Matrikelnr." onChange={this.handleInputChange}/>
+                            <input className="regIn" type="text" id="name" name="regName" value={this.state.regName} placeholder="Name" onChange={this.handleInputChange}/>
+                            <input className="regIn" type="email" id="email" name="regEmail" value={this.state.regEmail}placeholder="Email" onChange={this.handleInputChange}/>
                             <div className="adminCheck">
-                                <p>Bist du ein Admin? Sei ehrlich!</p>
-                                <input type="checkbox" className="box" id="admin" name="regAdmin" checked={this.state.regAdmin} onChange={this.handleInputChange} />
+                                <Form.Check label="Ich bin ein Admin" checked={this.regAdmin} onChange={this.handleCheck} />
                             </div>
-                            <input type="password" id="password" name="regPassword" value={this.state.regPassword} placeholder="Passwort" className="spaceTop" onChange={this.handleInputChange}/>
-                            <input type="password" id="passwordRe" name="regPasswordRe" value={this.state.regPasswordRe} placeholder="Passwort widerholen" onChange={this.handleInputChange}/>
+                            <input className="regIn" type="password" id="password" name="regPassword" value={this.state.regPassword} placeholder="Passwort" onChange={this.handleInputChange}/>
+                            <input className="regIn" type="password" id="passwordRe" name="regPasswordRe" value={this.state.regPasswordRe} placeholder="Passwort widerholen" onChange={this.handleInputChange}/>
                             { warning }
                             <div className="regButtonAlign">
                                 <Button onClick={this.handleCancel} className="standardButton rCancel spaceTop">Abbrechen</Button>
                                 <Button onClick={this.handleRegistration} className="standardButton submit spaceTop">Registrieren</Button>
                             </div>
-                        </form>
+                        </Form>
                     </div>
                     <img alt="kimbaa_login_logo" src="kimbaa_high_login.png"/>
                 </div>

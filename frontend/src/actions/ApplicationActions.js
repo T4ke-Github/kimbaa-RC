@@ -35,5 +35,5 @@ export function saveApplication(summer, studentId, department, name, email, phon
 
     console.log("Saved the application: ", application);
 
-    getSaveApplicationAction(application);
+    return dispatch => { dispatch(getSaveApplicationAction(application)) };
 }
