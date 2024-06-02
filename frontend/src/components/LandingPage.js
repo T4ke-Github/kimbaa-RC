@@ -8,7 +8,9 @@ import { bindActionCreators } from "redux";
 //import * as authActions from '../actions/AuthActions';
 
 const mapStateToProps = state => {
-    return state;
+    return {
+        userResource: state.auth.userResource,
+    }
 }
 
 class LandingPage extends Component{
@@ -31,11 +33,14 @@ class LandingPage extends Component{
 
 
     render(){
+
+        let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
+
         return (
             <>
                 <Container className="fLanding" >
                     <h1>Willkommen bei kimbaa!</h1>
-                    <p> Du hast dich erfolgreich eingeloggt, *name* </p>
+                    <p> Du hast dich erfolgreich eingeloggt, {name}!</p>
                 </Container>
                 <Container className="fGrid">
                     <Card style={{ width: '18rem' }} className="card">
@@ -54,9 +59,9 @@ class LandingPage extends Component{
                                 </Card.Text>
                         </Card.Body>
                     </Card>
-                    {['bachelor medieninfo'].map((antrag) => (
-                        <Card style={{ width: '18rem' }} className="card">
-                            <Card.Img variant="top" src="kimbaa_logo_clean.png" />
+                    {['Bachelor Medieninformatik'].map((antrag, index) => (
+                        <Card key={index} style={{ width: '18rem' }} className="card">
+                            <Card.Img variant="top" src="kimbaa_logo_256.png" />
                             <Card.Body>
                                 <Card.Title>
                                     {antrag}
