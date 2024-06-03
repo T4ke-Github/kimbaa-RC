@@ -32,6 +32,7 @@ class App extends Component{
       case "application":
         workspace =  <MainApplicationPage />
         break;
+      case "userEdit":
       default:
         workspace = <LoginPage />
     }

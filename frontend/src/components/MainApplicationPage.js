@@ -217,7 +217,7 @@ class MainApplicationPage extends Component{
                             <Form.Label className="mainApplicationLabel">Optionale Verzichterklärung</Form.Label>
                             <Form.Check label={<>Einen Vorschlag für das Thema und den/die Betreuer*in meiner Abschlussarbeit unterbreite ich nicht. <b>Ich wünsche die Vergabe durch den Prüfungsausschuss</b></>} name="appNoTopicProposition" value={this.state.appNoTopicProposition} onChange={this.handleCheckChange} />
                         </Form.Group>
-                        <Form.Group controlId="Submit or Leave" className="spaceTop spaceBottom">
+                        <Form.Group controlId="SubmitOrLeave" className="spaceTop spaceBottom">
                             <div className="itemInlineRow">
                                 <Button className="standardButton buttonWidth aCancel" onClick={this.handleOpen}>Abbrechen</Button>
                                 <Button className="standardButton buttonWidth" onClick={this.handleSave}>Speichern</Button>
