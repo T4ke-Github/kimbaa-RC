@@ -43,6 +43,13 @@ h1, h2, h3 {
   max-width: 50%;
 }
 
+.fMessage{
+  border: 2px solid;
+  padding-left: 12px;
+  border-radius: 10px;
+  width: 326px;
+}
+
 .fAlignmentHelp{
   display: flex;
   flex-direction: column;
@@ -117,7 +124,6 @@ input{
 }
 
 .linkStyleButton{
-  color: #ea3b07;
   border: none;
   background: none;
   margin-bottom: 10px;
