@@ -1,1 +1,0 @@
-//Für jedes Model müssen in Recources einträge gemacht werden
