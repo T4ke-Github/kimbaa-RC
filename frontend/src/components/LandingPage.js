@@ -59,6 +59,14 @@ class LandingPage extends Component{
                                 </Card.Text>
                         </Card.Body>
                     </Card>
+                    <Card style={{ width: '18rem' }} className="card">
+                        <Card.Body>
+                            <Card.Title><Button className="cardButton" onClick={this.props.userUpdate}>Nutzerdaten bearbeiten</Button> </Card.Title>
+                                <Card.Text >
+                                    Hier kannst du Details deines Accounts bearbeiten.
+                                </Card.Text>
+                        </Card.Body>
+                    </Card>
                     {['Bachelor Medieninformatik'].map((antrag, index) => (
                         <Card key={index} style={{ width: '18rem' }} className="card">
                             <Card.Img variant="top" src="kimbaa_logo_256.png" />
@@ -81,6 +89,7 @@ class LandingPage extends Component{
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     antrag: navActions.getNavApplicationPageAction,
+    userUpdate: navActions.getNavUserEditPageAction,
     //deleteAntragAction: authActions.deleteAntragAction,
     //editAntragAction: authActions.editAntragAction,
 }, dispatch)
