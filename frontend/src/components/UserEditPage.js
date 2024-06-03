@@ -18,10 +18,18 @@ class UserEditPage extends Component{
     constructor(props){
         super(props);
         
-        let userResource = this.props.userResource;
+        let userResource = this.props.userResource ? this.props.userResource : "missing";
+
+        let address = userResource.address ? userResource.address : ",  ";
 
         this.state = {
+            uEstudentId: userResource.studentId ? userResource.studentId : "",
             uEName: userResource.name ? userResource.name : "",
+            uEStreet: "",
+            uEPlace: "",
+            uEPostal: "",
+            uEEmail: userResource.email ? userResource.email : "",
+            uECourse: userResource.course ? userResource.course : "",
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -97,12 +105,20 @@ class UserEditPage extends Component{
                         }
                     `}
                 </style>
-                <div className="mainApplicationPAge">
+                <div className="mainApplicationPage">
                     <h1>Nutzerdaten bearbeiten & ergänzen</h1>
                     <Form className="mainApplicationForm">
                         <Form.Group controlId="details" className="itemInlineColumn">
-                            <Form.Label>Ergänze oder ändere hier deine persönlichen Daten. Die Daten können genutzt werden, um deinen Bachelorantrag z.T. vorauszufüllen.</Form.Label>
+                            <Form.Label className="mainApplicationLabel">Ergänze oder ändere hier deine persönlichen Daten. Die Daten können genutzt werden, um deinen Bachelorantrag z.T. vorauszufüllen.</Form.Label>
+                            <input className="textInput tiWide spaceTop" type="number" placeholder="Matrikel" name="uEStudentId" value={this.state.uEstudentId} disabled/>
                             <input className="textInput tiWide" type="text" placeholder="Name" name="uEName" value={this.state.uEName} onChange={this.handleInputChange} />
+                            <input className="textInput tiWide gapTop" type="text" placeholder="Straße" name="uEStreet" value={this.state.uEStreet} onChange={this.handleInputChange} />
+                            <div className="itemInlineRow">
+                                <input className="textInput tiSmall" type="number" placeholder="PLZ" name="uEPostal" value={this.state.uEPostal} onChange={this.handleInputChange} />
+                                <input className="textInput tiNarrow" type="text" placeholder="Ort" name="uEPlace" value={this.state.uEPlace} onChange={this.handleInputChange} />
+                            </div>
+                            <input className="textInput tiWide" type="text" placeholder="Email" name="uEEmail" value={this.state.uEEmail} onChange={this.handleInputChange} />
+                            <input className="textInput tiWide" type="text" placeholder="Studiengang" name="uEName" value={this.state.uEName} onChange={this.handleInputChange} />
                         </Form.Group>
                         <Form.Group controlId="SubmitOrLeave" className="spaceTop spaceBottom">
                             <div className="itemInlineRow">
