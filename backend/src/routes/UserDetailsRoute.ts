@@ -44,7 +44,7 @@ userDetailsRouter.put("/:identifier", async (req: Request, res: Response, next: 
     try {
         const identifier = req.params.identifier;
         const userDetails = req.body;
-        
+
         let user;
         let newApplication;
         let application;
@@ -63,8 +63,8 @@ userDetailsRouter.put("/:identifier", async (req: Request, res: Response, next: 
                     id: application.id,
                     userDetails: userDetails
                 });
-            } 
-            if(user) {
+            }
+            if (user && !application) {
                 logger.info("UserDetailsRoute.update: Antrag aktualisiert application existiert nicht");
                 // Wenn kein Antrag existiert, erstellen wir einen neuen
                 newApplication = await antragZulassungService.createApplication({
@@ -73,7 +73,7 @@ userDetailsRouter.put("/:identifier", async (req: Request, res: Response, next: 
                     userDetails: userDetails
                 });
             }
-        } if(!user && !application) {
+        } if (!user && !application) {
             // Wenn weder eine Studenten-ID noch eine E-Mail-Adresse erkannt wird, lösen wir einen Fehler aus
             logger.info("UserDetailsRoute.update: Antrag aktualisiert user und application existiert nicht");
             throw new Error("Invalid identifier");

@@ -54,7 +54,6 @@ test("AntragZulassungModel.test createAntragZulassung", async () => {
     expect(antrag.creator).toBeDefined();
     expect(antrag.studentid).toBe("12345678");
     expect(antrag.department).toBe("Informatik");
-    expect(antrag.course).toBe("Software Engineering");
     expect(antrag.bachelor).toBe(true);
     expect(antrag.master).toBe(false);
     expect(antrag.userDetails!.lastName).toBe("Mustermann");

@@ -65,50 +65,7 @@ test("GET /userdetails/:identifier - success", async () => {
     
 })
 
-test("PUT /userdetails/:identifier - success", async () => {
-    const testee = supertest(app);
-    const user = await userService.getOneUser({ studentId: "666456" });
-    const application = await antragZulassungService.createApplication({
-        creator: user.id,
-        studentid: user.studentId,
-        department: "Informatik",
-        bachelor: true,
-        master: false,
-        userDetails: {
-            lastName: "Mustermann",
-            firstName: "Max",
-            street: "Musterstraße 1",
-            city: "Berlin",
-            postalCode: "12345",
-            country: "Deutschland",
-            phone: "0123456789",
-        },
-        internshipCompleted: false,
-        recognitionApplied: false,
-        modulesCompleted: false,
-        modulesPending: true,
-        attachment2Included: false,
-        topicSuggestion: false,
-        date: new Date(),
-    });
 
-    const updatedUserDetails = {
-        lastName: "Musterfrau",
-        firstName: "Maria",
-        street: "Musterstraße 2",
-        city: "Berlin",
-        postalCode: "12345",
-        country: "Deutschland",
-        phone: "0123456789",
-    };
-
-    const res = await testee.put("/api/userdetails/666456").send(updatedUserDetails);
-
-    expect(res.status).toBe(200);
-    expect(res.body.userDetails.lastName).toEqual(updatedUserDetails.lastName);
-    expect(res.body.userDetails.firstName).toEqual(updatedUserDetails.firstName);
-    // und so weiter für die anderen Attribute
-});
 test("PUT /userdetails/:identifier - success with no existing application", async () => {
     const testee = supertest(app);
     const user = await userService.getOneUser({ studentId: "666456" });
@@ -141,3 +98,56 @@ test("PUT /userdetails/:identifier - success with no existing application", asyn
     // und so weiter für die anderen Attribute
 });
 
+test("PUT /userdetails/:identifier - success with existing application", async () => {
+    const testee = supertest(app);
+    const user = await userService.getOneUser({ studentId: "666456" });
+    const application = await antragZulassungService.createApplication({
+        creator: user.id,
+        studentid: user.studentId,
+        department: "Informatik",
+        bachelor: true,
+        master: false,
+        userDetails: {
+            lastName: "Mustermann",
+            firstName: "Max",
+            street: "Musterstraße 1",
+            city: "Berlin",
+            postalCode: "12345",
+            country: "Deutschland",
+            phone: "0123456789",
+        },
+        internshipCompleted: false,
+        recognitionApplied: false,
+        modulesCompleted: false,
+        modulesPending: true,
+        attachment2Included: false,
+        topicSuggestion: false,
+        date: new Date(),
+    });
+    // Stellen Sie sicher, dass kein Antrag für diesen Benutzer existiert
+
+
+    const newUserDetails = {
+        lastName: "Musterfrau",
+        firstName: "Maria",
+        street: "Musterstraße 2",
+        city: "Berlin",
+        postalCode: "12345",
+        country: "Deutschland",
+        phone: "0123456789",
+    };
+
+    const res = await testee.put("/api/userdetails/666456").send(newUserDetails);
+
+    expect(res.status).toBe(200);
+    expect(res.body.antragZulassungDetails.lastName).toEqual(newUserDetails.lastName);
+    expect(res.body.antragZulassungDetails.firstName).toEqual(newUserDetails.firstName);
+    // und so weiter für die anderen Attribute
+
+    // Überprüfen Sie, ob jetzt ein Antrag für diesen Benutzer existiert
+    const foundapplication = await antragZulassungService.getApplicationById(user.id!);
+    expect(foundapplication).not.toBeNull();
+    expect(foundapplication!.userDetails!.lastName).toEqual(newUserDetails.lastName);
+    expect(foundapplication!.userDetails!.firstName).toEqual(newUserDetails.firstName);
+    // und so weiter für die anderen Attribute
+});
