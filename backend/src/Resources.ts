@@ -29,28 +29,36 @@ export type ModulListResource = {
     updatedAt?: string;
 }
 
-
-export type applicationZulassungResource = {
-    creator?: string;
-    attach1id?: string;
-    attach2id?: string;
-    finalSemester?: string;
-    name?: string;
-    degreeProgram?: string;
-    course?: string;
-    department?: string;
-    email?: string;
-    adresse?: AdressResource;
-    fragen?: applicationZulassungKontrollfragenResource[];
-    datum?: Date;
-}
-
-export type AdressResource = {
-    street: string;
-    city: string;
-    postalCode: string;
-    country: string;
-}
+export type UserDataResource = {
+    lastName?: string; // Nachname
+    firstName?: string; // Vorname
+    street?: string; // Straße
+    city?: string; // Stadt
+    postalCode?: string; // Postleitzahl
+    country?: string; // Land
+    phone?: string; // Telefon
+  }
+  
+  export type ApplicationResource = {
+    id?: string;
+    creator?: string; // Ersteller
+    attach1id?: string; // Anlage 1 ID
+    attach2id?: string; // Anlage 2 ID
+    studentid?: string; // Matrikelnummer
+    department?: string; // Fachbereich
+    bachelor?: boolean; // Bachelor
+    master?: boolean; // Master
+    userData?: UserDataResource; // Benutzerdaten
+    internshipCompleted?: boolean; // Praxisphase abgeschlossen
+    recognitionApplied?: boolean; // Anerkennung beantragt
+    internshipCompletedFrom?: Date; // Praxisphase abgeleistet von
+    internshipCompletedTo?: Date; // Praxisphase abgeleistet bis
+    modulesCompleted?: boolean; // Module abgeschlossen
+    modulesPending?: boolean; // Module ausstehend
+    attachment2Included?: boolean; // Anlage 2 beigefügt
+    topicSuggestion?: boolean; // Thema vorgeschlagen
+    date?: Date; // Datum
+  }
 
 export type applicationZulassungKontrollfragenResource = {
     dummy_frage: string;

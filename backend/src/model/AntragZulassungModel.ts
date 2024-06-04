@@ -1,7 +1,7 @@
 import { Model, Schema, Types, model } from "mongoose";
 
 // UserData schema for the UserData of the applicant
-export interface IUserData {
+export interface IUserDetails {
   lastName: string; // Required | Nachname
   firstName: string; // Required | Vorname
   street: string; // Straße
@@ -13,7 +13,7 @@ export interface IUserData {
 }
 
 // Schema for the UserData
-const UserDataSchema = new Schema<IUserData>({
+const UserDetailsSchema = new Schema<IUserDetails>({
   lastName: { type: String, required: true }, // Nachname
   firstName: { type: String, required: true }, // Vorname
   street: { type: String, required: true }, // Straße
@@ -29,12 +29,12 @@ export interface IApplication {
   creator: Types.ObjectId; // Required | Ersteller
   attach1id: Types.ObjectId; // Optional | Anlage 1 ID
   attach2id: Types.ObjectId; // Optional | Anlage 2 ID
-  matriculationNumber: string; // Required | Matrikelnummer
+  studentid: string; // Required | Matrikelnummer
   department: string; // Required | Fachbereich
   course: string; // Required | Studiengang
   bachelor: boolean; // Required | Bachelor
   master: boolean; // Required | Master
-  userData: IUserData; // Required | Benutzerdaten
+  userDetails: IUserDetails; // Required | Benutzerdaten
   internshipCompleted: boolean; // Required | Praxisphase abgeschlossen
   recognitionApplied: boolean; // Required | Anerkennung beantragt
   internshipCompletedFrom: Date; // Required | Praxisphase abgeleistet von
@@ -54,12 +54,12 @@ const ApplicationSchema = new Schema<IApplication>({
   creator: { type: Schema.Types.ObjectId, ref: "User", required: true }, // Ersteller
   attach1id: { type: Schema.Types.ObjectId, ref: "Attachment", required: false }, // Anlage 1 ID
   attach2id: { type: Schema.Types.ObjectId, ref: "Attachment", required: false }, // Anlage 2 ID
-  matriculationNumber: { type: String, required: true }, // Matrikelnummer
+  studentid: { type: String, required: true }, // Matrikelnummer
   department: { type: String, required: true }, // Fachbereich
   course: { type: String, required: true }, // Studiengang
   bachelor: { type: Boolean, required: true }, // Bachelor
   master: { type: Boolean, required: true }, // Master
-  userData: { type: UserDataSchema, required: true }, // Benutzerdaten
+  userDetails: { type: UserDetailsSchema, required: true }, // Benutzerdaten
   internshipCompleted: { type: Boolean, required: true, default: false }, // Praxisphase abgeschlossen
   recognitionApplied: { type: Boolean, required: false, default: false }, // Anerkennung beantragt
   internshipCompletedFrom: { type: Date, required: false }, // Praxisphase abgeleistet von
