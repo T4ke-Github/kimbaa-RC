@@ -173,7 +173,7 @@ class RegistrationPage extends Component{
                         <Form className="fBody">
                             <input className="regIn firstItem" type="number" id="matrikel" name="regMatrikel" value={this.state.regMatrikel} placeholder="Matrikelnr." onChange={this.handleInputChange}/>
                             <input className="regIn" type="text" id="name" name="regName" value={this.state.regName} placeholder="Name" onChange={this.handleInputChange}/>
-                            <input className="regIn" type="email" id="email" name="regEmail" value={this.state.regEmail}placeholder="Email" onChange={this.handleInputChange}/>
+                            <input className="regIn" type="email" id="email" name="regEmail" value={this.state.regEmail}placeholder="Email (muss auf '@bht-berlin.de' enden)" onChange={this.handleInputChange}/>
                             <div className="adminCheck">
                                 <Form.Check label="Ich bin ein Admin" checked={this.regAdmin} onChange={this.handleCheck} />
                             </div>
