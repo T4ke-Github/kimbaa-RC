@@ -30,3 +30,18 @@ function authReducer(state = initialState, action){
 }
 
 export default authReducer;
+
+/*
+userResource = {
+    name: string; // Required
+    password: string; // Required
+    admin?: boolean; // Optional, default: false
+    studentId: string; // Required, unique
+    application?: string;
+    address?: string;
+    email?: string; // Optional
+    createdAt?: Date; // Required
+    updatedAt?: Date; // Optional
+    course?: string; // Optional
+}
+*/

@@ -84,18 +84,31 @@ class LandingDemo extends Component{
                             color: #ea3b07;
                         }
                         .shiftRight{
-                            padding-left: 12px;
+                            padding-left: 1vw;
+                        }
+                        .standardButton{
+                            width: calc(35vw + 5px);
+                        }
+                        .loginField{
+                            width: 35vw;
+                            height: 26px;
+                            border-radius: 10px;
+                            border: 0;
+                            margin-top: 10px;
+                        }
+                        .linkStyleButton{
+                            font-size: 18px;
                         }
                     `}
                 </style>
                 <div className="formPage" onKeyDown={this.handleKeyPress}>
                     <div className="fAlignmentHelp">
                         <h1>Willkommen bei kimbaa!</h1>
-                        <p>Melde dich an, um deine Sitzung fortzusetzen.</p>
+                        <h2>Melde dich an, um deine Sitzung fortzusetzen.</h2>
                         <div className="fBody">
                             <h2>Login:</h2>
-                                <input type="number" name="matrikel" value={this.state.matrikel} placeholder="Matrikelnr." onChange={this.handleInputChange}/>
-                                <input type="password" name="password"value={this.state.password} placeholder="Passwort" onChange={this.handleInputChange}/>
+                                <input className="loginField" type="number" name="matrikel" value={this.state.matrikel} placeholder="Matrikelnr." onChange={this.handleInputChange}/>
+                                <input className="loginField" type="password" name="password"value={this.state.password} placeholder="Passwort" onChange={this.handleInputChange}/>
                                 <div>
                                     <button onClick={this.getRegistrationForm} className="linkStyleButton red"><u>Registrieren</u></button>
                                 </div>
