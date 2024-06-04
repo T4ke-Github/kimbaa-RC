@@ -4,7 +4,7 @@ import { Types } from "mongoose";
 import path from 'path';
 import { UserResource } from "../Resources"; // This should be your resource interface for User
 import { logger } from "../logger/serviceLogger";
-import { AntragZulassung } from "../model/AntragZulassungModel";
+import { Application } from "../../src/model/AntragZulassungModel";
 import { User } from "../model/UserModel";
 import * as modulListService from "./ModulListService";
 import * as modulService from "./ModulService";
@@ -76,7 +76,6 @@ export async function getAlleUser(): Promise<UserResource[]> {
         admin: user.admin || false,
         studentId: user.studentId,
         application: user.application || undefined,
-        address: user.address || undefined,
         email: user.email,
         course: user.course || undefined,
     }));
@@ -196,7 +195,7 @@ export async function deleteUser(id: string): Promise<void> {
         }
         if (user !== null) {
             logger.info("UserService.deleteUser: Benutzer gefunden und bereit zu löschen: " + user.name);
-            await AntragZulassung.deleteMany({ creator: user._id }); // Löscht verbundene Daten
+            await Application.deleteMany({ creator: user._id }); // Löscht verbundene Daten
             await user.deleteOne({ _id: new Types.ObjectId(id) });
             logger.info("UserService.deleteUser: Benutzer gelöscht: " + user.name);
         }

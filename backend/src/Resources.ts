@@ -4,6 +4,7 @@ export type UserResource = {
     password?: string;
     admin?: boolean;
     studentId?: string;
+    application?: string;
     email?: string;
     createdAt?: string;
     updatedAt?: string;
@@ -29,7 +30,7 @@ export type ModulListResource = {
     updatedAt?: string;
 }
 
-export type UserDataResource = {
+export type UserDetailsResource = {
     lastName?: string; // Nachname
     firstName?: string; // Vorname
     street?: string; // Straße
@@ -48,7 +49,7 @@ export type UserDataResource = {
     department?: string; // Fachbereich
     bachelor?: boolean; // Bachelor
     master?: boolean; // Master
-    userData?: UserDataResource; // Benutzerdaten
+    userDetails?: UserDetailsResource; // Benutzerdaten
     internshipCompleted?: boolean; // Praxisphase abgeschlossen
     recognitionApplied?: boolean; // Anerkennung beantragt
     internshipCompletedFrom?: Date; // Praxisphase abgeleistet von

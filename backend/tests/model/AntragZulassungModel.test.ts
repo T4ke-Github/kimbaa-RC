@@ -37,7 +37,6 @@ test("AntragZulassungModel.test createAntragZulassung", async () => {
             city: "Berlin",
             postalCode: "12345",
             country: "Deutschland",
-            email: "mustermann@bht-berlin.de",
             phone: "0123456789"
         },
         internshipCompleted: true,
@@ -64,7 +63,6 @@ test("AntragZulassungModel.test createAntragZulassung", async () => {
     expect(antrag.userDetails!.city).toBe("Berlin");
     expect(antrag.userDetails!.postalCode).toBe("12345");
     expect(antrag.userDetails!.country).toBe("Deutschland");
-    expect(antrag.userDetails!.email).toBe("mustermann@bht-berlin.de");
     expect(antrag.userDetails!.phone).toBe("0123456789");
     expect(antrag.internshipCompleted).toBe(true);
     expect(antrag.recognitionApplied).toBe(false);
