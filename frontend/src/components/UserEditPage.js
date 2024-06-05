@@ -45,8 +45,11 @@ class UserEditPage extends Component{
 
     handleSaveUser(e){
         const{ uEstudentId, uEName, uEEmail, uECourse, uEUserId} = this.state;
-        const{saveUser} = this.props;
+        const{saveUser, refreshResource} = this.props;
         saveUser( uEstudentId, uEName, uEEmail, uECourse, uEUserId);
+        setTimeout(() => {
+            refreshResource(uEstudentId);
+        }, 500);
     }
 
     render(){
@@ -145,6 +148,7 @@ class UserEditPage extends Component{
 const mapDispatchToProps = dispatch => bindActionCreators({
     moveToLanding: navActions.getNavLandingAction,
     saveUser: appActions.saveUserAction,
+    refreshResource: appActions.refreshUE,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEditPage);

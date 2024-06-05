@@ -107,11 +107,13 @@ function saveApplicationReal( studentId, department,bachelor, master, practicalD
 export const USER_PENDING = "USER_PENDING";
 export const USER_FAILURE = "USER_FAILURE";
 export const USER_SUCCESS = "USER_SUCCESS";
+export const REFRESH_SUCCESS = "REFRESH_SUCCESS";
+export const REFRESH_FAILURE = "REFRESH_FAILURE";
 
 
 function getSaveUserPending(){ return { type: USER_PENDING } }
 function getSaveUserFail(err){ return { type: USER_FAILURE, err: err } }
-function getSaveUserSuccess(){ return { type: USER_SUCCESS, payload: 'landing' } }
+function getSaveUserSuccess(){ return { type: USER_SUCCESS} }
 
 export function saveUserAction(studentId, name, email, course , id){
     return dispatch => {
@@ -125,6 +127,35 @@ export function saveUserAction(studentId, name, email, course , id){
                 dispatch(getSaveUserFail(err))
             })
     }
+}
+
+function getRefreshResourceFailure(){ return { type: REFRESH_FAILURE, payload: 'landing' } }
+function getRefreshResourceSuccess(userResource){ return { type: REFRESH_SUCCESS, userResource: userResource, payload: 'landing' } }
+
+export function refreshUE(studentId){
+    return dispatch => {
+        refreshUserResource(studentId)
+            .then(resource => {
+                Cookies.set('currentPage', 'landing');
+                dispatch(getRefreshResourceSuccess(resource));
+            })
+            .catch(err => {
+                dispatch(getRefreshResourceFailure(err));
+            })
+    }
+}
+function refreshUserResource(studentId){
+    const requestOptions = {
+        method: 'GET',
+    }
+
+    return fetch(`http://localhost:8081/api/user/`+studentId, requestOptions)
+        .then(response => {
+            if(!response.ok){
+                throw new Error('Error while refreshing userResource');
+            }
+            return response.json();
+        })
 }
 
 function saveUser( studentId, name, email, course , id){
