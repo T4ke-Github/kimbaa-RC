@@ -19,7 +19,7 @@ const app = express();
 
 app.use(cors({
     origin: function (origin, callback) {
-        const allowedOrigins = ['127.0.0.1:3000', 'kimbaa.local:3000'];
+        const allowedOrigins = ['127.0.0.1:3000', 'kimbaa.local:3000', 'localhost:3000'];
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true)
         } else {
