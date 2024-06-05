@@ -1,10 +1,8 @@
 import supertest from "supertest";
 import app from "../../src/app";
-import express from 'express';
-import { userDetailsRouter } from '../../src/routes/UserDetailsRoute';
-import * as userService from "../../src/services/UserService";
-import * as antragZulassungService from "../../src/services/AntragZulassungService";
 import { User } from '../../src/model/UserModel';
+import * as antragZulassungService from "../../src/services/AntragZulassungService";
+import * as userService from "../../src/services/UserService";
 
 
 
