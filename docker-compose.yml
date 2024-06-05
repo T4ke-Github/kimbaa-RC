@@ -48,6 +48,13 @@ services:
       - '27017:27017'
     env_file:
       - mongodb/mongo-dev.env
+  cors:
+    build:
+      context: ./nginx
+      # dockerfile: Dockerfile
+    container_name: cors
+    ports:
+      - "3000:80"
 
 #  mongo-express:
 #    image: mongo-express
