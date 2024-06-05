@@ -1,5 +1,7 @@
 import * as authActions from '../actions/AuthActions';
 import * as navActions from '../actions/NavActions';
+import * as appActions from '../actions/ApplicationActions';
+
 import Cookies from 'js-cookie';
 
 const initialState = {
@@ -21,6 +23,11 @@ function authReducer(state = initialState, action){
                 ...state,
                 loggedIn: false,
                 userResource: null
+            }
+        case appActions.REFRESH_SUCCESS:
+            return{
+                ...state,
+                userResource: action.userResource
             }
         default:
             return{

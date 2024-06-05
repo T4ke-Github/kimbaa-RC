@@ -38,7 +38,7 @@ class UserWidget extends Component{
                         padding-right: 14px;
                         padding-top: 6px;
                         padding-bottom: 6px;
-                        margin-left: calc(100vw - 300px);
+                        margin-left: calc(100vw - 450px);
                     }
                     .logoutButton:hover{
                         background-color: #00a0aa;

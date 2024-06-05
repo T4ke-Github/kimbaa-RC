@@ -58,7 +58,7 @@ class TopMenu extends Component{
                     <img alt="" src="kimbaa_logo_256.png" width="52" height="52" className="d-inline-block align-top"/>
                 </Navbar.Brand>
                 <Nav>
-                    <h2 onClick={this.contextualLogoAction}>kimbaa</h2>
+                    <h2 onClick={this.contextualLogoAction}>kimbaa [playtest]</h2>
                 </Nav>
                 {widget}
             </Navbar>

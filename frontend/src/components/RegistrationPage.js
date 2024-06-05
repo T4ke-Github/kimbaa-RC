@@ -175,7 +175,7 @@ class RegistrationPage extends Component{
                             <input className="regIn" type="text" id="name" name="regName" value={this.state.regName} placeholder="Name" onChange={this.handleInputChange}/>
                             <input className="regIn" type="email" id="email" name="regEmail" value={this.state.regEmail}placeholder="Email (muss auf '@bht-berlin.de' enden)" onChange={this.handleInputChange}/>
                             <div className="adminCheck">
-                                <Form.Check label="Ich bin ein Admin" checked={this.regAdmin} onChange={this.handleCheck} />
+                                <Form.Check label="Ich bin ein Admin" checked={this.regAdmin} onChange={this.handleCheck} disabled/>
                             </div>
                             <input className="regIn" type="password" id="password" name="regPassword" value={this.state.regPassword} placeholder="Passwort" onChange={this.handleInputChange}/>
                             <input className="regIn" type="password" id="passwordRe" name="regPasswordRe" value={this.state.regPasswordRe} placeholder="Passwort widerholen" onChange={this.handleInputChange}/>

@@ -1,7 +1,8 @@
-import React, {createRef, Component} from "react";
+import React, { Component} from "react";
 import { connect } from "react-redux";
 
 import * as navActions from '../actions/NavActions';
+import * as appActions from "../actions/ApplicationActions";
 import { bindActionCreators } from "redux";
 
 import Button from "react-bootstrap/Button";
@@ -20,9 +21,10 @@ class UserEditPage extends Component{
         
         let userResource = this.props.userResource ? this.props.userResource : "missing";
 
-        let address = userResource.address ? userResource.address : ",  ";
+        //let address = userResource.address ? userResource.address : ",  ";
 
         this.state = {
+            uEUserId: userResource._id,
             uEstudentId: userResource.studentId ? userResource.studentId : "",
             uEName: userResource.name ? userResource.name : "",
             uEStreet: "",
@@ -33,11 +35,21 @@ class UserEditPage extends Component{
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSaveUser = this.handleSaveUser.bind(this);
     }
 
     handleInputChange(e){
         const { name, value } = e.target;
         this.setState({[name]: value});
+    }
+
+    handleSaveUser(e){
+        const{ uEstudentId, uEName, uEEmail, uECourse, uEUserId} = this.state;
+        const{saveUser, refreshResource} = this.props;
+        saveUser( uEstudentId, uEName, uEEmail, uECourse, uEUserId);
+        setTimeout(() => {
+            refreshResource(uEstudentId);
+        }, 500);
     }
 
     render(){
@@ -118,12 +130,12 @@ class UserEditPage extends Component{
                                 <input className="textInput tiNarrow" type="text" placeholder="Ort" name="uEPlace" value={this.state.uEPlace} onChange={this.handleInputChange} />
                             </div>
                             <input className="textInput tiWide" type="text" placeholder="Email" name="uEEmail" value={this.state.uEEmail} onChange={this.handleInputChange} />
-                            <input className="textInput tiWide" type="text" placeholder="Studiengang" name="uEName" value={this.state.uEName} onChange={this.handleInputChange} />
+                            <input className="textInput tiWide" type="text" placeholder="Studiengang" name="uECourse" value={this.state.uECourse} onChange={this.handleInputChange} />
                         </Form.Group>
                         <Form.Group controlId="SubmitOrLeave" className="spaceTop spaceBottom">
                             <div className="itemInlineRow">
                                 <Button className="standardButton buttonWidth aCancel" onClick={this.props.moveToLanding}>Abbrechen</Button>
-                                <Button className="standardButton buttonWidth">Speichern</Button>
+                                <Button className="standardButton buttonWidth" onClick={this.handleSaveUser}>Speichern</Button>
                             </div>
                         </Form.Group>
                     </Form>
@@ -134,7 +146,9 @@ class UserEditPage extends Component{
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    moveToLanding: navActions.getNavLandingAction
+    moveToLanding: navActions.getNavLandingAction,
+    saveUser: appActions.saveUserAction,
+    refreshResource: appActions.refreshUE,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEditPage);
