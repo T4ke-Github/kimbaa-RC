@@ -1,4 +1,4 @@
-import React, {createRef, Component} from "react";
+import React, { Component} from "react";
 import { connect } from "react-redux";
 
 import * as navActions from '../actions/NavActions';
@@ -20,7 +20,7 @@ class UserEditPage extends Component{
         
         let userResource = this.props.userResource ? this.props.userResource : "missing";
 
-        let address = userResource.address ? userResource.address : ",  ";
+        //let address = userResource.address ? userResource.address : ",  ";
 
         this.state = {
             uEstudentId: userResource.studentId ? userResource.studentId : "",
