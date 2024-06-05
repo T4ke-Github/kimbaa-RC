@@ -17,7 +17,7 @@ const app = express();
 
 // Middleware:
 
-const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://kimbaa.local:3000/' , 'http://localhost:8081/'];
+const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://kimbaa.local:3000/' , 'http://localhost:8081/', 'http://127.0.0.1:8081/'];
 
 app.use(cors({
     origin: function(origin, callback){
