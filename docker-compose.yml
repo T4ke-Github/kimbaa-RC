@@ -37,6 +37,8 @@ services:
           path: ./backend/package.json
     ports:
       - 8081:3000
+    volumes:
+      - ./.logs/backend:/backend/logFiles
     environment:
       - DB_CONNECTION_STRING=mongodb://root:example@kimbaa_mongo:27017/
       - HTTP_PORT=3000
