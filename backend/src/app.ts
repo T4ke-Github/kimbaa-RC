@@ -5,10 +5,13 @@ import "express-async-errors"; // needs to be imported before routers and other 
 import cors from 'cors';
 import { loginRouter } from './routes/loginRoute';
 import { modulRouter } from './routes/modulRoute';
-import { userDetailsRouter } from './routes/userDetailsRoute';
+// import { userDetailsRouter } from './routes/userDetailsRoute';
 import { userRouter } from './routes/userRout';
 import { antragZulassungRouter } from './routes/antragZulassungRoute';
 
+const FRONTEND_PORT: number = parseInt(process.env.FRONTEND_PORT || '3000');
+const FRONTEND_URL: string = process.env.FRONTEND_URL || 'http://localhost';
+export const log_level = (process.env.LOG_LEVEL || 'info')
 
 
 
@@ -19,7 +22,7 @@ const app = express();
 
 app.use(cors({
     origin: function (origin, callback) {
-        const allowedOrigins = ['127.0.0.1:3000', 'localhost:3000'];
+        const allowedOrigins = ['127.0.0.1:3000', 'localhost:3000', FRONTEND_URL+FRONTEND_PORT];
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true)
         } else {
@@ -31,10 +34,10 @@ app.use('*', express.json()) //
 
 
 // Routes
-app.use("/api/login", loginRouter)   
+app.use("/api/login", loginRouter)
 app.use("/api/user", userRouter)
 app.use("/api/modul", modulRouter)
-app.use("/api/userdetails", userDetailsRouter)
+// app.use("/api/userdetails", userDetailsRouter)
 app.use("/api/antragZulassung", antragZulassungRouter)
 
 export default app;
