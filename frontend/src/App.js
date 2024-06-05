@@ -8,6 +8,7 @@ import LoginPage from './components/LoginPage';
 import RegistrationPage from './components/RegistrationPage';
 import MainApplicationPage from './components/MainApplicationPage';
 import UserEditPage from './components/UserEditPage';
+import PlayTestApplicationPage from './components/PlayTestApplicationPage';
 
 const mapStateToProps = state => {
   return {
@@ -35,6 +36,9 @@ class App extends Component{
         break;
       case "userEdit":
         workspace = <UserEditPage />
+        break;
+      case "playTestPage":
+        workspace = <PlayTestApplicationPage />;
         break;
       default:
         workspace = <LoginPage />

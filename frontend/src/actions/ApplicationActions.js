@@ -50,15 +50,15 @@ export const APPLICATION_SUCCESS = "APPLICATION_SUCCESS";
 
 function getSaveApplicationPending(){ return { type: APPLICATION_PENDING } }
 function getApplicationFail(err){ return { type: APPLICATION_FAILURE, err: err } }
-function getApplicationSuccess(){ return { type: APPLICATION_SUCCESS, payload: 'Landing' } }
+function getApplicationSuccess(applicationForm){ return { type: APPLICATION_SUCCESS, playTestApplication: applicationForm, payload: 'landing' } }
 
 export function saveApplicationAction(studentId, department,bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition ){
     return dispatch => {
         dispatch(getSaveApplicationPending());
-        saveApplicationReal(studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition  )
-            .then(() => {
+        saveApplicationReal(studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition)
+            .then(applicationForm => {
                 Cookies.set('currentPage', 'Landing')
-                dispatch(getApplicationSuccess())
+                dispatch(getApplicationSuccess(applicationForm))
             })
             .catch(err => {
                 dispatch(getApplicationFail(err))
