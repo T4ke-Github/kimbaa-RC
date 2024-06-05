@@ -17,7 +17,7 @@ const app = express();
 
 // Middleware:
 
-const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://kimbaa.local:3000/'];
+const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://kimbaa.local:3000/' , 'http://localhost:8081/'];
 
 app.use(cors({
     origin: function(origin, callback){
@@ -34,7 +34,7 @@ app.use('*', express.json()) //
 
 
 // Routes
-app.use("/api/login", loginRouter)   
+app.use("/api/login", loginRouter)
 app.use("/api/user", userRouter)
 app.use("/api/modul", modulRouter)
 app.use("/api/userdetails", userDetailsRouter)
