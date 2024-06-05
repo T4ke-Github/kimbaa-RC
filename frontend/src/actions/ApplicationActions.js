@@ -102,3 +102,58 @@ function saveApplicationReal( studentId, department,bachelor, master, practicalD
             return response.json();
         })
 }
+
+
+export const USER_PENDING = "USER_PENDING";
+export const USER_FAILURE = "USER_FAILURE";
+export const USER_SUCCESS = "USER_SUCCESS";
+
+
+function getSaveUserPending(){ return { type: USER_PENDING } }
+function getSaveUserFail(err){ return { type: USER_FAILURE, err: err } }
+function getSaveUserSuccess(){ return { type: USER_SUCCESS, payload: 'landing' } }
+
+export function saveUserAction(studentId, name, email, course , id){
+    return dispatch => {
+        dispatch(getSaveUserPending());
+        saveUser(studentId, name, email, course, id )
+            .then(() => {
+                Cookies.set('currentPage', 'landing');
+                dispatch(getSaveUserSuccess())
+            })
+            .catch(err => {
+                dispatch(getSaveUserFail(err))
+            })
+    }
+}
+
+function saveUser( studentId, name, email, course , id){
+    const ApplicationForm = {
+        id: id,
+        name: name,
+        //password: string,
+        //admin: boolean,
+        studentId: studentId,
+        //application: string,
+        email: email,
+        //createdAt: string,
+        //updatedAt: string,
+        //course: course,
+    }
+
+    const requestOptions = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(ApplicationForm)
+    }
+
+    return fetch('http://localhost:8081/api/user/'+ studentId, requestOptions)
+        .then(response => {
+            if(!response.ok){
+                throw new Error('Error while saving User');
+            }
+            return response.json();
+        })
+}
