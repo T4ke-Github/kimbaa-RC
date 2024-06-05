@@ -17,14 +17,17 @@ const app = express();
 
 // Middleware:
 
+const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000'];
+
 app.use(cors({
-    origin: function (origin, callback) {
-        const allowedOrigins = ['127.0.0.1:3000', 'localhost:3000'];
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error('Not allowed by CORS'))
-        }
+    origin: function(origin, callback){
+      // erlaubt Anfragen ohne Ursprung (wie mobile Apps oder curl-Anfragen)
+      if(!origin) return callback(null, true);
+      if(allowedOrigins.indexOf(origin) === -1){
+        var msg = 'Die CORS-Richtlinie für diese Site erlaubt keinen Zugriff von der angegebenen Ursprung.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
     }
 }));
 app.use('*', express.json()) //
