@@ -17,7 +17,7 @@ beforeEach(async () => {
 
 test("/api/login login with correct credentials", async () => {
     const testee = supertest(app);
-    const testee23 = supertest(app);
+    
     const response = await testee.get("/api/user/alle");
     expect(response.status).toBe(200);
     expect(response.body.length).toBe(1);
@@ -52,4 +52,28 @@ test("/api/login login with wrong credentials", async () => {
     expect(response.status).toBe(401);
 });
 
-//Login and check 
+//Login min date
+test("/api/login login min date", async () => {
+    const user1 = new User({
+        name: "Tim",
+        password: "test",
+        studentId: "111111",
+        email: "test55@bht-berlin.de",
+        
+    });
+    await user1.save();
+    const testee = supertest(app);
+    
+    const response = await testee.get("/api/user/alle");
+    expect(response.status).toBe(200);
+    expect(response.body[0].name).toBe("Tim");
+
+    const response2 = await testee.post("/api/login/login").send({ studentId: "111111", password: "test" });
+
+    //cascading login infos
+    const { user, loginResult } = response2.body;
+
+
+    expect(response2.status).toBe(200);
+
+})

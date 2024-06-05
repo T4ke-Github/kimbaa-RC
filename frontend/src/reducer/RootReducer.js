@@ -1,5 +1,6 @@
 import * as navActions from "../actions/NavActions";
 import * as authActions from "../actions/AuthActions";
+import * as appActions from "../actions/ApplicationActions";
 import Cookies from 'js-cookie'
 
 const initialState = {
@@ -12,8 +13,14 @@ function rootReducer(state = initialState, action) {
         case navActions.LANDING:
         case navActions.REGISTRATION:
         case navActions.APPLICATION:
+        case navActions.USEREDIT:
+        case navActions.PTAPAGE:
         case authActions.REGISTRATION_SUCCESS:
         case authActions.LOGIN_SUCCESS:
+        case appActions.APPLICATION_SAVE:
+        case appActions.APPLICATION_SUCCESS:
+        case appActions.REFRESH_FAILURE:
+        case appActions.REFRESH_SUCCESS:
             return{
                 ...state,
                 page: action.payload

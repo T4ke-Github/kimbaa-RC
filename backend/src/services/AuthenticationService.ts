@@ -13,7 +13,7 @@ export async function login(studentId: string, password: string): Promise<{ id: 
     const user = await User.findOne({ studentId }).exec();
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
-        logger.info("Login failed" + user);
+        logger.info("Login failed");
         return false;
         
     }else{

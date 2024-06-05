@@ -1,7 +1,9 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 import * as navActions from '../actions/NavActions';
 import * as authActions from '../actions/AuthActions';
@@ -20,21 +22,35 @@ class RegistrationPage extends Component{
             regName: "",
             regEmail: "",
             regAdmin: false,
-            regDepartment: "",
-            regCreditPoints: "",
             regPassword: "",
             regPasswordRe: "",
             noMatch: false,
+            incorrectEmailFormat: false,
         }
 
         this.handleCancel = this.handleCancel.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleRegistration = this.handleRegistration.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
+        this.checkEmail = this.checkEmail.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
+    }
+
+    handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.handleRegistration(e);
+        }
     }
 
     handleCancel(e){
         const { close } = this.props;
         close();
+    }
+
+    handleCheck(e){
+        const { name, checked } = e.target;
+        this.setState({[name]: checked});
     }
 
     handleInputChange(e){
@@ -44,29 +60,59 @@ class RegistrationPage extends Component{
                 [name]: value,
                 noMatch: false
             }));
+        }else if(name === "regEmail"){
+            this.setState(prevState => ({
+                [name]: value,
+                incorrectEmailFormat: false,
+            }));
         }else{
             this.setState({[name]: value});
         }
     }
 
+    checkEmail(email){
+        const suffix = '@bht-berlin.de';
+        return email.endsWith(suffix);
+    }
+
     handleRegistration(e){
         e.preventDefault();
-        const { regMatrikel, regName, regEmail, regAdmin, regCreditPoints, regDepartment, regPassword, regPasswordRe } = this.state;
+        const { regMatrikel, regName, regEmail, regAdmin, regPassword, regPasswordRe } = this.state;
         const { register } = this.props;
         if(regPassword !== regPasswordRe){
-            this.setState({noMatch: true});
-            this.setState({regPassword: ""});
-            this.setState({regPasswordRe: ""});
+            this.setState({
+                noMatch: true,
+                regPassword: "",
+                regPasswordRe: ""
+            });
+            if(!this.checkEmail(regEmail)){
+                this.setState({
+                    incorrectEmailFormat: true,
+                    regEmail: ""
+                });
+                return;
+            }
             return;
         }
-        console.log("Time to doxx the new user! Matrikel: "+regMatrikel+", Name: "+regName+", Email: "+regEmail+", Admin: "+regAdmin+", CreditPoints: "+regCreditPoints+", Department: "+regDepartment+", Password: "+regPassword);
+        if(!this.checkEmail(regEmail)){
+            this.setState({
+                incorrectEmailFormat: true,
+                regEmail: ""
+            });
+            return;
+        }
+        console.log("Time to doxx the new user! Matrikel: "+regMatrikel+", Name: "+regName+", Email: "+regEmail+", Admin: "+regAdmin+", Password: "+regPassword);
         register(regMatrikel, regName, regEmail, regPassword);
     }
 
     render(){
         let warning;
-        if(this.state.noMatch){
-            warning = <p className="warn">Passwords didn't match!</p>
+        if(this.state.noMatch && !this.state.incorrectEmailFormat){
+            warning = <div className="fMessage white"><p>Beide Passwörter müssen übereinstimmen!</p></div>
+        }else if(!this.state.noMatch && this.state.incorrectEmailFormat){
+            warning = <div className="fMessage white"><p>Falsches Emailformat (muss auf @bht-berlin.de enden)!</p></div>
+        }else if(this.state.noMatch && this.state.incorrectEmailFormat){
+            warning = <div className="fMessage white"><p>Beide Passwörter müssen übereinstimmen!</p><p>Falsches Emailformat (muss auf @bht-berlin.de enden)!</p></div>
         }else{
             warning=<p></p>
         }
@@ -80,7 +126,8 @@ class RegistrationPage extends Component{
                         .rCancel{
                             background-color: #ffffff;
                             color: #ea3b07;
-                            margin-right: 20px
+                            width: 15vw;
+                            margin-right: 5vw;
                         }
                         .rCancel:hover{
                             background-color: #ea3b07;
@@ -89,44 +136,55 @@ class RegistrationPage extends Component{
                         .regButtonAlign{
                             display: flex;
                             flex-direction: row;
-                            padding-right: 50px
+                        }
+                        .submit{
+                            width: 15vw;
                         }
                         .submit:hover{
                             background-color: #60a2d2;
                             color: #004282;
                         }
-                        .warn{
+                        .white{
                             color: #ffffff;
+                            border-color: #ffffff;
+                            margin-top: 20px;
                         }
                         .adminCheck{
                             color: #ffffff;
-                            display: flex;
-                            align-items: flex-end;
+                            margin-top: 20px;
+                            margin-bottom: 10px
+                        }
+                        .regIn{
+                            width: 35vw;
+                            height: 26px;
+                            border-radius: 10px;
+                            border: none;
+                            margin-top: 10px;
+                        }
+                        .firstItem{
+                            margin-top: 30px;
                         }
                     `}
                 </style>
-                <div className="formPage">
+                <div className="formPage" onKeyDown={this.handleKeyPress}>
                     <div className="fAlignmentHelp">
                         <h1>Ist die Zeit für deine Bachelorarbeit gekommen?</h1>
                         <h2>Kein Problem - registriere dich hier!</h2>
-                        <form className="fBody">
-                            <input type="number" id="matrikel" name="regMatrikel" value={this.state.regMatrikel} placeholder="Matrikelnr." className="spaceTop" onChange={this.handleInputChange}/>
-                            <input type="text" id="name" name="regName" value={this.state.regName} placeholder="Name" onChange={this.handleInputChange}/>
-                            <input type="email" id="email" name="regEmail" value={this.state.regEmail}placeholder="Email" onChange={this.handleInputChange}/>
-                            <input type="number" id="department" name="regDepartment" value={this.state.regDepartment} placeholder="Fachbereich" onChange={this.handleInputChange}/>
-                            <input type="number" id="creditPoints" name="regCreditPoints" value={this.state.regCreditPoints} placeholder="Credit Points" onChange={this.handleInputChange}/>
+                        <Form className="fBody">
+                            <input className="regIn firstItem" type="number" id="matrikel" name="regMatrikel" value={this.state.regMatrikel} placeholder="Matrikelnr." onChange={this.handleInputChange}/>
+                            <input className="regIn" type="text" id="name" name="regName" value={this.state.regName} placeholder="Name" onChange={this.handleInputChange}/>
+                            <input className="regIn" type="email" id="email" name="regEmail" value={this.state.regEmail}placeholder="Email (muss auf '@bht-berlin.de' enden)" onChange={this.handleInputChange}/>
                             <div className="adminCheck">
-                                <p>Bist du ein Admin? Sei ehrlich!</p>
-                                <input type="checkbox" className="box" id="admin" name="regAdmin" checked={this.state.regAdmin} onChange={this.handleInputChange} />
+                                <Form.Check label="Ich bin ein Admin" checked={this.regAdmin} onChange={this.handleCheck} disabled/>
                             </div>
-                            <input type="password" id="password" name="regPassword" value={this.state.regPassword} placeholder="Passwort" className="spaceTop" onChange={this.handleInputChange}/>
-                            <input type="password" id="passwordRe" name="regPasswordRe" value={this.state.regPasswordRe} placeholder="Passwort widerholen" className="spaceBottom" onChange={this.handleInputChange}/>
+                            <input className="regIn" type="password" id="password" name="regPassword" value={this.state.regPassword} placeholder="Passwort" onChange={this.handleInputChange}/>
+                            <input className="regIn" type="password" id="passwordRe" name="regPasswordRe" value={this.state.regPasswordRe} placeholder="Passwort widerholen" onChange={this.handleInputChange}/>
                             { warning }
                             <div className="regButtonAlign">
-                                <Button onClick={this.handleCancel} className="standardButton rCancel ">Abbrechen</Button>
-                                <Button onClick={this.handleRegistration} className="standardButton submit">Registrieren</Button>
+                                <Button onClick={this.handleCancel} className="standardButton rCancel spaceTop">Abbrechen</Button>
+                                <Button onClick={this.handleRegistration} className="standardButton submit spaceTop">Registrieren</Button>
                             </div>
-                        </form>
+                        </Form>
                     </div>
                     <img alt="kimbaa_login_logo" src="kimbaa_high_login.png"/>
                 </div>

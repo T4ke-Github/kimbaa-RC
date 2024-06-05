@@ -11,7 +11,6 @@ export interface IUser {
   admin?: boolean; // Optional, default: false
   studentId: string; // Required, unique
   application?: string;
-  address?: string;
   email?: string; // Optional
   createdAt?: Date; // Required
   updatedAt?: Date; // Optional
@@ -37,7 +36,6 @@ export const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
     max: 999999,  // Höchstwert für eine 6-stellige Zahl
   },
   application : { type: String },
-  address: { type: String },
   email: {
     type: String,
     required: true,

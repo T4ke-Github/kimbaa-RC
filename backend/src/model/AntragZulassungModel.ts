@@ -1,55 +1,74 @@
 import { Model, Schema, Types, model } from "mongoose";
 
-// Adressschema für die Adresse des AntragsSteller
-export interface IAdress {
-  street: string;
-  city: string;
-  postalCode: string;
-  country: string;
+// UserData schema for the UserData of the applicant
+export interface IUserDetails {
+  lastName: string; // Required | Nachname
+  firstName: string; // Required | Vorname
+  street: string; // Straße
+  city: string; // Stadt
+  postalCode: string; // Postleitzahl
+  country: string; // Land
+  phone: string; // Required | Telefon
 }
 
-// Interface für das Kontrollfragen-Objekt im AntragZulassung
-export interface IAntragZulassungKontrollfragen {
-  frage: string;
-  antwort: string;
-}
-
-// Interface für das applicationsmodell
-export interface IAntragZulassung {
-  creator: Types.ObjectId; // Required
-  attach1id: Types.ObjectId; // Optional
-  attach2id: Types.ObjectId; // Optional
-  finalSemester: string; // Required
-  name: string; // Required
-  degreeProgram: string; // Required
-  course: string; // Optional
-  email: string; // Required
-  adress: IAdress; // Required
-  extension: IAntragZulassungKontrollfragen[]; // Optional
-  datum: Date; // Required
-}
-
-// Typ für das applicationsmodell
-type AntragZulassungModel = Model<IAntragZulassung>;
-
-// Schema für das applicationsmodell
-const AntragZulassungSchema = new Schema<IAntragZulassung>({
-  creator: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  attach1id: { type: Schema.Types.ObjectId, ref: "Anlage", required: false },
-  attach2id: { type: Schema.Types.ObjectId, ref: "Anlage", required: false },
-  finalSemester: { type: String, required: false },
-  name: { type: String, required: false },
-  degreeProgram: { type: String, required: false },
-  course: { type: String },
-  email: { type: String, required: false },
-  adress: { type: String, required: false },
-  extension: 
-    {
-      frage: { type: String, required: false },
-      antwort: { type: String, required: false },
-    },
-  datum: { type: Date, required: false },
+// Schema for the UserData
+const UserDetailsSchema = new Schema<IUserDetails>({
+  lastName: { type: String, required: false }, // Nachname
+  firstName: { type: String, required: false }, // Vorname
+  street: { type: String, required: false }, // Straße
+  city: { type: String, required: false }, // Stadt
+  postalCode: { type: String, required: false }, // Postleitzahl
+  country: { type: String, required: false }, // Land
+  phone: { type: String, required: false }, // Telefon
 });
 
-// Modell für den application auf Zulassung
-export const AntragZulassung = model<IAntragZulassung, AntragZulassungModel>("AntragZulassung", AntragZulassungSchema);
+// Interface for the application model
+export interface IApplication {
+  id?: string;
+  creator: Types.ObjectId;
+  attach1id?: Types.ObjectId; // Optional | Anlage 1 ID
+  attach2id?: Types.ObjectId; // Optional | Anlage 2 ID
+  studentid?: string; // Required | Matrikelnummer
+  department?: string; // Required | Fachbereich
+  bachelor?: boolean; // Required | Bachelor
+  master?: boolean; // Required | Master
+  userDetails?: IUserDetails; // Required | Benutzerdaten
+  internshipCompleted?: boolean; // Required | Praxisphase abgeschlossen
+  recognitionApplied?: boolean; // Required | Anerkennung beantragt
+  internshipCompletedFrom?: Date; // Required | Praxisphase abgeleistet von
+  internshipCompletedTo?: Date; // Required | Praxisphase abgeleistet bis
+  modulesCompleted?: boolean; // Required | Module abgeschlossen
+  modulesPending?: boolean; // Required | Module ausstehend
+  attachment2Included?: boolean; // Required | Anlage 2 beigefügt
+  topicSuggestion?: boolean; // Required | Thema vorgeschlagen
+  date?: Date; // Required | Datum
+}
+
+// Type for the application model
+type ApplicationModel = Model<IApplication>;
+
+// Schema for the application model
+const ApplicationSchema = new Schema<IApplication>({
+  creator: { type: Schema.Types.ObjectId, ref: "User", required: true }, // Ersteller
+  attach1id: { type: Schema.Types.ObjectId, ref: "Attachment1", required: false }, // Anlage 1 ID
+  attach2id: { type: Schema.Types.ObjectId, ref: "Attachment2", required: false }, // Anlage 2 ID
+  studentid: { type: String, required: false }, // Matrikelnummer
+  department: { type: String, required: false }, // Fachbereich
+  bachelor: { type: Boolean, required: false }, // Bachelor
+  master: { type: Boolean, required: false }, // Master
+  userDetails: { type: UserDetailsSchema, required: false }, // Benutzerdaten
+  internshipCompleted: { type: Boolean, required: false, default: false }, // Praxisphase abgeschlossen
+  recognitionApplied: { type: Boolean, required: false, default: false }, // Anerkennung beantragt
+  internshipCompletedFrom: { type: Date, required: false }, // Praxisphase abgeleistet von
+  internshipCompletedTo: { type: Date, required: false }, // Praxisphase abgeleistet bis
+  modulesCompleted: { type: Boolean, required: false, default: false }, // Module abgeschlossen
+  modulesPending: { type: Boolean, required: false, default: false }, // Module ausstehend
+  attachment2Included: { type: Boolean, required: false, default: false }, // Anlage 2 beigefügt
+  topicSuggestion: { type: Boolean, required: false, default: false }, // Thema vorgeschlagen
+  date: { type: Date, required: false }, // Datum
+},{
+  timestamps: true,
+});
+
+// Model for the application for admission
+export const Application = model<IApplication, ApplicationModel>("Application", ApplicationSchema);
