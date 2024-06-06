@@ -16,6 +16,9 @@ services:
           path: ./backend/package.json
     ports:
       - 3000:3000
+    environment:
+    - HOSTNAME=kimbaa.local
+    - BPORT=8081
 
 
   backend:
@@ -37,6 +40,8 @@ services:
     environment:
       - DB_CONNECTION_STRING=mongodb://root:example@mongo:27017/
       - HTTP_PORT=3000
+      - HOSTNAME=kimbaa.local
+      - FRONTEND_PORT=3000
     depends_on:
       - mongo
 
@@ -48,13 +53,6 @@ services:
       - '27017:27017'
     env_file:
       - mongodb/mongo-dev.env
-  cors:
-    build:
-      context: ./nginx
-      # dockerfile: Dockerfile
-    container_name: cors
-    ports:
-      - "3000:80"
 
 #  mongo-express:
 #    image: mongo-express

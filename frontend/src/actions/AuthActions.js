@@ -1,4 +1,6 @@
 import Cookies from "js-cookie";
+import {BACKEND_URL} from '../index.js'
+
 
 export const REGISTRATION_PENDING = "REGISTRATION_PENDING";
 export const REGISTRATION_FAILURE = "REGISTRATION_FAILURE";
@@ -45,7 +47,8 @@ function registerUser(matrikel, name, email, password){
         body: JSON.stringify(registrationForm)
     }
 
-    return fetch('http://localhost:8081/api/user', requestOptions)
+    console.log('fetching: '+ BACKEND_URL + '/api/user')
+    return fetch(BACKEND_URL + '/api/user', requestOptions)
         .then(response => {
             if(!response.ok){
                 throw new Error('Error while registrating');
@@ -74,7 +77,7 @@ function login(loginId, password){
         studentId: loginId,
         password: password
     }
-    
+
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -83,7 +86,8 @@ function login(loginId, password){
         body: JSON.stringify(loginData)
     }
 
-    return fetch('http://localhost:8081/api/login/login', requestOptions)
+    console.log('fetching: ' + BACKEND_URL + '/api/login/login')
+    return fetch(BACKEND_URL + '/api/login/login', requestOptions)
         .then(response => {
             if(!response.ok){
                 throw new Error('Error logging in');
@@ -96,7 +100,7 @@ function login(loginId, password){
 }
 
 /*
-if login ok: 
+if login ok:
     status code 200
     body: userResource
     loginResult
