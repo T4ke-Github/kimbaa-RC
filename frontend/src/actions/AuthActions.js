@@ -27,10 +27,12 @@ export function registerUserAction(matrikel, name, email, password){
                 dispatch(getRegistrationSuccess())
             })
             .catch(err => {
-                if(err === "User Already Exists"){
+                const errorMessage = err.message;
+                if(errorMessage === "User Already Exists"){
                     dispatch(getRegistrationFailUserExists())
+                }else{
+                    dispatch(getRegistrationFail(err))
                 }
-                dispatch(getRegistrationFail(err))
             })
     }
 }
