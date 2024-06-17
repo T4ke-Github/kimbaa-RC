@@ -24,7 +24,7 @@ class UserEditPage extends Component{
         //let address = userResource.address ? userResource.address : ",  ";
 
         this.state = {
-            uEUserId: userResource._id,
+            uEUserId: userResource._id ? userResource._id : userResource.id,
             uEstudentId: userResource.studentId ? userResource.studentId : "",
             uEName: userResource.name ? userResource.name : "",
             uEStreet: "",

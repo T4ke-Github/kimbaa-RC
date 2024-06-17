@@ -134,6 +134,7 @@ export const refreshUE = (studentId) => async (dispatch) => {
     try {
         const resource = await refreshUserResource(studentId);
         Cookies.set('currentPage', 'landing');
+        console.log('Returned Refresh:', resource);
         dispatch(getRefreshResourceSuccess(resource));
     } catch (err) {
         dispatch(getRefreshResourceFailure(err));
@@ -168,6 +169,8 @@ function saveUser( studentId, name, email, course , id){
         //updatedAt: string,
         //course: course,
     }
+
+    console.log('ApplicationForm:', ApplicationForm);
 
     const requestOptions = {
         method: 'PUT',
