@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 
 export const REGISTRATION_PENDING = "REGISTRATION_PENDING";
 export const REGISTRATION_FAILURE = "REGISTRATION_FAILURE";
+export const REGISTRATION_FAILURE_USER_EXISTS = "REGISTRATION_FAILURE_USER_EXISTS";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 
 export const LOGIN_PENDING = "LOGIN_PENDING";
@@ -10,6 +11,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
 function getRegistrationPending(){ return { type: REGISTRATION_PENDING } }
 function getRegistrationFail(err){ return { type: REGISTRATION_FAILURE, err: err } }
+function getRegistrationFailUserExists(){ return { type: REGISTRATION_FAILURE_USER_EXISTS } }
 function getRegistrationSuccess(){ return { type: REGISTRATION_SUCCESS, payload: 'login' } }
 
 function getLoginPending(){ return { type: LOGIN_PENDING } }
@@ -25,6 +27,9 @@ export function registerUserAction(matrikel, name, email, password){
                 dispatch(getRegistrationSuccess())
             })
             .catch(err => {
+                if(err === "User Already Exists"){
+                    dispatch(getRegistrationFailUserExists())
+                }
                 dispatch(getRegistrationFail(err))
             })
     }
@@ -48,6 +53,9 @@ function registerUser(matrikel, name, email, password){
     return fetch('http://localhost:8081/api/user', requestOptions)
         .then(response => {
             if(!response.ok){
+                if(response.status === 400){
+                    throw new Error('User Already Exists');
+                }
                 throw new Error('Error while registrating');
             }
             return response.json();

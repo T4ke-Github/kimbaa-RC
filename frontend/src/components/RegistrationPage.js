@@ -9,7 +9,9 @@ import * as navActions from '../actions/NavActions';
 import * as authActions from '../actions/AuthActions';
 
 const mapStateToProps = state => {
-    return state;
+    return { 
+        userExistsError: state.auth.userAlreadyExists 
+    }
 }
 
 class RegistrationPage extends Component{
@@ -125,8 +127,8 @@ class RegistrationPage extends Component{
         let warnings = [];
         if (this.state.noMatch) { warnings.push("Beide Passwörter müssen übereinstimmen!"); }
         if (this.state.incorrectEmailFormat) { warnings.push("Falsches Emailformat (muss auf @bht-berlin.de enden)!"); }
-        if (this.state.incorrectSIDFormat) { warnings.push("Falsches Studenten-ID-Format (muss eine sechsstellige Zahl sein)!"); }
-
+        if (this.state.incorrectSIDFormat) { warnings.push("Falsches Matrikelnr.-Format (muss eine sechsstellige Zahl sein)!"); }
+        if (this.props.userExistsError) { warnings.push("Ein Nutzer mit dieser Matrikelnummer existiert bereits!"); }
         let warning;
         if (warnings.length > 0) {
             warning = (
