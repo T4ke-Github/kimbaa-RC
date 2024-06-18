@@ -51,7 +51,6 @@ class MainApplicationPage extends Component{
         this.handleSemester = this.handleSemester.bind(this);
         this.handleDegree = this.handleDegree.bind(this);
         this.handleCheckChange = this.handleCheckChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -98,12 +97,6 @@ class MainApplicationPage extends Component{
         }else if(name === "appMaster"){
             this.setState({"appBachelor": false });
         }
-    }
-
-    handleSave(e){
-        const { appSemSummer, appMatrikel, appDepartment, appName, appEmail, appPhone, appStreet, appPlace, appPostal, appCourse, appMaster, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, appPracticalSemesterAcknowledgement, appPracticalSemesterDone} = this.state;
-        const { saveApplication } = this.props;
-        saveApplication(appSemSummer, appMatrikel, appDepartment, appName, appEmail, appPhone, appStreet, appPlace, appPostal, appCourse, appMaster, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, appPracticalSemesterDone, appPracticalSemesterAcknowledgement);
     }
 
     handleSaveReal(e){
@@ -260,7 +253,6 @@ class MainApplicationPage extends Component{
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     moveToLanding: navActions.getNavLandingAction,
-    saveApplication: appActions.saveApplication,
     saveApplicationReal: appActions.saveApplicationAction,
 }, dispatch)
 
