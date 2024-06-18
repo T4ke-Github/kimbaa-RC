@@ -29,11 +29,6 @@ class LandingPage extends Component{
         antrag();
     }
 
-    showApplication(e){
-        const { getPTAPage } = this.props;
-        getPTAPage();
-    }
-
     //editAntrag(antrag){ const { editAntragAction } = this.props; editAntragAction("id", antrag); }
     //deleteAntrag(antrag){ const { deleteAntragAction } = this.props; deleteAntragAction("id", antrag); }
 
@@ -44,7 +39,7 @@ class LandingPage extends Component{
 
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
         let yourApplication = <></>;
-        if(this.props.playTestApplication){
+        /* if(this.props.playTestApplication){
             console.log(this.props.playTestApplication);
             yourApplication =   <Card style={{ width: '18rem' }} className="card">
                                         <Card.Body>
@@ -54,7 +49,7 @@ class LandingPage extends Component{
                                                 </Card.Text>
                                         </Card.Body>
                                     </Card>;
-        }
+        }*/
         
 
         return (
@@ -104,7 +99,6 @@ class LandingPage extends Component{
 const mapDispatchToProps = dispatch => bindActionCreators({
     antrag: navActions.getNavApplicationPageAction,
     userUpdate: navActions.getNavUserEditPageAction,
-    getPTAPage: navActions.getNavPlayTestApplicationPage,
     //deleteAntragAction: authActions.deleteAntragAction,
     //editAntragAction: authActions.editAntragAction,
 }, dispatch)
