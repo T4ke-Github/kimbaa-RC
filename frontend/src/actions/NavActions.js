@@ -8,7 +8,7 @@ export const USEREDIT = "USEREDIT";
 export const PTAPAGE = "PTAPAGE";
 
 export function getNavLoginAction(){
-    Cookies.set('currentPage', 'login');
+    Cookies.set('currentPage', 'login', { sameSite: 'Strict' });
     Cookies.remove('userResource');
     return {
         type: LOGIN,
@@ -16,35 +16,35 @@ export function getNavLoginAction(){
     }
 }
 export function getNavLandingAction(){
-    Cookies.set('currentPage', 'landing');
+    Cookies.set('currentPage', 'landing', { sameSite: 'Strict' });
     return {
         type: LANDING,
         payload: 'landing'
     }
 }
 export function getNavRegistrationPageAction(){
-    Cookies.set('currentPage', 'registration');
+    Cookies.set('currentPage', 'registration', { sameSite: 'Strict' });
     return {
         type: REGISTRATION,
         payload: 'registration'
     }
 }
 export function getNavApplicationPageAction(){
-    Cookies.set('currentPage', 'application');
+    Cookies.set('currentPage', 'application', { sameSite: 'Strict' });
     return {
         type: APPLICATION,
         payload: 'application'
     }
 }
 export function getNavUserEditPageAction(){
-    Cookies.set('currentPage', 'userEdit');
+    Cookies.set('currentPage', 'userEdit', { sameSite: 'Strict' });
     return {
         type: USEREDIT,
         payload: 'userEdit'
     }
 }
 export function getNavPlayTestApplicationPage(){
-    Cookies.set('currentPage', 'playTestPage');
+    Cookies.set('currentPage', 'playTestPage', { sameSite: 'Strict' });
     return {
         type: PTAPAGE,
         payload: 'playTestPage',

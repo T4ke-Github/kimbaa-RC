@@ -1,7 +1,5 @@
 import Cookies from "js-cookie";
 
-
-
 export const APPLICATION_SAVE = "APPLICATION_SAVE";
 
 function getSaveApplicationAction(application){ return { type: APPLICATION_SAVE, application: application, payload: 'landing' }};
@@ -57,7 +55,7 @@ export function saveApplicationAction(studentId, department,bachelor, master, pr
         dispatch(getSaveApplicationPending());
         saveApplicationReal(studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition)
             .then(applicationForm => {
-                Cookies.set('currentPage', 'Landing')
+                Cookies.set('currentPage', 'Landing', { sameSite: 'Strict' })
                 dispatch(getApplicationSuccess(applicationForm))
             })
             .catch(err => {
@@ -119,7 +117,7 @@ export const saveUserAction = (studentId, name, email, course, id) => async (dis
     dispatch(getSaveUserPending());
     try {
         await saveUser(studentId, name, email, course, id);
-        Cookies.set('currentPage', 'landing');
+        Cookies.set('currentPage', 'landing', { sameSite: 'Strict' });
         dispatch(getSaveUserSuccess());
     } catch (err) {
         dispatch(getSaveUserFail(err));
@@ -133,7 +131,7 @@ function getRefreshResourceSuccess(userResource){ return { type: REFRESH_SUCCESS
 export const refreshUE = (studentId) => async (dispatch) => {
     try {
         const resource = await refreshUserResource(studentId);
-        Cookies.set('currentPage', 'landing');
+        Cookies.set('currentPage', 'landing', { sameSite: 'Strict' });
         dispatch(getRefreshResourceSuccess(resource));
     } catch (err) {
         dispatch(getRefreshResourceFailure(err));

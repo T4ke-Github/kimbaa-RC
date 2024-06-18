@@ -23,7 +23,7 @@ export function registerUserAction(matrikel, name, email, password){
         dispatch(getRegistrationPending());
         registerUser(matrikel, name, email, password)
             .then(() => {
-                Cookies.set('currentPage', 'login')
+                Cookies.set('currentPage', 'login', { sameSite: 'Strict' })
                 dispatch(getRegistrationSuccess())
             })
             .catch(err => {
@@ -69,9 +69,9 @@ export function loginAction(loginId, password){
         dispatch(getLoginPending());
         login(loginId, password)
             .then(user => {
-                Cookies.set('currentPage', 'landing');
-                Cookies.set('loggedIn', true);
-                Cookies.set('userResource', JSON.stringify(user));
+                Cookies.set('currentPage', 'landing', { sameSite: 'Strict' });
+                Cookies.set('loggedIn', true, { sameSite: 'Strict' });
+                Cookies.set('userResource', JSON.stringify(user), { sameSite: 'Strict' });
                 dispatch(getLoginSuccess(user))
             })
             .catch(err => {

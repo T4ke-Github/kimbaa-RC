@@ -10,13 +10,13 @@ const initialState = {
 function appReducer(state = initialState, action){
     switch(action.type){
         case appActions.APPLICATION_SAVE:
-            Cookies.set('applications', [...state.applications, action.application]);
+            Cookies.set('applications', [...state.applications, action.application], { sameSite: 'Strict' });
             return{
                 ...state,
                 applications: [...state.applications, action.application],
             }
         case appActions.APPLICATION_SUCCESS:
-            Cookies.set('playTestApplication', action.playTestApplication);
+            Cookies.set('playTestApplication', action.playTestApplication, { sameSite: 'Strict' });
             return{
                 ...state,
                 playTestApplication: action.playTestApplication,
