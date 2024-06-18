@@ -122,7 +122,7 @@ class RegistrationPage extends Component{
             this.setState({
                 incompleteForm: true,
             })
-            hasFailed = true,
+            hasFailed = true;
         }
         if(hasFailed){
             return;
