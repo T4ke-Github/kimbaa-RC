@@ -29,6 +29,7 @@ class RegistrationPage extends Component{
             noMatch: false,
             incorrectEmailFormat: false,
             incorrectSIDFormat: false,
+            incompleteForm: false,
         }
 
         this.handleCancel = this.handleCancel.bind(this);
@@ -77,6 +78,7 @@ class RegistrationPage extends Component{
         }else{
             this.setState({[name]: value});
         }
+        this.setState({incompleteForm: false});
     }
 
     checkEmail(email){
@@ -116,6 +118,12 @@ class RegistrationPage extends Component{
             })
             hasFailed = true;
         }
+        if(regMatrikel === "" || regName === "" || regEmail === "" || regPassword === ""){
+            this.setState({
+                incompleteForm: true,
+            })
+            hasFailed = true,
+        }
         if(hasFailed){
             return;
         }
@@ -129,6 +137,7 @@ class RegistrationPage extends Component{
         if (this.state.incorrectEmailFormat) { warnings.push("Falsches Emailformat (muss auf @bht-berlin.de enden)!"); }
         if (this.state.incorrectSIDFormat) { warnings.push("Falsches Matrikelnr.-Format (muss eine sechsstellige Zahl sein)!"); }
         if (this.props.userExistsError) { warnings.push("Ein Nutzer mit dieser Matrikelnummer existiert bereits!"); }
+        if (this.incompleteForm) { warning.push("Das Formular ist unvollständig!"); }
         let warning;
         if (warnings.length > 0) {
             warning = (
