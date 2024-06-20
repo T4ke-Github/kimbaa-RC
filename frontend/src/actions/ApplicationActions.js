@@ -1,5 +1,8 @@
 import Cookies from "js-cookie";
 
+import {BACKEND_URL} from '../index.js'
+// import {logger} from './logger/testLogger'
+
 
 export const APPLICATION_PENDING = "APPLICATION_PENDING";
 export const APPLICATION_FAILURE = "APPLICATION_FAILURE";
@@ -52,7 +55,8 @@ function saveApplicationReal( studentId, department,bachelor, master, practicalD
         body: JSON.stringify(ApplicationForm)
     }
 
-    return fetch('http://localhost:8081/api/antragzulassung/'+ studentId, requestOptions)
+    console.log("fetching:" + BACKEND_URL + '/api/antragzulassung/' + studentId)
+    return fetch(BACKEND_URL + '/api/antragzulassung/' + studentId, requestOptions)
         .then(response => {
             if(!response.ok){
                 throw new Error('Error while saving Application');
@@ -104,7 +108,8 @@ function refreshUserResource(studentId){
         method: 'GET',
     }
 
-    return fetch(`http://localhost:8081/api/user/`+studentId, requestOptions)
+    console.log('fetching: ' + BACKEND_URL + '/api/user/' + studentId)
+    return fetch(BACKEND_URL + '/api/user/' +studentId, requestOptions)
         .then(response => {
             if(!response.ok){
                 throw new Error('Error while refreshing userResource');
@@ -137,7 +142,8 @@ function saveUser( studentId, name, email, course , id){
         body: JSON.stringify(ApplicationForm)
     }
 
-    return fetch('http://localhost:8081/api/user/'+ studentId, requestOptions)
+    console.log("fetching: " + BACKEND_URL + '/api/user/'+ studentId)
+    return fetch(BACKEND_URL + '/api/user/'+ studentId, requestOptions)
         .then(response => {
             if(!response.ok){
                 throw new Error('Error while saving User');
