@@ -14,7 +14,7 @@ const mapStateToProps = state => {
     }
 }
 
-class MainApplicationPage extends Component{
+class MainApplicationEditPage extends Component{
     
     constructor(props){
         super(props);
@@ -51,6 +51,7 @@ class MainApplicationPage extends Component{
         this.handleSemester = this.handleSemester.bind(this);
         this.handleDegree = this.handleDegree.bind(this);
         this.handleCheckChange = this.handleCheckChange.bind(this);
+        this.handleSave = this.handleSave.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -98,7 +99,6 @@ class MainApplicationPage extends Component{
             this.setState({"appBachelor": false });
         }
     }
-
 
     handleSaveReal(e){
         const{appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo } =  this.state;
@@ -254,7 +254,7 @@ class MainApplicationPage extends Component{
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     moveToLanding: navActions.getNavLandingAction,
-    saveApplicationReal: appActions.saveApplicationAction,
+    saveApplication: appActions.saveApplicationAction,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainApplicationPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MainApplicationEditPage);
