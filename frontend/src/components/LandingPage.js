@@ -53,15 +53,15 @@ class LandingPage extends Component{
             <>
                 <Container className="fLanding" >
                     <h1>Willkommen bei kimbaa!</h1>
-                    <p> Du hast dich erfolgreich eingeloggt, {name}!</p>
+                    <p> Schön, dich zu sehen, {name}!</p>
                 </Container>
                 <Container className="fGrid">
                     <Card style={{ width: '18rem' }} className="card">
                         <Card.Body>
-                            <Card.Title><Button className="cardButton" onClick={this.getAntrag}> Neuen Antrag Anlegen</Button> </Card.Title>
-                                <Card.Text >
-                                    Hier kannst du einen neuen Bachelorantrag erstellen!
-                                </Card.Text>
+                            <Card.Title>
+                                <Button className="cardButton" onClick={this.getAntrag}> Neuen Antrag Anlegen</Button>
+                            </Card.Title>
+                            <Card.Text >Hier kannst du einen neuen Bachelorantrag erstellen!</Card.Text>
                         </Card.Body>
                     </Card>
                     <Card style={{ width: '18rem' }} className="card">

@@ -15,7 +15,7 @@ export function saveApplicationAction(studentId, department,bachelor, master, pr
         dispatch(getSaveApplicationPending());
         saveApplicationReal(studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition, dateFrom, dateTo)
             .then(applicationForm => {
-                Cookies.set('currentPage', 'Landing')
+                Cookies.set('currentPage', 'Landing', { sameSite: 'Strict' })
                 dispatch(getApplicationSuccess(applicationForm))
             })
             .catch(err => {
@@ -73,35 +73,32 @@ function getSaveUserPending(){ return { type: USER_PENDING } }
 function getSaveUserFail(err){ return { type: USER_FAILURE, err: err } }
 function getSaveUserSuccess(){ return { type: USER_SUCCESS} }
 
-export function saveUserAction(studentId, name, email, course , id){
-    return dispatch => {
-        dispatch(getSaveUserPending());
-        saveUser(studentId, name, email, course, id )
-            .then(() => {
-                Cookies.set('currentPage', 'landing');
-                dispatch(getSaveUserSuccess())
-            })
-            .catch(err => {
-                dispatch(getSaveUserFail(err))
-            })
+export const saveUserAction = (studentId, name, email, course, id) => async (dispatch) => {
+    dispatch(getSaveUserPending());
+    try {
+        await saveUser(studentId, name, email, course, id);
+        Cookies.set('currentPage', 'landing', { sameSite: 'Strict' });
+        dispatch(getSaveUserSuccess());
+    } catch (err) {
+        dispatch(getSaveUserFail(err));
+        throw err; // Ensure the error is thrown to be caught in handleSaveUser
     }
 }
 
 function getRefreshResourceFailure(){ return { type: REFRESH_FAILURE, payload: 'landing' } }
 function getRefreshResourceSuccess(userResource){ return { type: REFRESH_SUCCESS, userResource: userResource, payload: 'landing' } }
 
-export function refreshUE(studentId){
-    return dispatch => {
-        refreshUserResource(studentId)
-            .then(resource => {
-                Cookies.set('currentPage', 'landing');
-                dispatch(getRefreshResourceSuccess(resource));
-            })
-            .catch(err => {
-                dispatch(getRefreshResourceFailure(err));
-            })
+export const refreshUE = (studentId) => async (dispatch) => {
+    try {
+        const resource = await refreshUserResource(studentId);
+        Cookies.set('currentPage', 'landing', { sameSite: 'Strict' });
+        dispatch(getRefreshResourceSuccess(resource));
+    } catch (err) {
+        dispatch(getRefreshResourceFailure(err));
+        throw err; // Ensure the error is thrown to be caught in handleSaveUser
     }
 }
+
 function refreshUserResource(studentId){
     const requestOptions = {
         method: 'GET',
@@ -129,6 +126,8 @@ function saveUser( studentId, name, email, course , id){
         //updatedAt: string,
         //course: course,
     }
+
+    console.log('ApplicationForm:', ApplicationForm);
 
     const requestOptions = {
         method: 'PUT',

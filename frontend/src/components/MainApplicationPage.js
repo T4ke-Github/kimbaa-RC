@@ -51,7 +51,6 @@ class MainApplicationPage extends Component{
         this.handleSemester = this.handleSemester.bind(this);
         this.handleDegree = this.handleDegree.bind(this);
         this.handleCheckChange = this.handleCheckChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
