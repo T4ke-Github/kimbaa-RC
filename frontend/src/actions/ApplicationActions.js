@@ -155,8 +155,8 @@ function saveUser( studentId, name, email, course , id){
 
 
 export const APPLICATION_DELETE_PENDING = "APPLICATION_DELETE_PENDING";
-export const APPLICATION_DELETEFAILURE = "APPLICATION_DELETE_FAILURE";
-export const APPLICATION_DELETESUCCESS = "APPLICATION_DELETE_SUCCESS";
+export const APPLICATION_DELETE_FAILURE = "APPLICATION_DELETE_FAILURE";
+export const APPLICATION_DELETE_SUCCESS = "APPLICATION_DELETE_SUCCESS";
 
 
 function getDeleteApplicationPending(){ return { type: APPLICATION_DELETE_PENDING } }
@@ -177,13 +177,9 @@ export function deleteApplicationAction( id){
     }
 }
 
-function deleteApplication(id){
+function deleteApplication(studentId){
     const requestOptions = {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(ApplicationForm)
+        method: 'DELETE'
     }
 
     return fetch('http://localhost:8081/api/antragzulassung/'+ studentId, requestOptions)

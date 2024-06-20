@@ -137,7 +137,7 @@ class RegistrationPage extends Component{
         if (this.state.incorrectEmailFormat) { warnings.push("Falsches Emailformat (muss auf @bht-berlin.de enden)!"); }
         if (this.state.incorrectSIDFormat) { warnings.push("Falsches Matrikelnr.-Format (muss eine sechsstellige Zahl sein)!"); }
         if (this.props.userExistsError) { warnings.push("Ein Nutzer mit dieser Matrikelnummer existiert bereits!"); }
-        if (this.incompleteForm) { warning.push("Das Formular ist unvollständig!"); }
+        if (this.incompleteForm) { warnings.push("Das Formular ist unvollständig!"); }
         let warning;
         if (warnings.length > 0) {
             warning = (

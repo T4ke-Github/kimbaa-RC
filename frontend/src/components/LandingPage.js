@@ -3,9 +3,8 @@ import { Button, Card} from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import { connect } from "react-redux";
 
-import * as navActions from '../actions/NavActions';
 import { bindActionCreators } from "redux";
-import * as authActions from '../actions/AuthActions';
+import * as navActions from '../actions/NavActions';
 import * as appActions from '../actions/ApplicationActions';
 
 const mapStateToProps = state => {
@@ -18,7 +17,6 @@ const mapStateToProps = state => {
 class LandingPage extends Component{
     constructor(props){
         super(props);
-        let applicationList = [mmedieninformatik, techinfo]
         //this.props.
         this.getAntrag = this.getAntrag.bind(this);
         this.showApplication = this.showApplication.bind(this);
@@ -37,8 +35,9 @@ class LandingPage extends Component{
     }
 
     editAntrag(antrag){ 
-        const { editAntragAction } = this.props; 
-        editAntragAction("id", antrag); 
+        /* const { editAntragAction } = this.props; 
+        editAntragAction("id", antrag); */
+        console.log("editAntrag has yet to be implemented");
     }
     deleteAntrag(antrag){ 
         const { deleteAntragAction } = this.props; 
@@ -47,7 +46,7 @@ class LandingPage extends Component{
 
 
     render(){
-
+        let applicationList = ["medieninformatik", "techinfo"];
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
         return (
             <>
@@ -105,7 +104,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     userUpdate: navActions.getNavUserEditPageAction,
     getPTAPage: navActions.getNavPlayTestApplicationPage,
     deleteApplication: appActions.deleteApplicationAction,
-    editAntragAction: navActions.editApplicationAction,
+    // editAntragAction: navActions.editApplicationAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
