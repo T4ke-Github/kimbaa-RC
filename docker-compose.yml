@@ -53,7 +53,8 @@ services:
 
   mongo:
     container_name: mongo-db
-    image: mongo #db-raspberrypi4-unofficial-r7.0.4
+    image: mongo
+    # image: mongodb-raspberrypi4-unofficial-r7.0.4
     restart: always
     ports:
       - '27017:27017'
