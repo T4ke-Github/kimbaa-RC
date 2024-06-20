@@ -19,7 +19,7 @@ services:
     ports:
       - 3000:3000
     environment:
-    - HOSTNAME=kimbaa.local
+    # - HOSTNAME=kimbaa.local
     - BPORT=8081
     networks:
       - loki
@@ -43,7 +43,7 @@ services:
     environment:
       - DB_CONNECTION_STRING=mongodb://root:example@mongo:27017/
       - HTTP_PORT=3000
-      - HOSTNAME=kimbaa.local
+      # - HOSTNAME=kimbaa.local
       - FRONTEND_PORT=3000
     depends_on:
       - mongo

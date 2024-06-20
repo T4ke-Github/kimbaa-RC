@@ -12,7 +12,7 @@ import rootReducer from './reducer/RootReducer';
 import authReducer from './reducer/AuthReducer';
 import appReducer from './reducer/ApplicationReducer';
 
-let HOSTNAME = envs('HOSTNAME', 'kimbaa.local')
+let HOSTNAME = envs('HOSTNAME', 'localhost')
 
 let PORT = envs('BPORT', '8081')
 
