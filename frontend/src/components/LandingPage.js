@@ -5,7 +5,8 @@ import { connect } from "react-redux";
 
 import * as navActions from '../actions/NavActions';
 import { bindActionCreators } from "redux";
-//import * as authActions from '../actions/AuthActions';
+import * as authActions from '../actions/AuthActions';
+import * as appActions from '../actions/ApplicationActions';
 
 const mapStateToProps = state => {
     return {
@@ -17,11 +18,12 @@ const mapStateToProps = state => {
 class LandingPage extends Component{
     constructor(props){
         super(props);
-
+        let applicationList = [mmedieninformatik, techinfo]
+        //this.props.
         this.getAntrag = this.getAntrag.bind(this);
         this.showApplication = this.showApplication.bind(this);
-        //this.editAntrag = this.editAntrag.bind(this);
-        //this.deleteAntrag = this.deleteAntrag.bind(this);
+        this.editApplication = this.editApplication.bind(this);
+        this.deleteApplication = this.deleteApplication.bind(this);
     }
 
     getAntrag(){
@@ -29,29 +31,24 @@ class LandingPage extends Component{
         antrag();
     }
 
-    //editAntrag(antrag){ const { editAntragAction } = this.props; editAntragAction("id", antrag); }
-    //deleteAntrag(antrag){ const { deleteAntragAction } = this.props; deleteAntragAction("id", antrag); }
+    showApplication(e){
+        const { getPTAPage } = this.props;
+        getPTAPage();
+    }
 
-    //import(){}
+    editAntrag(antrag){ 
+        const { editAntragAction } = this.props; 
+        editAntragAction("id", antrag); 
+    }
+    deleteAntrag(antrag){ 
+        const { deleteAntragAction } = this.props; 
+        deleteAntragAction("id", antrag); 
+    }
 
 
     render(){
 
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
-        let yourApplication = <></>;
-        /* if(this.props.playTestApplication){
-            console.log(this.props.playTestApplication);
-            yourApplication =   <Card style={{ width: '18rem' }} className="card">
-                                        <Card.Body>
-                                            <Card.Title><Button className="cardButton" onClick={this.showApplication}>Gespeicherten Antrag einsehen</Button> </Card.Title>
-                                                <Card.Text >
-                                                    Hier kannst du dir anzeigen lassen, wie dein Antrag im Backend gespeichert wurde.
-                                                </Card.Text>
-                                        </Card.Body>
-                                    </Card>;
-        }*/
-        
-
         return (
             <>
                 <Container className="fLanding" >
@@ -69,13 +66,21 @@ class LandingPage extends Component{
                     </Card>
                     <Card style={{ width: '18rem' }} className="card">
                         <Card.Body>
-                            <Card.Title>
-                                <Button className="cardButton" onClick={this.props.userUpdate}>Nutzerdaten bearbeiten</Button>
-                            </Card.Title>
-                            <Card.Text >Hier kannst du Details deines Accounts bearbeiten.</Card.Text>
+                            <Card.Title><Button className="cardButton"> Module/Creditpoints importieren</Button> </Card.Title>
+                                <Card.Text >
+                                    Hier kannst du Module sowie Creditpoints importieren
+                                </Card.Text>
                         </Card.Body>
                     </Card>
-                    {['Bachelor Medieninformatik'].map((antrag, index) => (
+                    <Card style={{ width: '18rem' }} className="card">
+                        <Card.Body>
+                            <Card.Title><Button className="cardButton" onClick={this.props.userUpdate}>Nutzerdaten bearbeiten</Button> </Card.Title>
+                                <Card.Text >
+                                    Hier kannst du Details deines Accounts bearbeiten.
+                                </Card.Text>
+                        </Card.Body>
+                    </Card>
+                    {applicationList.map((antrag, index) => (
                         <Card key={index} style={{ width: '18rem' }} className="card">
                             <Card.Img variant="top" src="kimbaa_logo_256.png" />
                             <Card.Body>
@@ -83,8 +88,8 @@ class LandingPage extends Component{
                                     {antrag}
                                 </Card.Title>
                                     <Card.Text >
-                                        <Button className="cardButton" > Antrag bearbeiten</Button> 
-                                        <Button className="cardButton" > Antrag löschen</Button>
+                                        <Button className="cardButton" onClick={this.editAntrag(antrag)} > Antrag bearbeiten</Button> 
+                                        <Button className="cardButton" onClick={this.deleteAntrag(antrag)} > Antrag löschen</Button>
                                     </Card.Text>
                                 </Card.Body>
                         </Card>
@@ -98,8 +103,11 @@ class LandingPage extends Component{
 const mapDispatchToProps = dispatch => bindActionCreators({
     antrag: navActions.getNavApplicationPageAction,
     userUpdate: navActions.getNavUserEditPageAction,
-    //deleteAntragAction: authActions.deleteAntragAction,
-    //editAntragAction: authActions.editAntragAction,
+    getPTAPage: navActions.getNavPlayTestApplicationPage,
+    deleteApplication: appActions.deleteApplicationAction,
+    editAntragAction: navActions.editApplicationAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
+
+
