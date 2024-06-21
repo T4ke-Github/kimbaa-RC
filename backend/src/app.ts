@@ -5,9 +5,10 @@ import "express-async-errors"; // needs to be imported before routers and other 
 import cors from 'cors';
 import { loginRouter } from './routes/loginRoute';
 import { modulRouter } from './routes/modulRoute';
-import { userDetailsRouter } from './routes/UserDetailsRoute';
+import { userDetailsRouter } from './routes/userDetailsRoute';
 import { userRouter } from './routes/userRout';
 import { antragZulassungRouter } from './routes/antragZulassungRoute';
+import { healthRouter } from './routes/healthRoute';
 import { logger } from './logger/serviceLogger';
 
 
@@ -46,5 +47,6 @@ app.use("/api/user", userRouter)
 app.use("/api/modul", modulRouter)
 app.use("/api/userdetails", userDetailsRouter)
 app.use("/api/antragZulassung", antragZulassungRouter)
+app.use("/api/health", healthRouter)
 
 export default app;
