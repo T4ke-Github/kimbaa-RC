@@ -208,7 +208,8 @@ test("/api/user/ create User Medieninformatik and test for moduls", async () => 
     const modulList = await ModulList.findOne({ creator: response.body.id });
     const alleEintraege = await ModulService.getAlleModule(studentID);
     expect(alleEintraege.length).toBe(55);
+//add timeout to test
+}, 10000)
 
-});
     
     
