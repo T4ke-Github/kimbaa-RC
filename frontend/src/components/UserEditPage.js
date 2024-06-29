@@ -24,7 +24,7 @@ class UserEditPage extends Component{
         //let address = userResource.address ? userResource.address : ",  ";
 
         this.state = {
-            uEUserId: userResource._id,
+            uEUserId: userResource._id ? userResource._id : userResource.id,
             uEstudentId: userResource.studentId ? userResource.studentId : "",
             uEName: userResource.name ? userResource.name : "",
             uEStreet: "",
@@ -43,14 +43,20 @@ class UserEditPage extends Component{
         this.setState({[name]: value});
     }
 
-    handleSaveUser(e){
-        const{ uEstudentId, uEName, uEEmail, uECourse, uEUserId} = this.state;
-        const{saveUser, refreshResource} = this.props;
-        saveUser( uEstudentId, uEName, uEEmail, uECourse, uEUserId);
-        setTimeout(() => {
-            refreshResource(uEstudentId);
-        }, 500);
+    async handleSaveUser(e) {
+        e.preventDefault(); // Prevent default form submission behavior
+        const { uEstudentId, uEName, uEEmail, uECourse, uEUserId } = this.state;
+        const { saveUserAction, refreshUE } = this.props;
+        
+        try {
+            // Await saveUser to ensure it completes before calling refreshResource
+            await saveUserAction(uEstudentId, uEName, uEEmail, uECourse, uEUserId);
+            await refreshUE(uEstudentId);
+        } catch (error) {
+            console.error("Error saving user and refreshing resource:", error);
+        }
     }
+    
 
     render(){
         return(
@@ -147,8 +153,8 @@ class UserEditPage extends Component{
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     moveToLanding: navActions.getNavLandingAction,
-    saveUser: appActions.saveUserAction,
-    refreshResource: appActions.refreshUE,
+    saveUserAction: appActions.saveUserAction,
+    refreshUE: appActions.refreshUE,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEditPage);

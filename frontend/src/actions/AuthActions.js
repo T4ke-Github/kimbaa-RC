@@ -1,7 +1,10 @@
 import Cookies from "js-cookie";
+import {BACKEND_URL} from '../index.js'
+
 
 export const REGISTRATION_PENDING = "REGISTRATION_PENDING";
 export const REGISTRATION_FAILURE = "REGISTRATION_FAILURE";
+export const REGISTRATION_FAILURE_USER_EXISTS = "REGISTRATION_FAILURE_USER_EXISTS";
 export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
 
 export const LOGIN_PENDING = "LOGIN_PENDING";
@@ -10,6 +13,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
 function getRegistrationPending(){ return { type: REGISTRATION_PENDING } }
 function getRegistrationFail(err){ return { type: REGISTRATION_FAILURE, err: err } }
+function getRegistrationFailUserExists(){ return { type: REGISTRATION_FAILURE_USER_EXISTS } }
 function getRegistrationSuccess(){ return { type: REGISTRATION_SUCCESS, payload: 'login' } }
 
 function getLoginPending(){ return { type: LOGIN_PENDING } }
@@ -21,11 +25,16 @@ export function registerUserAction(matrikel, name, email, password){
         dispatch(getRegistrationPending());
         registerUser(matrikel, name, email, password)
             .then(() => {
-                Cookies.set('currentPage', 'login')
+                Cookies.set('currentPage', 'login', { sameSite: 'Strict' })
                 dispatch(getRegistrationSuccess())
             })
             .catch(err => {
-                dispatch(getRegistrationFail(err))
+                const errorMessage = err.message;
+                if(errorMessage === "User Already Exists"){
+                    dispatch(getRegistrationFailUserExists())
+                }else{
+                    dispatch(getRegistrationFail(err))
+                }
             })
     }
 }
@@ -45,9 +54,13 @@ function registerUser(matrikel, name, email, password){
         body: JSON.stringify(registrationForm)
     }
 
-    return fetch('http://localhost:8081/api/user', requestOptions)
+    console.log('fetching: '+ BACKEND_URL + '/api/user')
+    return fetch(BACKEND_URL + '/api/user', requestOptions)
         .then(response => {
             if(!response.ok){
+                if(response.status === 400){
+                    throw new Error('User Already Exists');
+                }
                 throw new Error('Error while registrating');
             }
             return response.json();
@@ -59,9 +72,9 @@ export function loginAction(loginId, password){
         dispatch(getLoginPending());
         login(loginId, password)
             .then(user => {
-                Cookies.set('currentPage', 'landing');
-                Cookies.set('loggedIn', true);
-                Cookies.set('userResource', JSON.stringify(user));
+                Cookies.set('currentPage', 'landing', { sameSite: 'Strict' });
+                Cookies.set('loggedIn', true, { sameSite: 'Strict' });
+                Cookies.set('userResource', JSON.stringify(user), { sameSite: 'Strict' });
                 dispatch(getLoginSuccess(user))
             })
             .catch(err => {
@@ -74,7 +87,7 @@ function login(loginId, password){
         studentId: loginId,
         password: password
     }
-    
+
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -83,7 +96,8 @@ function login(loginId, password){
         body: JSON.stringify(loginData)
     }
 
-    return fetch('http://localhost:8081/api/login/login', requestOptions)
+    console.log('fetching: ' + BACKEND_URL + '/api/login/login')
+    return fetch(BACKEND_URL + '/api/login/login', requestOptions)
         .then(response => {
             if(!response.ok){
                 throw new Error('Error logging in');
@@ -96,7 +110,7 @@ function login(loginId, password){
 }
 
 /*
-if login ok: 
+if login ok:
     status code 200
     body: userResource
     loginResult

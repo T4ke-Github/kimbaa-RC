@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 const initialState = {
     loggedIn: Cookies.get('loggedIn') === 'true' || false,
     userResource: Cookies.get('userResource') ? JSON.parse(Cookies.get('userResource')) : null,
+    userAlreadyExists: false,
     err: null
 }
 
@@ -17,6 +18,16 @@ function authReducer(state = initialState, action){
                 ...state,
                 loggedIn: true,
                 userResource: action.userResource,
+            }
+        case authActions.REGISTRATION_FAILURE_USER_EXISTS:
+            return{
+                ...state,
+                userAlreadyExists: true,
+            }
+        case authActions.REGISTRATION_PENDING:
+            return{
+                ...state,
+                userAlreadyExists: false,
             }
         case navActions.LOGIN:
             return{
