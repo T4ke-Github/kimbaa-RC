@@ -1,4 +1,6 @@
-
+#kimbaa stack
+---
+version: "3"
 
 services:
 
@@ -16,7 +18,11 @@ services:
           path: ./backend/package.json
     ports:
       - 3000:3000
-
+    environment:
+    # - HOSTNAME=kimbaa.local
+    - BPORT=8081
+    networks:
+      - loki
 
   backend:
     build:
@@ -37,30 +43,24 @@ services:
     environment:
       - DB_CONNECTION_STRING=mongodb://root:example@mongo:27017/
       - HTTP_PORT=3000
+      # - HOSTNAME=kimbaa.local
+      - FRONTEND_PORT=3000
     depends_on:
       - mongo
+    networks:
+      - loki
 
   mongo:
     container_name: mongo-db
     image: mongo
+    # image: mongodb-raspberrypi4-unofficial-r7.0.4
     restart: always
     ports:
       - '27017:27017'
     env_file:
       - mongodb/mongo-dev.env
-
-#  mongo-express:
-#    image: mongo-express
-#    restart: always
-#    ports:
-#      - 8081:8081
-#    environment:
-#      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-#      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-#      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-#      ME_CONFIG_BASICAUTH: false
-
+    networks:
+      - loki
 
 networks:
-  kimbaa:
-    name: kimbaa
+  loki:
