@@ -1,6 +1,10 @@
 import express from 'express';
 import "express-async-errors"; // needs to be imported before routers and other stuff!
 import cookieParser from 'cookie-parser';
+import fs from 'fs';
+import https from 'https';
+import path from 'path';
+import dotenv from 'dotenv';
 
 import { loginRouter } from './routes/loginRoute';
 import { modulRouter } from './routes/modulRoute';
@@ -11,10 +15,13 @@ import { healthRouter } from './routes/healthRoute';
 import { logger } from './logger/serviceLogger';
 import { configureCORS } from './configCORS';
 
-let HOSTNAME = (process.env.HOSTNAME || 'localhost');
-let FPORT = (process.env.FRONTEND_PORT || '3000');
+// Laden der Umgebungsvariablen aus der .env Datei
+dotenv.config();
 
-export const FRONTEND_URL = 'http://'+ HOSTNAME + ':' + FPORT;
+const HOSTNAME = process.env.HOSTNAME || 'localhost';
+const FPORT = process.env.FRONTEND_PORT || '3000';
+
+export const FRONTEND_URL = 'http://' + HOSTNAME + ':' + FPORT;
 
 logger.info('Using ' + FRONTEND_URL);
 
@@ -41,5 +48,30 @@ app.use("/api/modul", modulRouter);
 app.use("/api/userdetails", userDetailsRouter);
 app.use("/api/antragZulassung", antragZulassungRouter);
 app.use("/api/health", healthRouter);
+
+const HTTP_PORT = process.env.HTTP_PORT || 3000;
+const HTTPS_PORT = process.env.HTTPS_PORT || 3001;
+
+if (process.env.USE_SSL === 'true') {
+    const SSL_KEY_FILE = process.env.SSL_KEY_FILE;
+    const SSL_CRT_FILE = process.env.SSL_CRT_FILE;
+
+    if (!SSL_KEY_FILE || !SSL_CRT_FILE) {
+        throw new Error("SSL_KEY_FILE und SSL_CRT_FILE müssen gesetzt sein, wenn USE_SSL auf 'true' gesetzt ist.");
+    }
+
+    const sslOptions = {
+        key: fs.readFileSync(path.resolve(__dirname, SSL_KEY_FILE)),
+        cert: fs.readFileSync(path.resolve(__dirname, SSL_CRT_FILE)),
+    };
+
+    https.createServer(sslOptions, app).listen(HTTPS_PORT, () => {
+        logger.info(`Secure server listening on port ${HTTPS_PORT}`);
+    });
+} else {
+    app.listen(HTTP_PORT, () => {
+        logger.info(`Server listening on port ${HTTP_PORT}`);
+    });
+}
 
 export default app;
