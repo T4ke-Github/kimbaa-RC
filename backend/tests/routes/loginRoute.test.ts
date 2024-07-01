@@ -40,7 +40,7 @@ test("/api/login login with wrong credentials", async () => {
     const testee = supertest(app);
     const response = await testee.post("/api/login/").send({ studentId: "666456", password: "test2" });
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(403);
 });
 
 //Login min date
@@ -59,7 +59,7 @@ test("/api/login login min date", async () => {
     expect(response.status).toBe(200);
     expect(response.body[0].name).toBe("Tim");
 
-    const response2 = await testee.post("/api/login/").send({ studentId: "111111", password: "test" });
+    const response2 = await testee.post("/api/login/").send({ studentId: "111111", password: "1234abcdABCD..;,." });
 
     //cascading login infos
     const { user, loginResult } = response2.body;

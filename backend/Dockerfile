@@ -13,6 +13,6 @@ RUN npm install
 COPY --chown=node:node . .
 
 # Expose both HTTP and HTTPS ports
-EXPOSE 3000 3001
+EXPOSE 3000 3443
 
 CMD [ "npm", "start" ]

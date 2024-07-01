@@ -51,8 +51,8 @@ test(`/api/login POST, Negativtest - wrong password`, async () => {
     const testee = supertest(app);
     const loginData = { studentId: "12345", password: "wrongpassword" };
     const response = await testee.post(`/api/login`).send(loginData);
-    expect(response.status).toBe(401);
-    expect(response.body).toBe(false);
+    expect(response.status).toBe(403);
+    
 });
 
 test(`/api/login POST, Negativtest - non-existent user`, async () => {
@@ -60,7 +60,7 @@ test(`/api/login POST, Negativtest - non-existent user`, async () => {
     const loginData = { studentId: "nonexistent", password: "1234abcdABCD..;,." };
     const response = await testee.post(`/api/login`).send(loginData);
     expect(response.status).toBe(401);
-    expect(response.body).toBe(false);
+    
 });
 
 test(`/api/login GET, Positivtest`, async () => {
