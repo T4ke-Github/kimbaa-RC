@@ -5,7 +5,7 @@ import { User } from "../../src/model/UserModel";
 beforeEach(async () => {
     const user1 = new User({
         name: "Tim",
-        password: "test",
+        password: "1234abcdABCD..;,.",
         admin: false,
         studentId: "666456",
         email: "test@bht-berlin.de",
@@ -23,32 +23,23 @@ test("/api/login login with correct credentials", async () => {
     expect(response.body.length).toBe(1);
     expect(response.body[0].name).toBe("Tim");
 
-    const response2 = await testee.post("/api/login/login").send({ studentId: "666456", password: "test" });
+    const response2 = await testee.post("/api/login").send({ studentId: "666456", password: "1234abcdABCD..;,." });
 
-    //cascading login infos
-    const { user, loginResult } = response2.body;
-
+    console.log(response2.body);  // Fügen Sie dies zur Debugging-Ausgabe hinzu
 
     expect(response2.status).toBe(200);
-    //login role
-
-    expect(loginResult.role).toBe("u");
-    //true or false
-    expect(loginResult.success).toBe(true);
-    //Check userdata
+    const { user, jwt } = response2.body;
 
     expect(user.name).toBe("Tim");
     expect(user.studentId).toBe("666456");
     expect(user.email).toBe("test@bht-berlin.de");
     expect(user.course).toBe("6");
-
-
 });
 
 test("/api/login login with wrong credentials", async () => {
     const testee = supertest(app);
-    const response = await testee.post("/api/login/login").send({ studentId: "666456", password: "test2" });
-    expect(response.body).toBe(false);
+    const response = await testee.post("/api/login/").send({ studentId: "666456", password: "test2" });
+
     expect(response.status).toBe(401);
 });
 
@@ -56,7 +47,7 @@ test("/api/login login with wrong credentials", async () => {
 test("/api/login login min date", async () => {
     const user1 = new User({
         name: "Tim",
-        password: "test",
+        password: "1234abcdABCD..;,.",
         studentId: "111111",
         email: "test55@bht-berlin.de",
         
@@ -68,7 +59,7 @@ test("/api/login login min date", async () => {
     expect(response.status).toBe(200);
     expect(response.body[0].name).toBe("Tim");
 
-    const response2 = await testee.post("/api/login/login").send({ studentId: "111111", password: "test" });
+    const response2 = await testee.post("/api/login/").send({ studentId: "111111", password: "test" });
 
     //cascading login infos
     const { user, loginResult } = response2.body;
