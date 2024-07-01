@@ -1,35 +1,50 @@
+#kimbaa stack
+---
 version: "3"
 
 services:
+
   frontend:
     build:
       context: frontend
-    volumes:
-      - ./frontend:/frontend
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /frontend #TODO target path
+          ignore:
+            - ./frontend/package.json
+        - action: rebuild
+          path: ./backend/package.json
     ports:
-      - "3000:3000"
+      - 3000:3000
     environment:
-      - BPORT=8081
+    # - HOSTNAME=kimbaa.local
+    - BPORT=8081
     networks:
       - loki
 
   backend:
     build:
       context: backend
-    volumes:
-      - ./backend:/backend
-      - ./backend/cert:/backend/cert
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: /backend #TODO target path
+          ignore:
+            - ./backend/package.json
+            - ./backend/tests
+            - ./backend/testConfig
+        - action: rebuild
+          path: ./backend/package.json
     ports:
-      - "8081:3000"  # HTTP Port
-      - "8444:3001"  # HTTPS Port (Mapping des internen 3443 auf externen 8443)
+      - 8081:3000
     environment:
       - DB_CONNECTION_STRING=mongodb://root:example@mongo:27017/
       - HTTP_PORT=3000
+      # - HOSTNAME=kimbaa.local
       - FRONTEND_PORT=3000
-      - USE_SSL=true
-      - HTTPS_PORT=3001
-      - SSL_KEY_FILE=/backend/cert/private.key
-      - SSL_CRT_FILE=/backend/cert/public.crt
     depends_on:
       - mongo
     networks:
@@ -38,9 +53,10 @@ services:
   mongo:
     container_name: mongo-db
     image: mongo
+    # image: mongodb-raspberrypi4-unofficial-r7.0.4
     restart: always
     ports:
-      - "27017:27017"
+      - '27017:27017'
     env_file:
       - mongodb/mongo-dev.env
     networks:
