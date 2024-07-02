@@ -58,8 +58,8 @@ build_backend:
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
   before_script:
-    - echo $CI_REGISTRY
-    - docker info
+    # - echo $CI_REGISTRY
+    # - docker info
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker build -t $CI_REGISTRY/jala5026/kimbaa/backend:$CI_COMMIT_REF_SLUG backend/
@@ -83,7 +83,7 @@ build_frontend:
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
   before_script:
-    - docker info
+    # - docker info
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
     - docker build -t $CI_REGISTRY/jala5026/kimbaa/frontend:$CI_COMMIT_REF_SLUG frontend/
