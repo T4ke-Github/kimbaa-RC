@@ -8,7 +8,6 @@ import { bindActionCreators } from "redux";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import logger from "../logging/logger";
 
 const mapStateToProps = state => {
     return{

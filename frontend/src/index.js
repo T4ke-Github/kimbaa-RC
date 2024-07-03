@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import envs from 'envs';
-// import {logger} from './logger/testLogger'
 
 import { applyMiddleware, legacy_createStore as createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';

@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as navActions from '../actions/NavActions';
-import logger from "../logging/logger";
 
 const mapStateToProps = state => {
     return state;
