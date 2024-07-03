@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { Button, Card} from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import { connect } from "react-redux";
+import logger from "../logging/logger";
 
 import { bindActionCreators } from "redux";
 import * as navActions from '../actions/NavActions';
@@ -22,6 +23,10 @@ class LandingPage extends Component{
         this.showApplication = this.showApplication.bind(this);
         this.editApplication = this.editApplication.bind(this);
         this.deleteApplication = this.deleteApplication.bind(this);
+    }
+
+    componentDidMount(){
+        logger.info("LandingPage.js mounted!");
     }
 
     getAntrag(){

@@ -1,10 +1,12 @@
 import React, {Component} from "react";
 import Cookies from 'js-cookie';
+import logger from "../logging/logger";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import * as navActions from '../actions/NavActions';
+import logger from "../logging/logger";
 
 const mapStateToProps = state => {
     return state;
@@ -14,6 +16,10 @@ class UserWidget extends Component{
     constructor(props){
         super(props);
         this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    componentDidMount(){
+        logger.info("MainApplicationEditPage.js mounted!");
     }
 
     handleLogout(e){

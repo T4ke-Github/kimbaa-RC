@@ -1,5 +1,6 @@
 import React, {createRef, Component} from "react";
 import { connect } from "react-redux";
+import logger from "../logging/logger";
 
 import * as navActions from '../actions/NavActions';
 import * as appActions from "../actions/ApplicationActions";
@@ -7,6 +8,7 @@ import { bindActionCreators } from "redux";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import logger from "../logging/logger";
 
 const mapStateToProps = state => {
     return{
@@ -55,6 +57,10 @@ class MainApplicationPage extends Component{
         this.handleClose = this.handleClose.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSaveReal = this.handleSaveReal.bind(this);
+    }
+
+    componentDidMount(){
+        logger.info("MainApplicationPage.js mounted!");
     }
 
     handleInputChange(e){
