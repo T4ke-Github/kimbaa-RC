@@ -1,56 +1,55 @@
-import express, { Request, Response, NextFunction } from 'express';
-import * as antragAnlage2Service from '../services/AntragAnlage2Service';
-import { logger } from '../logger/routeLogger';
+import express, { NextFunction, Request, Response } from 'express';
+import * as antragAnlage2Service from "../services/AntragAnlage2Service";
+import * as userService from "../services/UserService";
 
 export const antragAnlage2Router = express.Router();
 
-antragAnlage2Router.post("/", async (req: Request, res: Response, next: NextFunction) => {
+// Route to get Anlage2 details
+antragAnlage2Router.get("/:identifier", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const anlage2 = await antragAnlage2Service.createAntragAnlage2(req.body);
-        res.status(201).send(anlage2);
-    } catch (error) {
-        logger.error("Error creating AntragAnlage2: " + error);
-        res.status(400).send(error);
-        next(error);
-    }
-});
+        const identifier = req.params.identifier;
+        const user = await userService.getOneUser({ studentId: String(identifier) });
+        const anlage2 = await antragAnlage2Service.getAntragAnlage2ById(user.id!);
 
-antragAnlage2Router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const anlage2 = await antragAnlage2Service.getAntragAnlage2ById(req.params.id);
-        if (anlage2) {
-            res.status(200).send(anlage2);
-        } else {
-            res.status(404).send("Anlage2 not found");
+        if (anlage2 === null) {
+            return res.status(404).send("Anlage2 nicht gefunden.");
         }
+
+        res.status(200).send({ antragAnlage2Details: anlage2 });
+
     } catch (error) {
-        logger.error("Error fetching AntragAnlage2: " + error);
         res.status(400).send(error);
         next(error);
     }
 });
 
-antragAnlage2Router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
+// Route to update Anlage2 details
+antragAnlage2Router.put("/:identifier", async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const anlage2 = await antragAnlage2Service.updateAntragAnlage2({ id: req.params.id, ...req.body });
+        const identifier = req.params.identifier;
+        const anlage2Resource = req.body;
+
+        const user = await userService.getOneUser({ studentId: String(identifier) });
+        let anlage2 = await antragAnlage2Service.getAntragAnlage2ById(user.id!);
+
         if (anlage2) {
-            res.status(200).send(anlage2);
+            // If Anlage2 exists, update it
+            anlage2 = await antragAnlage2Service.updateAntragAnlage2({
+                id: anlage2.id,
+                ...anlage2Resource
+            });
         } else {
-            res.status(404).send("Anlage2 not found");
+            // If no Anlage2 exists, create a new one
+            anlage2 = await antragAnlage2Service.createAntragAnlage2({
+                creator: user.id,
+                studentid: user.studentId,
+                ...anlage2Resource
+            });
         }
-    } catch (error) {
-        logger.error("Error updating AntragAnlage2: " + error);
-        res.status(400).send(error);
-        next(error);
-    }
-});
 
-antragAnlage2Router.delete("/:id", async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        await antragAnlage2Service.deleteAntragAnlage2(req.params.id);
-        res.status(204).send();
+        res.status(200).send({ antragAnlage2Details: anlage2 });
+
     } catch (error) {
-        logger.error("Error deleting AntragAnlage2: " + error);
         res.status(400).send(error);
         next(error);
     }

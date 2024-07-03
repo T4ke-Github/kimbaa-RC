@@ -124,7 +124,7 @@ test("AntragAnlage2Service.test getAntragAnlage2ById", async () => {
         begruendungFuerDatum: "Begründung für das Datum"
     });
 
-    const fetchedAnlage2 = await AntragAnlage2Service.getAntragAnlage2ById(anlage2.id!);
+    const fetchedAnlage2 = await AntragAnlage2Service.getAntragAnlage2ById(user.id!);
 
     expect(fetchedAnlage2!.id!).toBe(anlage2.id); // Überprüfen Sie, ob der richtige Antrag abgerufen wurde
     logger.info("AntragAnlage2Service.test getAntragAnlage2ById wurde beendet");

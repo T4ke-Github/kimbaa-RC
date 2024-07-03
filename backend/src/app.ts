@@ -5,10 +5,12 @@ import "express-async-errors"; // needs to be imported before routers and other 
 import cors from 'cors';
 import { loginRouter } from './routes/loginRoute';
 import { modulRouter } from './routes/modulRoute';
-import { userDetailsRouter } from './routes/UserDetailsRoute';
+import { userDetailsRouter } from './routes/userDetailsRoute';
 import { userRouter } from './routes/userRout';
 import { antragZulassungRouter } from './routes/antragZulassungRoute';
+import { antragAnlage2Router } from './routes/antragAnlage2Route';
 import { logger } from './logger/serviceLogger';
+
 
 
 let HOSTNAME = (process.env.HOSTNAME || 'localhost');
@@ -46,5 +48,6 @@ app.use("/api/user", userRouter)
 app.use("/api/modul", modulRouter)
 app.use("/api/userdetails", userDetailsRouter)
 app.use("/api/antragZulassung", antragZulassungRouter)
+app.use("/api/antragAnlage2", antragAnlage2Router)
 
 export default app;
