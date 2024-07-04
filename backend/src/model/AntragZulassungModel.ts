@@ -25,7 +25,7 @@ const UserDetailsSchema = new Schema<IUserDetails>({
 // Interface for the application model
 export interface IApplication {
   id?: string;
-  creator: Types.ObjectId;
+  creator?: Types.ObjectId;
   attach1id?: Types.ObjectId; // Optional | Anlage 1 ID
   attach2id?: Types.ObjectId; // Optional | Anlage 2 ID
   studentid?: string; // Required | Matrikelnummer
