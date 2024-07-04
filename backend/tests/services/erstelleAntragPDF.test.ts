@@ -1,4 +1,5 @@
 import { createAntragPDF } from "../../src/services/erstelleAntragPDFService";
+import { createAnlage2PDF } from "../../src/services/erstelleAnlage2PDFService";
 import { User } from "../../src/model/UserModel";
 import * as UserService from "../../src/services/UserService";
 import * as AntragZulassungService from "../../src/services/AntragZulassungService";
@@ -57,19 +58,29 @@ test("createAntragPDF", async () => {
     const user = await UserService.getOneUser({ studentId: "666456" });
     const [pdfBuffer1] = await createAntragPDF(user.id!.toString());
 
-    // Pfade der zu erstellenden PDF-Dateien
     const outputPath1 = path.resolve(__dirname, '../../src/output/Antrag_Zulassung_Abschlusspruefung.pdf');
-    
 
-    // Falls Dateien existieren, zuerst löschen
     if (fs.existsSync(outputPath1)) {
         fs.unlinkSync(outputPath1);
     }
 
-    // Speichern der PDF-Dateien zum Überprüfen
     fs.writeFileSync(outputPath1, pdfBuffer1);
 
-
-    // Überprüfen, ob die Dateien existieren
     expect(fs.existsSync(outputPath1)).toBe(true);
+});
+
+test("createAnlage2PDF", async () => {
+    const user = await UserService.getOneUser({ studentId: "666456" });
+    //const anlage2 = await AntragAnlage2Service.getAntragAnlage2ById(user.id!.toString());
+    const [pdfBuffer2] = await createAnlage2PDF(user.id!.toString());
+
+    const outputPath2 = path.resolve(__dirname, '../../src/output/Anlage_2.pdf');
+
+    if (fs.existsSync(outputPath2)) {
+        fs.unlinkSync(outputPath2);
+    }
+
+    fs.writeFileSync(outputPath2, pdfBuffer2);
+
+    expect(fs.existsSync(outputPath2)).toBe(true);
 });
