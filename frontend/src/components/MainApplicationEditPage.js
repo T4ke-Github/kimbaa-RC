@@ -1,5 +1,6 @@
 import React, {createRef, Component} from "react";
 import { connect } from "react-redux";
+import logger from "../logging/logger";
 
 import * as navActions from '../actions/NavActions';
 import * as appActions from "../actions/ApplicationActions";
@@ -58,6 +59,10 @@ class MainApplicationEditPage extends Component{
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.loadApplication = this.loadApplication.bind(this);
+    }
+
+    componentDidMount(){
+        logger.info("MainApplicationEditPage.js mounted!");
     }
 
     handleInputChange(e){

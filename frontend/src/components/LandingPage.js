@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { Button, Card} from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import { connect } from "react-redux";
+import logger from "../logging/logger";
 
 import { bindActionCreators } from "redux";
 import * as navActions from '../actions/NavActions';
@@ -32,6 +33,11 @@ class LandingPage extends Component{
         const { application } = this.props;
         application();
     }
+
+    componentDidMount(){
+        logger.info("LandingPage.js mounted!");
+    }
+
 
     moveEditApplication(){ 
         const { editApplication, getApplication} = this.props;
