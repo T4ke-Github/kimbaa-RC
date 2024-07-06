@@ -10,24 +10,24 @@ export const APPLICATION_SUCCESS = "APPLICATION_SUCCESS";
 
 
 function getSaveApplicationPending(){ return { type: APPLICATION_PENDING } }
-function getApplicationFail(err){ return { type: APPLICATION_FAILURE, err: err } }
-function getApplicationSuccess(applicationForm){ return { type: APPLICATION_SUCCESS, playTestApplication: applicationForm, payload: 'landing' } }
+function getSaveApplicationFail(err){ return { type: APPLICATION_FAILURE, err: err } }
+function getSaveApplicationSuccess(applicationForm){ return { type: APPLICATION_SUCCESS, payload: 'landing' } }
 
 export function saveApplicationAction(studentId, department,bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition , dateFrom, dateTo ){
     return dispatch => {
         dispatch(getSaveApplicationPending());
-        saveApplicationReal(studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition, dateFrom, dateTo)
+        saveApplication(studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition, dateFrom, dateTo)
             .then(applicationForm => {
                 Cookies.set('currentPage', 'Landing', { sameSite: 'Strict' })
-                dispatch(getApplicationSuccess(applicationForm))
+                dispatch(getSaveApplicationSuccess(applicationForm))
             })
             .catch(err => {
-                dispatch(getApplicationFail(err))
+                dispatch(getSaveApplicationFail(err))
             })
     }
 }
 
-function saveApplicationReal( studentId, department,bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition , dateFrom, dateTo){
+function saveApplication( studentId, department,bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition , dateFrom, dateTo){
     const ApplicationForm = {
         //creator?:  , // Ersteller
         //attach1id?: ; // Anlage 1 ID
@@ -161,7 +161,7 @@ export const APPLICATION_DELETE_SUCCESS = "APPLICATION_DELETE_SUCCESS";
 
 function getDeleteApplicationPending(){ return { type: APPLICATION_DELETE_PENDING } }
 function getDeleteApplicationFail(err){ return { type: APPLICATION_DELETE_FAILURE, err: err } }
-function getDeleteApplicationSuccess(applicationForm){ return { type: APPLICATION_DELETE_SUCCESS, playTestApplication: applicationForm, payload: 'landing' } }
+function getDeleteApplicationSuccess(){ return { type: APPLICATION_DELETE_SUCCESS,  payload: 'landing' } }
 
 export function deleteApplicationAction( id){
     return dispatch => {
@@ -169,7 +169,7 @@ export function deleteApplicationAction( id){
         deleteApplication(id)
             .then(applicationForm => {
                 Cookies.set('currentPage', 'Landing')
-                dispatch(getDeleteApplicationSuccess(applicationForm))
+                dispatch(getDeleteApplicationSuccess())
             })
             .catch(err => {
                 dispatch(getDeleteApplicationFail(err))
@@ -185,7 +185,48 @@ function deleteApplication(studentId){
     return fetch('http://localhost:8081/api/antragzulassung/'+ studentId, requestOptions)
         .then(response => {
             if(!response.ok){
-                throw new Error('Error while saving Application');
+                throw new Error('Error while deleting Application');
+            }
+            return response.json();
+        })
+}
+
+
+export const APPLICATION_FETCH_PENDING = "APPLICATION_FETCH_PENDING";
+export const APPLICATION_FETCH_FAILURE = "APPLICATION_FETCH_FAILURE";
+export const APPLICATION_FETCH_SUCCESS = "APPLICATION_FETCH_SUCCESS";
+
+
+function getFetchApplicationPending(){ return { type: APPLICATION_FETCH_PENDING } }
+function getFetchApplicationFail(err){ return { type: APPLICATION_FETCH_FAILURE, err: err } }
+function getFetchApplicationSuccess(applicationForm){ return { type: APPLICATION_FETCH_SUCCESS, application:applicationForm,  payload: 'landing' } }
+
+export function getApplicationAction( studentId ){
+    return dispatch => {
+        dispatch(getFetchApplicationPending());
+        getApplication( studentId )
+            .then(applicationForm => {
+                dispatch(getFetchApplicationSuccess(applicationForm))
+            })
+            .catch(err => {
+                dispatch(getFetchApplicationFail(err))
+            })
+    }
+}
+
+function getApplication( studentId ){
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    console.log("fetching:" + BACKEND_URL + '/api/antragzulassung/' + studentId)
+    return fetch(BACKEND_URL + '/api/antragzulassung/' + studentId, requestOptions)
+        .then(response => {
+            if(!response.ok){
+                throw new Error('Error getting saving Application');
             }
             return response.json();
         })

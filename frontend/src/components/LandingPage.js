@@ -10,38 +10,39 @@ import * as appActions from '../actions/ApplicationActions';
 const mapStateToProps = state => {
     return {
         userResource: state.auth.userResource,
-        playTestApplication: state.app.playTestApplication.antragZulassungDetails,
+        application: state.app.application.antragZulassungDetails
     }
 }
 
 class LandingPage extends Component{
     constructor(props){
         super(props);
-        //this.props.
-        this.getAntrag = this.getAntrag.bind(this);
-        this.showApplication = this.showApplication.bind(this);
-        this.editApplication = this.editApplication.bind(this);
-        this.deleteApplication = this.deleteApplication.bind(this);
+
+        let userResource = this.props.userResource;
+        
+        this.state = {
+            appMatrikel: userResource.studentId ? userResource.studentId : "",
+        }
+        this.makeApplication = this.makeApplication.bind(this);
+        this.moveEditApplication = this.moveEditApplication.bind(this);
+        this.moveDeleteApplication = this.moveDeleteApplication.bind(this);
     }
 
-    getAntrag(){
-        const { antrag } = this.props;
-        antrag();
+    makeApplication(){
+        const { application } = this.props;
+        application();
     }
 
-    showApplication(e){
-        const { getPTAPage } = this.props;
-        getPTAPage();
+    moveEditApplication(){ 
+        const { editApplication, getApplication} = this.props;
+        const {appMatrikel} = this.state;
+        getApplication(appMatrikel);
+        editApplication();
     }
 
-    editAntrag(antrag){ 
-        /* const { editAntragAction } = this.props; 
-        editAntragAction("id", antrag); */
-        console.log("editAntrag has yet to be implemented");
-    }
-    deleteAntrag(antrag){ 
-        const { deleteAntragAction } = this.props; 
-        deleteAntragAction("id", antrag); 
+    moveDeleteApplication(){ 
+        const { deleteApplication } = this.props;
+        deleteApplication(); 
     }
 
 
@@ -58,7 +59,7 @@ class LandingPage extends Component{
                     <Card style={{ width: '18rem' }} className="card">
                         <Card.Body>
                             <Card.Title>
-                                <Button className="cardButton" onClick={this.getAntrag}> Neuen Antrag Anlegen</Button>
+                                <Button className="cardButton" onClick={this.makeApplication}> Neuen Antrag Anlegen</Button>
                             </Card.Title>
                             <Card.Text >Hier kannst du einen neuen Bachelorantrag erstellen!</Card.Text>
                         </Card.Body>
@@ -87,8 +88,8 @@ class LandingPage extends Component{
                                     {antrag}
                                 </Card.Title>
                                     <Card.Text >
-                                        <Button className="cardButton" onClick={this.editAntrag(antrag)} > Antrag bearbeiten</Button> 
-                                        <Button className="cardButton" onClick={this.deleteAntrag(antrag)} > Antrag löschen</Button>
+                                        <Button className="cardButton" onClick={this.moveEditApplication} > Antrag bearbeiten</Button> 
+                                        <Button className="cardButton" onClick={this.moveDeleteApplication} > Antrag löschen</Button>
                                     </Card.Text>
                                 </Card.Body>
                         </Card>
@@ -100,11 +101,11 @@ class LandingPage extends Component{
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    antrag: navActions.getNavApplicationPageAction,
+    application: navActions.getNavApplicationPageAction,
     userUpdate: navActions.getNavUserEditPageAction,
-    getPTAPage: navActions.getNavPlayTestApplicationPage,
     deleteApplication: appActions.deleteApplicationAction,
-    // editAntragAction: navActions.editApplicationAction,
+    editApplication: navActions.getNavApplicationEditPageAction,
+    getApplication: appActions.getApplicationAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
