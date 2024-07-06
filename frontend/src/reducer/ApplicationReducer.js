@@ -3,7 +3,7 @@ import * as navActions from "../actions/NavActions";
 import Cookies from 'js-cookie';
 
 const initialState = {
-    applications: Cookies.get('applications') ? JSON.parse(Cookies.get('applications')) : [],
+    application: Cookies.get('application') ? JSON.parse(Cookies.get('application')) : "",
 }
 
 function appReducer(state = initialState, action){
@@ -16,11 +16,16 @@ function appReducer(state = initialState, action){
             }
         case navActions.LOGIN:
             Cookies.remove('applications');
-            Cookies.remove ('playTestApplication');
             return{
                 ...state,
                 applications: [],
                 playTestApplication: "",
+            }
+        case appActions.APPLICATION_FETCH_SUCCESS:
+            Cookies.set('application', action.application);
+            return{
+                ...state,
+                application: action.playTestApplication,
             }
         default:
             return{

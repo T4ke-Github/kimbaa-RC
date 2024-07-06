@@ -11,7 +11,8 @@ import Form from "react-bootstrap/Form";
 
 const mapStateToProps = state => {
     return{
-        userResource: state.auth.userResource
+        userResource: state.auth.userResource,
+        application: state.app.application.antragZulassungDetails
     }
 }
 
@@ -21,12 +22,13 @@ class MainApplicationEditPage extends Component{
         super(props);
 
         let userResource = this.props.userResource;
+        let appli =  this.props.application;
 
         this.state = {
             appSemWinter: true,
             appSemSummer: false,
             appMatrikel: userResource.studentId ? userResource.studentId : "",
-            appDepartment: "",
+            appDepartment: appli.department ? appli.department : "",
             appName: userResource.name ? userResource.name : "",
             appEmail: userResource.email ? userResource.email : "",
             appPhone: "",
@@ -34,14 +36,14 @@ class MainApplicationEditPage extends Component{
             appPlace: "",
             appPostal: "",
             appCourse: "",
-            appBachelor: true,
-            appMaster: false,
-            appModuleRequirementsMet: false,
+            appBachelor: appli.bachelor ? appli.bachelor : false,
+            appMaster: appli.master ? appli.master : false,
+            appModuleRequirementsMet: appli.modulesCompleted ? appli.modulesCompleted : false,
             appAttachment1: false,
             appAttachment2: false,
             appNoTopicProposition: false,
-            appPracticalSemesterDone: false,
-            appPracticalSemesterAcknowledgement: false,
+            appPracticalSemesterDone: appli.internshipCompleted ? appli.internshipCompleted : false,
+            appPracticalSemesterAcknowledgement: appli.recognitionApplied ? appli.recognitionApplied : false,
             dateFrom: Date,
             dateTo: Date,
         }
@@ -52,11 +54,11 @@ class MainApplicationEditPage extends Component{
         this.handleSemester = this.handleSemester.bind(this);
         this.handleDegree = this.handleDegree.bind(this);
         this.handleCheckChange = this.handleCheckChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
-        this.handleSaveReal = this.handleSaveReal.bind(this);
+        this.handleSave = this.handleSave.bind(this);
+        this.loadApplication = this.loadApplication.bind(this);
     }
 
     componentDidMount(){
@@ -105,7 +107,7 @@ class MainApplicationEditPage extends Component{
         }
     }
 
-    handleSaveReal(e){
+    handleSave(e){
         const{appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo } =  this.state;
         const{saveApplicationReal} = this.props;
         saveApplicationReal(appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo );
@@ -118,7 +120,7 @@ class MainApplicationEditPage extends Component{
     };
 
     render(){        
-
+        this.loadApplication();
         return(
             <>
                 <style>
