@@ -11,7 +11,7 @@ import * as appActions from '../actions/ApplicationActions';
 const mapStateToProps = state => {
     return {
         userResource: state.auth.userResource,
-        application: state.app.application.antragZulassungDetails
+        application: state.app.application
     }
 }
 
@@ -20,9 +20,11 @@ class LandingPage extends Component{
         super(props);
 
         let userResource = this.props.userResource;
+        let application = this.props.application;
         
         this.state = {
             appMatrikel: userResource.studentId ? userResource.studentId : "",
+            appDetails: application.antragZulassungDetails ? application.antragZulassungDetails : "empty"
         }
         this.makeApplication = this.makeApplication.bind(this);
         this.moveEditApplication = this.moveEditApplication.bind(this);
@@ -55,9 +57,11 @@ class LandingPage extends Component{
     render(){
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
 
-        let yourApplication = <></>;
-        if(this.props.application){
-            console.log(this.props.application);
+        let yourApplication;
+        if(this.state.appDetails === "empty"){
+            yourApplication = <></>;
+        }else{
+            console.log("Look: " + this.props.application);
             yourApplication =   <Card style={{ width: '18rem' }} className="card">
                                     <Card.Img variant="top" src="kimbaa_logo_256.png" />
                                     <Card.Body>
