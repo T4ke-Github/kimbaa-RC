@@ -53,8 +53,25 @@ class LandingPage extends Component{
 
 
     render(){
-        let applicationList = ["medieninformatik", "techinfo"];
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
+
+        let yourApplication = <></>;
+        if(this.props.application){
+            console.log(this.props.application);
+            yourApplication =   <Card style={{ width: '18rem' }} className="card">
+                                    <Card.Img variant="top" src="kimbaa_logo_256.png" />
+                                    <Card.Body>
+                                        <Card.Title>
+                                            {this.props.application.department}
+                                        </Card.Title>
+                                        <Card.Text >
+                                            <Button className="cardButton" onClick={this.moveEditApplication} > Antrag bearbeiten</Button> 
+                                            <Button className="cardButton" onClick={this.moveDeleteApplication} > Antrag löschen</Button>
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+        }
+
         return (
             <>
                 <Container className="fLanding" >
@@ -86,20 +103,7 @@ class LandingPage extends Component{
                                 </Card.Text>
                         </Card.Body>
                     </Card>
-                    {applicationList.map((antrag, index) => (
-                        <Card key={index} style={{ width: '18rem' }} className="card">
-                            <Card.Img variant="top" src="kimbaa_logo_256.png" />
-                            <Card.Body>
-                                <Card.Title>
-                                    {antrag}
-                                </Card.Title>
-                                    <Card.Text >
-                                        <Button className="cardButton" onClick={this.moveEditApplication} > Antrag bearbeiten</Button> 
-                                        <Button className="cardButton" onClick={this.moveDeleteApplication} > Antrag löschen</Button>
-                                    </Card.Text>
-                                </Card.Body>
-                        </Card>
-                    ))}
+                    {yourApplication}
                 </Container>
             </>
         )

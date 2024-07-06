@@ -3,7 +3,7 @@ import * as navActions from "../actions/NavActions";
 import Cookies from 'js-cookie';
 
 const initialState = {
-    application: Cookies.get('application') ? JSON.parse(Cookies.get('application')) : "",
+    application: Cookies.get('application') ? JSON.parse(Cookies.get('application')) : "empty",
 }
 
 function appReducer(state = initialState, action){
@@ -15,7 +15,7 @@ function appReducer(state = initialState, action){
                 applications: [...state.applications, action.application],
             }
         case navActions.LOGIN:
-            Cookies.remove('applications');
+            Cookies.remove('application');
             return{
                 ...state,
                 applications: [],
