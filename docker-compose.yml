@@ -19,8 +19,8 @@ services:
     ports:
       - 3000:3000
     environment:
-    # - HOSTNAME=kimbaa.local
-    - BPORT=8081
+    - REACT_APP_HOSTNAME=localhost
+    - REACT_APP_PORT=8081
     - FRONTEND_PORT=3000
     networks:
       - loki
