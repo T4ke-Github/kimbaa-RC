@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-import {BACKEND_URL} from '../index.js'
+import { BACKEND_URL } from '../index.js'
 // import {logger} from './logger/testLogger'
 
 
