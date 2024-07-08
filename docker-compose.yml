@@ -5,9 +5,13 @@ services:
     build:
       context: frontend
     ports:
-      - 3000:3000
+      - "3000:3000"
     environment:
-      - BPORT=8081
+      - HOSTNAME=localhost
+      - HTTP_PORT=3000
+      - HTTPS_PORT=3443
+      - HTTPS=true
+      - BACKEND_URL=https://localhost:3443 # oder die entsprechende URL
     networks:
       - loki
 
@@ -15,7 +19,8 @@ services:
     build:
       context: backend
     ports:
-      - 8081:3000
+      - "8081:3000"
+      - "3443:3443"
     environment:
       - DB_CONNECTION_STRING=mongodb://root:example@mongo:27017/
       - HTTP_PORT=3000

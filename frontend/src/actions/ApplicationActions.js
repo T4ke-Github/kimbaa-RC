@@ -1,7 +1,5 @@
 import Cookies from "js-cookie";
-
-import {BACKEND_URL} from '../index.js'
-// import {logger} from './logger/testLogger'
+const BACKEND_URL = process.env.BACKEND_URL;
 
 
 export const APPLICATION_PENDING = "APPLICATION_PENDING";

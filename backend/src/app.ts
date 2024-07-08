@@ -17,7 +17,7 @@ import { configureCORS } from './configCORS';
 dotenv.config();
 
 const HOSTNAME = process.env.HOSTNAME || 'localhost';
-const FPORT = process.env.FRONTEND_PORT || '3000';
+const FPORT = process.env.FRONTEND_PORT || '3443';
 
 export const FRONTEND_URL = 'http://' + HOSTNAME + ':' + FPORT;
 
@@ -38,7 +38,9 @@ app.get('/test', (req, res) => {
     const cookie = req.cookies['test_cookie'];
     res.json({ message: 'Test route working', cookie: cookie });
 });
-
+app.get('/', (req, res) => {
+    res.send('Root path is working!');
+});
 // Routes
 app.use("/api/login", loginRouter);
 app.use("/api/user", userRouter);

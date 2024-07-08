@@ -9,6 +9,7 @@
     "dotenv": "^16.4.5",
     "envs": "^0.1.6",
     "js-cookie": "^3.0.5",
+    "path-browserify": "^1.0.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.3.1",
@@ -41,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "dotenv-webpack": "^8.1.0"
   }
 }

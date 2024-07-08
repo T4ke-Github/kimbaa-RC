@@ -31,7 +31,9 @@ async function setup() {
         try {
             const [privateSSLKey, publicSSLCert] = await Promise.all([
                 readFile(process.env.SSL_KEY_FILE!),
-                readFile(process.env.SSL_CRT_FILE!)
+                readFile(process.env.SSL_CRT_FILE!),
+                console.log("publicSSLCert"),
+                console.log("privateSSLKey")
             ]);
             const httpsServer = https.createServer({ key: privateSSLKey, cert: publicSSLCert }, app);
             httpsServer.listen(process.env.HTTPS_PORT, () => {

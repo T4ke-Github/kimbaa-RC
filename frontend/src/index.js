@@ -1,22 +1,20 @@
+// index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { applyMiddleware, legacy_createStore as createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import {thunk} from 'redux-thunk'; 
 import rootReducer from './reducer/RootReducer';
 import authReducer from './reducer/AuthReducer';
 import appReducer from './reducer/ApplicationReducer';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 let HOSTNAME = process.env.HOSTNAME || 'localhost';
 let HTTP_PORT = process.env.HTTP_PORT || '3000';
 let HTTPS_PORT = process.env.HTTPS_PORT || '3443';
 
-let BACKEND_URL;
+export let BACKEND_URL = process.env.BACKEND_URL;
 
 if (process.env.HTTPS === 'true') {
   BACKEND_URL = `https://${HOSTNAME}:${HTTPS_PORT}`;

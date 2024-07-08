@@ -11,7 +11,10 @@ import cors, { CorsOptions } from 'cors';
  */
 export function configureCORS(app: express.Express) {
     // Hier wird sichergestellt, dass CORS_ORIGINS immer ein string ist, falls es gesetzt ist
-    const allowedOrigins = (process.env.CORS_ORIGINS || "https://localhost:3000").split(',');
+    const allowedOrigins = [
+        "https://localhost:3443",
+        "http://localhost:3000"
+    ];
 
     const corsOptions: CorsOptions = {
         origin: function(origin, callback) {
