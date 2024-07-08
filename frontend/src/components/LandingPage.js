@@ -23,7 +23,7 @@ class LandingPage extends Component{
         let application = this.props.application;
         
         this.state = {
-            appMatrikel: userResource.studentId ? userResource.studentId : "",
+            appMatrikel: userResource && userResource.studentId ? userResource.studentId : "",
             appDetails: application.antragZulassungDetails ? application.antragZulassungDetails : "empty"
         }
         this.makeApplication = this.makeApplication.bind(this);
