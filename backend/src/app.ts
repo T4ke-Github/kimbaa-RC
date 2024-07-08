@@ -9,7 +9,7 @@ import { modulRouter } from './routes/modulRoute';
 import { userDetailsRouter } from './routes/userDetailsRoute';
 import { userRouter } from './routes/userRoute';
 import { antragZulassungRouter } from './routes/antragZulassungRoute';
-import { healthRouter } from './routes/healthRoute';
+import { antragAnlage2Router } from './routes/antragAnlage2Route';
 import { logger } from './logger/serviceLogger';
 import { configureCORS } from './configCORS';
 
@@ -46,5 +46,11 @@ app.use("/api/modul", modulRouter);
 app.use("/api/userdetails", userDetailsRouter);
 app.use("/api/antragZulassung", antragZulassungRouter);
 app.use("/api/health", healthRouter);
+app.use("/api/login", loginRouter)
+app.use("/api/user", userRouter)
+app.use("/api/modul", modulRouter)
+app.use("/api/userdetails", userDetailsRouter)
+app.use("/api/antragZulassung", antragZulassungRouter)
+app.use("/api/antragAnlage2", antragAnlage2Router)
 
 export default app;
