@@ -10,6 +10,7 @@ import { userDetailsRouter } from './routes/userDetailsRoute';
 import { userRouter } from './routes/userRoute';
 import { antragZulassungRouter } from './routes/antragZulassungRoute';
 import { antragAnlage2Router } from './routes/antragAnlage2Route';
+import { healthRouter } from './routes/healthRoute';
 import { logger } from './logger/serviceLogger';
 import { configureCORS } from './configCORS';
 
