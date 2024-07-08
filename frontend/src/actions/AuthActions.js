@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import {BACKEND_URL} from '../index.js'
+const BACKEND_URL = process.env.BACKEND_URL;
 
 
 export const REGISTRATION_PENDING = "REGISTRATION_PENDING";
