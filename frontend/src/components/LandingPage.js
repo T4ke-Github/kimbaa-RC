@@ -19,11 +19,11 @@ class LandingPage extends Component{
     constructor(props){
         super(props);
 
-        let userResource = this.props.userResource;
+        // let userResource = this.props.userResource;
         let application = this.props.application;
         
         this.state = {
-            appMatrikel: userResource && userResource.studentId ? userResource.studentId : "",
+            appMatrikel: "",
             appDetails: application.antragZulassungDetails ? application.antragZulassungDetails : "empty"
         }
         this.makeApplication = this.makeApplication.bind(this);
