@@ -1,8 +1,7 @@
 import express from 'express';
 import "express-async-errors"; // needs to be imported before routers and other stuff!
+import cookieParser from 'cookie-parser';
 
-
-import cors from 'cors';
 import { loginRouter } from './routes/loginRoute';
 import { modulRouter } from './routes/modulRoute';
 import { userDetailsRouter } from './routes/userDetailsRoute';
@@ -10,37 +9,14 @@ import { userRouter } from './routes/userRout';
 import { antragZulassungRouter } from './routes/antragZulassungRoute';
 import { antragAnlage2Router } from './routes/antragAnlage2Route';
 import { logger } from './logger/serviceLogger';
-
-
-
-let HOSTNAME = (process.env.HOSTNAME || 'localhost');
-
-let FPORT = (process.env.FRONTEND_PORT || '3000');
-
-export const FRONTEND_URL = 'http://'+ HOSTNAME + ':' + FPORT;
-
-logger.info('Using ' + FRONTEND_URL)
+import { configureCORS } from './../src/configCORS';
 
 
 const app = express();
-
+configureCORS(app);
 // Middleware:
-
-const allowedOrigins = [FRONTEND_URL];
-
-app.use(cors({
-    origin: function(origin, callback){
-      // erlaubt Anfragen ohne Ursprung (wie mobile Apps oder curl-Anfragen)
-      if(!origin) return callback(null, true);
-      if(allowedOrigins.indexOf(origin) === -1){
-        var msg = 'Die CORS-Richtlinie für diese Site erlaubt keinen Zugriff von der angegebenen Ursprung: ' + origin;
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    }
-}));
-app.use('*', express.json()) //
-
+app.use('*', express.json())
+app.use(cookieParser())
 
 // Routes
 app.use("/api/login", loginRouter)
