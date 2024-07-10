@@ -16,11 +16,11 @@ let HTTPS_PORT = process.env.HTTPS_PORT || '3443';
 
 export let BACKEND_URL = process.env.BACKEND_URL;
 
-if (process.env.HTTPS === 'true') {
+/* if (process.env.HTTPS === 'true') {
   BACKEND_URL = `https://${HOSTNAME}:${HTTPS_PORT}`;
 } else {
   BACKEND_URL = `http://${HOSTNAME}:${HTTP_PORT}`;
-}
+} */
 
 console.log(`Using ${BACKEND_URL} as the backend url`);
 

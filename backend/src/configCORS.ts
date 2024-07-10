@@ -13,7 +13,7 @@ export function configureCORS(app: express.Express) {
     // Hier wird sichergestellt, dass CORS_ORIGINS immer ein string ist, falls es gesetzt ist
     const allowedOrigins = [
         "https://localhost:3443",
-        "http://localhost:3000"
+        "https://localhost:3000"
     ];
 
     const corsOptions: CorsOptions = {
@@ -27,11 +27,11 @@ export function configureCORS(app: express.Express) {
             return callback(null, true);
         },
         methods: "GET,PUT,POST,DELETE",
-        allowedHeaders: "Origin,Content-Type",
-        optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-        credentials: true
+        allowedHeaders: "Origin,Content-Type,Accept",
+        credentials: true,
+        optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
     };
 
     app.use(cors(corsOptions));
-    app.options('*', cors()); // enable pre-flight (request method "options") everywhere, you may want to specify that in detail in production
+    app.options('*', cors(corsOptions)); // enable pre-flight (request method "options") everywhere, you may want to specify that in detail in production
 }

@@ -13,13 +13,15 @@ const postValidationRules = [
     body("name").isLength({ min: 1, max: 100 }),
     body("password").isStrongPassword().withMessage("Das Passwort ist zu schwach"),
     body("studentId").isLength({ min: 6, max: 6 }),
-    body("email").isEmail().withMessage("Ungültige E-Mail-Adresse")
+    body("email").isEmail().withMessage("Ungültige E-Mail-Adresse"),
+    body("course").optional().isLength({ min: 1, max: 100 }),
 ];
 
 const putValidationRules = [
     body("name").optional().isLength({ min: 1, max: 100 }),
     body("password").optional().isStrongPassword().withMessage("Das Passwort ist zu schwach"),
-    body("email").optional().isEmail().withMessage("Ungültige E-Mail-Adresse")
+    body("email").optional().isEmail().withMessage("Ungültige E-Mail-Adresse"),
+    body("course").optional().isLength({ min: 1, max: 100 }),
 ];
 
 const deleteValidationRules = [
@@ -60,6 +62,23 @@ userRouter.get("/:identifier", requiresAuthentication, async (req: Request, res:
     }
 });
 
+// POST new user - registration does not require authentication
+userRouter.post("/register", postValidationRules, async (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const userResource = matchedData(req) as UserResource;
+    try {
+        const user = await userService.createUser(userResource);
+        res.status(201).send(user);
+    } catch (error) {
+        logger.error("UserRouter.create: Fehler beim Erstellen des Users: " + error);
+        res.status(400).send(error);
+        next(error);
+    }
+});
+
 // POST new user - requires authentication
 userRouter.post("/", postValidationRules, async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
@@ -83,18 +102,19 @@ userRouter.post("/", postValidationRules, async (req: Request, res: Response, ne
 userRouter.put("/:identifier", putValidationRules, async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(401).json({ errors: errors.array() });
     }
     next();
 }, optionalAuthentication, async (req: Request, res: Response, next: NextFunction) => {
-    const userResource: UserResource = matchedData(req) as UserResource;
     try {
-        const user = await userService.updateUser(userResource);
+        const UserResource = req.body;
+        const userId = req.params.id;
+        const user = await userService.updateUser(UserResource);
         logger.info("UserService.updateUser: User aktualisiert ");
         res.status(200).send(user);
     } catch (error) {
         logger.error("UserService.updateUser: Fehler beim Aktualisieren des Users: " + error);
-        res.status(400).send(error);
+        res.status(402).send(error);
         next(error);
     }
 });
