@@ -75,7 +75,7 @@ export type LoginResource = {
 
 export type AntragAnlage2Resource = {
     id?: string;
-    creator: string;
+    creator?: string;
     themenvorschlag: string;
     betreuung1: string;
     akademischerGradVonBetreuung1: string;

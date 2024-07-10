@@ -3,26 +3,33 @@ import app from "../../src/app";
 import * as userService from "../../src/services/UserService";
 import * as antragAnlage2Service from "../../src/services/AntragAnlage2Service";
 import { User } from '../../src/model/UserModel';
+import { performAuthentication, supertestWithAuth } from "../supertestWithAuth";
+import { UserResource } from "../../src/Resources";
+
+let token: string;
+let user: UserResource;
+let user2: UserResource;
 
 beforeEach(async () => {
-    const user = new User({
-        name: "DerOtto",
-        password: "test",
-        admin: false,
+    await User.deleteMany({});
+
+    user = await userService.createUser({
+        name: "Tim",
+        password: "12345bcdABCD..;,.",
+        admin: true,
         studentId: "666456",
         email: "test@bht-berlin.de",
-        course: "6",
+        course: "Medieninformatik",
     });
-    await user.save();
-    const user2 = new User({
-        name: "DerOtto",
-        password: "test",
+    user2 = await userService.createUser({
+        name: "Tom",
+        password: "12345bcdABCD..;,.",
         admin: false,
-        studentId: "999999",
+        studentId: "666995",
         email: "test2@bht-berlin.de",
-        course: "6",
-    });
-    await user2.save();
+        course: "Informetrik",
+    })
+
     await antragAnlage2Service.createAntragAnlage2({
         creator: user2.id,
         themenvorschlag: "Thema Vorschlag",
@@ -41,12 +48,14 @@ beforeEach(async () => {
         startZum: new Date("2024-09-01"),
         begruendungFuerDatum: "Begründung für das Datum"
     });
+
+    await performAuthentication("666456", "test1234ABCD");
 });
 
 test("PUT /api/antraganlage2/:identifier - success with no existing application", async () => {
-    const testee = supertest(app);
+    const token = await performAuthentication("666456", "12345bcdABCD..;,.");
+    const testee = supertestWithAuth(app);
     const user = await userService.getOneUser({ studentId: "666456" });
-
 
     // Stellen Sie sicher, dass kein Antrag für diesen Benutzer existiert
     let application = await antragAnlage2Service.getAntragAnlage2ById(user.id!);
@@ -78,11 +87,11 @@ test("PUT /api/antraganlage2/:identifier - success with no existing application"
     expect(anlage2?.startVorlesungszeit).toBe(true);
     expect(anlage2?.startZum).toEqual(new Date("2024-10-01"));
     expect(anlage2?.begruendungFuerDatum).toBe("Neue Begründung für das Datum");
-
 });
 
 test("PUT /api/antraganlage2/:identifier - success with existing application", async () => {
-    const testee = supertest(app);
+    const token = await performAuthentication("666456", "12345bcdABCD..;,.");
+    const testee = supertestWithAuth(app);
     const user2 = await userService.getOneUser({ studentId: "666456" });
 
     const newAnlage2Resource = {
@@ -115,7 +124,8 @@ test("PUT /api/antraganlage2/:identifier - success with existing application", a
 });
 
 test("GET /api/antraganlage2/:identifier - success", async () => {
-    const testee = supertest(app);
+    const token = await performAuthentication("666456", "12345bcdABCD..;,.");
+    const testee = supertestWithAuth(app);
     const user = await userService.getOneUser({ studentId: "666456" });
 
     const application = await antragAnlage2Service.createAntragAnlage2({
@@ -157,5 +167,4 @@ test("GET /api/antraganlage2/:identifier - success", async () => {
     expect(res.body.antragAnlage2Details.startVorlesungszeit).toBe(true);
     expect(res.body.antragAnlage2Details.startZum).toBe("2024-09-01T00:00:00.000Z");
     expect(res.body.antragAnlage2Details.begruendungFuerDatum).toBe("Begründung für das Datum");
-
 });
