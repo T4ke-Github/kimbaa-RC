@@ -58,6 +58,8 @@ export type userDetailsResource = {
     modulesPending?: boolean; // Module ausstehend
     attachment2Included?: boolean; // Anlage 2 beigefügt
     topicSuggestion?: boolean; // Thema vorgeschlagen
+    sommersemester?: boolean; // Sommersemester
+    wintersemester?: boolean; // Wintersemester
     date?: Date; // Datum
   }
 
@@ -76,19 +78,19 @@ export type LoginResource = {
 export type AntragAnlage2Resource = {
     id?: string;
     creator?: string;
-    themenvorschlag: string;
-    betreuung1: string;
-    akademischerGradVonBetreuung1: string;
+    themenvorschlag?: string;
+    betreuung1?: string;
+    akademischerGradVonBetreuung1?: string;
     betreuung2?: string;
     akademischerGradVonBetreuung2?: string;
-    arbeitAlsGruppenarbeit: boolean;
+    arbeitAlsGruppenarbeit?: boolean;
     gruppenmitglied1?: string;
     matrikelnummerVonGruppenmitglied1?: number;
     gruppenmitglied2?: string;
     matrikelnummerVonGruppenmitglied2?: number;
-    studentenSindAnHochschule: boolean;
-    studentenSindBeiFirma: boolean;
-    startVorlesungszeit: boolean;
+    studentenSindAnHochschule?: boolean;
+    studentenSindBeiFirma?: boolean;
+    startVorlesungszeit?: boolean;
     startZum?: Date;
     begruendungFuerDatum?: string;
 }

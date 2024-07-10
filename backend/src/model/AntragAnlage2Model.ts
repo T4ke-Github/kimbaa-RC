@@ -2,21 +2,21 @@ import { Model, Schema, Types, model } from "mongoose";
 
 export interface IAntragAnlage2 {
     id?: string;
-    themenvorschlag: string;
-    betreuung1: string;
-    akademischerGradVonBetreuung1: string;
-    betreuung2: string;
-    akademischerGradVonBetreuung2: string;
-    arbeitAlsGruppenarbeit: boolean;
-    gruppenmitglied1: string;
-    matrikelnummerVonGruppenmitglied1: number;
-    gruppenmitglied2: string;
-    matrikelnummerVonGruppenmitglied2: number;
-    studentenSindAnHochschule: boolean;
-    studentenSindBeiFirma: boolean;
-    startVorlesungszeit: boolean;
-    startZum: Date;
-    begruendungFuerDatum: string;
+    themenvorschlag?: string;
+    betreuung1?: string;
+    akademischerGradVonBetreuung1?: string;
+    betreuung2?: string;
+    akademischerGradVonBetreuung2?: string;
+    arbeitAlsGruppenarbeit?: boolean;
+    gruppenmitglied1?: string;
+    matrikelnummerVonGruppenmitglied1?: number;
+    gruppenmitglied2?: string;
+    matrikelnummerVonGruppenmitglied2?: number;
+    studentenSindAnHochschule?: boolean;
+    studentenSindBeiFirma?: boolean;
+    startVorlesungszeit?: boolean;
+    startZum?: Date;
+    begruendungFuerDatum?: string;
     creator?: string;
 }
 
