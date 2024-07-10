@@ -1,17 +1,16 @@
 import { LoginResource } from "../Resources";
 import { login } from "./AuthenticationService";
-import { JsonWebTokenError, JwtPayload, sign, verify }
-    from "jsonwebtoken";
+import { JsonWebTokenError, JwtPayload, sign, verify } from "jsonwebtoken";
 
 export async function verifyPasswordAndCreateJWT(studentID: string, password: string): Promise<string | undefined> {
     //geheimnis aus .env holen und nach gucken ob es gesetzt wurde 
     const secret = process.env.JWT_SECRET;
-    let time = process.env.JWT_TTL 
+    let time = process.env.JWT_TTL
     let newTime
-   if(time!==undefined){
-    newTime=parseInt(time)*1000
-   }
-    
+    if (time !== undefined) {
+        newTime = parseInt(time) * 1000
+    }
+
     if (!secret || !time) {
         throw Error("variablen nicht gesetzt")
     }
@@ -44,7 +43,7 @@ export function verifyJWT(jwtString: string | undefined): LoginResource {
     const time = process.env.JWT_TTL //300 sekunden
     let holder
     if (!secret || !time) {
-        throw  Error("variablen nicht gesetzt")
+        throw Error("variablen nicht gesetzt")
     }
     if (!jwtString) {
         throw Error("jwt ist kein string")
@@ -59,8 +58,8 @@ export function verifyJWT(jwtString: string | undefined): LoginResource {
                 role: payload.role,
                 exp: payload.exp!
             }
-            holder=loginRes
-        } 
+            holder = loginRes
+        }
         return holder!
     }
     catch (err) {
