@@ -1,9 +1,6 @@
-
-import dotenv from "dotenv";
-dotenv.config();
-import "restmatcher";
 import supertest from "supertest";
 import app from "../../src/app";
+import "restmatcher";
 import { User } from "../../src/model/UserModel";
 import { verifyPasswordAndCreateJWT } from "../../src/services/JWTService";
 import { UserResource } from "../../src/Resources";

@@ -2,56 +2,42 @@ import dotenv from "dotenv";
 dotenv.config();
 import supertest from "supertest";
 import app from "../../src/app";
-import { ModulResource } from "../../src/Resources";
+import { ModulResource, UserResource } from "../../src/Resources";
 import * as userService from "../../src/services/UserService";
-import * as modulService from "../../src/services/ModulService";
+import * as ModulService from "../../src/services/ModulService";
 import { User } from "../../src/model/UserModel";
 import { performAuthentication, supertestWithAuth } from "../supertestWithAuth";
 
-let user;
 
+let user: UserResource;
 beforeEach(async () => {
     await User.deleteMany({});
     user = await userService.createUser({
         name: "Tim",
-        password: "test",
-        admin: false,
+        password: "12345bcdABCD..;,.",
+        admin: true,
         studentId: "666456",
         email: "test@bht-berlin.de",
         course: "Medieninformatik",
     });
 
-    await performAuthentication("666456", "test");
+    await performAuthentication("666456", "12345bcdABCD..;,.");
 });
 
 // Test zum Abrufen aller Module
 test("/api/modul getAlleModule", async () => {
+    const token = await performAuthentication("666456", "12345bcdABCD..;,.");
     const testee = supertestWithAuth(app);
+    //const response = await testee.get("/api/modul/alle/666456");
 
-    // Hier sollten Sie Code hinzufügen, um einige Module für den Benutzer zu erstellen
-    await modulService.createModul({
-        creator: user.id,
-        modulname: "Mathematik I",
-        solved: true
-    });
-    await modulService.createModul({
-        creator: user.id,
-        modulname: "Grundlagen der Theoretischen Informatik",
-        solved: true
-    });
-    await modulService.createModul({
-        creator: user.id,
-        modulname: "Mathematik II",
-        solved: true
-    });
-
-    const response = await testee.get(`/api/modul/alle/${user.studentId}`);
+    const response = await testee.get(`/api/modul/alle/666456`);
     expect(response.status).toBe(200);
     expect(response.body.length).toBeGreaterThan(2); // Ändern Sie dies entsprechend der Anzahl der erstellten Module
 });
 
 // Test zum Aktualisieren von Modulen anhand des Modulnamens und der Benutzer-ID
 test("/api/modul updateModulesByModuleNameAndUserId", async () => {
+    const token = await performAuthentication("666456", "12345bcdABCD..;,.");
     const testee = supertestWithAuth(app);
     const modules: ModulResource[] = [
         {
@@ -76,6 +62,7 @@ test("/api/modul updateModulesByModuleNameAndUserId", async () => {
 
 // Test zum Abrufen der Modulzusammenfassung
 test("/api/modul calculateModuleSummary", async () => {
+    const token = await performAuthentication("666456", "12345bcdABCD..;,.");
     const testee = supertestWithAuth(app);
     const modules: ModulResource[] = [
         {
@@ -95,9 +82,7 @@ test("/api/modul calculateModuleSummary", async () => {
         }
     ];
 
-    await modulService.createModul(modules[0]);
-    await modulService.createModul(modules[1]);
-    await modulService.createModul(modules[2]);
+  
 
     const responseUpdate = await testee.put("/api/modul/update").send({ modules });
     expect(responseUpdate.status).toBe(200);

@@ -30,7 +30,7 @@ export type ModulListResource = {
     updatedAt?: string;
 }
 
-export type UserDetailsResource = {
+export type userDetailsResource = {
     lastName?: string; // Nachname
     firstName?: string; // Vorname
     street?: string; // Straße
@@ -49,7 +49,7 @@ export type UserDetailsResource = {
     department?: string; // Fachbereich
     bachelor?: boolean; // Bachelor
     master?: boolean; // Master
-    userDetails?: UserDetailsResource; // Benutzerdaten
+    userDetails?: userDetailsResource; // Benutzerdaten
     internshipCompleted?: boolean; // Praxisphase abgeschlossen
     recognitionApplied?: boolean; // Anerkennung beantragt
     internshipCompletedFrom?: Date; // Praxisphase abgeleistet von

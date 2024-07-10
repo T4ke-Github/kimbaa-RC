@@ -18,7 +18,7 @@ async function setup() {
         logger.info("Start MongoMemoryServer")
         const MMS = await import('mongodb-memory-server')
         const mongo = await MMS.MongoMemoryServer.create();
-        mongodURI = mongo.getUri();
+        mongodURI = await mongo.getUri();
     }
 
     logger.info(`Connect to mongod at ${mongodURI}`)

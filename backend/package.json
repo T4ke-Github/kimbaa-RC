@@ -29,7 +29,7 @@
     "jest-extended": "^4.0.2",
     "jest-junit": "^16.0.0",
     "metamatcher": "^1.0.48",
-    "mongodb-memory-server": "^9.1.8",
+    "mongodb-memory-server": "^6.9.6",
     "nodemon": "^3.1.0",
     "restmatcher": "^1.1.14",
     "rimraf": "^5.0.5",

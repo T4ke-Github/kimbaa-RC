@@ -11,8 +11,8 @@ beforeEach(async () => {
     await User.deleteMany({});
     const user = new User({
         name: "DerOtto",
-        password: "test",
-        admin: false,
+        password: "12345bcdABCD..;,.",
+        admin: true,
         studentId: "666456",
         email: "test@bht-berlin.de",
         course: "6",
@@ -23,6 +23,7 @@ beforeEach(async () => {
 });
 
 test("GET /userdetails/:identifier - success", async () => {
+    const token = await performAuthentication("666456", "12345bcdABCD..;,.");
     const testee = supertestWithAuth(app);
     const user = await userService.getOneUser({ studentId: "666456" });
     const application = await antragZulassungService.createApplication({
@@ -64,6 +65,7 @@ test("GET /userdetails/:identifier - success", async () => {
 });
 
 test("PUT /userdetails/:identifier - success with no existing application", async () => {
+    const token = await performAuthentication("666456", "12345bcdABCD..;,.");
     const testee = supertestWithAuth(app);
     const user = await userService.getOneUser({ studentId: "666456" });
 
@@ -90,6 +92,7 @@ test("PUT /userdetails/:identifier - success with no existing application", asyn
 });
 
 test("PUT /userdetails/:identifier - success with existing application", async () => {
+    const token = await performAuthentication("666456", "12345bcdABCD..;,.");
     const testee = supertestWithAuth(app);
     const user = await userService.getOneUser({ studentId: "666456" });
     const application = await antragZulassungService.createApplication({
