@@ -4,29 +4,23 @@ import "express-async-errors"; // needs to be imported before routers and other 
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 
+
 import { loginRouter } from './routes/loginRoute';
 import { modulRouter } from './routes/modulRoute';
 import { userDetailsRouter } from './routes/userDetailsRoute';
 import { userRouter } from './routes/userRoute';
 import { antragZulassungRouter } from './routes/antragZulassungRoute';
 import { healthRouter } from './routes/healthRoute';
+import { antragAnlage2Router } from './routes/antragAnlage2Route';
 import { logger } from './logger/serviceLogger';
+dotenv.config();
 import { configureCORS } from './configCORS';
 
 // Laden der Umgebungsvariablen aus der .env Datei
-dotenv.config();
-
-const HOSTNAME = process.env.HOSTNAME || 'localhost';
-const FPORT = process.env.FRONTEND_PORT || '3443';
-
-export const FRONTEND_URL = 'http://' + HOSTNAME + ':' + FPORT;
-
-logger.info('Using ' + FRONTEND_URL);
-
 const app = express();
 
-// CORS muss ganz oben:
 configureCORS(app);
+
 
 // Middleware:
 app.use('*', express.json());
@@ -41,6 +35,9 @@ app.get('/test', (req, res) => {
 app.get('/', (req, res) => {
     res.send('Root path is working!');
 });
+app.use('*', express.json())
+app.use(cookieParser())
+
 // Routes
 app.use("/api/login", loginRouter);
 app.use("/api/user", userRouter);
@@ -48,5 +45,7 @@ app.use("/api/modul", modulRouter);
 app.use("/api/userdetails", userDetailsRouter);
 app.use("/api/antragZulassung", antragZulassungRouter);
 app.use("/api/health", healthRouter);
+
+app.use("/api/antragAnlage2", antragAnlage2Router)
 
 export default app;
