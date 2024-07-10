@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
-import { AntragAnlage2Resource, ApplicationResource } from "../Resources";
-import * as antragAnlage2Service from "../services/AntragAnlage2Service";
+import { ApplicationResource } from "../Resources";
 import * as antragZulassungService from "../services/AntragZulassungService";
 import { User } from '../model/UserModel';
 
@@ -21,9 +20,7 @@ export const createAntragPDF = async (id: string): Promise<Buffer[]> => {
             throw new Error("User nicht gefunden.");
         }
 
-        const [application] = await Promise.all([
-            antragZulassungService.getApplicationById(user.id!) as Promise<ApplicationResource>
-        ]);
+        const application = await antragZulassungService.getApplicationById(user.id!) as ApplicationResource;
 
         // Erstes PDF-Dokument erstellen
         const pdfDoc1 = await PDFDocument.create();
@@ -37,7 +34,6 @@ export const createAntragPDF = async (id: string): Promise<Buffer[]> => {
         const logoImageBytes = fs.readFileSync(logoPath);
         const logoImage = await pdfDoc1.embedPng(logoImageBytes);
         const logoDims = logoImage.scale(0.5);
-        // Berechnung der x-Position für zentriertes Logo
         const pageWidth = page1.getWidth();
         const logoWidth = pageWidth - 20; // 10 pt Rand links und rechts
         const logoHeight = (logoImage.height / logoImage.width) * logoWidth;
@@ -116,10 +112,6 @@ export const createAntragPDF = async (id: string): Promise<Buffer[]> => {
         drawText(`Datum, Unterschrift Student*in: ${application.date ? application.date.toISOString().split('T')[0] : ''}`);
 
         const pdfBytes1 = await pdfDoc1.save();
-        const outputPath1 = path.resolve(__dirname, '../output/final_antrag_1.pdf');
-        await fs.promises.writeFile(outputPath1, pdfBytes1);
-
-        console.log(`PDFs erfolgreich gespeichert: ${outputPath1}`);
         return [Buffer.from(pdfBytes1)];
     } catch (error) {
         console.error("Fehler beim Erstellen AntragZulassung:", error);
