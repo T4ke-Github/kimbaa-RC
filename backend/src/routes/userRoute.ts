@@ -1,18 +1,44 @@
 import express, { NextFunction, Request, Response } from 'express';
-
+import { body, param, validationResult, matchedData } from 'express-validator';
 import { UserResource } from "../Resources";
 import { logger } from '../logger/routeLogger';
 import * as serviceHelper from "../services/ServiceHelper";
 import * as userService from "../services/UserService";
+import { requiresAuthentication, optionalAuthentication } from "./authentication";
 
 export const userRouter = express.Router();
 
-userRouter.get("/alle", async (req: Request, res: Response, next ) => {
+// Validation rules
+const postValidationRules = [
+    body("name").isLength({ min: 1, max: 100 }),
+    body("password").isStrongPassword().withMessage("Das Passwort ist zu schwach"),
+    body("studentId").isLength({ min: 6, max: 6 }),
+    body("email").isEmail().withMessage("Ungültige E-Mail-Adresse")
+];
+
+const putValidationRules = [
+    body("name").optional().isLength({ min: 1, max: 100 }),
+    body("password").optional().isStrongPassword().withMessage("Das Passwort ist zu schwach"),
+    body("email").optional().isEmail().withMessage("Ungültige E-Mail-Adresse")
+];
+
+const deleteValidationRules = [
+    param("identifier").isLength({ min: 1, max: 100 }).withMessage("Ungültiger Identifier")
+];
+
+// GET all users - requires authentication
+userRouter.get("/alle", requiresAuthentication, async (req: Request, res: Response, next: NextFunction) => {
+    try {
         const users = await userService.getAlleUser();
         res.send(users);
+    } catch (error) {
+        res.status(500).send(error);
+        next(error);
+    }
 });
-//getOne by studentId
-userRouter.get("/:identifier", async (req: Request, res: Response, next: NextFunction) => {
+
+// GET user by identifier - requires authentication
+userRouter.get("/:identifier", requiresAuthentication, async (req: Request, res: Response, next: NextFunction) => {
     try {
         const identifier = req.params.identifier;
 
@@ -20,12 +46,10 @@ userRouter.get("/:identifier", async (req: Request, res: Response, next: NextFun
         if (!isNaN(Number(identifier))) {
             // Wenn identifier eine Nummer ist, dann ist es eine studentId
             user = await userService.getOneUser({ studentId: String(identifier) });
-            
         } else if (serviceHelper.isEmail(identifier)) {
             // Wenn identifier das Format einer E-Mail hat, dann ist es eine email
             user = await userService.getOneUser({ email: String(identifier) });
-            
-        }else {
+        } else {
             // Wenn weder eine Studenten-ID noch eine E-Mail-Adresse erkannt wird, lösen wir einen Fehler aus
             throw new Error("Invalid identifier");
         }
@@ -35,24 +59,35 @@ userRouter.get("/:identifier", async (req: Request, res: Response, next: NextFun
         next(error);
     }
 });
-//CREate
 
-userRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
-
-        const userResource: UserResource = req.body;
-        // Validierung der Anfragedaten
-        try {
-            const user = await userService.createUser(userResource);
-            res.status(201).send(user);
-        } catch (error) {
-            logger.error("UserRouter.create: Fehler beim Erstellen des Users: " + error);
-            res.status(400).send(error);
-            next(error);
-        }
+// POST new user - requires authentication
+userRouter.post("/", postValidationRules, async (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+}, requiresAuthentication, async (req: Request, res: Response, next: NextFunction) => {
+    const userResource = matchedData(req) as UserResource;
+    try {
+        const user = await userService.createUser(userResource);
+        res.status(201).send(user);
+    } catch (error) {
+        logger.error("UserRouter.create: Fehler beim Erstellen des Users: " + error);
+        res.status(400).send(error);
+        next(error);
+    }
 });
 
-userRouter.put("/:identifier", async (req: Request, res: Response, next: NextFunction) => {
-    const userResource: UserResource = req.body;
+// PUT update user - optional authentication
+userRouter.put("/:identifier", putValidationRules, async (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+}, optionalAuthentication, async (req: Request, res: Response, next: NextFunction) => {
+    const userResource: UserResource = matchedData(req) as UserResource;
     try {
         const user = await userService.updateUser(userResource);
         logger.info("UserService.updateUser: User aktualisiert ");
@@ -62,15 +97,23 @@ userRouter.put("/:identifier", async (req: Request, res: Response, next: NextFun
         res.status(400).send(error);
         next(error);
     }
-})
-userRouter.delete("/:identifier", async (req: Request, res: Response, next: NextFunction) => {
+});
+
+// DELETE user - requires authentication
+userRouter.delete("/:identifier", deleteValidationRules, async (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+}, requiresAuthentication, async (req: Request, res: Response, next: NextFunction) => {
     const identifier = req.params.identifier;
     try {
         const user = await userService.deleteUser(identifier);
-        res.status(200).send(user);
+        res.status(204).send(user);
     } catch (error) {
         logger.error("UserService.deleteUser: Fehler beim Loeschen des Users: " + error);
-        res.status(400).send(error);
+        res.status(404).send(error);
         next(error);
     }
-})
+});
