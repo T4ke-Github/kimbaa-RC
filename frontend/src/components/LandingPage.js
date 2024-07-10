@@ -1,8 +1,7 @@
-import React, {Component} from "react";
-import { Button, Card} from "react-bootstrap";
+import React, { Component } from "react";
+import { Button, Card } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import { connect } from "react-redux";
-
 import { bindActionCreators } from "redux";
 import * as navActions from '../actions/NavActions';
 import * as appActions from '../actions/ApplicationActions';
@@ -10,47 +9,44 @@ import * as appActions from '../actions/ApplicationActions';
 const mapStateToProps = state => {
     return {
         userResource: state.auth.userResource,
-        playTestApplication: state.app.playTestApplication ? state.app.playTestApplication.antragZulassungDetails : {}, // Sicherstellen, dass playTestApplication definiert ist
+        playTestApplication: state.app.playTestApplication ? state.app.playTestApplication.antragZulassungDetails : {},
     };
 };
 
-class LandingPage extends Component{
-    constructor(props){
+class LandingPage extends Component {
+    constructor(props) {
         super(props);
-        //this.props.
         this.getAntrag = this.getAntrag.bind(this);
         this.showApplication = this.showApplication.bind(this);
-        this.editApplication = this.editApplication.bind(this);
-        this.deleteApplication = this.deleteApplication.bind(this);
+        this.editAntrag = this.editAntrag.bind(this);
+        this.deleteAntrag = this.deleteAntrag.bind(this);
     }
 
-    getAntrag(){
+    getAntrag() {
         const { antrag } = this.props;
         antrag();
     }
 
-    showApplication(e){
+    showApplication(e) {
         const { getPTAPage } = this.props;
         getPTAPage();
     }
 
-    editAntrag(antrag){ 
-        /* const { editAntragAction } = this.props; 
-        editAntragAction("id", antrag); */
+    editAntrag(antrag) {
         console.log("editAntrag has yet to be implemented");
     }
-    deleteAntrag(antrag){ 
-        const { deleteAntragAction } = this.props; 
-        deleteAntragAction("id", antrag); 
+
+    deleteAntrag(antrag) {
+        const { deleteApplication } = this.props;
+        deleteApplication("id", antrag);
     }
 
-
-    render(){
+    render() {
         let applicationList = ["medieninformatik", "techinfo"];
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
         return (
             <>
-                <Container className="fLanding" >
+                <Container className="fLanding">
                     <h1>Willkommen bei kimbaa!</h1>
                     <p> Schön, dich zu sehen, {name}!</p>
                 </Container>
@@ -60,23 +56,23 @@ class LandingPage extends Component{
                             <Card.Title>
                                 <Button className="cardButton" onClick={this.getAntrag}> Neuen Antrag Anlegen</Button>
                             </Card.Title>
-                            <Card.Text >Hier kannst du einen neuen Bachelorantrag erstellen!</Card.Text>
+                            <Card.Text>Hier kannst du einen neuen Bachelorantrag erstellen!</Card.Text>
                         </Card.Body>
                     </Card>
                     <Card style={{ width: '18rem' }} className="card">
                         <Card.Body>
                             <Card.Title><Button className="cardButton"> Module/Creditpoints importieren</Button> </Card.Title>
-                                <Card.Text >
-                                    Hier kannst du Module sowie Creditpoints importieren
-                                </Card.Text>
+                            <Card.Text>
+                                Hier kannst du Module sowie Creditpoints importieren
+                            </Card.Text>
                         </Card.Body>
                     </Card>
                     <Card style={{ width: '18rem' }} className="card">
                         <Card.Body>
                             <Card.Title><Button className="cardButton" onClick={this.props.userUpdate}>Nutzerdaten bearbeiten</Button> </Card.Title>
-                                <Card.Text >
-                                    Hier kannst du Details deines Accounts bearbeiten.
-                                </Card.Text>
+                            <Card.Text>
+                                Hier kannst du Details deines Accounts bearbeiten.
+                            </Card.Text>
                         </Card.Body>
                     </Card>
                     {applicationList.map((antrag, index) => (
@@ -86,17 +82,17 @@ class LandingPage extends Component{
                                 <Card.Title>
                                     {antrag}
                                 </Card.Title>
-                                    <Card.Text >
-                                        <Button className="cardButton" onClick={this.editAntrag(antrag)} > Antrag bearbeiten</Button> 
-                                        <Button className="cardButton" onClick={this.deleteAntrag(antrag)} > Antrag löschen</Button>
-                                    </Card.Text>
-                                </Card.Body>
+                                <Card.Text>
+                                    <Button className="cardButton" onClick={() => this.editAntrag(antrag)}> Antrag bearbeiten</Button>
+                                    <Button className="cardButton" onClick={() => this.deleteAntrag(antrag)}> Antrag löschen</Button>
+                                </Card.Text>
+                            </Card.Body>
                         </Card>
                     ))}
                 </Container>
             </>
-        )
-    }   
+        );
+    }
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -104,9 +100,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     userUpdate: navActions.getNavUserEditPageAction,
     getPTAPage: navActions.getNavPlayTestApplicationPage,
     deleteApplication: appActions.deleteApplicationAction,
-    // editAntragAction: navActions.editApplicationAction,
-}, dispatch)
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
-
-
