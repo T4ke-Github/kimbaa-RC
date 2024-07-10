@@ -10,11 +10,11 @@ import rootReducer from './reducer/RootReducer';
 import authReducer from './reducer/AuthReducer';
 import appReducer from './reducer/ApplicationReducer';
 
-let HOSTNAME = process.env.HOSTNAME || 'localhost';
+/* let HOSTNAME = process.env.HOSTNAME || 'localhost';
 let HTTP_PORT = process.env.HTTP_PORT || '3000';
 let HTTPS_PORT = process.env.HTTPS_PORT || '3443';
-
-export let BACKEND_URL = process.env.BACKEND_URL;
+ */
+export let BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 /* if (process.env.HTTPS === 'true') {
   BACKEND_URL = `https://${HOSTNAME}:${HTTPS_PORT}`;

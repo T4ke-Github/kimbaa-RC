@@ -6,13 +6,13 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as navActions from '../actions/NavActions';
 import * as appActions from '../actions/ApplicationActions';
-/* 
+
 const mapStateToProps = state => {
     return {
         userResource: state.auth.userResource,
-        playTestApplication: state.app.playTestApplication.antragZulassungDetails,
-    }
-} */
+        playTestApplication: state.app.playTestApplication ? state.app.playTestApplication.antragZulassungDetails : {}, // Sicherstellen, dass playTestApplication definiert ist
+    };
+};
 
 class LandingPage extends Component{
     constructor(props){
