@@ -45,7 +45,6 @@ app.use("/api/modul", modulRouter);
 app.use("/api/userdetails", userDetailsRouter);
 app.use("/api/antragZulassung", antragZulassungRouter);
 app.use("/api/health", healthRouter);
-
 app.use("/api/antragAnlage2", antragAnlage2Router)
 
 export default app;
