@@ -29,9 +29,6 @@ export function saveApplicationAction(studentId, department,bachelor, master, pr
 
 function saveApplication( studentId, department,bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition , dateFrom, dateTo){
     const ApplicationForm = {
-        //creator?:  , // Ersteller
-        //attach1id?: ; // Anlage 1 ID
-        //attach2id?: ; // Anlage 2 ID
         studentid: studentId, // Matrikelnummer
         department: department, // Fachbereich
         bachelor: bachelor, // Bachelor
@@ -199,14 +196,15 @@ export const APPLICATION_FETCH_SUCCESS = "APPLICATION_FETCH_SUCCESS";
 
 function getFetchApplicationPending(){ return { type: APPLICATION_FETCH_PENDING } }
 function getFetchApplicationFail(err){ return { type: APPLICATION_FETCH_FAILURE, err: err } }
-function getFetchApplicationSuccess(applicationForm){ return { type: APPLICATION_FETCH_SUCCESS, application:applicationForm,  payload: 'landing' } }
+function getFetchApplicationSuccess(){ return { type: APPLICATION_FETCH_SUCCESS, payload: 'landing' } }
 
 export function getApplicationAction( studentId ){
     return dispatch => {
         dispatch(getFetchApplicationPending());
         getApplication( studentId )
             .then(applicationForm => {
-                dispatch(getFetchApplicationSuccess(applicationForm))
+                Cookies.set('application', JSON.stringify(applicationForm.antragZulassungDetails), { sameSite: 'Strict' });
+                dispatch(getFetchApplicationSuccess())
             })
             .catch(err => {
                 dispatch(getFetchApplicationFail(err))
@@ -226,7 +224,7 @@ function getApplication( studentId ){
     return fetch(BACKEND_URL + '/api/antragzulassung/' + studentId, requestOptions)
         .then(response => {
             if(!response.ok){
-                throw new Error('Error getting saving Application');
+                throw new Error('Error getting Application');
             }
             return response.json();
         })

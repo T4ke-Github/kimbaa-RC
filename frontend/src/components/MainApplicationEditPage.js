@@ -12,7 +12,7 @@ import Form from "react-bootstrap/Form";
 const mapStateToProps = state => {
     return{
         userResource: state.auth.userResource,
-        application: state.app.application.antragZulassungDetails
+        application: state.app.application
     }
 }
 
@@ -22,7 +22,7 @@ class MainApplicationEditPage extends Component{
         super(props);
 
         let userResource = this.props.userResource;
-        let appli =  this.props.application;
+        let appli =  this.props.application.antragZulassungDetails;
 
         this.state = {
             appSemWinter: true,
@@ -63,6 +63,11 @@ class MainApplicationEditPage extends Component{
 
     componentDidMount(){
         logger.info("MainApplicationEditPage.js mounted!");
+    }
+
+    loadApplication(){
+        const{getapplication, appMatrikel} = this.props;
+        getapplication(appMatrikel);
     }
 
     handleInputChange(e){
@@ -262,6 +267,7 @@ class MainApplicationEditPage extends Component{
 const mapDispatchToProps = dispatch => bindActionCreators({
     moveToLanding: navActions.getNavLandingAction,
     saveApplication: appActions.saveApplicationAction,
+    getapplication: appActions.getApplicationAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainApplicationEditPage);

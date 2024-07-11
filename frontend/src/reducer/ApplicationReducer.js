@@ -9,23 +9,15 @@ const initialState = {
 function appReducer(state = initialState, action){
     switch(action.type){
         case appActions.APPLICATION_SUCCESS:
-            Cookies.set('applications', [...state.applications, action.application], { sameSite: 'Strict' });
+            Cookies.set('application', [...state.application, action.application], { sameSite: 'Strict' });
             return{
                 ...state,
-                applications: [...state.applications, action.application],
             }
         case navActions.LOGIN:
             Cookies.remove('application');
             return{
                 ...state,
-                applications: [],
-                playTestApplication: "",
-            }
-        case appActions.APPLICATION_FETCH_SUCCESS:
-            Cookies.set('application', action.application);
-            return{
-                ...state,
-                application: action.playTestApplication,
+                application: [],
             }
         default:
             return{

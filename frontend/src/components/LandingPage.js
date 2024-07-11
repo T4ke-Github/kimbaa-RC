@@ -37,14 +37,14 @@ class LandingPage extends Component{
     }
 
     componentDidMount(){
+        const { appMatrikel } = this.state;
+        this.props.getApplication(appMatrikel);
         logger.info("LandingPage.js mounted!");
     }
 
 
     moveEditApplication(){ 
-        const { editApplication, getApplication} = this.props;
-        const {appMatrikel} = this.state;
-        getApplication(appMatrikel);
+        const { editApplication} = this.props;
         editApplication();
     }
 
@@ -56,11 +56,10 @@ class LandingPage extends Component{
 
     render(){
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
-
         let yourApplication;
-        if(this.state.appDetails === "empty"){
-            yourApplication = <></>;
-        }else{
+//        if(this.state.appDetails === "empty"){
+//            yourApplication = <></>;
+//        }else{
             console.log("Look: " + this.props.application);
             yourApplication =   <Card style={{ width: '18rem' }} className="card">
                                     <Card.Img variant="top" src="kimbaa_logo_256.png" />
@@ -74,7 +73,7 @@ class LandingPage extends Component{
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
-        }
+//        }
 
         return (
             <>
