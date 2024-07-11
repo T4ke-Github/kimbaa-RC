@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import app from "./app";
 import { logger } from "./logger/serviceLogger";
 import { readFile } from "fs/promises";
+import { prefillDB } from "./prefill";
 
 async function setup() {
     let mongodURI = process.env.DB_CONNECTION_STRING;
@@ -26,7 +27,9 @@ async function setup() {
     const port = process.env.HTTP_PORT ? parseInt(process.env.HTTP_PORT) : 3000;
     const useSSL = process.env.USE_SSL === 'true';
     const httpsPort = parseInt(process.env.HTTPS_PORT!);
-    
+    if (process.env.DB_PREFILL==="true") {
+        await prefillDB();
+    }
     if (useSSL) {
         try {
             const [privateSSLKey, publicSSLCert] = await Promise.all([
@@ -44,6 +47,7 @@ async function setup() {
             process.exit(1);
         }
     } else {
+        const port = process.env.HTTP_PORT ? parseInt(process.env.HTTP_PORT) : 3000;
         const httpServer = http.createServer(app);
         httpServer.listen(port, () => {
             logger.info(`Listening for HTTP at http://localhost:${port}`);
