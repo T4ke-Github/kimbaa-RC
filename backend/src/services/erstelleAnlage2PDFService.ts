@@ -5,6 +5,7 @@ import { AntragAnlage2Resource, ApplicationResource } from "../Resources";
 import * as antragAnlage2Service from "../services/AntragAnlage2Service";
 import * as antragZulassungService from "../services/AntragZulassungService";
 import { User } from '../model/UserModel';
+import { logger } from "../logger/serviceLogger";
 
 const LINE_SPACING = 23; // Globale Variable für den Zeilenabstand
 const CHECKBOX_TEXT_OFFSET = -2; // Globale Variable für den vertikalen Offset der Checkboxen
@@ -15,18 +16,26 @@ const SIGNATURE_LINE_SPACING = 30; // Abstand für die Zeile mit der Unterschrif
 
 export const createAnlage2PDF = async (id: string): Promise<Buffer[]> => {
     try {
+        logger.info("createAnlage2PDF: Daten aus der Datenbank abrufen");
+
         // Daten aus der Datenbank abrufen
         const anlage2Data = await antragAnlage2Service.getAntragAnlage2ById(id) as AntragAnlage2Resource;
         if (!anlage2Data) {
             throw new Error("Anlage 2 Daten nicht gefunden.");
         }
+        logger.info("createAnlage2PDF: Anlage 2 Daten gefunden");
 
         const user = await User.findById(id).exec();
         if (!user) {
             throw new Error("User nicht gefunden.");
         }
+        logger.info("createAnlage2PDF: User gefunden: " + user?.name);
 
         const application = await antragZulassungService.getApplicationById(user.id!) as ApplicationResource;
+        if (!application) {
+            throw new Error("Application nicht gefunden.");
+        }
+        logger.info("createAnlage2PDF: Application gefunden");
 
         // PDF-Dokument erstellen
         const pdfDoc = await PDFDocument.create();
@@ -155,9 +164,10 @@ export const createAnlage2PDF = async (id: string): Promise<Buffer[]> => {
         drawLine(column2X, currentY + SIGNATURE_LINE_SPACING - 12, 200);
 
         const pdfBytes = await pdfDoc.save();
+        logger.info("createAnlage2PDF: PDF erfolgreich erstellt");
         return [Buffer.from(pdfBytes)];
     } catch (error) {
-        console.error("Fehler beim Erstellen der Anlage 2:", error);
+        logger.error("Fehler beim Erstellen der Anlage 2:", error);
         throw error;
     }
 };

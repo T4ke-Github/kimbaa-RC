@@ -4,6 +4,7 @@ import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { ApplicationResource } from "../Resources";
 import * as antragZulassungService from "../services/AntragZulassungService";
 import { User } from '../model/UserModel';
+import { logger } from "../logger/serviceLogger";
 
 const LINE_SPACING = 23; // Globale Variable für den Zeilenabstand
 const CHECKBOX_TEXT_OFFSET = -2; // Globale Variable für den vertikalen Offset der Checkboxen
@@ -16,10 +17,12 @@ export const createAntragPDF = async (id: string): Promise<Buffer[]> => {
     try {
         // Daten aus der Datenbank abrufen
         const user = await User.findById(id).exec();
+        
         if (!user) {
-            throw new Error("User nicht gefunden.");
+            logger.error("PDFAntrag:User nicht gefunden.");
+            throw new Error("PDFAntrag:User nicht gefunden.");
         }
-
+        logger.info("PDFAntrag:User gefunden: " + user?.name);
         const application = await antragZulassungService.getApplicationById(user.id!) as ApplicationResource;
 
         // Erstes PDF-Dokument erstellen
