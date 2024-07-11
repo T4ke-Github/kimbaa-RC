@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Button, Card } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import { connect } from "react-redux";
+import logger from "../logging/logger";
+
 import { bindActionCreators } from "redux";
 import * as navActions from '../actions/NavActions';
 import * as appActions from '../actions/ApplicationActions';
@@ -9,41 +11,70 @@ import * as appActions from '../actions/ApplicationActions';
 const mapStateToProps = state => {
     return {
         userResource: state.auth.userResource,
-        playTestApplication: state.app.playTestApplication ? state.app.playTestApplication.antragZulassungDetails : {},
-    };
-};
+        application: state.app.application
+    }
+}
 
 class LandingPage extends Component {
     constructor(props) {
         super(props);
-        this.getAntrag = this.getAntrag.bind(this);
-        this.showApplication = this.showApplication.bind(this);
-        this.editAntrag = this.editAntrag.bind(this);
-        this.deleteAntrag = this.deleteAntrag.bind(this);
+
+        let userResource = this.props.userResource;
+        let application = this.props.application;
+        
+        this.state = {
+            appMatrikel: userResource.studentId ? userResource.studentId : "",
+            appDetails: application.antragZulassungDetails ? application.antragZulassungDetails : "empty"
+        }
+        this.makeApplication = this.makeApplication.bind(this);
+        this.moveEditApplication = this.moveEditApplication.bind(this);
+        this.moveDeleteApplication = this.moveDeleteApplication.bind(this);
     }
 
-    getAntrag() {
-        const { antrag } = this.props;
-        antrag();
+    makeApplication(){
+        const { application } = this.props;
+        application();
     }
 
-    showApplication(e) {
-        const { getPTAPage } = this.props;
-        getPTAPage();
+    componentDidMount(){
+        logger.info("LandingPage.js mounted!");
     }
 
-    editAntrag(antrag) {
-        console.log("editAntrag has yet to be implemented");
+
+    moveEditApplication(){ 
+        const { editApplication, getApplication} = this.props;
+        const {appMatrikel} = this.state;
+        getApplication(appMatrikel);
+        editApplication();
     }
 
-    deleteAntrag(antrag) {
+    moveDeleteApplication(){ 
         const { deleteApplication } = this.props;
-        deleteApplication("id", antrag);
+        deleteApplication(); 
     }
 
-    render() {
-        let applicationList = ["medieninformatik", "techinfo"];
+    render(){
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
+
+        let yourApplication;
+        if(this.state.appDetails === "empty"){
+            yourApplication = <></>;
+        }else{
+            console.log("Look: " + this.props.application);
+            yourApplication =   <Card style={{ width: '18rem' }} className="card">
+                                    <Card.Img variant="top" src="kimbaa_logo_256.png" />
+                                    <Card.Body>
+                                        <Card.Title>
+                                            {this.props.application.department}
+                                        </Card.Title>
+                                        <Card.Text >
+                                            <Button className="cardButton" onClick={this.moveEditApplication} > Antrag bearbeiten</Button> 
+                                            <Button className="cardButton" onClick={this.moveDeleteApplication} > Antrag löschen</Button>
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+        }
+
         return (
             <>
                 <Container className="fLanding">
@@ -54,7 +85,7 @@ class LandingPage extends Component {
                     <Card style={{ width: '18rem' }} className="card">
                         <Card.Body>
                             <Card.Title>
-                                <Button className="cardButton" onClick={this.getAntrag}> Neuen Antrag Anlegen</Button>
+                                <Button className="cardButton" onClick={this.makeApplication}> Neuen Antrag Anlegen</Button>
                             </Card.Title>
                             <Card.Text>Hier kannst du einen neuen Bachelorantrag erstellen!</Card.Text>
                         </Card.Body>
@@ -75,20 +106,7 @@ class LandingPage extends Component {
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                    {applicationList.map((antrag, index) => (
-                        <Card key={index} style={{ width: '18rem' }} className="card">
-                            <Card.Img variant="top" src="kimbaa_logo_256.png" />
-                            <Card.Body>
-                                <Card.Title>
-                                    {antrag}
-                                </Card.Title>
-                                <Card.Text>
-                                    <Button className="cardButton" onClick={() => this.editAntrag(antrag)}> Antrag bearbeiten</Button>
-                                    <Button className="cardButton" onClick={() => this.deleteAntrag(antrag)}> Antrag löschen</Button>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    ))}
+                    {yourApplication}
                 </Container>
             </>
         );
@@ -96,10 +114,11 @@ class LandingPage extends Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    antrag: navActions.getNavApplicationPageAction,
+    application: navActions.getNavApplicationPageAction,
     userUpdate: navActions.getNavUserEditPageAction,
-    getPTAPage: navActions.getNavPlayTestApplicationPage,
     deleteApplication: appActions.deleteApplicationAction,
-}, dispatch);
+    editApplication: navActions.getNavApplicationEditPageAction,
+    getApplication: appActions.getApplicationAction,
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

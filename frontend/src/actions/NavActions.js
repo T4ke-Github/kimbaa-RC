@@ -5,7 +5,7 @@ export const LANDING = "LANDING";
 export const REGISTRATION = "REGISTRATION";
 export const APPLICATION = "APPLICATION";
 export const USEREDIT = "USEREDIT";
-export const PTAPAGE = "PTAPAGE";
+export const APPLICATIONEDIT = "APPLICATIONEDIT";
 
 export function getNavLoginAction(){
     Cookies.set('currentPage', 'login', { sameSite: 'Strict' });
@@ -43,10 +43,10 @@ export function getNavUserEditPageAction(){
         payload: 'userEdit'
     }
 }
-export function getNavPlayTestApplicationPage(){
-    Cookies.set('currentPage', 'playTestPage', { sameSite: 'Strict' });
+export function getNavApplicationEditPageAction(){
+    Cookies.set('currentPage', 'applicationEdit', { sameSite: 'Strict' });
     return {
-        type: PTAPAGE,
-        payload: 'playTestPage',
+        type: APPLICATIONEDIT,
+        payload: 'applicationEdit'
     }
 }

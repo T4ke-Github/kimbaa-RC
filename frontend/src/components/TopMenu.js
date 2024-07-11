@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import UserWidget from './UserWidget';
+import logger from "../logging/logger";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -19,6 +20,10 @@ class TopMenu extends Component{
     constructor(props){
         super(props);
         this.contextualLogoAction = this.contextualLogoAction.bind(this);
+    }
+
+    componentDidMount(){
+        logger.info("TopMenu.js mounted!");
     }
 
     contextualLogoAction(){

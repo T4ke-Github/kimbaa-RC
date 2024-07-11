@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import logger from "../logging/logger";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -39,6 +40,10 @@ class RegistrationPage extends Component{
         this.checkEmail = this.checkEmail.bind(this);
         this.checkSID = this.checkSID.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
+    }
+
+    componentDidMount(){
+        logger.info("RegistrationPage.js mounted!");
     }
 
     handleKeyPress(e) {
