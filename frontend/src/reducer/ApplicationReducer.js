@@ -22,7 +22,7 @@ function appReducer(state = initialState, action){
                 playTestApplication: "",
             }
         case appActions.APPLICATION_FETCH_SUCCESS:
-            Cookies.set('application', action.application);
+            Cookies.set('application', action.application, { sameSite: 'Strict' });
             return{
                 ...state,
                 application: action.playTestApplication,
