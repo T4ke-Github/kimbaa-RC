@@ -10,7 +10,6 @@ import cors, { CorsOptions } from 'cors';
  * Das Paket 'cors' ist bereits installiert.
  */
 export function configureCORS(app: express.Express) {
-    // Hier wird sichergestellt, dass CORS_ORIGINS immer ein string ist, falls es gesetzt ist
     const allowedOrigins = [
         "https://localhost:3443",
         "https://localhost:3000"
@@ -27,7 +26,7 @@ export function configureCORS(app: express.Express) {
             return callback(null, true);
         },
         methods: "GET,PUT,POST,DELETE",
-        allowedHeaders: "Origin,Content-Type,Accept",
+        allowedHeaders: ["Origin", "Content-Type", "Accept", "Authorization"],
         credentials: true,
         optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
     };
