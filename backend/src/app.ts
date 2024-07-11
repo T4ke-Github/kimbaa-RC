@@ -11,7 +11,7 @@ import { userRouter } from './routes/userRoute';
 import { antragZulassungRouter } from './routes/antragZulassungRoute';
 import { healthRouter } from './routes/healthRoute';
 import { antragAnlage2Router } from './routes/antragAnlage2Route';
-import { userDetailsRouter } from '../src/routes/userDetailsRoute';
+import { userDetailsRouter } from '../src/routes/UserDetailsRoute';
 import { pdfAntragRouter } from './routes/pdfAntragRoute';
 import { pdfAnlageRouter } from './routes/pdfAnlageRoute';
 import { logger } from './logger/serviceLogger';
