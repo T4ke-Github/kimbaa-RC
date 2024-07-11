@@ -4,7 +4,6 @@ import "express-async-errors"; // needs to be imported before routers and other 
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 
-
 import { loginRouter } from './routes/loginRoute';
 import { modulRouter } from './routes/modulRoute';
 import { userRouter } from './routes/userRoute';
