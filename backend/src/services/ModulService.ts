@@ -11,9 +11,10 @@ export async function getAlleModule(studentId: string): Promise<ModulResource[]>
     logger.info("Modul.Service.getAlleModule wird gestartet");
     const modulList = await ModulList.findOne({ studentId: studentId }).exec();
     const modulListId = modulList?.id;
+    logger.info("modulListId: " + modulListId);
     if (!modulList) {
-        logger.info("getAlleModule: keine gültige ID");
-        throw new Error("getAlleModule: keine gültige ID");
+        logger.info("getAlleModule: keine gültige ID" + modulListId + " " + studentId);
+        throw new Error("getAlleModule: keine gültige ID" + modulListId + " " + studentId);
     } else {
         logger.info("modulListId: " + modulListId);
         const alleModule = await Modul.find({ modulList: modulListId }).exec();
