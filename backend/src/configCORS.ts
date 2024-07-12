@@ -13,7 +13,8 @@ Das Paket 'cors' ist bereits installiert.
 export function configureCORS(app: express.Express) {
     const allowedOrigins = [
         "https://localhost:3443/",
-        "https://localhost:3000/"
+        "https://localhost:3000/",
+        'https://localhost:3000'
     ];
 
     const corsOptions: CorsOptions = {
