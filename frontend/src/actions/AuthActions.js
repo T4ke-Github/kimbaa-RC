@@ -17,7 +17,7 @@ function getRegistrationSuccess() { return { type: REGISTRATION_SUCCESS, payload
 
 function getLoginPending() { return { type: LOGIN_PENDING } }
 function getLoginFail(err) { return { type: LOGIN_FAILURE, err: err } }
-function getLoginSuccess(user) { return { type: LOGIN_SUCCESS, userResource: user, payload: 'landing' } }
+function getLoginSuccess(user, jwt) { return { type: LOGIN_SUCCESS, userResource: user, userToken: jwt, payload: 'landing' } }
 
 export function registerUserAction(matrikel, name, email, password) {
     return dispatch => {
@@ -77,7 +77,7 @@ export function loginAction(loginId, password) {
                 Cookies.set('loggedIn', true, { sameSite: 'Strict' });
                 Cookies.set('userResource', JSON.stringify(user), { sameSite: 'Strict' });
                 Cookies.set('jwt', jwt, { sameSite: 'Strict' }); // Store JWT token
-                dispatch(getLoginSuccess(user));
+                dispatch(getLoginSuccess(user, jwt));
             })
             .catch(err => {
                 dispatch(getLoginFail(err))

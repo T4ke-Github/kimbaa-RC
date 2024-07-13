@@ -11,7 +11,8 @@ import * as appActions from '../actions/ApplicationActions';
 const mapStateToProps = state => {
     return {
         userResource: state.auth.userResource,
-        application: state.app.application
+        application: state.app.application,
+        userToken: state.auth.userToken,
     }
 }
 
@@ -56,6 +57,7 @@ class LandingPage extends Component {
     render(){
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
         let yourApplication;
+        let jwt = this.props.userToken ? "Token present" : "Token not present";
 //        if(this.state.appDetails === "empty"){
 //            yourApplication = <></>;
 //        }else{
@@ -78,7 +80,7 @@ class LandingPage extends Component {
             <>
                 <Container className="fLanding">
                     <h1>Willkommen bei kimbaa!</h1>
-                    <p> Schön, dich zu sehen, {name}!</p>
+                    <p> Schön, dich zu sehen, {name}! {jwt}</p>
                 </Container>
                 <Container className="fGrid">
                     <Card style={{ width: '18rem' }} className="card">
