@@ -31,6 +31,7 @@ class RegistrationPage extends Component{
             incorrectEmailFormat: false,
             incorrectSIDFormat: false,
             incompleteForm: false,
+            incorrectPWFormat: false,
         }
 
         this.handleCancel = this.handleCancel.bind(this);
@@ -40,6 +41,7 @@ class RegistrationPage extends Component{
         this.checkEmail = this.checkEmail.bind(this);
         this.checkSID = this.checkSID.bind(this);
         this.handleCheck = this.handleCheck.bind(this);
+        this.checkPWSecurity = this.checkPWSecurity.bind(this);
     }
 
     componentDidMount(){
@@ -68,7 +70,8 @@ class RegistrationPage extends Component{
         if(name === "regPassword" || name === "regPasswordRe"){
             this.setState(prevState => ({
                 [name]: value,
-                noMatch: false
+                noMatch: false,
+                incorrectPWFormat: false,
             }));
         }else if(name === "regEmail"){
             this.setState(prevState => ({
@@ -94,6 +97,20 @@ class RegistrationPage extends Component{
         const regex = /^\d{6}$/;
         return regex.test(input);
     }
+    checkPWSecurity(password){
+        let passed = true;
+        if(password.length <= 7){
+            passed = false;
+        }
+        const regLower = /[a-z]/;
+        const regUpper = /[A-Z]/;
+        const regNumber = /[0-9]/;
+        const regSymbol = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/;
+        if(!regLower.test(password) || !regUpper.test(password) || !regNumber.test(password) || !regSymbol.test(password)){
+            passed = false;
+        }
+        return passed;
+    }
     
 
     handleRegistration(e){
@@ -104,6 +121,14 @@ class RegistrationPage extends Component{
         if(regPassword !== regPasswordRe){
             this.setState({
                 noMatch: true,
+                regPassword: "",
+                regPasswordRe: ""
+            });
+            hasFailed = true;
+        }
+        if(!this.checkPWSecurity(regPassword)){
+            this.setState({
+                incorrectPWFormat: true,
                 regPassword: "",
                 regPasswordRe: ""
             });
@@ -142,7 +167,8 @@ class RegistrationPage extends Component{
         if (this.state.incorrectEmailFormat) { warnings.push("Falsches Emailformat (muss auf @bht-berlin.de enden)!"); }
         if (this.state.incorrectSIDFormat) { warnings.push("Falsches Matrikelnr.-Format (muss eine sechsstellige Zahl sein)!"); }
         if (this.props.userExistsError) { warnings.push("Ein Nutzer mit dieser Matrikelnummer existiert bereits!"); }
-        if (this.incompleteForm) { warnings.push("Das Formular ist unvollständig!"); }
+        if (this.state.incompleteForm) { warnings.push("Das Formular ist unvollständig!"); }
+        if (this.state.incorrectPWFormat) { warnings.push("Das Passwort ist nicht sicher genug. (8 Zeichen, mindestens 1 Groß- und Kleinbuchstabe und Sonderzeichen."); }
         let warning;
         if (warnings.length > 0) {
             warning = (
