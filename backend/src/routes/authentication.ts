@@ -21,7 +21,7 @@ export function requiresAuthentication(req: Request, res: Response, next: NextFu
     try {
         let jwtString = req.cookies.access_token
         if (!jwtString) {
-            res.sendStatus(401)
+            return res.sendStatus(401)
         }
         let user = verifyJWT(jwtString)
         req.userId = user.id

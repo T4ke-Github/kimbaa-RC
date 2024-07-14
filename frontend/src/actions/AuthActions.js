@@ -96,7 +96,8 @@ function login(loginId, password) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(loginData)
+        body: JSON.stringify(loginData),
+        credentials: 'include'
     }
 
     console.log('fetching: ' + BACKEND_URL + '/api/login')

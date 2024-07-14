@@ -30,6 +30,7 @@ class LandingPage extends Component {
         this.makeApplication = this.makeApplication.bind(this);
         this.moveEditApplication = this.moveEditApplication.bind(this);
         this.moveDeleteApplication = this.moveDeleteApplication.bind(this);
+        this.getApplicationDef = this.getApplicationDef.bind(this);
     }
 
     makeApplication(){
@@ -41,6 +42,11 @@ class LandingPage extends Component {
         const { appMatrikel } = this.state;
         this.props.getApplication(appMatrikel);
         logger.info("LandingPage.js mounted!");
+    }
+    getApplicationDef(){
+        const { appMatrikel } = this.state;
+        this.props.getApplication(appMatrikel);
+        logger.info("Loaded Application Manually (Debug)");
     }
 
 
@@ -57,7 +63,7 @@ class LandingPage extends Component {
     render(){
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
         let yourApplication;
-        let jwt = this.props.userToken ? "Token present" : "Token not present";
+        let jwt = this.props.userToken ? "Token present [DEBUG]" : "Token not present [DEBUG]";
 //        if(this.state.appDetails === "empty"){
 //            yourApplication = <></>;
 //        }else{
@@ -81,6 +87,7 @@ class LandingPage extends Component {
                 <Container className="fLanding">
                     <h1>Willkommen bei kimbaa!</h1>
                     <p> Schön, dich zu sehen, {name}! {jwt}</p>
+                    <button className="cardButton" onClick={this.getApplicationDef}>Get Application [DEBUG]</button>
                 </Container>
                 <Container className="fGrid">
                     <Card style={{ width: '18rem' }} className="card">
