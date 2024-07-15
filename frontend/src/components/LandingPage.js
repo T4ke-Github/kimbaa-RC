@@ -20,20 +20,10 @@ class LandingPage extends Component {
         super(props);
 
         let userResource = this.props.userResource;
-        let application = this.props.application;
         
         this.state = {
             appMatrikel: userResource.studentId ? userResource.studentId : "",
-            appDetails: application.antragZulassungDetails ? application.antragZulassungDetails : "empty"
         }
-        this.makeApplication = this.makeApplication.bind(this);
-        this.moveEditApplication = this.moveEditApplication.bind(this);
-        this.moveDeleteApplication = this.moveDeleteApplication.bind(this);
-    }
-
-    makeApplication(){
-        const { application } = this.props;
-        application();
     }
 
     componentDidMount(){
@@ -42,37 +32,25 @@ class LandingPage extends Component {
         logger.info("LandingPage.js mounted!");
     }
 
-
-    moveEditApplication(){ 
-        const { editApplication} = this.props;
-        editApplication();
-    }
-
-    moveDeleteApplication(){ 
-        const { deleteApplication } = this.props;
-        deleteApplication(); 
-    }
-
     render(){
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
-        let yourApplication;
-//        if(this.state.appDetails === "empty"){
-//            yourApplication = <></>;
-//        }else{
+        let yourApplication = <></>;
+        if(this.props.application){
             console.log("Look: " + this.props.application);
             yourApplication =   <Card style={{ width: '18rem' }} className="card">
                                     <Card.Img variant="top" src="kimbaa_logo_256.png" />
                                     <Card.Body>
                                         <Card.Title>
-                                            {this.props.application.department}
+                                            {this.state.department}
+                                            {this.props.application._id || "ID not found"}
                                         </Card.Title>
                                         <Card.Text >
-                                            <Button className="cardButton" onClick={this.moveEditApplication} > Antrag bearbeiten</Button> 
-                                            <Button className="cardButton" onClick={this.moveDeleteApplication} > Antrag löschen</Button>
+                                            <Button className="cardButton" onClick={this.props.editApplication} > Antrag bearbeiten</Button> 
+                                            <Button className="cardButton" onClick={this.props.deleteApplication} > Antrag löschen</Button>
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
-//        }
+        }
 
         return (
             <>
@@ -84,7 +62,7 @@ class LandingPage extends Component {
                     <Card style={{ width: '18rem' }} className="card">
                         <Card.Body>
                             <Card.Title>
-                                <Button className="cardButton" onClick={this.makeApplication}> Neuen Antrag Anlegen</Button>
+                                <Button className="cardButton" onClick={this.props.makeApplication}> Neuen Antrag Anlegen</Button>
                             </Card.Title>
                             <Card.Text>Hier kannst du einen neuen Bachelorantrag erstellen!</Card.Text>
                         </Card.Body>
@@ -113,7 +91,7 @@ class LandingPage extends Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    application: navActions.getNavApplicationPageAction,
+    makeApplication: navActions.getNavApplicationPageAction,
     userUpdate: navActions.getNavUserEditPageAction,
     deleteApplication: appActions.deleteApplicationAction,
     editApplication: navActions.getNavApplicationEditPageAction,
@@ -121,3 +99,5 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
+
+

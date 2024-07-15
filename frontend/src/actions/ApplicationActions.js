@@ -9,15 +9,15 @@ export const APPLICATION_SUCCESS = "APPLICATION_SUCCESS";
 
 function getSaveApplicationPending(){ return { type: APPLICATION_PENDING } }
 function getSaveApplicationFail(err){ return { type: APPLICATION_FAILURE, err: err } }
-function getSaveApplicationSuccess(applicationForm){ return { type: APPLICATION_SUCCESS, payload: 'landing' } }
+function getSaveApplicationSuccess(){ return { type: APPLICATION_SUCCESS, payload: 'landing' } }
 
 export function saveApplicationAction(studentId, department,bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition , dateFrom, dateTo ){
     return dispatch => {
         dispatch(getSaveApplicationPending());
         saveApplication(studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition, dateFrom, dateTo)
-            .then(applicationForm => {
+            .then(() => {
                 Cookies.set('currentPage', 'Landing', { sameSite: 'Strict' })
-                dispatch(getSaveApplicationSuccess(applicationForm))
+                dispatch(getSaveApplicationSuccess())
             })
             .catch(err => {
                 dispatch(getSaveApplicationFail(err))
@@ -194,7 +194,7 @@ export const APPLICATION_FETCH_SUCCESS = "APPLICATION_FETCH_SUCCESS";
 
 function getFetchApplicationPending(){ return { type: APPLICATION_FETCH_PENDING } }
 function getFetchApplicationFail(err){ return { type: APPLICATION_FETCH_FAILURE, err: err } }
-function getFetchApplicationSuccess(){ return { type: APPLICATION_FETCH_SUCCESS, payload: 'landing' } }
+function getFetchApplicationSuccess(application){ return { type: APPLICATION_FETCH_SUCCESS, application: application, payload: 'landing' } }
 
 export function getApplicationAction( studentId ){
     return dispatch => {
@@ -202,7 +202,7 @@ export function getApplicationAction( studentId ){
         getApplication( studentId )
             .then(applicationForm => {
                 Cookies.set('application', JSON.stringify(applicationForm.antragZulassungDetails), { sameSite: 'Strict' });
-                dispatch(getFetchApplicationSuccess())
+                dispatch(getFetchApplicationSuccess(JSON.stringify(applicationForm.antragZulassungDetails)))
             })
             .catch(err => {
                 dispatch(getFetchApplicationFail(err))

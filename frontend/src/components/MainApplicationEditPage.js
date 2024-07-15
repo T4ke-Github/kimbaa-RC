@@ -58,16 +58,12 @@ class MainApplicationEditPage extends Component{
         this.handleClose = this.handleClose.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
-        this.loadApplication = this.loadApplication.bind(this);
     }
 
     componentDidMount(){
+        const { appMatrikel } = this.state;
+        this.props.getApplication(appMatrikel);
         logger.info("MainApplicationEditPage.js mounted!");
-    }
-
-    loadApplication(){
-        const{getapplication, appMatrikel} = this.props;
-        getapplication(appMatrikel);
     }
 
     handleInputChange(e){
