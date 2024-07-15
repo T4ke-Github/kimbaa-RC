@@ -32,12 +32,6 @@ class LandingPage extends Component {
         this.props.getApplication(appMatrikel);
         logger.info("LandingPage.js mounted!");
     }
-    // Debugging Tool, will execute a get request for the application to the backend manually instead of on page load. Only componentDidMount() should be used on release
-    getApplicationDef(){
-        const { appMatrikel } = this.state;
-        this.props.getApplication(appMatrikel);
-        logger.info("Loaded Application Manually (Debug)");
-    }
 
     render(){
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
@@ -63,8 +57,7 @@ class LandingPage extends Component {
             <>
                 <Container className="fLanding">
                     <h1>Willkommen bei kimbaa!</h1>
-                    <p> Schön, dich zu sehen, {name}! {jwt}</p>
-                    <button className="cardButton" onClick={this.getApplicationDef}>Get Application [DEBUG]</button>
+                    <p> Schön, dich zu sehen, {name}!</p>
                 </Container>
                 <Container className="fGrid">
                     <Card style={{ width: '18rem' }} className="card">
