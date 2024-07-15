@@ -31,30 +31,33 @@ class LandingPage extends Component {
         this.moveEditApplication = this.moveEditApplication.bind(this);
         this.moveDeleteApplication = this.moveDeleteApplication.bind(this);
         this.getApplicationDef = this.getApplicationDef.bind(this);
+        this.handleFileUpload = this.handleFileUpload.bind(this);
     }
 
-    makeApplication(){
-        const { application } = this.props;
-        application();
-    }
-
+    // Tries to fetch existing application on page load
     componentDidMount(){
         const { appMatrikel } = this.state;
         this.props.getApplication(appMatrikel);
         logger.info("LandingPage.js mounted!");
     }
+    // Debugging Tool, will execute a get request for the application to the backend manually instead of on page load. Only componentDidMount() should be used on release
     getApplicationDef(){
         const { appMatrikel } = this.state;
         this.props.getApplication(appMatrikel);
         logger.info("Loaded Application Manually (Debug)");
     }
 
-
+    // Opens application creation page (MainApplicationPage.js)
+    makeApplication(){
+        const { application } = this.props;
+        application();
+    }
+    // opens page for application editing (MainApplicationEditPage.js)
     moveEditApplication(){ 
         const { editApplication} = this.props;
         editApplication();
     }
-
+    // deletes the saved application
     moveDeleteApplication(){ 
         const { deleteApplication } = this.props;
         deleteApplication(); 
@@ -63,7 +66,7 @@ class LandingPage extends Component {
     render(){
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
         let yourApplication;
-        let jwt = this.props.userToken ? "Token present [DEBUG]" : "Token not present [DEBUG]";
+        let jwt = this.props.userToken ? "Token present [DEBUG]" : "Token not present [DEBUG]"; //
 //        if(this.state.appDetails === "empty"){
 //            yourApplication = <></>;
 //        }else{
@@ -100,7 +103,8 @@ class LandingPage extends Component {
                     </Card>
                     <Card style={{ width: '18rem' }} className="card">
                         <Card.Body>
-                            <Card.Title><Button className="cardButton"> Module/Creditpoints importieren</Button> </Card.Title>
+                            <Card.Title>Module hochladen</Card.Title>
+                            <input type="file" onChange={this.handleFileUpload} accept=".pdf" />
                             <Card.Text>
                                 Hier kannst du Module sowie Creditpoints importieren
                             </Card.Text>
