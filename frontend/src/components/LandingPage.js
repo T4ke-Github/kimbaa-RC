@@ -11,7 +11,8 @@ import * as appActions from '../actions/ApplicationActions';
 const mapStateToProps = state => {
     return {
         userResource: state.auth.userResource,
-        application: state.app.application
+        application: state.app.application,
+        userToken: state.auth.userToken,
     }
 }
 
@@ -30,6 +31,12 @@ class LandingPage extends Component {
         const { appMatrikel } = this.state;
         this.props.getApplication(appMatrikel);
         logger.info("LandingPage.js mounted!");
+    }
+    // Debugging Tool, will execute a get request for the application to the backend manually instead of on page load. Only componentDidMount() should be used on release
+    getApplicationDef(){
+        const { appMatrikel } = this.state;
+        this.props.getApplication(appMatrikel);
+        logger.info("Loaded Application Manually (Debug)");
     }
 
     render(){
@@ -56,7 +63,8 @@ class LandingPage extends Component {
             <>
                 <Container className="fLanding">
                     <h1>Willkommen bei kimbaa!</h1>
-                    <p> Schön, dich zu sehen, {name}!</p>
+                    <p> Schön, dich zu sehen, {name}! {jwt}</p>
+                    <button className="cardButton" onClick={this.getApplicationDef}>Get Application [DEBUG]</button>
                 </Container>
                 <Container className="fGrid">
                     <Card style={{ width: '18rem' }} className="card">
@@ -69,7 +77,8 @@ class LandingPage extends Component {
                     </Card>
                     <Card style={{ width: '18rem' }} className="card">
                         <Card.Body>
-                            <Card.Title><Button className="cardButton"> Module/Creditpoints importieren</Button> </Card.Title>
+                            <Card.Title>Module hochladen</Card.Title>
+                            <input type="file" onChange={this.handleFileUpload} accept=".pdf" />
                             <Card.Text>
                                 Hier kannst du Module sowie Creditpoints importieren
                             </Card.Text>

@@ -14,7 +14,7 @@ const PDFParser = require("pdf2json");
 // let files = formData.get("file");
 
 // // Read the files in the testFiles folder
-let files = fs.readdirSync("testFiles");
+let files = fs.readdirSync("uploadedFiles");
 
 // parsed module in an array
 const Module = [];
@@ -29,7 +29,7 @@ const Module = [];
         let pdfParser = new PDFParser(this, 1);
 
         // Load the pdf document
-        pdfParser.loadPDF(`testFiles/${file}`);
+        pdfParser.loadPDF(`uploadedFiles/${file}`);
 
         // Parsed data from the pdf document
         let data = await new Promise(async (resolve, reject) => {

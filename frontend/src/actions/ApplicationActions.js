@@ -25,7 +25,7 @@ export function saveApplicationAction(studentId, department,bachelor, master, pr
     }
 }
 
-function saveApplication( studentId, department,bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition , dateFrom, dateTo){
+function saveApplication( studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition , dateFrom, dateTo){
     const ApplicationForm = {
         studentid: studentId, // Matrikelnummer
         department: department, // Fachbereich
@@ -47,7 +47,8 @@ function saveApplication( studentId, department,bachelor, master, practicalDone,
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(ApplicationForm)
+        body: JSON.stringify(ApplicationForm),
+        credentials: 'include'
     }
 
     console.log("fetching:" + BACKEND_URL + '/api/antragzulassung/' + studentId)
@@ -214,8 +215,9 @@ function getApplication( studentId ){
     const requestOptions = {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
-        }
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
     }
 
     console.log("fetching:" + BACKEND_URL + '/api/antragzulassung/' + studentId)
