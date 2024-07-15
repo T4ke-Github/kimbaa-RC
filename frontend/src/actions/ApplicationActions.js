@@ -47,7 +47,8 @@ function saveApplication( studentId, department, bachelor, master, practicalDone
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(ApplicationForm)
+        body: JSON.stringify(ApplicationForm),
+        credentials: 'include'
     }
 
     console.log("fetching:" + BACKEND_URL + '/api/antragzulassung/' + studentId)
