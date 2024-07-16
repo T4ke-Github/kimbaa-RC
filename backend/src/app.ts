@@ -10,7 +10,7 @@ import { userRouter } from './routes/userRoute';
 import { antragZulassungRouter } from './routes/antragZulassungRoute';
 import { healthRouter } from './routes/healthRoute';
 import { antragAnlage2Router } from './routes/antragAnlage2Route';
-import { userDetailsRouter } from '../src/routes/UserDetailsRoute';
+import { userDetailsRouter } from './routes/detailsRoute';
 import { pdfAntragRouter } from './routes/pdfAntragRoute';
 import { pdfAnlageRouter } from './routes/pdfAnlageRoute';
 import { logger } from './logger/serviceLogger';
@@ -43,11 +43,11 @@ app.use(cookieParser())
 app.use("/api/login", loginRouter);
 app.use("/api/user", userRouter);
 app.use("/api/modul", modulRouter);
-app.use("/api/userdetails", userDetailsRouter);
+
 app.use("/api/antragZulassung", antragZulassungRouter);
 app.use("/api/health", healthRouter);
 app.use("/api/antragAnlage2", antragAnlage2Router)
 app.use("/api/pdfAntrag", pdfAntragRouter);
 app.use("/api/pdfAnlage", pdfAnlageRouter);
-
+app.use("/api/userdetails", userDetailsRouter);
 export default app;
