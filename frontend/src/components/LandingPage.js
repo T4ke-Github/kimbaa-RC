@@ -7,6 +7,7 @@ import logger from "../logging/logger";
 import { bindActionCreators } from "redux";
 import * as navActions from '../actions/NavActions';
 import * as appActions from '../actions/ApplicationActions';
+import { quickParser } from "../pdfParser/pdfParserSimplified";
 
 const mapStateToProps = state => {
     return {
@@ -24,13 +25,26 @@ class LandingPage extends Component {
         
         this.state = {
             appMatrikel: userResource.studentId ? userResource.studentId : "",
+            appAttachmentFile: null,
         }
+
+        this.handleFileChange = this.handleFileChange.bind(this);
     }
 
     componentDidMount(){
         const { appMatrikel } = this.state;
         this.props.getApplication(appMatrikel);
         logger.info("LandingPage.js mounted!");
+    }
+
+    async handleFileChange(event){
+        const uploadedFile = event.target.files[0];
+        if(uploadedFile){
+            this.setState({appAttachmentFile: uploadedFile});
+            const arrayBuffer = await uploadedFile.arrayBuffer();
+            const parsedData = await quickParser(arrayBuffer);
+            logger.info(parsedData);
+        }
     }
 
     render(){
@@ -71,7 +85,7 @@ class LandingPage extends Component {
                     <Card style={{ width: '18rem' }} className="card">
                         <Card.Body>
                             <Card.Title>Module hochladen</Card.Title>
-                            <input type="file" onChange={this.handleFileUpload} accept=".pdf" />
+                            <input type="file" onChange={this.handleFileChange} accept=".pdf" />
                             <Card.Text>
                                 Hier kannst du Module sowie Creditpoints importieren
                             </Card.Text>
