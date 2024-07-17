@@ -28,6 +28,8 @@ class LandingPage extends Component {
         }
 
         this.handleFileChange = this.handleFileChange.bind(this);
+        this.handlePrintApplication = this.handlePrintApplication.bind(this);
+
     }
 
     componentDidMount(){
@@ -40,6 +42,13 @@ class LandingPage extends Component {
         if (prevProps.application !== this.props.application && this.props.application) {
             console.log('New application data received:', this.props.application);
         }
+    }
+
+    handlePrintApplication(){
+        const { appMatrikel } = this.state;
+        const { getPDFAntrag } = this.props;
+
+        getPDFAntrag(appMatrikel);
     }
 
     async handleFileChange(event){
@@ -70,8 +79,7 @@ class LandingPage extends Component {
                                         </Card.Title>
                                         <Card.Text >
                                             <Button className="cardButton" onClick={this.props.editApplication} > Antrag bearbeiten</Button> 
-                                            <Button className="cardButton" onClick={this.props.deleteApplication(this.state.appMatrikel)} > Antrag löschen</Button>
-                                            <Button className="cardButton" onClick={this.props.getPDFAntrag(this.state.appMatrikel)}> Antrag Drucken</Button>
+                                            <Button className="cardButton" onClick={this.handlePrintApplication}> Antrag Drucken</Button>
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
@@ -120,7 +128,6 @@ class LandingPage extends Component {
 const mapDispatchToProps = dispatch => bindActionCreators({
     makeApplication: navActions.getNavApplicationPageAction,
     userUpdate: navActions.getNavUserEditPageAction,
-    deleteApplication: appActions.deleteApplicationAction,
     editApplication: navActions.getNavApplicationEditPageAction,
     getApplication: appActions.getApplicationAction,
     updateModules: appActions.updateModuleAction,

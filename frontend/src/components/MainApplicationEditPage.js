@@ -220,7 +220,10 @@ class MainApplicationEditPage extends Component{
                         </Form.Group>
                         <Form.Group controlId="courseInput" className="spaceTop">
                             <Form.Label className="mainApplicationLabel">In welchem Studiengang möchtest du den Kurs anlegen?</Form.Label>
-                            <input className="textInput tiWide" type="text" placeholder="Studiengang" name="appCourse" value={this.state.appCourse} onChange={this.handleInputChange} />
+                            <select className="textInput tiWide spaceTop" name="appCourse" value={this.state.appCourse} onChange={this.handleInputChange} disabled>
+                                <option value="">Bitte wähle eine Option!</option>
+                                <option value="Medieninformatik">Medieninformatik</option>
+                            </select>
                         </Form.Group>
                         <Form.Group controlId="furtherDetails" className="spaceTop">
                             <Form.Label className="mainApplicationLabel">Weitere Details (Zutreffendes ankreuzen):</Form.Label>

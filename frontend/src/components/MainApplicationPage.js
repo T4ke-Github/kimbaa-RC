@@ -141,9 +141,9 @@ class MainApplicationPage extends Component{
                 </Form.Group>
             </>
         }
-        let buttonStates = <Button className="standardButton buttonWidth" onClick={this.handleSave} disabled>Speichern</Button>
+        let buttonStates = <Button className="standardButton buttonWidth" onClick={this.handleSave} disabled>Speichern</Button>;
         if(this.state.appCourse){
-            <Button className="standardButton buttonWidth" onClick={this.handleSave}>Speichern</Button>
+            buttonStates = <Button className="standardButton buttonWidth" onClick={this.handleSave}>Speichern</Button>;
         }
 
         return(
