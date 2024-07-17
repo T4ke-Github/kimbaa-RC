@@ -268,6 +268,7 @@ function updateModule(filteredModules){
             if(!response.ok){
                 throw new Error('Error updating Module (ApplicationActions.js)');
             }
+            logger.info("Uploaded module list successfully!");
             return response.json();
         })
 }

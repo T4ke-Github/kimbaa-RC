@@ -14,7 +14,6 @@ const mapStateToProps = state => {
         userResource: state.auth.userResource,
         application: state.app.application,
         userToken: state.auth.userToken,
-        modUpdateSuccess: state.app.modUpdateSuccess,
     }
 }
 
@@ -52,7 +51,6 @@ class LandingPage extends Component {
 
     render(){
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
-        let modUpdateSuccess = this.props.modUpdateSuccess ? <p>Success</p> : <p>No success</p>;
         let yourApplication = <></>;
         if(this.props.application){
             yourApplication =   <Card style={{ width: '18rem' }} className="card">
@@ -75,7 +73,6 @@ class LandingPage extends Component {
                 <Container className="fLanding">
                     <h1>Willkommen bei kimbaa!</h1>
                     <p> Schön, dich zu sehen, {name}!</p>
-                    {modUpdateSuccess}
                 </Container>
                 <Container className="fGrid">
                     <Card style={{ width: '18rem' }} className="card">

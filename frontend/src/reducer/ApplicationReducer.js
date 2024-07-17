@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 
 const initialState = {
     application: Cookies.get('application') ? JSON.parse(Cookies.get('application')) : null,
-    modUpdateSuccess: false,
 }
 
 function appReducer(state = initialState, action){
@@ -26,11 +25,6 @@ function appReducer(state = initialState, action){
             return{
                 ...state,
                 application: [],
-            }
-        case appActions.MODULE_UPDATE_SUCCESS:
-            return{
-                ...state,
-                modUpdateSuccess: true
             }
         default:
             return{
