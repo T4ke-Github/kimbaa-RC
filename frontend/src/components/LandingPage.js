@@ -61,7 +61,7 @@ class LandingPage extends Component {
         if(application){
             console.log("Look: " + application);
             const department = application.department; 
-            yourApplication =   <Card style={{ width: '18rem' }} className="card">
+            yourApplication =   <Card style={{ width: '18rem' }} className="card whiteText">
 
                                     <Card.Img variant="top" src="kimbaa_logo_256.png" />
                                     <Card.Body>
