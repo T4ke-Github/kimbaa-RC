@@ -1,6 +1,7 @@
 import React, {createRef, Component} from "react";
 import { connect } from "react-redux";
 import logger from "../logging/logger";
+import { fetchPointStatus } from "../actions/ApplicationActions";
 
 import * as navActions from '../actions/NavActions';
 import * as appActions from "../actions/ApplicationActions";
