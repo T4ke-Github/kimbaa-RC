@@ -48,7 +48,7 @@ build_backend:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     - if: $CI_COMMIT_BRANCH == 'dev'
   stage: build
-  needs: ["test_backend"]
+
   image: docker:20.10.16
   services:
     - name: registry.hub.docker.com/library/docker:20.10.16-dind
