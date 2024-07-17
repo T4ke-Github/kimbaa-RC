@@ -11,10 +11,10 @@ function getSaveApplicationPending(){ return { type: APPLICATION_PENDING } }
 function getSaveApplicationFail(err){ return { type: APPLICATION_FAILURE, err: err } }
 function getSaveApplicationSuccess(){ return { type: APPLICATION_SUCCESS, payload: 'landing' } }
 
-export function saveApplicationAction(studentId, department,bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition , dateFrom, dateTo ){
+export function saveApplicationAction(studentId, department,bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition  ){
     return dispatch => {
         dispatch(getSaveApplicationPending());
-        saveApplication(studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition, dateFrom, dateTo)
+        saveApplication(studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition)
             .then(() => {
                 Cookies.set('currentPage', 'Landing', { sameSite: 'Strict' })
                 dispatch(getSaveApplicationSuccess())
@@ -25,17 +25,14 @@ export function saveApplicationAction(studentId, department,bachelor, master, pr
     }
 }
 
-function saveApplication( studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition , dateFrom, dateTo){
+function saveApplication( studentId, department, bachelor, master, practicalDone, practicalAcknowlegded, reqMet, att1, att2, noTopicProposition ){
     const ApplicationForm = {
         studentid: studentId, // Matrikelnummer
         department: department, // Fachbereich
         bachelor: bachelor, // Bachelor
         master: master, // Master
-        //userDetails?: ; // Benutzerdaten
         internshipCompleted: practicalDone, // Praxisphase abgeschlossen
         recognitionApplied: practicalAcknowlegded, // Anerkennung beantragt
-        internshipCompletedFrom: dateFrom, // Praxisphase abgeleistet von
-        internshipCompletedTo: dateTo, // Praxisphase abgeleistet bis
         modulesCompleted: reqMet, // Module abgeschlossen
         modulesPending: att1, // Module ausstehend
         attachment2Included: att2, // Anlage 2 beigefügt
@@ -292,10 +289,10 @@ function getPutUserdetailsPending(){ return { type: PUT_USERDETAILS_PENDING } }
 function getPutUserdetailsFail(err){ return { type: PUT_USERDETAILS_FAILURE, err: err } }
 function getPutUserdetailsSuccess(){ return { type: PUT_USERDETAILS_SUCCESS,  } }
 
-export function putUserdetailsAction(studentId, street, city, postalCode){
+export function putUserdetailsAction(studentId, street, city, postalCode, phone, nameFirst, nameLast){
     return dispatch => {
         dispatch(getPutUserdetailsPending());
-        putUserdetails(studentId, street, city, postalCode )
+        putUserdetails(studentId, street, city, postalCode , phone, nameFirst, nameLast)
             .then(() => {
                 dispatch(getPutUserdetailsSuccess())
             })
@@ -305,15 +302,15 @@ export function putUserdetailsAction(studentId, street, city, postalCode){
     }
 }
 
-function putUserdetails( studentId, street, city, postalCode ){
+function putUserdetails( studentId, street, city, postalCode, phone , nameFirst, nameLast){
     const userDetails = { 
-        //"lastName": "string", 
-        //"firstName": "string", 
+        lastName: nameLast, 
+        firstName: nameFirst, 
         street: street, 
         city: city, 
         postalCode: postalCode, 
-        //"country": "string", 
-        //"phone": "string" 
+        //country: place, 
+        phone: phone 
     }
 
     const requestOptions = {

@@ -56,12 +56,26 @@ class MainApplicationPage extends Component{
         this.handleClose = this.handleClose.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
+        this.splitName = this.splitName.bind(this);
     }
 
     componentDidMount(){
         logger.info("MainApplicationPage.js mounted!");
     }
 
+    splitName(name) {
+        const parts = name.split(' ');
+        if (parts.length > 2) {
+            const firstName = parts.slice(0, parts.length - 1).join(' ');
+            const lastName = parts[parts.length - 1];
+            return [firstName, lastName];
+        }
+        if (parts.length === 2) {
+            return parts;
+        }
+        return [name, ''];
+    }
+    
     handleInputChange(e){
         const { name, value } = e.target;
         this.setState({[name]: value});
@@ -106,9 +120,13 @@ class MainApplicationPage extends Component{
 
 
     handleSave(e){
-        const{appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo } =  this.state;
+        const{appMatrikel, appName ,appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition
+            , appPhone, appStreet, appPlace, appPostal,
+        } =  this.state;
+        const [firstName, lastName] = this.splitName(appName);
         const{saveApplication} = this.props;
-        saveApplication(appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo);
+        this.props.updateUserdetails(appMatrikel , appStreet, appPlace, appPostal, appPhone, firstName, lastName );
+        saveApplication(appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition);
     }
     handleClose(){
         this.dialogRef.current.close();
@@ -273,6 +291,7 @@ class MainApplicationPage extends Component{
 const mapDispatchToProps = dispatch => bindActionCreators({
     moveToLanding: navActions.getNavLandingAction,
     saveApplication: appActions.saveApplicationAction,
+    updateUserdetails: appActions.putUserdetailsAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainApplicationPage);

@@ -35,7 +35,7 @@ class MainApplicationEditPage extends Component{
             appStreet: applicationreal.userDetails.street,
             appPlace:  applicationreal.userDetails.city,
             appPostal: applicationreal.userDetails.postalCode,
-            appCourse: applicationreal.course,
+            appCourse: userResource.course,
             appBachelor:  applicationreal.bachelor,
             appMaster:  applicationreal.master,
             appModuleRequirementsMet: applicationreal.modulesCompleted,
@@ -58,6 +58,7 @@ class MainApplicationEditPage extends Component{
         this.handleClose = this.handleClose.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
+        this.splitName = this.splitName.bind(this);
     }
 
     componentDidMount(){
@@ -66,6 +67,18 @@ class MainApplicationEditPage extends Component{
         logger.info("MainApplicationEditPage.js mounted!");
     }
 
+    splitName(name) {
+        const parts = name.split(' ');
+        if (parts.length > 2) {
+            const firstName = parts.slice(0, parts.length - 1).join(' ');
+            const lastName = parts[parts.length - 1];
+            return [firstName, lastName];
+        }
+        if (parts.length === 2) {
+            return parts;
+        }
+        return [name, ''];
+    }
 
     handleInputChange(e){
         const { name, value } = e.target;
@@ -110,8 +123,12 @@ class MainApplicationEditPage extends Component{
     }
 
     handleSave(e){
-        const{appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo } =  this.state;
+        const{appMatrikel, appName, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo
+            , appPhone, appStreet, appPlace, appPostal,
+         } =  this.state;
         const{saveApplication} = this.props;
+        const [firstName, lastName] = this.splitName(appName);
+        this.props.updateUserdetails(appMatrikel , appStreet, appPlace, appPostal, appPhone, firstName, lastName );
         saveApplication(appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo );
     }
     handleClose(){
@@ -187,7 +204,7 @@ class MainApplicationEditPage extends Component{
                     `}
                 </style>
                 <div className="mainApplicationPage">
-                    <h1>Antrag anlegen</h1>
+                    <h1>Antrag bearbeiten</h1>
                     <Form className="mainApplicationForm">
                         <Form.Group controlId="personalDetails" className="itemInlineColumn">
                             <Form.Label className="mainApplicationLabel">Persönliche Daten</Form.Label>

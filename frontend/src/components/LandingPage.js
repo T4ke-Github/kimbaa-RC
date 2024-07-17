@@ -25,6 +25,7 @@ class LandingPage extends Component {
         this.state = {
             appMatrikel: userResource.studentId ? userResource.studentId : "",
             appAttachmentFile: null,
+            course: userResource.course ? userResource.course : "",
         }
 
         this.handleFileChange = this.handleFileChange.bind(this);
@@ -68,14 +69,11 @@ class LandingPage extends Component {
         let yourApplication = <></>;
         let application = typeof this.props.application === 'string' ? JSON.parse(this.props.application) : this.props.application;
         if(application){
-            console.log("Look: " + application);
-            const department = application.department; 
             yourApplication =   <Card style={{ width: '18rem' }} className="card whiteText">
-
                                     <Card.Img variant="top" src="kimbaa_logo_256.png" />
                                     <Card.Body>
                                         <Card.Title>
-                                            {department}
+                                            {this.state.course}
                                         </Card.Title>
                                         <Card.Text >
                                             <Button className="cardButton" onClick={this.props.editApplication} > Antrag bearbeiten</Button> 

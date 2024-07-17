@@ -35,10 +35,12 @@ class UserEditPage extends Component{
             uEPostal: applicationreal.userDetails.postalCode ,
             uEEmail: userResource.email ? userResource.email : "",
             uECourse: userResource.course ? userResource.course : "",
+            uEPhone: applicationreal.userDetails.phone,
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSaveUser = this.handleSaveUser.bind(this);
+        this.splitName = this.splitName.bind(this);
     }
 
     componentDidMount(){
@@ -53,6 +55,19 @@ class UserEditPage extends Component{
         }
     }
 
+    splitName(name) {
+        const parts = name.split(' ');
+        if (parts.length > 2) {
+            const firstName = parts.slice(0, parts.length - 1).join(' ');
+            const lastName = parts[parts.length - 1];
+            return [firstName, lastName];
+        }
+        if (parts.length === 2) {
+            return parts;
+        }
+        return [name, ''];
+    }
+
     handleInputChange(e){
         const { name, value } = e.target;
         this.setState({[name]: value});
@@ -60,13 +75,13 @@ class UserEditPage extends Component{
 
     async handleSaveUser(e) {
         e.preventDefault(); // Prevent default form submission behavior
-        const { uEstudentId, uEName, uEEmail, uECourse, uEUserId, uEStreet, uEPlace, uEPostal } = this.state;
+        const { uEstudentId, uEName, uEEmail, uECourse, uEUserId, uEStreet, uEPlace, uEPostal , uEPhone} = this.state;
         const { saveUserAction, refreshUE } = this.props;
-        
+        const [firstName, lastName] = this.splitName(uEName);
         try {
             // Await saveUser to ensure it completes before calling refreshResource
             await saveUserAction(uEstudentId, uEName, uEEmail, uECourse, uEUserId);
-            await this.props.updateUserdetails(uEstudentId , uEStreet, uEPlace, uEPostal);
+            await this.props.updateUserdetails(uEstudentId , uEStreet, uEPlace, uEPostal,uEPhone, firstName, lastName);
             await refreshUE(uEstudentId);
         } catch (error) {
             console.error("Error saving user and refreshing resource:", error);
