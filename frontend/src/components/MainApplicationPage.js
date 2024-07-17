@@ -39,6 +39,7 @@ class MainApplicationPage extends Component{
             appMaster: false,
             appModulePoints: 0,
             appModuleRequirementsMet: false,
+            appModuleViable: false,
             appAttachment1: false,
             appAttachment2: false,
             appNoTopicProposition: false,
@@ -65,9 +66,11 @@ class MainApplicationPage extends Component{
 
         let moduleSummary = await fetchPointStatus(this.props.userResource._id);
         if(moduleSummary){
-            logger.info("Credits: "+moduleSummary.credits);
-            logger.info("AllReq: "+moduleSummary.allrequired);
-            logger.info("MinReq: "+moduleSummary.minreqCredits);
+            this.setState({ 
+                appModulePoints: moduleSummary.credits,
+                appModuleRequirementsMet: moduleSummary.allrequired,
+                appModuleViable: moduleSummary.minreqCredits
+            });
         }
     }
 
@@ -127,6 +130,14 @@ class MainApplicationPage extends Component{
     };
 
     render(){
+        let requiredAbsolved = <>Du hast nicht alle Pflichtmodule absolviert. </>;
+        if(this.state.appModuleRequirementsMet === true){
+            requiredAbsolved = <>Du hast alle Pflichtmodule absolviert. </>;
+        }
+        let succeededModules = <>Du kannst daher noch keine Prüfung schreiben. Wenn diese Evaluation nicht stimmt, lade bitte deine aktuelle Modulbescheinigung auf der Hauptseite hoch. </>;
+        if(this.state.appModuleViable === true){
+            succeededModules = <>Du kannst zur Prüfung antreten!</>;
+        }
         let specificOptions = <></>;
         if(this.state.appCourse){
             specificOptions = <>
@@ -140,8 +151,7 @@ class MainApplicationPage extends Component{
                 </Form.Group> 
                 <Form.Check label="Die Praxisphase wurde erfolgreich abgeschlossen" name="appPracticalSemesterDone" value={this.state.appPracticalSemesterDone} onChange={this.handleCheckChange}/>
                 <Form.Check label="Die Anerkennung der Praxisphase wurde beantragt oder ist bereits erfolgt." name="appPracticalSemesterAcknowledgement" value={this.state.appPracticalSemesterAcknowledgement} onChange={this.handleCheckChange} />
-                <Form.Check label="Sämtliche erforderliche Module des Bachelor- oder Masterstudiums sind erfolgreich abgeschlossen." name="appModuleRequirementsMet" value={this.state.appModuleRequirementsMet} onChange={this.handleCheckChange} />
-                <Form.Check label="Der erfolgreiche Abschluss der in Anlage 1 angeführten Module steht noch aus" name="appAttachment1" value={this.state.appAttachment1} onChange={this.handleCheckChange} />
+                <p><b>Du hast {this.state.appModulePoints} von 155 benötigten Credits erlangt. {requiredAbsolved}{succeededModules}</b></p>
                 <Form.Check label="Die Anlage 2 (mein Vorschlag zum Thema meiner Abschlussarbeit und des/der Betreuers*in) ist beigefügt." name="appAttachment2" value={this.state.appAttachment2} onChange={this.handleCheckChange} />
                 </Form.Group>
                 <Form.Group controlId="declarationOfWaive" className="spaceTop">
@@ -221,7 +231,7 @@ class MainApplicationPage extends Component{
                 </style>
                 <div className="mainApplicationPage">
                     <h1>Antrag anlegen</h1>
-                    <Form className="mainApplicationForm">
+                    <Form className="mainApplicationForm whiteText">
                         <Form.Group controlId="personalDetails" className="itemInlineColumn">
                             <Form.Label className="mainApplicationLabel">Persönliche Daten</Form.Label>
                             <div className="itemInlineRow">
