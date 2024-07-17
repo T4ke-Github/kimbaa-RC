@@ -44,7 +44,6 @@ class MainApplicationPage extends Component{
             appPracticalSemesterAcknowledgement: false,
             dateFrom: Date,
             dateTo: Date,
-            showCourseSpecificOptions: "",
         }
 
         this.dialogRef = createRef();
@@ -120,7 +119,7 @@ class MainApplicationPage extends Component{
 
     render(){
         let specificOptions = <></>;
-        if(this.state.showCourseSpecificOptions){
+        if(this.state.appCourse){
             specificOptions = <>
                 <Form.Group controlId="furtherDetails" className="spaceTop">
                 <Form.Label className="mainApplicationLabel">Weitere Details (Zutreffendes ankreuzen):</Form.Label>
@@ -143,7 +142,7 @@ class MainApplicationPage extends Component{
             </>
         }
         let buttonStates = <Button className="standardButton buttonWidth" onClick={this.handleSave} disabled>Speichern</Button>
-        if(this.state.showCourseSpecificOptions){
+        if(this.state.appCourse){
             <Button className="standardButton buttonWidth" onClick={this.handleSave}>Speichern</Button>
         }
 
