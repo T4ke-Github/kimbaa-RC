@@ -19,10 +19,10 @@ function getLoginPending() { return { type: LOGIN_PENDING } }
 function getLoginFail(err) { return { type: LOGIN_FAILURE, err: err } }
 function getLoginSuccess(user, jwt) { return { type: LOGIN_SUCCESS, userResource: user, userToken: jwt, payload: 'landing' } }
 
-export function registerUserAction(matrikel, name, email, password) {
+export function registerUserAction(matrikel, name, email, password, course) {
     return dispatch => {
         dispatch(getRegistrationPending());
-        registerUser(matrikel, name, email, password)
+        registerUser(matrikel, name, email, password, course)
             .then(() => {
                 Cookies.set('currentPage', 'login', { sameSite: 'Strict' })
                 dispatch(getRegistrationSuccess())
@@ -38,13 +38,13 @@ export function registerUserAction(matrikel, name, email, password) {
     }
 }
 
-function registerUser(matrikel, name, email, password) {
+function registerUser(matrikel, name, email, password, course) {
     const registrationForm = {
         name: name,
         password: password,
         studentId: matrikel,
         email: email,
-        course: "Medieninformatik" // Fügen Sie den Kurs hier hinzu
+        course: course || "Medieninformatik" // Fügen Sie den Kurs hier hinzu
     }
 
     const requestOptions = {

@@ -24,9 +24,9 @@ class RegistrationPage extends Component{
             regMatrikel: "",
             regName: "",
             regEmail: "",
-            regAdmin: false,
             regPassword: "",
             regPasswordRe: "",
+            regCourse: "",
             noMatch: false,
             incorrectEmailFormat: false,
             incorrectSIDFormat: false,
@@ -40,8 +40,8 @@ class RegistrationPage extends Component{
         this.handleKeyPress = this.handleKeyPress.bind(this);
         this.checkEmail = this.checkEmail.bind(this);
         this.checkSID = this.checkSID.bind(this);
-        this.handleCheck = this.handleCheck.bind(this);
         this.checkPWSecurity = this.checkPWSecurity.bind(this);
+        this.handleSelectorChange = this.handleSelectorChange.bind(this);
     }
 
     componentDidMount(){
@@ -60,9 +60,8 @@ class RegistrationPage extends Component{
         close();
     }
 
-    handleCheck(e){
-        const { name, checked } = e.target;
-        this.setState({[name]: checked});
+    handleSelectorChange(e){
+        console.log("hi");
     }
 
     handleInputChange(e){
@@ -116,7 +115,7 @@ class RegistrationPage extends Component{
     handleRegistration(e){
         let hasFailed = false;
         e.preventDefault();
-        const { regMatrikel, regName, regEmail, regAdmin, regPassword, regPasswordRe } = this.state;
+        const { regMatrikel, regName, regEmail, regPassword, regPasswordRe } = this.state;
         const { register } = this.props;
         if(regPassword !== regPasswordRe){
             this.setState({
@@ -157,7 +156,7 @@ class RegistrationPage extends Component{
         if(hasFailed){
             return;
         }
-        console.log("Time to doxx the new user! Matrikel: "+regMatrikel+", Name: "+regName+", Email: "+regEmail+", Admin: "+regAdmin+", Password: "+regPassword);
+        console.log("Time to doxx the new user! Matrikel: "+regMatrikel+", Name: "+regName+", Email: "+regEmail+", Password: "+regPassword);
         register(regMatrikel, regName, regEmail, regPassword);
     }
 
@@ -238,9 +237,10 @@ class RegistrationPage extends Component{
                             <input className="regIn firstItem" type="number" id="matrikel" name="regMatrikel" value={this.state.regMatrikel} placeholder="Matrikelnr." onChange={this.handleInputChange}/>
                             <input className="regIn" type="text" id="name" name="regName" value={this.state.regName} placeholder="Name" onChange={this.handleInputChange}/>
                             <input className="regIn" type="email" id="email" name="regEmail" value={this.state.regEmail}placeholder="Email (muss auf '@bht-berlin.de' enden)" onChange={this.handleInputChange}/>
-                            <div className="adminCheck">
-                                <Form.Check label="Ich bin ein Admin" checked={this.regAdmin} onChange={this.handleCheck} disabled/>
-                            </div>
+                            <select className="regIn" id="courseSelector" name="regCourse" value={this.state.regCourse} onChange={this.handleInputChange}>
+                                <option value="">Kurs auswählen (Optional)</option>
+                                <option value="Medieninformatik">Medieninformatik</option>
+                            </select>
                             <input className="regIn" type="password" id="password" name="regPassword" value={this.state.regPassword} placeholder="Passwort" onChange={this.handleInputChange}/>
                             <input className="regIn" type="password" id="passwordRe" name="regPasswordRe" value={this.state.regPasswordRe} placeholder="Passwort widerholen" onChange={this.handleInputChange}/>
                             { warning }

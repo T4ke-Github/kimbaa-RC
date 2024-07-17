@@ -55,7 +55,7 @@ class MainApplicationPage extends Component{
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
-        this.handleSaveReal = this.handleSaveReal.bind(this);
+        this.handleSave = this.handleSave.bind(this);
     }
 
     componentDidMount(){
@@ -105,10 +105,10 @@ class MainApplicationPage extends Component{
     }
 
 
-    handleSaveReal(e){
+    handleSave(e){
         const{appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo } =  this.state;
-        const{saveApplicationReal} = this.props;
-        saveApplicationReal(appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo );
+        const{saveApplication} = this.props;
+        saveApplication(appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo);
     }
     handleClose(){
         this.dialogRef.current.close();
@@ -117,7 +117,34 @@ class MainApplicationPage extends Component{
         this.dialogRef.current.showModal();
     };
 
-    render(){        
+    render(){
+        let specificOptions = <></>;
+        if(this.state.appCourse){
+            specificOptions = <>
+                <Form.Group controlId="furtherDetails" className="spaceTop">
+                <Form.Label className="mainApplicationLabel">Weitere Details (Zutreffendes ankreuzen):</Form.Label>
+                <Form.Group >
+                    <Form.Check label="Die Praxisphase wird abgeleistet vom:"  /> 
+                    <input type="date" name="dateFrom" value={this.state.dateFrom} onChange={this.handleDateChange} placeholder="" />
+                    <Form.Label >bis</Form.Label>
+                    <input type="date" name="dateTo" value={this.state.dateTo} onChange={this.handleDateChange} placeholder="" />
+                </Form.Group> 
+                <Form.Check label="Die Praxisphase wurde erfolgreich abgeschlossen" name="appPracticalSemesterDone" value={this.state.appPracticalSemesterDone} onChange={this.handleCheckChange}/>
+                <Form.Check label="Die Anerkennung der Praxisphase wurde beantragt oder ist bereits erfolgt." name="appPracticalSemesterAcknowledgement" value={this.state.appPracticalSemesterAcknowledgement} onChange={this.handleCheckChange} />
+                <Form.Check label="Sämtliche erforderliche Module des Bachelor- oder Masterstudiums sind erfolgreich abgeschlossen." name="appModuleRequirementsMet" value={this.state.appModuleRequirementsMet} onChange={this.handleCheckChange} />
+                <Form.Check label="Der erfolgreiche Abschluss der in Anlage 1 angeführten Module steht noch aus" name="appAttachment1" value={this.state.appAttachment1} onChange={this.handleCheckChange} />
+                <Form.Check label="Die Anlage 2 (mein Vorschlag zum Thema meiner Abschlussarbeit und des/der Betreuers*in) ist beigefügt." name="appAttachment2" value={this.state.appAttachment2} onChange={this.handleCheckChange} />
+                </Form.Group>
+                <Form.Group controlId="declarationOfWaive" className="spaceTop">
+                    <Form.Label className="mainApplicationLabel">Optionale Verzichterklärung</Form.Label>
+                    <Form.Check label={<>Einen Vorschlag für das Thema und den/die Betreuer*in meiner Abschlussarbeit unterbreite ich nicht. <b>Ich wünsche die Vergabe durch den Prüfungsausschuss</b></>} name="appNoTopicProposition" value={this.state.appNoTopicProposition} onChange={this.handleCheckChange} />
+                </Form.Group>
+            </>
+        }
+        let buttonStates = <Button className="standardButton buttonWidth" onClick={this.handleSave} disabled>Speichern</Button>;
+        if(this.state.appCourse){
+            buttonStates = <Button className="standardButton buttonWidth" onClick={this.handleSave}>Speichern</Button>;
+        }
 
         return(
             <>
@@ -217,30 +244,16 @@ class MainApplicationPage extends Component{
                         </Form.Group>
                         <Form.Group controlId="courseInput" className="spaceTop">
                             <Form.Label className="mainApplicationLabel">In welchem Studiengang möchtest du den Kurs anlegen?</Form.Label>
-                            <input className="textInput tiWide" type="text" placeholder="Studiengang" name="appCourse" value={this.state.appCourse} onChange={this.handleInputChange} />
+                            <select className="textInput tiWide spaceTop" name="appCourse" value={this.state.appCourse} onChange={this.handleInputChange} >
+                                <option value="">Bitte wähle eine Option!</option>
+                                <option value="Medieninformatik">Medieninformatik</option>
+                            </select>
                         </Form.Group>
-                        <Form.Group controlId="furtherDetails" className="spaceTop">
-                            <Form.Label className="mainApplicationLabel">Weitere Details (Zutreffendes ankreuzen):</Form.Label>
-                            <Form.Group >
-                                <Form.Check label="Die Praxisphase wird abgeleistet vom:"  /> 
-                                <input type="date" name="dateFrom" value={this.state.dateFrom} onChange={this.handleDateChange} placeholder="" />
-                                <Form.Label >bis</Form.Label>
-                                <input type="date" name="dateTo" value={this.state.dateTo} onChange={this.handleDateChange} placeholder="" />
-                            </Form.Group> 
-                            <Form.Check label="Die Praxisphase wurde erfolgreich abgeschlossen" name="appPracticalSemesterDone" value={this.state.appPracticalSemesterDone} onChange={this.handleCheckChange}/>
-                            <Form.Check label="Die Anerkennung der Praxisphase wurde beantragt oder ist bereits erfolgt." name="appPracticalSemesterAcknowledgement" value={this.state.appPracticalSemesterAcknowledgement} onChange={this.handleCheckChange} />
-                            <Form.Check label="Sämtliche erforderliche Module des Bachelor- oder Masterstudiums sind erfolgreich abgeschlossen." name="appModuleRequirementsMet" value={this.state.appModuleRequirementsMet} onChange={this.handleCheckChange} />
-                            <Form.Check label="Der erfolgreiche Abschluss der in Anlage 1 angeführten Module steht noch aus" name="appAttachment1" value={this.state.appAttachment1} onChange={this.handleCheckChange} />
-                            <Form.Check label="Die Anlage 2 (mein Vorschlag zum Thema meiner Abschlussarbeit und des/der Betreuers*in) ist beigefügt." name="appAttachment2" value={this.state.appAttachment2} onChange={this.handleCheckChange} />
-                        </Form.Group>
-                        <Form.Group controlId="declarationOfWaive" className="spaceTop">
-                            <Form.Label className="mainApplicationLabel">Optionale Verzichterklärung</Form.Label>
-                            <Form.Check label={<>Einen Vorschlag für das Thema und den/die Betreuer*in meiner Abschlussarbeit unterbreite ich nicht. <b>Ich wünsche die Vergabe durch den Prüfungsausschuss</b></>} name="appNoTopicProposition" value={this.state.appNoTopicProposition} onChange={this.handleCheckChange} />
-                        </Form.Group>
+                        {specificOptions}
                         <Form.Group controlId="SubmitOrLeave" className="spaceTop spaceBottom">
                             <div className="itemInlineRow">
                                 <Button className="standardButton buttonWidth aCancel" onClick={this.handleOpen}>Abbrechen</Button>
-                                <Button className="standardButton buttonWidth" onClick={this.handleSaveReal}>Speichern</Button>
+                                {buttonStates}
                             </div>
                         </Form.Group>
                     </Form>
@@ -259,7 +272,7 @@ class MainApplicationPage extends Component{
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     moveToLanding: navActions.getNavLandingAction,
-    saveApplicationReal: appActions.saveApplicationAction,
+    saveApplication: appActions.saveApplicationAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainApplicationPage);
