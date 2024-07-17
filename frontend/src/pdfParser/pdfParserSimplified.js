@@ -402,7 +402,7 @@ export async function quickParser(arrayBuffer) {
             let modulnummer = "WP27";
             let value = /WP27\s(.*?)143191/i.exec(raw)[1].trim();
             let result = extractDecimalNumber(value);
-            return returnResult(modulnummer, result, "");
+            return returnResult(modulnummer, result, "Externes_Modul_3");
         })(),
 
         WP24: (() => {
