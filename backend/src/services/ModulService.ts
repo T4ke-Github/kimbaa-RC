@@ -162,7 +162,28 @@ export async function updateModulesByModuleNameAndUserId(modules: ModulResource[
         }
     }
 }
+export async function updateModulesByModuleNumberAndUserId(modules: ModulResource[]): Promise<void> {
+    for (const module of modules) {
+        try {
+            const existingModule = await Modul.findOne({
+                creator: module.creator,
+                modulnumber: module.modulnumber,
+            }).exec();
 
+            if (!existingModule) {
+                throw new Error(`Modul mit Modulnummer "${module.modulnumber}" und Ersteller-ID ${module.creator} nicht gefunden.`);
+            }
+
+            // Hier kannst du den Solved-Wert aktualisieren
+            existingModule.solved = module.solved;
+
+            // Speichere die Änderungen
+            await existingModule.save();
+        } catch (error) {
+            console.error(`Fehler beim Aktualisieren des Moduls mit Modulname "${module.modulnumber}": ${error}`);
+        }
+    }
+}
 export async function calculateModuleSummary(userId: string): Promise<{
     credits: number;
     allrequired: boolean;

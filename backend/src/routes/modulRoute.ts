@@ -48,13 +48,14 @@ modulRouter.put("/update", requiresAuthentication, updateModulesValidationRules,
 
     try {
         const modules: ModulResource[] = req.body.modules;
-        await modulService.updateModulesByModuleNameAndUserId(modules);
+        await modulService.updateModulesByModuleNumberAndUserId(modules);
         res.status(200).send({ message: "Module erfolgreich aktualisiert" });
     } catch (error) {
         res.status(400).send(error);
         next(error);
     }
 });
+
 
 // Route zum Abrufen der Modulzusammenfassung
 modulRouter.get("/summary/:userId", requiresAuthentication, userIdValidationRules, async (req: Request, res: Response, next: NextFunction) => {
