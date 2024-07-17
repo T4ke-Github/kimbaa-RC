@@ -4,6 +4,7 @@ import logger from "../logging/logger";
 
 import * as navActions from '../actions/NavActions';
 import * as appActions from "../actions/ApplicationActions";
+import { fetchPointStatus } from "../actions/ApplicationActions";
 import { bindActionCreators } from "redux";
 
 import Button from "react-bootstrap/Button";
@@ -36,6 +37,7 @@ class MainApplicationPage extends Component{
             appCourse: "",
             appBachelor: true,
             appMaster: false,
+            appModulePoints: 0,
             appModuleRequirementsMet: false,
             appAttachment1: false,
             appAttachment2: false,
@@ -58,8 +60,15 @@ class MainApplicationPage extends Component{
         this.handleSave = this.handleSave.bind(this);
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         logger.info("MainApplicationPage.js mounted!");
+
+        let moduleSummary = await fetchPointStatus(this.props.userResource._id);
+        if(moduleSummary){
+            logger.info("Credits: "+moduleSummary.credits);
+            logger.info("AllReq: "+moduleSummary.allrequired);
+            logger.info("MinReq: "+moduleSummary.minreqCredits);
+        }
     }
 
     handleInputChange(e){
