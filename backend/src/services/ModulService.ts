@@ -197,10 +197,9 @@ export async function calculateModuleSummary(userId: string): Promise<{
     for (const module of modules) {
         if (module.solved) {
             totalCredits += module.creditPoints!;
-            if (module.required && module.modulname !== 'Abschlussarbeit') {
-                // Wenn ein erforderliches Modul nicht gelöst ist (außer Abschlussarbeit), allRequired auf false setzen
-                allRequired = false;
-            }
+        } else if (module.required && module.modulname !== 'Abschlussarbeit') {
+            // Wenn ein erforderliches Modul nicht gelöst ist (außer Abschlussarbeit), allRequired auf false setzen
+            allRequired = false;
         }
     }
 
