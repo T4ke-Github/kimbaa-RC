@@ -38,7 +38,9 @@ class MainApplicationEditPage extends Component{
             appCourse: userResource.course,
             appBachelor:  applicationreal.bachelor,
             appMaster:  applicationreal.master,
-            appModuleRequirementsMet: applicationreal.modulesCompleted,
+            appModulePoints: 0,
+            appModuleRequirementsMet: false,
+            appModuleViable: false,
             appAttachment1: false,
             appAttachment2: applicationreal.attachment2Included,
             appNoTopicProposition: applicationreal.topicSuggestion ,
@@ -61,10 +63,18 @@ class MainApplicationEditPage extends Component{
         this.splitName = this.splitName.bind(this);
     }
 
-    componentDidMount(){
+    async componentDidMount(){
  //       const { appMatrikel} = this.state;
  //       this.props.getApplication(appMatrikel);
         logger.info("MainApplicationEditPage.js mounted!");
+        let moduleSummary = await fetchPointStatus(this.props.userResource._id);
+        if(moduleSummary){
+            this.setState({ 
+                appModulePoints: moduleSummary.credits,
+                appModuleRequirementsMet: moduleSummary.allrequired,
+                appModuleViable: moduleSummary.minreqCredits
+            });
+        }
     }
 
     splitName(name) {
@@ -138,7 +148,17 @@ class MainApplicationEditPage extends Component{
         this.dialogRef.current.showModal();
     };
 
-    render(){ 
+    render(){
+
+        let requiredAbsolved = <>Du hast nicht alle Pflichtmodule absolviert. </>;
+        if(this.state.appModuleRequirementsMet === true){
+            requiredAbsolved = <>Du hast alle Pflichtmodule absolviert. </>;
+        }
+        let succeededModules = <>Du kannst daher noch keine Prüfung schreiben. Wenn diese Evaluation nicht stimmt, lade bitte deine aktuelle Modulbescheinigung auf der Hauptseite hoch. </>;
+        if(this.state.appModuleViable === true){
+            succeededModules = <>Du kannst zur Prüfung antreten!</>;
+        }
+
         return(
             <>
                 <style>
@@ -252,8 +272,7 @@ class MainApplicationEditPage extends Component{
                             </Form.Group> 
                             <Form.Check label="Die Praxisphase wurde erfolgreich abgeschlossen" name="appPracticalSemesterDone" checked={this.state.appPracticalSemesterDone} onChange={this.handleCheckChange}/>
                             <Form.Check label="Die Anerkennung der Praxisphase wurde beantragt oder ist bereits erfolgt." name="appPracticalSemesterAcknowledgement" checked={this.state.appPracticalSemesterAcknowledgement} onChange={this.handleCheckChange} />
-                            <Form.Check label="Sämtliche erforderliche Module des Bachelor- oder Masterstudiums sind erfolgreich abgeschlossen." name="appModuleRequirementsMet" checked={this.state.appModuleRequirementsMet} onChange={this.handleCheckChange} />
-                            <Form.Check label="Der erfolgreiche Abschluss der in Anlage 1 angeführten Module steht noch aus" name="appAttachment1" checked={this.state.appAttachment1} onChange={this.handleCheckChange} />
+                            <p><b>Du hast {this.state.appModulePoints} von 155 benötigten Credits erlangt. {requiredAbsolved}{succeededModules}</b></p>
                             <Form.Check label="Die Anlage 2 (mein Vorschlag zum Thema meiner Abschlussarbeit und des/der Betreuers*in) ist beigefügt." name="appAttachment2" checked={this.state.appAttachment2} onChange={this.handleCheckChange} />
                         </Form.Group>
                         <Form.Group controlId="declarationOfWaive" className="spaceTop">

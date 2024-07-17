@@ -35,6 +35,7 @@ class LandingPage extends Component {
 
     componentDidMount(){
         const { appMatrikel } = this.state;
+
         this.props.getApplication(appMatrikel);
         logger.info("LandingPage.js mounted!");
     }

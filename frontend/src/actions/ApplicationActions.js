@@ -331,3 +331,21 @@ function putUserdetails( studentId, street, city, postalCode, phone , nameFirst,
             return response.json();
         })
 }
+
+
+export async function fetchPointStatus(studentId){
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+    };
+
+    logger.info("fetching:" + BACKEND_URL + '/api/modul/summary/' + studentId);
+    const response = await fetch(BACKEND_URL + '/api/modul/summary/' + studentId, requestOptions);
+    if (!response.ok) {
+        logger.info("Request for Module Point Summary Failed (ApplicationActions.js)");
+    }
+    return await response.json();
+}
