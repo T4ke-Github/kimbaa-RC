@@ -3,7 +3,7 @@ import PDFJSWorker from 'pdfjs-dist/legacy/build/pdf.worker.entry'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJSWorker;
 
-export async function quickParser(arrayBuffer) {
+export async function quickParser(arrayBuffer, userId) {
 
     // Extract text from each page using pdfjs-dist
     const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
@@ -40,7 +40,7 @@ export async function quickParser(arrayBuffer) {
         if (result === "-404") {
             solved = "false";
         }
-        return { Modulnummer: modulnummer, Result: result, Solved: solved, ModuleName: name };
+        return { creator: userId, modulname: name, solved: solved };
     }
     // Return the parsed data
     const parsedData = {

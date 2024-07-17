@@ -39,10 +39,11 @@ class LandingPage extends Component {
 
     async handleFileChange(event){
         const uploadedFile = event.target.files[0];
+        let userId = this.props.userResource._id;
         if(uploadedFile){
             this.setState({appAttachmentFile: uploadedFile});
             const arrayBuffer = await uploadedFile.arrayBuffer();
-            const parsedData = await quickParser(arrayBuffer);
+            const parsedData = await quickParser(arrayBuffer, userId);
             logger.info(parsedData);
         }
     }
@@ -51,7 +52,6 @@ class LandingPage extends Component {
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
         let yourApplication = <></>;
         if(this.props.application){
-            console.log("Look: " + this.props.application);
             yourApplication =   <Card style={{ width: '18rem' }} className="card">
                                     <Card.Img variant="top" src="kimbaa_logo_256.png" />
                                     <Card.Body>
