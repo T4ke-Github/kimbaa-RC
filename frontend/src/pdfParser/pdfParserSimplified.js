@@ -1,5 +1,6 @@
 import * as pdfjsLib from 'pdfjs-dist/build/pdf';
 import PDFJSWorker from 'pdfjs-dist/legacy/build/pdf.worker.entry'
+import logger from '../logging/logger';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJSWorker;
 
@@ -36,9 +37,9 @@ export async function quickParser(arrayBuffer, userId) {
     
     // Return modulnummer string + result
     function returnResult(modulnummer, result, name) {
-        let solved = "true";
+        let solved = true;
         if (result === "-404") {
-            solved = "false";
+            solved = false;
         }
         return { creator: userId, modulname: name, solved: solved };
     }
@@ -420,5 +421,19 @@ export async function quickParser(arrayBuffer, userId) {
         })(),
     };
 
-    return parsedData;
+    const returnArray = [];
+
+    for(let key in parsedData){
+        if(parsedData.hasOwnProperty(key)){
+            const item = parsedData[key];
+            logger.info(item);
+
+            if(item.hasOwnProperty('creator') && item.solved === true){
+                returnArray.push(item);
+                logger.info("Pushed");
+            }
+        }
+    }
+
+    return { modules: returnArray };
 }
