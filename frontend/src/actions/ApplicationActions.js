@@ -175,7 +175,8 @@ export function deleteApplicationAction( id){
 
 function deleteApplication(studentId){
     const requestOptions = {
-        method: 'DELETE'
+        method: 'DELETE',
+        credentials: 'include'
     }
 
     return fetch('http://localhost:8081/api/antragzulassung/'+ studentId, requestOptions)

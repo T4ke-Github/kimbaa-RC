@@ -22,28 +22,28 @@ class MainApplicationEditPage extends Component{
         super(props);
 
         let userResource = this.props.userResource;
-        let appli =  this.props.application.antragZulassungDetails;
-
+        let applicationreal = typeof this.props.application === 'string' ? JSON.parse(this.props.application) : this.props.application;
+        
         this.state = {
             appSemWinter: true,
             appSemSummer: false,
             appMatrikel: userResource.studentId ? userResource.studentId : "",
-            appDepartment: appli.department ? appli.department : "",
+            appDepartment: applicationreal.department,
             appName: userResource.name ? userResource.name : "",
             appEmail: userResource.email ? userResource.email : "",
-            appPhone: "",
-            appStreet: "",
-            appPlace: "",
-            appPostal: "",
-            appCourse: "",
-            appBachelor: appli.bachelor ? appli.bachelor : false,
-            appMaster: appli.master ? appli.master : false,
-            appModuleRequirementsMet: appli.modulesCompleted ? appli.modulesCompleted : false,
+            appPhone: applicationreal.userDetails.phone,
+            appStreet: applicationreal.userDetails.street,
+            appPlace:  applicationreal.userDetails.city,
+            appPostal: applicationreal.userDetails.postalCode,
+            appCourse: applicationreal.course,
+            appBachelor:  applicationreal.bachelor,
+            appMaster:  applicationreal.master,
+            appModuleRequirementsMet: applicationreal.modulesCompleted,
             appAttachment1: false,
-            appAttachment2: false,
-            appNoTopicProposition: false,
-            appPracticalSemesterDone: appli.internshipCompleted ? appli.internshipCompleted : false,
-            appPracticalSemesterAcknowledgement: appli.recognitionApplied ? appli.recognitionApplied : false,
+            appAttachment2: applicationreal.attachment2Included,
+            appNoTopicProposition: applicationreal.topicSuggestion ,
+            appPracticalSemesterDone:  applicationreal.internshipCompleted,
+            appPracticalSemesterAcknowledgement: applicationreal.recognitionApplied,
             dateFrom: Date,
             dateTo: Date,
         }
@@ -61,10 +61,11 @@ class MainApplicationEditPage extends Component{
     }
 
     componentDidMount(){
-        const { appMatrikel } = this.state;
-        this.props.getApplication(appMatrikel);
+ //       const { appMatrikel} = this.state;
+ //       this.props.getApplication(appMatrikel);
         logger.info("MainApplicationEditPage.js mounted!");
     }
+
 
     handleInputChange(e){
         const { name, value } = e.target;
@@ -110,8 +111,8 @@ class MainApplicationEditPage extends Component{
 
     handleSave(e){
         const{appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo } =  this.state;
-        const{saveApplicationReal} = this.props;
-        saveApplicationReal(appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo );
+        const{saveApplication} = this.props;
+        saveApplication(appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo );
     }
     handleClose(){
         this.dialogRef.current.close();
@@ -120,8 +121,7 @@ class MainApplicationEditPage extends Component{
         this.dialogRef.current.showModal();
     };
 
-    render(){        
-        this.loadApplication();
+    render(){ 
         return(
             <>
                 <style>
@@ -193,7 +193,7 @@ class MainApplicationEditPage extends Component{
                             <Form.Label className="mainApplicationLabel">Persönliche Daten</Form.Label>
                             <div className="itemInlineRow">
                                 <input className="textInput tiNarrow" type="number" placeholder="Matrikelnr." name="appMatrikel" value={this.state.appMatrikel} onChange={this.handleInputChange} />
-                                <input className="textInput tiSmall" type="number" placeholder="Fachbereich" name="appDepartment" value={this.state.appDepartment} onChange={this.handleInputChange} />
+                                <input className="textInput tiSmall" type="text" placeholder="Fachbereich" name="appDepartment" value={this.state.appDepartment} onChange={this.handleInputChange} />
                             </div>
                             <input className="textInput tiWide" type="text" placeholder="Name" name="appName" value={this.state.appName} onChange={this.handleInputChange} />
                             <input className="textInput tiWide" type="email" placeholder="Email-Adresse" name="appEmail" value={this.state.appEmail} onChange={this.handleInputChange} />
@@ -230,11 +230,11 @@ class MainApplicationEditPage extends Component{
                                 <Form.Label >bis</Form.Label>
                                 <input type="date" name="dateTo" value={this.state.dateTo} onChange={this.handleDateChange} placeholder="" />
                             </Form.Group> 
-                            <Form.Check label="Die Praxisphase wurde erfolgreich abgeschlossen" name="appPracticalSemesterDone" value={this.state.appPracticalSemesterDone} onChange={this.handleCheckChange}/>
-                            <Form.Check label="Die Anerkennung der Praxisphase wurde beantragt oder ist bereits erfolgt." name="appPracticalSemesterAcknowledgement" value={this.state.appPracticalSemesterAcknowledgement} onChange={this.handleCheckChange} />
-                            <Form.Check label="Sämtliche erforderliche Module des Bachelor- oder Masterstudiums sind erfolgreich abgeschlossen." name="appModuleRequirementsMet" value={this.state.appModuleRequirementsMet} onChange={this.handleCheckChange} />
-                            <Form.Check label="Der erfolgreiche Abschluss der in Anlage 1 angeführten Module steht noch aus" name="appAttachment1" value={this.state.appAttachment1} onChange={this.handleCheckChange} />
-                            <Form.Check label="Die Anlage 2 (mein Vorschlag zum Thema meiner Abschlussarbeit und des/der Betreuers*in) ist beigefügt." name="appAttachment2" value={this.state.appAttachment2} onChange={this.handleCheckChange} />
+                            <Form.Check label="Die Praxisphase wurde erfolgreich abgeschlossen" name="appPracticalSemesterDone" checked={this.state.appPracticalSemesterDone} onChange={this.handleCheckChange}/>
+                            <Form.Check label="Die Anerkennung der Praxisphase wurde beantragt oder ist bereits erfolgt." name="appPracticalSemesterAcknowledgement" checked={this.state.appPracticalSemesterAcknowledgement} onChange={this.handleCheckChange} />
+                            <Form.Check label="Sämtliche erforderliche Module des Bachelor- oder Masterstudiums sind erfolgreich abgeschlossen." name="appModuleRequirementsMet" checked={this.state.appModuleRequirementsMet} onChange={this.handleCheckChange} />
+                            <Form.Check label="Der erfolgreiche Abschluss der in Anlage 1 angeführten Module steht noch aus" name="appAttachment1" checked={this.state.appAttachment1} onChange={this.handleCheckChange} />
+                            <Form.Check label="Die Anlage 2 (mein Vorschlag zum Thema meiner Abschlussarbeit und des/der Betreuers*in) ist beigefügt." name="appAttachment2" checked={this.state.appAttachment2} onChange={this.handleCheckChange} />
                         </Form.Group>
                         <Form.Group controlId="declarationOfWaive" className="spaceTop">
                             <Form.Label className="mainApplicationLabel">Optionale Verzichterklärung</Form.Label>
@@ -243,7 +243,7 @@ class MainApplicationEditPage extends Component{
                         <Form.Group controlId="SubmitOrLeave" className="spaceTop spaceBottom">
                             <div className="itemInlineRow">
                                 <Button className="standardButton buttonWidth aCancel" onClick={this.handleOpen}>Abbrechen</Button>
-                                <Button className="standardButton buttonWidth" onClick={this.handleSaveReal}>Speichern</Button>
+                                <Button className="standardButton buttonWidth" onClick={this.handleSave}>Speichern</Button>
                             </div>
                         </Form.Group>
                     </Form>
@@ -263,7 +263,7 @@ class MainApplicationEditPage extends Component{
 const mapDispatchToProps = dispatch => bindActionCreators({
     moveToLanding: navActions.getNavLandingAction,
     saveApplication: appActions.saveApplicationAction,
-    getapplication: appActions.getApplicationAction,
+    getApplication: appActions.getApplicationAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainApplicationEditPage);
