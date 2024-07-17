@@ -114,6 +114,12 @@ h1, h2, h3 {
   background-color: #ffffff;
   color: var(--blue);
 }
+.standardButton:disabled{
+  background-color: #3375b5;
+}
+.standardButton:disabled:hover{
+  color: #ffffff;
+}
 
 .linkStyleButton{
   border: none;

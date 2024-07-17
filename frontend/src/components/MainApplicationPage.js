@@ -108,7 +108,7 @@ class MainApplicationPage extends Component{
     handleSave(e){
         const{appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo } =  this.state;
         const{saveApplication} = this.props;
-        saveApplication(appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo );
+        saveApplication(appMatrikel, appDepartment, appBachelor, appMaster, appPracticalSemesterDone, appPracticalSemesterAcknowledgement, appModuleRequirementsMet, appAttachment1, appAttachment2, appNoTopicProposition, dateFrom, dateTo);
     }
     handleClose(){
         this.dialogRef.current.close();
@@ -244,7 +244,7 @@ class MainApplicationPage extends Component{
                         </Form.Group>
                         <Form.Group controlId="courseInput" className="spaceTop">
                             <Form.Label className="mainApplicationLabel">In welchem Studiengang möchtest du den Kurs anlegen?</Form.Label>
-                            <select className="textInput tiWide" name="appCourse" value={this.state.appCourse} onChange={this.handleInputChange} >
+                            <select className="textInput tiWide spaceTop" name="appCourse" value={this.state.appCourse} onChange={this.handleInputChange} >
                                 <option value="">Bitte wähle eine Option!</option>
                                 <option value="Medieninformatik">Medieninformatik</option>
                             </select>
