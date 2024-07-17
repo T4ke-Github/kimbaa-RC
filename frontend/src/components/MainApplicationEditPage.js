@@ -304,6 +304,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     moveToLanding: navActions.getNavLandingAction,
     saveApplication: appActions.saveApplicationAction,
     getApplication: appActions.getApplicationAction,
+    updateUserdetails: appActions.putUserdetailsAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainApplicationEditPage);
