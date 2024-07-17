@@ -11,7 +11,9 @@ import Form from "react-bootstrap/Form";
 
 const mapStateToProps = state => {
     return{
-        userResource: state.auth.userResource
+        userResource: state.auth.userResource,
+        application: state.app.application,
+        userToken: state.auth.userToken,
     }
 }
 
@@ -21,16 +23,16 @@ class UserEditPage extends Component{
         super(props);
         
         let userResource = this.props.userResource ? this.props.userResource : "missing";
+        let applicationreal = typeof this.props.application === 'string' ? JSON.parse(this.props.application) : this.props.application;
 
-        //let address = userResource.address ? userResource.address : ",  ";
 
         this.state = {
             uEUserId: userResource._id ? userResource._id : userResource.id,
             uEstudentId: userResource.studentId ? userResource.studentId : "",
             uEName: userResource.name ? userResource.name : "",
-            uEStreet: "",
-            uEPlace: "",
-            uEPostal: "",
+            uEStreet: applicationreal.userDetails.street ,
+            uEPlace: applicationreal.userDetails.city ,
+            uEPostal: applicationreal.userDetails.postalCode ,
             uEEmail: userResource.email ? userResource.email : "",
             uECourse: userResource.course ? userResource.course : "",
         }
@@ -40,7 +42,15 @@ class UserEditPage extends Component{
     }
 
     componentDidMount(){
+        const { uEstudentId } = this.state;
+        this.props.getApplication(uEstudentId);
         logger.info("UserEditPage.js mounted!");
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.application !== this.props.application && this.props.application) {
+            console.log('New application data received:', this.props.application);
+        }
     }
 
     handleInputChange(e){
@@ -50,12 +60,13 @@ class UserEditPage extends Component{
 
     async handleSaveUser(e) {
         e.preventDefault(); // Prevent default form submission behavior
-        const { uEstudentId, uEName, uEEmail, uECourse, uEUserId } = this.state;
+        const { uEstudentId, uEName, uEEmail, uECourse, uEUserId, uEStreet, uEPlace, uEPostal } = this.state;
         const { saveUserAction, refreshUE } = this.props;
         
         try {
             // Await saveUser to ensure it completes before calling refreshResource
             await saveUserAction(uEstudentId, uEName, uEEmail, uECourse, uEUserId);
+            await this.props.updateUserdetails(uEstudentId , uEStreet, uEPlace, uEPostal);
             await refreshUE(uEstudentId);
         } catch (error) {
             console.error("Error saving user and refreshing resource:", error);
@@ -160,6 +171,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     moveToLanding: navActions.getNavLandingAction,
     saveUserAction: appActions.saveUserAction,
     refreshUE: appActions.refreshUE,
+    updateUserdetails: appActions.putUserdetailsAction,
+    getApplication: appActions.getApplicationAction,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEditPage);

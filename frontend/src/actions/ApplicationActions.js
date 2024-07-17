@@ -65,9 +65,6 @@ function saveApplication( studentId, department, bachelor, master, practicalDone
 export const USER_PENDING = "USER_PENDING";
 export const USER_FAILURE = "USER_FAILURE";
 export const USER_SUCCESS = "USER_SUCCESS";
-export const REFRESH_SUCCESS = "REFRESH_SUCCESS";
-export const REFRESH_FAILURE = "REFRESH_FAILURE";
-
 
 function getSaveUserPending(){ return { type: USER_PENDING } }
 function getSaveUserFail(err){ return { type: USER_FAILURE, err: err } }
@@ -83,35 +80,6 @@ export const saveUserAction = (studentId, name, email, course, id) => async (dis
         dispatch(getSaveUserFail(err));
         throw err; // Ensure the error is thrown to be caught in handleSaveUser
     }
-}
-
-function getRefreshResourceFailure(){ return { type: REFRESH_FAILURE, payload: 'landing' } }
-function getRefreshResourceSuccess(userResource){ return { type: REFRESH_SUCCESS, userResource: userResource, payload: 'landing' } }
-
-export const refreshUE = (studentId) => async (dispatch) => {
-    try {
-        const resource = await refreshUserResource(studentId);
-        Cookies.set('currentPage', 'landing', { sameSite: 'Strict' });
-        dispatch(getRefreshResourceSuccess(resource));
-    } catch (err) {
-        dispatch(getRefreshResourceFailure(err));
-        throw err; // Ensure the error is thrown to be caught in handleSaveUser
-    }
-}
-
-function refreshUserResource(studentId){
-    const requestOptions = {
-        method: 'GET',
-    }
-
-    console.log('fetching: ' + BACKEND_URL + '/api/user/' + studentId)
-    return fetch(BACKEND_URL + '/api/user/' +studentId, requestOptions)
-        .then(response => {
-            if(!response.ok){
-                throw new Error('Error while refreshing userResource');
-            }
-            return response.json();
-        })
 }
 
 function saveUser( studentId, name, email, course , id){
@@ -135,7 +103,8 @@ function saveUser( studentId, name, email, course , id){
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(ApplicationForm)
+        body: JSON.stringify(ApplicationForm),
+        credentials: 'include'
     }
 
     console.log("fetching: " + BACKEND_URL + '/api/user/'+ studentId)
@@ -148,41 +117,34 @@ function saveUser( studentId, name, email, course , id){
         })
 }
 
+export const REFRESH_SUCCESS = "REFRESH_SUCCESS";
+export const REFRESH_FAILURE = "REFRESH_FAILURE";
 
+function getRefreshResourceFailure(){ return { type: REFRESH_FAILURE, payload: 'landing' } }
+function getRefreshResourceSuccess(userResource){ return { type: REFRESH_SUCCESS, userResource: userResource, payload: 'landing' } }
 
-export const APPLICATION_DELETE_PENDING = "APPLICATION_DELETE_PENDING";
-export const APPLICATION_DELETE_FAILURE = "APPLICATION_DELETE_FAILURE";
-export const APPLICATION_DELETE_SUCCESS = "APPLICATION_DELETE_SUCCESS";
-
-
-function getDeleteApplicationPending(){ return { type: APPLICATION_DELETE_PENDING } }
-function getDeleteApplicationFail(err){ return { type: APPLICATION_DELETE_FAILURE, err: err } }
-function getDeleteApplicationSuccess(){ return { type: APPLICATION_DELETE_SUCCESS,  payload: 'landing' } }
-
-export function deleteApplicationAction( id){
-    return dispatch => {
-        dispatch(getDeleteApplicationPending());
-        deleteApplication(id)
-            .then(applicationForm => {
-                Cookies.set('currentPage', 'Landing')
-                dispatch(getDeleteApplicationSuccess())
-            })
-            .catch(err => {
-                dispatch(getDeleteApplicationFail(err))
-            })
+export const refreshUE = (studentId) => async (dispatch) => {
+    try {
+        const resource = await refreshUserResource(studentId);
+        Cookies.set('currentPage', 'landing', { sameSite: 'Strict' });
+        dispatch(getRefreshResourceSuccess(resource));
+    } catch (err) {
+        dispatch(getRefreshResourceFailure(err));
+        throw err; // Ensure the error is thrown to be caught in handleSaveUser
     }
 }
 
-function deleteApplication(studentId){
+function refreshUserResource(studentId){
     const requestOptions = {
-        method: 'DELETE',
+        method: 'GET',
         credentials: 'include'
     }
 
-    return fetch('http://localhost:8081/api/antragzulassung/'+ studentId, requestOptions)
+    console.log('fetching: ' + BACKEND_URL + '/api/user/' + studentId)
+    return fetch(BACKEND_URL + '/api/user/' +studentId, requestOptions)
         .then(response => {
             if(!response.ok){
-                throw new Error('Error while deleting Application');
+                throw new Error('Error while refreshing userResource');
             }
             return response.json();
         })
@@ -319,4 +281,56 @@ function getPdfAntrag(studentId) {
             logger.info("got pdfAntrag successfully!");
             return response.blob();
         });
+}
+
+
+export const PUT_USERDETAILS_PENDING = "PUT_USERDETAILS_PENDING";
+export const PUT_USERDETAILS_FAILURE = "PUT_USERDETAILS_FAILURE";
+export const PUT_USERDETAILS_SUCCESS = "PUT_USERDETAILS_SUCCESS";
+
+function getPutUserdetailsPending(){ return { type: PUT_USERDETAILS_PENDING } }
+function getPutUserdetailsFail(err){ return { type: PUT_USERDETAILS_FAILURE, err: err } }
+function getPutUserdetailsSuccess(){ return { type: PUT_USERDETAILS_SUCCESS,  } }
+
+export function putUserdetailsAction(studentId, street, city, postalCode){
+    return dispatch => {
+        dispatch(getPutUserdetailsPending());
+        putUserdetails(studentId, street, city, postalCode )
+            .then(() => {
+                dispatch(getPutUserdetailsSuccess())
+            })
+            .catch(err => {
+                dispatch(getPutUserdetailsFail(err))
+            })
+    }
+}
+
+function putUserdetails( studentId, street, city, postalCode ){
+    const userDetails = { 
+        //"lastName": "string", 
+        //"firstName": "string", 
+        street: street, 
+        city: city, 
+        postalCode: postalCode, 
+        //"country": "string", 
+        //"phone": "string" 
+    }
+
+    const requestOptions = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userDetails),
+        credentials: 'include'
+    }
+
+    console.log("fetching:" + BACKEND_URL + '/api/userdetails/' + studentId)
+    return fetch(BACKEND_URL + '/api/userdetails/' + studentId, requestOptions)
+        .then(response => {
+            if(!response.ok){
+                throw new Error('Error while updating Userdetails ');
+            }
+            return response.json();
+        })
 }
