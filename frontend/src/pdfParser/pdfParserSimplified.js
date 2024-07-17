@@ -426,11 +426,9 @@ export async function quickParser(arrayBuffer, userId) {
     for(let key in parsedData){
         if(parsedData.hasOwnProperty(key)){
             const item = parsedData[key];
-            logger.info(item);
 
             if(item.hasOwnProperty('creator') && item.solved === true){
                 returnArray.push(item);
-                logger.info("Pushed");
             }
         }
     }
