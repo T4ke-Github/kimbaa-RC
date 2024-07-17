@@ -3,7 +3,6 @@ import { Button, Card } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import { connect } from "react-redux";
 import logger from "../logging/logger";
-
 import { bindActionCreators } from "redux";
 import * as navActions from '../actions/NavActions';
 import * as appActions from '../actions/ApplicationActions';
@@ -37,6 +36,12 @@ class LandingPage extends Component {
         logger.info("LandingPage.js mounted!");
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.application !== this.props.application && this.props.application) {
+            console.log('New application data received:', this.props.application);
+        }
+    }
+
     async handleFileChange(event){
         const uploadedFile = event.target.files[0];
         let userId = this.props.userResource._id;
@@ -52,13 +57,16 @@ class LandingPage extends Component {
     render(){
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
         let yourApplication = <></>;
-        if(this.props.application){
+        let application = typeof this.props.application === 'string' ? JSON.parse(this.props.application) : this.props.application;
+        if(application){
+            console.log("Look: " + application);
+            const department = application.department; 
             yourApplication =   <Card style={{ width: '18rem' }} className="card whiteText">
+
                                     <Card.Img variant="top" src="kimbaa_logo_256.png" />
                                     <Card.Body>
                                         <Card.Title>
-                                            {this.state.department}
-                                            {this.props.application._id || "ID not found"}
+                                            {department}
                                         </Card.Title>
                                         <Card.Text >
                                             <Button className="cardButton" onClick={this.props.editApplication} > Antrag bearbeiten</Button> 
@@ -118,5 +126,3 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
-
-
