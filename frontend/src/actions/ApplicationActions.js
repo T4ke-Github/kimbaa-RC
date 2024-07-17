@@ -1,11 +1,11 @@
 import Cookies from "js-cookie";
+import logger from "../logging/logger";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 
 export const APPLICATION_PENDING = "APPLICATION_PENDING";
 export const APPLICATION_FAILURE = "APPLICATION_FAILURE";
 export const APPLICATION_SUCCESS = "APPLICATION_SUCCESS";
-
 
 function getSaveApplicationPending(){ return { type: APPLICATION_PENDING } }
 function getSaveApplicationFail(err){ return { type: APPLICATION_FAILURE, err: err } }
@@ -226,6 +226,49 @@ function getApplication( studentId ){
             if(!response.ok){
                 throw new Error('Error getting Application');
             }
+            return response.json();
+        })
+}
+
+// This Block deals with the uploading of the Module List on the Landing Page
+export const MODULE_UPDATE_PENDING = "MODULE_UPDATE_PENDING";
+export const MODULE_UPDATE_SUCCESS = "MODULE_UPDATE_SUCCESS";
+export const MODULE_UPDATE_FAILURE = "MODULE_UPDATE_FAILURE";
+
+function getModuleUpdatePending(){ return { type: MODULE_UPDATE_PENDING } };
+function getModuleUpdateFailure(err){ return { type: MODULE_UPDATE_FAILURE, err: err } };
+function getModuleUpdateSuccess(){ return { type: MODULE_UPDATE_SUCCESS } };
+
+export function updateModuleAction(filteredModules){
+    return dispatch => {
+        dispatch(getModuleUpdatePending());
+        updateModule(filteredModules)
+            .then(() => {
+                dispatch(getModuleUpdateSuccess());
+            })
+            .catch(err => {
+                dispatch(getModuleUpdateFailure(err));
+            })
+    }
+}
+
+function updateModule(filteredModules){
+    const requestOptions = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(filteredModules),
+    }
+
+    console.log("fetching:" + BACKEND_URL + '/api/modul/update')
+    return fetch(BACKEND_URL + '/api/modul/update', requestOptions)
+        .then(response => {
+            if(!response.ok){
+                throw new Error('Error updating Module (ApplicationActions.js)');
+            }
+            logger.info("Uploaded module list successfully!");
             return response.json();
         })
 }

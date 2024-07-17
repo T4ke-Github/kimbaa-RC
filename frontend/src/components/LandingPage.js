@@ -39,11 +39,13 @@ class LandingPage extends Component {
 
     async handleFileChange(event){
         const uploadedFile = event.target.files[0];
+        let userId = this.props.userResource._id;
         if(uploadedFile){
             this.setState({appAttachmentFile: uploadedFile});
             const arrayBuffer = await uploadedFile.arrayBuffer();
-            const parsedData = await quickParser(arrayBuffer);
-            logger.info(parsedData);
+            const parsedData = await quickParser(arrayBuffer, userId);
+            logger.info("Uploading: " + parsedData);
+            this.props.updateModules(parsedData);
         }
     }
 
@@ -51,8 +53,7 @@ class LandingPage extends Component {
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
         let yourApplication = <></>;
         if(this.props.application){
-            console.log("Look: " + this.props.application);
-            yourApplication =   <Card style={{ width: '18rem' }} className="card">
+            yourApplication =   <Card style={{ width: '18rem' }} className="card whiteText">
                                     <Card.Img variant="top" src="kimbaa_logo_256.png" />
                                     <Card.Body>
                                         <Card.Title>
@@ -74,7 +75,7 @@ class LandingPage extends Component {
                     <p> Schön, dich zu sehen, {name}!</p>
                 </Container>
                 <Container className="fGrid">
-                    <Card style={{ width: '18rem' }} className="card">
+                    <Card style={{ width: '18rem' }} className="card whiteText">
                         <Card.Body>
                             <Card.Title>
                                 <Button className="cardButton" onClick={this.props.makeApplication}> Neuen Antrag Anlegen</Button>
@@ -82,16 +83,17 @@ class LandingPage extends Component {
                             <Card.Text>Hier kannst du einen neuen Bachelorantrag erstellen!</Card.Text>
                         </Card.Body>
                     </Card>
-                    <Card style={{ width: '18rem' }} className="card">
+                    <Card style={{ width: '18rem' }} className="card whiteText">
                         <Card.Body>
-                            <Card.Title>Module hochladen</Card.Title>
-                            <input type="file" onChange={this.handleFileChange} accept=".pdf" />
+                            <div className="fLandingModUpload">
+                                <input type="file" onChange={this.handleFileChange} accept=".pdf" />
+                            </div>
                             <Card.Text>
                                 Hier kannst du Module sowie Creditpoints importieren
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                    <Card style={{ width: '18rem' }} className="card">
+                    <Card style={{ width: '18rem' }} className="card whiteText">
                         <Card.Body>
                             <Card.Title><Button className="cardButton" onClick={this.props.userUpdate}>Nutzerdaten bearbeiten</Button> </Card.Title>
                             <Card.Text>
@@ -112,6 +114,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     deleteApplication: appActions.deleteApplicationAction,
     editApplication: navActions.getNavApplicationEditPageAction,
     getApplication: appActions.getApplicationAction,
+    updateModules: appActions.updateModuleAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
