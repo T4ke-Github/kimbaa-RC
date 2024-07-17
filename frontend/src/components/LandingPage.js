@@ -70,7 +70,8 @@ class LandingPage extends Component {
                                         </Card.Title>
                                         <Card.Text >
                                             <Button className="cardButton" onClick={this.props.editApplication} > Antrag bearbeiten</Button> 
-                                            <Button className="cardButton" onClick={this.props.deleteApplication} > Antrag löschen</Button>
+                                            <Button className="cardButton" onClick={this.props.deleteApplication(this.state.appMatrikel)} > Antrag löschen</Button>
+                                            <Button className="cardButton" onClick={this.props.getPDFAntrag(this.state.appMatrikel)}> Antrag Drucken</Button>
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
@@ -123,6 +124,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     editApplication: navActions.getNavApplicationEditPageAction,
     getApplication: appActions.getApplicationAction,
     updateModules: appActions.updateModuleAction,
+    getPDFAntrag: appActions.getPdfAntragAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);

@@ -273,3 +273,50 @@ function updateModule(filteredModules){
             return response.json();
         })
 }
+
+export const GET_PDFANTRAG_PENDING = "GET_PDFANTRAG_PENDING";
+export const GET_PDFANTRAG_SUCCESS = "GET_PDFANTRAG_SUCCESS";
+export const GET_PDFANTRAG_FAILURE = "GET_PDFANTRAG_FAILURE";
+
+function getPDFAntragPending(){ return { type: GET_PDFANTRAG_PENDING } };
+function getPDFAntragFailure(err){ return { type: GET_PDFANTRAG_FAILURE, err: err } };
+function getPDFAntragSuccess(blob){ return { type: GET_PDFANTRAG_SUCCESS, payload:blob } };
+
+export function getPdfAntragAction(studentId) {
+    return dispatch => {
+        dispatch(getPDFAntragPending());
+        getPdfAntrag(studentId)
+            .then(blob => {
+                dispatch(getPDFAntragSuccess(blob));
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.click();
+            })
+            .catch(err => {
+                dispatch(getPDFAntragFailure(err));
+            });
+    };
+}
+
+function getPdfAntrag(studentId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    };
+
+    console.log("fetching:" + BACKEND_URL + "/api/pdfAntrag/" + studentId);
+    return fetch(BACKEND_URL + '/api/pdfAntrag/' + studentId, requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error getting pdfAntrag (ApplicationActions.js)');
+            }
+            logger.info("got pdfAntrag successfully!");
+            return response.blob();
+        });
+}
