@@ -1,50 +1,37 @@
-#kimbaa stack
----
-version: "3"
+version: "3.9"
 
 services:
-
   frontend:
     build:
       context: frontend
-    develop:
-      watch:
-        - action: sync
-          path: ./frontend
-          target: /frontend #TODO target path
-          ignore:
-            - ./frontend/package.json
-        - action: rebuild
-          path: ./backend/package.json
     ports:
-      - 3000:3000
+      - "3000:3000"
     environment:
-    # - HOSTNAME=kimbaa.local
-    - BPORT=8081
+      - HOSTNAME=localhost
+      - HTTP_PORT=3000
+      - HTTPS_PORT=3443
+      - HTTPS=true
+      - BACKEND_URL=https://localhost:3443 # oder die entsprechende URL
     networks:
       - loki
 
   backend:
     build:
       context: backend
-    develop:
-      watch:
-        - action: sync
-          path: ./backend
-          target: /backend #TODO target path
-          ignore:
-            - ./backend/package.json
-            - ./backend/tests
-            - ./backend/testConfig
-        - action: rebuild
-          path: ./backend/package.json
     ports:
-      - 8081:3000
+      - "8081:3000"
+      - "3443:3443"
     environment:
       - DB_CONNECTION_STRING=mongodb://root:example@mongo:27017/
       - HTTP_PORT=3000
-      # - HOSTNAME=kimbaa.local
       - FRONTEND_PORT=3000
+      - USE_SSL=true
+      - HTTPS_PORT=3443
+      - SSL_KEY_FILE=/backend/cert/private.key
+      - SSL_CRT_FILE=/backend/cert/public.crt
+    volumes:
+      - ./backend:/backend
+      - ./backend/cert:/backend/cert
     depends_on:
       - mongo
     networks:
@@ -53,7 +40,6 @@ services:
   mongo:
     container_name: mongo-db
     image: mongo
-    # image: mongodb-raspberrypi4-unofficial-r7.0.4
     restart: always
     ports:
       - '27017:27017'

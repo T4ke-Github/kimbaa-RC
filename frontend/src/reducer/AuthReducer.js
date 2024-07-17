@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 const initialState = {
     loggedIn: Cookies.get('loggedIn') === 'true' || false,
     userResource: Cookies.get('userResource') ? JSON.parse(Cookies.get('userResource')) : null,
+    userToken: Cookies.get('jwt') ? Cookies.get('jwt') : null,
     userAlreadyExists: false,
     err: null
 }
@@ -18,6 +19,7 @@ function authReducer(state = initialState, action){
                 ...state,
                 loggedIn: true,
                 userResource: action.userResource,
+                userToken: action.userToken,
             }
         case authActions.REGISTRATION_FAILURE_USER_EXISTS:
             return{
@@ -30,10 +32,12 @@ function authReducer(state = initialState, action){
                 userAlreadyExists: false,
             }
         case navActions.LOGIN:
+            Cookies.remove('userResource');
+            Cookies.remove('jwt');
             return{
                 ...state,
                 loggedIn: false,
-                userResource: null
+                userResource: null,
             }
         case appActions.REFRESH_SUCCESS:
             return{

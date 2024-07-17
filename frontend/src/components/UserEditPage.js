@@ -1,5 +1,6 @@
 import React, { Component} from "react";
 import { connect } from "react-redux";
+import logger from "../logging/logger";
 
 import * as navActions from '../actions/NavActions';
 import * as appActions from "../actions/ApplicationActions";
@@ -36,6 +37,10 @@ class UserEditPage extends Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSaveUser = this.handleSaveUser.bind(this);
+    }
+
+    componentDidMount(){
+        logger.info("UserEditPage.js mounted!");
     }
 
     handleInputChange(e){

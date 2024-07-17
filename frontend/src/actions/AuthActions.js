@@ -1,6 +1,5 @@
 import Cookies from "js-cookie";
-import {BACKEND_URL} from '../index.js'
-
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const REGISTRATION_PENDING = "REGISTRATION_PENDING";
 export const REGISTRATION_FAILURE = "REGISTRATION_FAILURE";
@@ -11,16 +10,16 @@ export const LOGIN_PENDING = "LOGIN_PENDING";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 
-function getRegistrationPending(){ return { type: REGISTRATION_PENDING } }
-function getRegistrationFail(err){ return { type: REGISTRATION_FAILURE, err: err } }
-function getRegistrationFailUserExists(){ return { type: REGISTRATION_FAILURE_USER_EXISTS } }
-function getRegistrationSuccess(){ return { type: REGISTRATION_SUCCESS, payload: 'login' } }
+function getRegistrationPending() { return { type: REGISTRATION_PENDING } }
+function getRegistrationFail(err) { return { type: REGISTRATION_FAILURE, err: err } }
+function getRegistrationFailUserExists() { return { type: REGISTRATION_FAILURE_USER_EXISTS } }
+function getRegistrationSuccess() { return { type: REGISTRATION_SUCCESS, payload: 'login' } }
 
-function getLoginPending(){ return { type: LOGIN_PENDING } }
-function getLoginFail(err){ return { type: LOGIN_FAILURE, err: err } }
-function getLoginSuccess(user){ return { type: LOGIN_SUCCESS, userResource: user, payload: 'landing' } }
+function getLoginPending() { return { type: LOGIN_PENDING } }
+function getLoginFail(err) { return { type: LOGIN_FAILURE, err: err } }
+function getLoginSuccess(user, jwt) { return { type: LOGIN_SUCCESS, userResource: user, userToken: jwt, payload: 'landing' } }
 
-export function registerUserAction(matrikel, name, email, password){
+export function registerUserAction(matrikel, name, email, password) {
     return dispatch => {
         dispatch(getRegistrationPending());
         registerUser(matrikel, name, email, password)
@@ -30,20 +29,22 @@ export function registerUserAction(matrikel, name, email, password){
             })
             .catch(err => {
                 const errorMessage = err.message;
-                if(errorMessage === "User Already Exists"){
+                if (errorMessage === "User Already Exists") {
                     dispatch(getRegistrationFailUserExists())
-                }else{
+                } else {
                     dispatch(getRegistrationFail(err))
                 }
             })
     }
 }
-function registerUser(matrikel, name, email, password){
+
+function registerUser(matrikel, name, email, password) {
     const registrationForm = {
         name: name,
         password: password,
         studentId: matrikel,
-        email: email
+        email: email,
+        course: "Medieninformatik" // Fügen Sie den Kurs hier hinzu
     }
 
     const requestOptions = {
@@ -54,35 +55,37 @@ function registerUser(matrikel, name, email, password){
         body: JSON.stringify(registrationForm)
     }
 
-    console.log('fetching: '+ BACKEND_URL + '/api/user')
-    return fetch(BACKEND_URL + '/api/user', requestOptions)
+    console.log('fetching: ' + BACKEND_URL + '/api/user/register')
+    return fetch(BACKEND_URL + '/api/user/register', requestOptions)
         .then(response => {
-            if(!response.ok){
-                if(response.status === 400){
+            if (!response.ok) {
+                if (response.status === 400) {
                     throw new Error('User Already Exists');
                 }
-                throw new Error('Error while registrating');
+                throw new Error('Error while registering');
             }
             return response.json();
         })
 }
 
-export function loginAction(loginId, password){
+export function loginAction(loginId, password) {
     return dispatch => {
         dispatch(getLoginPending());
         login(loginId, password)
-            .then(user => {
+            .then(({ user, jwt }) => {
                 Cookies.set('currentPage', 'landing', { sameSite: 'Strict' });
                 Cookies.set('loggedIn', true, { sameSite: 'Strict' });
                 Cookies.set('userResource', JSON.stringify(user), { sameSite: 'Strict' });
-                dispatch(getLoginSuccess(user))
+                Cookies.set('jwt', jwt, { sameSite: 'Strict' }); // Store JWT token
+                dispatch(getLoginSuccess(user, jwt));
             })
             .catch(err => {
                 dispatch(getLoginFail(err))
             })
     }
 }
-function login(loginId, password){
+
+function login(loginId, password) {
     const loginData = {
         studentId: loginId,
         password: password
@@ -93,39 +96,19 @@ function login(loginId, password){
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(loginData)
+        body: JSON.stringify(loginData),
+        credentials: 'include'
     }
 
-    console.log('fetching: ' + BACKEND_URL + '/api/login/login')
-    return fetch(BACKEND_URL + '/api/login/login', requestOptions)
+    console.log('fetching: ' + BACKEND_URL + '/api/login')
+    return fetch(BACKEND_URL + '/api/login', requestOptions)
         .then(response => {
-            if(!response.ok){
+            if (!response.ok) {
                 throw new Error('Error logging in');
             }
             return response.json();
         })
         .then(data => {
-            return data.user;
+            return data;
         })
 }
-
-/*
-if login ok:
-    status code 200
-    body: userResource
-    loginResult
-*/
-
-export function deleteAntragAction(loginId, antrag){
-    console.log("placeholder delete " + antrag + loginId)
-}
-//function deleteAntrag(loginId, password){
-//    return "placeholder"
-//}
-
-export function editAntragAction(loginId, antrag){
-    console.log("placeholder edit " + antrag + loginId)
-}
-//function editAntrag(loginId, password){
-//    return "placeholder"
-//}
