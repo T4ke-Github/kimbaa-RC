@@ -1,6 +1,5 @@
 import * as pdfjsLib from 'pdfjs-dist/build/pdf';
 import PDFJSWorker from 'pdfjs-dist/legacy/build/pdf.worker.entry'
-import logger from '../logging/logger';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJSWorker;
 
