@@ -278,7 +278,7 @@ class MainApplicationEditPage extends Component{
                         </Form.Group>
                         <Form.Group controlId="declarationOfWaive" className="spaceTop">
                             <Form.Label className="mainApplicationLabel">Optionale Verzichterklärung</Form.Label>
-                            <Form.Check label={<>Einen Vorschlag für das Thema und den/die Betreuer*in meiner Abschlussarbeit unterbreite ich nicht. <b>Ich wünsche die Vergabe durch den Prüfungsausschuss</b></>} name="appNoTopicProposition" value={this.state.appNoTopicProposition} onChange={this.handleCheckChange} />
+                            <Form.Check label={<>Einen Vorschlag für das Thema und den/die Betreuer*in meiner Abschlussarbeit unterbreite ich nicht. <b>Ich wünsche die Vergabe durch den Prüfungsausschuss</b></>} name="appNoTopicProposition" checked={this.state.appNoTopicProposition} onChange={this.handleCheckChange} />
                         </Form.Group>
                         <Form.Group controlId="SubmitOrLeave" className="spaceTop spaceBottom">
                             <div className="itemInlineRow">

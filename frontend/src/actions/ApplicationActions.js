@@ -90,7 +90,7 @@ function saveUser( studentId, name, email, course , id){
         email: email,
         //createdAt: string,
         //updatedAt: string,
-        //course: course,
+        course: course,
     }
 
     console.log('ApplicationForm:', ApplicationForm);
