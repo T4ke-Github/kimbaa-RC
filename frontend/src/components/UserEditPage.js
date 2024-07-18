@@ -30,12 +30,12 @@ class UserEditPage extends Component{
             uEUserId: userResource._id ? userResource._id : userResource.id,
             uEstudentId: userResource.studentId ? userResource.studentId : "",
             uEName: userResource.name ? userResource.name : "",
-            uEStreet: applicationreal.userDetails.street ,
-            uEPlace: applicationreal.userDetails.city ,
-            uEPostal: applicationreal.userDetails.postalCode ,
+            uEStreet: applicationreal.userDetails ? applicationreal.userDetails.street ? applicationreal.userDetails.street : "" : "",
+            uEPlace: applicationreal.userDetails ? applicationreal.userDetails.city ? applicationreal.userDetails.city : "" : "",
+            uEPostal: applicationreal.userDetails ? applicationreal.userDetails.postalCode ? applicationreal.userDetails.postalCode : "" : "",
             uEEmail: userResource.email ? userResource.email : "",
             uECourse: userResource.course ? userResource.course : "",
-            uEPhone: applicationreal.userDetails.phone,
+            uEPhone: applicationreal.userDetails ? applicationreal.userDetails.phone ? applicationreal.userDetails.phone : "" : "",
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
