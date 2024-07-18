@@ -3,7 +3,6 @@ import { Button, Card } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import { connect } from "react-redux";
 import logger from "../logging/logger";
-
 import { bindActionCreators } from "redux";
 import * as navActions from '../actions/NavActions';
 import * as appActions from '../actions/ApplicationActions';
@@ -26,15 +25,32 @@ class LandingPage extends Component {
         this.state = {
             appMatrikel: userResource.studentId ? userResource.studentId : "",
             appAttachmentFile: null,
+            course: userResource.course ? userResource.course : "",
         }
 
         this.handleFileChange = this.handleFileChange.bind(this);
+        this.handlePrintApplication = this.handlePrintApplication.bind(this);
+
     }
 
     componentDidMount(){
         const { appMatrikel } = this.state;
+
         this.props.getApplication(appMatrikel);
         logger.info("LandingPage.js mounted!");
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.application !== this.props.application && this.props.application) {
+            console.log('New application data received:', this.props.application);
+        }
+    }
+
+    handlePrintApplication(){
+        const { appMatrikel } = this.state;
+        const { getPDFAntrag } = this.props;
+
+        getPDFAntrag(appMatrikel);
     }
 
     async handleFileChange(event){
@@ -52,17 +68,16 @@ class LandingPage extends Component {
     render(){
         let name = this.props.userResource && this.props.userResource.name ? this.props.userResource.name : "John Default";
         let yourApplication = <></>;
-        if(this.props.application){
+        let application = typeof this.props.application === 'string' ? JSON.parse(this.props.application) : this.props.application;
+        if(application){
             yourApplication =   <Card style={{ width: '18rem' }} className="card whiteText">
-                                    <Card.Img variant="top" src="kimbaa_logo_256.png" />
                                     <Card.Body>
                                         <Card.Title>
-                                            {this.state.department}
-                                            {this.props.application._id || "ID not found"}
+                                            {this.state.course}
                                         </Card.Title>
                                         <Card.Text >
                                             <Button className="cardButton" onClick={this.props.editApplication} > Antrag bearbeiten</Button> 
-                                            <Button className="cardButton" onClick={this.props.deleteApplication} > Antrag löschen</Button>
+                                            <Button className="cardButton" onClick={this.handlePrintApplication}> Antrag Drucken</Button>
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>
@@ -111,12 +126,10 @@ class LandingPage extends Component {
 const mapDispatchToProps = dispatch => bindActionCreators({
     makeApplication: navActions.getNavApplicationPageAction,
     userUpdate: navActions.getNavUserEditPageAction,
-    deleteApplication: appActions.deleteApplicationAction,
     editApplication: navActions.getNavApplicationEditPageAction,
     getApplication: appActions.getApplicationAction,
     updateModules: appActions.updateModuleAction,
+    getPDFAntrag: appActions.getPdfAntragAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
-
-

@@ -11,7 +11,9 @@ import Form from "react-bootstrap/Form";
 
 const mapStateToProps = state => {
     return{
-        userResource: state.auth.userResource
+        userResource: state.auth.userResource,
+        application: state.app.application,
+        userToken: state.auth.userToken,
     }
 }
 
@@ -21,26 +23,49 @@ class UserEditPage extends Component{
         super(props);
         
         let userResource = this.props.userResource ? this.props.userResource : "missing";
+        let applicationreal = typeof this.props.application === 'string' ? JSON.parse(this.props.application) : this.props.application;
 
-        //let address = userResource.address ? userResource.address : ",  ";
 
         this.state = {
             uEUserId: userResource._id ? userResource._id : userResource.id,
             uEstudentId: userResource.studentId ? userResource.studentId : "",
             uEName: userResource.name ? userResource.name : "",
-            uEStreet: "",
-            uEPlace: "",
-            uEPostal: "",
+            uEStreet: applicationreal.userDetails ? applicationreal.userDetails.street ? applicationreal.userDetails.street : "" : "",
+            uEPlace: applicationreal.userDetails ? applicationreal.userDetails.city ? applicationreal.userDetails.city : "" : "",
+            uEPostal: applicationreal.userDetails ? applicationreal.userDetails.postalCode ? applicationreal.userDetails.postalCode : "" : "",
             uEEmail: userResource.email ? userResource.email : "",
             uECourse: userResource.course ? userResource.course : "",
+            uEPhone: applicationreal.userDetails ? applicationreal.userDetails.phone ? applicationreal.userDetails.phone : "" : "",
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSaveUser = this.handleSaveUser.bind(this);
+        this.splitName = this.splitName.bind(this);
     }
 
     componentDidMount(){
+        const { uEstudentId } = this.state;
+        this.props.getApplication(uEstudentId);
         logger.info("UserEditPage.js mounted!");
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.application !== this.props.application && this.props.application) {
+            console.log('New application data received:', this.props.application);
+        }
+    }
+
+    splitName(name) {
+        const parts = name.split(' ');
+        if (parts.length > 2) {
+            const firstName = parts.slice(0, parts.length - 1).join(' ');
+            const lastName = parts[parts.length - 1];
+            return [firstName, lastName];
+        }
+        if (parts.length === 2) {
+            return parts;
+        }
+        return [name, ''];
     }
 
     handleInputChange(e){
@@ -50,12 +75,13 @@ class UserEditPage extends Component{
 
     async handleSaveUser(e) {
         e.preventDefault(); // Prevent default form submission behavior
-        const { uEstudentId, uEName, uEEmail, uECourse, uEUserId } = this.state;
+        const { uEstudentId, uEName, uEEmail, uECourse, uEUserId, uEStreet, uEPlace, uEPostal , uEPhone} = this.state;
         const { saveUserAction, refreshUE } = this.props;
-        
+        const [firstName, lastName] = this.splitName(uEName);
         try {
             // Await saveUser to ensure it completes before calling refreshResource
             await saveUserAction(uEstudentId, uEName, uEEmail, uECourse, uEUserId);
+            await this.props.updateUserdetails(uEstudentId , uEStreet, uEPlace, uEPostal,uEPhone, firstName, lastName);
             await refreshUE(uEstudentId);
         } catch (error) {
             console.error("Error saving user and refreshing resource:", error);
@@ -160,6 +186,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     moveToLanding: navActions.getNavLandingAction,
     saveUserAction: appActions.saveUserAction,
     refreshUE: appActions.refreshUE,
+    updateUserdetails: appActions.putUserdetailsAction,
+    getApplication: appActions.getApplicationAction,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEditPage);

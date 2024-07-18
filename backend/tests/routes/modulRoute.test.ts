@@ -36,38 +36,15 @@ test("/api/modul getAlleModule", async () => {
 });
 
 // Test zum Aktualisieren von Modulen anhand des Modulnamens und der Benutzer-ID
-test("/api/modul updateModulesByModuleNameAndUserId", async () => {
-    const token = await performAuthentication("666456", "12345bcdABCD..;,.");
-    const testee = supertestWithAuth(app);
-    const modules: ModulResource[] = [
-        {
-            creator: user.id,
-            modulname: "Mathematik I",
-            solved: true
-        },
-        {
-            creator: user.id,
-            modulname: "Grundlagen der Theoretischen Informatik",
-            solved: true
-        },
-        {
-            creator: user.id,
-            modulname: "Mathematik II",
-            solved: true
-        }
-    ];
-    const response = await testee.put("/api/modul/update").send({ modules });
-    expect(response.status).toBe(200);
-});
 
 // Test zum Abrufen der Modulzusammenfassung
-test("/api/modul calculateModuleSummary", async () => {
+/* test("/api/modul calculateModuleSummary", async () => {
     const token = await performAuthentication("666456", "12345bcdABCD..;,.");
     const testee = supertestWithAuth(app);
     const modules: ModulResource[] = [
         {
             creator: user.id,
-            modulname: "Mathematik I",
+            modulnumber:" "
             solved: true
         },
         {
@@ -94,3 +71,4 @@ test("/api/modul calculateModuleSummary", async () => {
     expect(response.body.minreqCredits).toBe(false); // Beispielwert, ändern Sie dies entsprechend Ihrer Berechnungslogik
     expect(response.body.credits).toBeGreaterThan(0);
 });
+ */

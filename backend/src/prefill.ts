@@ -48,7 +48,7 @@ export async function prefillDB(): Promise<{ user?: UserResource | IUser, Antrag
         const application = await antragZulassungService.createApplication({
             creator: user.id?.toString(),
             studentid: user.studentId,
-            department: "Informatik",
+            department: "Fachbereich VI",
             bachelor: true,
             master: false,
             userDetails: {

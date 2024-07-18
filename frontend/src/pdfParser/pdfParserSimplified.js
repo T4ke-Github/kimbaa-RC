@@ -40,7 +40,7 @@ export async function quickParser(arrayBuffer, userId) {
         if (result === "-404") {
             solved = false;
         }
-        return { creator: userId, modulname: name, solved: solved };
+        return { creator: userId, modulname: name, solved: solved, modulnumber: modulnummer };
     }
     // Return the parsed data
     const parsedData = {
