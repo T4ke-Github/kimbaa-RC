@@ -71,7 +71,6 @@ class LandingPage extends Component {
         let application = typeof this.props.application === 'string' ? JSON.parse(this.props.application) : this.props.application;
         if(application){
             yourApplication =   <Card style={{ width: '18rem' }} className="card whiteText">
-                                    <Card.Img variant="top" src="kimbaa_logo_256.png" />
                                     <Card.Body>
                                         <Card.Title>
                                             {this.state.course}
