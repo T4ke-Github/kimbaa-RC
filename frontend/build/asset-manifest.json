@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0e6753aa.css",
+    "main.js": "/static/js/main.601dce88.js",
+    "static/media/BHT CaseText-Bold.otf": "/static/media/BHT CaseText-Bold.3895e4856046987e8280.otf",
+    "static/media/BHT CaseText-Regular.otf": "/static/media/BHT CaseText-Regular.47302fb159b895b5027c.otf",
+    "index.html": "/index.html",
+    "main.0e6753aa.css.map": "/static/css/main.0e6753aa.css.map",
+    "main.601dce88.js.map": "/static/js/main.601dce88.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0e6753aa.css",
+    "static/js/main.601dce88.js"
+  ]
+}
