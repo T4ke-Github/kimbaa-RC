@@ -34,5 +34,5 @@ export function configureCORS(app: express.Express) {
     };
 
     app.use(cors(corsOptions));
-    app.options('https://kimbaa-rc.onrender.com', cors(corsOptions)); // enable pre-flight (request method "options") everywhere, you may want to specify that in detail in production
+    app.options('*', cors(corsOptions)); // enable pre-flight (request method "options") everywhere, you may want to specify that in detail in production
 }
