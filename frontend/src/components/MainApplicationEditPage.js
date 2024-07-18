@@ -265,12 +265,6 @@ class MainApplicationEditPage extends Component{
                         </Form.Group>
                         <Form.Group controlId="furtherDetails" className="spaceTop">
                             <Form.Label className="mainApplicationLabel">Weitere Details (Zutreffendes ankreuzen):</Form.Label>
-                            <Form.Group >
-                                <Form.Check label="Die Praxisphase wird abgeleistet vom:"  /> 
-                                <input type="date" name="dateFrom" value={this.state.dateFrom} onChange={this.handleDateChange} placeholder="" />
-                                <Form.Label >bis</Form.Label>
-                                <input type="date" name="dateTo" value={this.state.dateTo} onChange={this.handleDateChange} placeholder="" />
-                            </Form.Group> 
                             <Form.Check label="Die Praxisphase wurde erfolgreich abgeschlossen" name="appPracticalSemesterDone" checked={this.state.appPracticalSemesterDone} onChange={this.handleCheckChange}/>
                             <Form.Check label="Die Anerkennung der Praxisphase wurde beantragt oder ist bereits erfolgt." name="appPracticalSemesterAcknowledgement" checked={this.state.appPracticalSemesterAcknowledgement} onChange={this.handleCheckChange} />
                             <p><b>Du hast {this.state.appModulePoints} von 155 benötigten Credits erlangt. {requiredAbsolved}{succeededModules}</b></p>
