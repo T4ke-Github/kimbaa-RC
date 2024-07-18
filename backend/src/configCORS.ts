@@ -12,7 +12,9 @@ Das Paket 'cors' ist bereits installiert.
 */
 export function configureCORS(app: express.Express) {
     const allowedOrigins = [
-        'https://kimbaa-rc.onrender.com'
+        process.env.ALLOWED_ORIGIN1,
+        process.env.ALLOWED_ORIGIN2,
+        process.env.ALLOWED_ORIGIN3
     ];
 
     const corsOptions: CorsOptions = {
@@ -32,5 +34,5 @@ export function configureCORS(app: express.Express) {
     };
 
     app.use(cors(corsOptions));
-    app.options('*', cors(corsOptions)); // enable pre-flight (request method "options") everywhere, you may want to specify that in detail in production
+    app.options('https://kimbaa-rc.onrender.com', cors(corsOptions)); // enable pre-flight (request method "options") everywhere, you may want to specify that in detail in production
 }
