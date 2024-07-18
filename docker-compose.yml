@@ -6,6 +6,8 @@ services:
       context: frontend
     ports:
       - "3000:3000"
+    env_file:
+      - backend/.env
     environment:
       - HOSTNAME=localhost
       - HTTP_PORT=3000
@@ -21,6 +23,8 @@ services:
     ports:
       - "8081:3000"
       - "3443:3443"
+    env_file:
+      - backend/.env
     environment:
       - DB_CONNECTION_STRING=mongodb://root:example@mongo:27017/
       - HTTP_PORT=3000
