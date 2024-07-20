@@ -49,7 +49,7 @@ async function setup() {
     } else {
         const port = process.env.HTTP_PORT ? parseInt(process.env.HTTP_PORT) : 3000;
         const httpServer = http.createServer(app);
-        httpServer.listen(port, () => {
+        httpServer.listen(port, '0.0.0.0', () => {
             logger.info(`Listening for HTTP at http://localhost:${port}`);
         });
     }
